@@ -1,0 +1,9 @@
+.vscode
+
+# dependencies
+/node_modules
+
+# production
+/build
+/idea
+/.idea

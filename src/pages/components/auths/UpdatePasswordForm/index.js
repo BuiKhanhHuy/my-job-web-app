@@ -1,0 +1,75 @@
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { Grid } from '@mui/material';
+
+import PasswordTextFieldCustom from '../../../../components/controls/PasswordTextFieldCustom';
+
+const UpdatePasswordForm = ({ handleUpdatePassword, serverErrors = {} }) => {
+  const schema = yup.object().shape({
+    oldPassword: yup
+      .string()
+      .required('Mật khẩu hiện tại là bắt buộc!')
+      .max(128, 'Mật khẩu hiện tại vượt quá độ dài cho phép.'),
+    newPassword: yup
+      .string()
+      .required('Mật khẩu mới là bắt buộc!')
+      .max(128, 'Mật khẩu mới vượt quá độ dài cho phép.'),
+    confirmPassword: yup
+      .string()
+      .required('Mật khẩu xác nhận là bắt buộc.')
+      .oneOf([yup.ref('newPassword')], 'Mật khẩu xác nhận không chính xác.'),
+  });
+
+  const { control, setError, handleSubmit } = useForm({
+    defaultValues: {
+      oldPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+    },
+    resolver: yupResolver(schema),
+  });
+
+  React.useEffect(() => {
+    for (let err in serverErrors) {
+      setError(err, { type: 400, message: serverErrors[err]?.join(' ') });
+    }
+  }, [serverErrors, setError]);
+
+  return (
+    <form id="modal-form" onSubmit={handleSubmit(handleUpdatePassword)}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <PasswordTextFieldCustom
+            name="oldPassword"
+            control={control}
+            title="Mật khẩu hiện tại"
+            showRequired={true}
+            placeholder="Nhập mật khẩu hiện tại"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <PasswordTextFieldCustom
+            name="newPassword"
+            control={control}
+            title="Mật khẩu mới"
+            showRequired={true}
+            placeholder="Nhập mật khẩu mới"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <PasswordTextFieldCustom
+            name="confirmPassword"
+            control={control}
+            title="Mật khẩu xác nhận"
+            showRequired={true}
+            placeholder="Nhập lại mật khẩu mới"
+          />
+        </Grid>
+      </Grid>
+    </form>
+  );
+};
+
+export default UpdatePasswordForm;
