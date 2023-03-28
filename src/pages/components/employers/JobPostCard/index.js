@@ -46,6 +46,12 @@ const headCells = [
     label: 'Lượt nộp',
   },
   {
+    id: 'viewedNumber',
+    numeric: false,
+    disablePadding: false,
+    label: 'Lượt xem',
+  },
+  {
     id: 'isUrgent',
     numeric: false,
     disablePadding: false,
@@ -162,7 +168,7 @@ const JobPostCard = () => {
 
         setOpenPopup(false);
         setIsSuccess(!isSuccess);
-        toastMessages.success('Thêm kinh tin tuyển dụng thành công.');
+        toastMessages.success('Thêm mới tin tuyển dụng thành công.');
       } catch (error) {
         errorHandling(error, setServerErrors);
       } finally {

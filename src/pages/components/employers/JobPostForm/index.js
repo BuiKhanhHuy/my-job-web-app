@@ -28,6 +28,10 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
       .string()
       .required('Tên công việc là bắt buộc.')
       .max(200, 'Tên công việc vượt quá độ dài cho phép.'),
+    career: yup
+      .number()
+      .required('Ngành/nghề là bắt buộc.')
+      .typeError('Ngành/nghề là bắt buộc.'),
     position: yup
       .number()
       .required('Vị trí công việc là bắt buộc.')
@@ -231,6 +235,16 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
             showRequired={true}
             placeholder="Nhập tên công việc"
             control={control}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <SingleSelectCustom
+            name="career"
+            control={control}
+            options={allConfig?.careerOptions || []}
+            title="Ngành nghề"
+            showRequired={true}
+            placeholder="Chọn ngành nghề cần tuyển"
           />
         </Grid>
         <Grid item xs={6}>

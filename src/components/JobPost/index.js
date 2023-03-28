@@ -4,19 +4,31 @@ import {
   Box,
   Card,
   Chip,
-  IconButton,
+  Skeleton,
   Stack,
   Typography,
 } from '@mui/material';
+// import { makeStyles } from '@material-ui/core/styles';
 
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import RoomIcon from '@mui/icons-material/Room';
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import AlarmIcon from '@mui/icons-material/Alarm';
+
+// const useStyles = makeStyles((theme) => ({
+//   customHoverFocus: {
+//     textDecoration: 'inherit',
+//     color: 'inherit',
+//     '&:hover, &.Mui-focusVisible': { borderColor: '#308edb' },
+//   },
+// }));
 
 const JobPost = () => {
+  // const classes = useStyles();
+
   return (
-    <Card variant="outlined" sx={{ p: 1 }}>
+    <Card variant="outlined" sx={{ p: 1 }} 
+    // className={classes.customHoverFocus}
+    >
       <Stack direction="row" spacing={1}>
         <Box>
           <Avatar
@@ -72,21 +84,64 @@ const JobPost = () => {
       >
         <Box>
           <Chip
-            sx={{ mr: 0.75 }}
+            sx={{ mr: 0.75, fontSize: 12 }}
             size="small"
             icon={<MonetizationOnIcon />}
             label="15tr - 20tr"
           />
-          <Chip size="small" icon={<RoomIcon />} label="Thừa Thiên Huế" />
-        </Box>
-        <Box>
-          <IconButton aria-label="save" size="small" color="primary">
-            <BookmarkAddedIcon fontSize="inherit" />
-          </IconButton>
+          <Chip
+            sx={{ mr: 0.75, fontSize: 12 }}
+            size="small"
+            icon={<RoomIcon />}
+            label="Thừa Thiên Huế"
+          />
+          <Chip
+            sx={{ fontSize: 12 }}
+            size="small"
+            icon={<AlarmIcon />}
+            label="27/02/2001"
+          />
         </Box>
       </Stack>
     </Card>
   );
 };
+
+const Loading = () => (
+  <>
+    <Card sx={{ p: 1, boxShadow: 0 }}>
+      <Stack direction="row" spacing={1}>
+        <Box>
+          <Skeleton variant="rounded" width={60} height={60} />
+        </Box>
+        <Box flex={1}>
+          <Typography variant="subtitle2" sx={{ fontSize: 15 }} gutterBottom>
+            <Skeleton height={30} />
+          </Typography>
+          <Typography variant="subtitle2" color="gray">
+            <Skeleton />
+          </Typography>
+        </Box>
+        <Box>
+          <Skeleton height={30} width={60} />
+        </Box>
+      </Stack>
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{ mt: 0.75 }}
+        justifyContent="space-between"
+      >
+        <Stack direction="row" spacing={1} justifyContent="space-between">
+          <Skeleton width={80} />
+          <Skeleton width={80} />
+          <Skeleton width={80} />
+        </Stack>
+      </Stack>
+    </Card>
+  </>
+);
+
+JobPost.Loading = Loading;
 
 export default JobPost;

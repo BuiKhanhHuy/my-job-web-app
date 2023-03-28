@@ -6,8 +6,6 @@ const jobService = {
 
     return httpRequest.post(url, data);
   },
-  getJobPost: () => {},
-  getJobPostDetailById: () => {},
   updateJobPostById: (id, data) => {
     const url = `api/job/web/job-posts/${id}/`;
 
@@ -18,6 +16,16 @@ const jobService = {
 
     return httpRequest.delete(url);
   },
+
+  getJobPosts: (params = {}) => {
+    const url = 'api/job/web/job-posts/';
+
+    return httpRequest.get(url, {
+      params: params,
+    });
+  },
+  getSuggestedJobPosts: () => {},
+  getJobPostDetailById: () => {},
 };
 
 export default jobService;

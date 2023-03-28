@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
+import DevicesIcon from '@mui/icons-material/Devices';
 
 const AUTH_CONFIG = {
   CLIENT_ID: '0VdoWiB6AaDGv1OiQeRn5c3BOcxEDMv1t4o8eFTt',
@@ -13,6 +15,19 @@ const ROLES_NAME = {
   EMPLOYER: 'EMPLOYER',
   JOB_SEEKER: 'JOB_SEEKER',
 };
+
+const HOME_FILTER_CAREER = [
+  {
+    id: 37,
+    name: 'IT - Phần mềm',
+    titleIcon: <DevicesIcon color="secondary" />,
+  },
+  {
+    id: 38,
+    name: 'IT - Phần cứng',
+    titleIcon: <DeveloperBoardIcon color="secondary" />
+  },
+];
 
 const REGEX_VATIDATE = {
   phoneRegExp:
@@ -42,6 +57,7 @@ const IMAGES = {
 export {
   AUTH_CONFIG,
   ROLES_NAME,
+  HOME_FILTER_CAREER,
   REGEX_VATIDATE,
   CV_TYPES,
   DATE_OPTIONS,

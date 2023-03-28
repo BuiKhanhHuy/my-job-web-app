@@ -1,157 +1,94 @@
 import * as React from 'react';
-import {
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Typography,
-} from '@mui/material';
-import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
-import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
-import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
-import DevicesIcon from '@mui/icons-material/Devices';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 
-import JobPosts from '../../../components/JobPosts';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
+
 import TopCompanyCarousel from '../../../components/TopCompanyCarousel';
 import CareerCarousel from '../../../components/CareerCarousel';
 import FeedbackCarousel from '../../../components/FeedbackCarousel';
 import JobByCategory from '../../components/defaults/JobByCategory';
+import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
+import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
+import { HOME_FILTER_CAREER } from '../../../configs/constants';
 
 export default function HomePage() {
   return (
     <>
-      {/*Start: Top cong ty */}
       <Box sx={{ mt: 6 }}>
+        {/*Start: Top cong ty */}
         <Typography variant="h5" sx={{ mb: 3 }} gutterBottom>
           Các công ty hàng đầu
         </Typography>
         <TopCompanyCarousel />
+        {/*End: Top cong ty */}
       </Box>
-      {/*End: Top cong ty */}
 
-      {/*Start: Viec lam tuyen gap */}
       <Box sx={{ mt: 10 }}>
-        <Card variant="outlined">
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: 'white' }} aria-label="recipe">
-                <AccessAlarmsIcon color="secondary" />
-              </Avatar>
-            }
-            title={
-              <Typography variant="h5" sx={{ color: 'white' }}>
-                Việc làm tuyển gấp
-              </Typography>
-            }
-            sx={{ backgroundColor: '#441da0' }}
-          />
-          <CardContent>
-            <Box sx={{ p: 2 }}>
-              <JobPosts />
-            </Box>
-          </CardContent>
-        </Card>
+        {/*Start: Viec lam tuyen gap */}
+        <FilterJobPostCard
+          title="Việc làm tuyển gấp"
+          titleIcon={<AccessTimeIcon color="secondary" />}
+          params={{
+            isUrgent: true,
+          }}
+        />
+        {/*End: Viec lam tuyen gap */}
       </Box>
-      {/*End: Viec lam tuyen gap */}
 
-      {/* Start: Cac nganh nghe */}
       <Box sx={{ mt: 10 }}>
+        {/* Start: Cac nganh nghe */}
         <Typography variant="h5" sx={{ mb: 3 }} gutterBottom>
           Ngành nghề trọng điểm
         </Typography>
         <CareerCarousel />
+        {/* End: Cac nganh nghe */}
       </Box>
-      {/* End: Cac nganh nghe */}
 
-      {/* Start: Viec lam goi y */}
       <Box sx={{ mt: 10 }}>
-        <Card variant="outlined">
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: 'white' }} aria-label="recipe">
-                <TipsAndUpdatesIcon color="secondary" />
-              </Avatar>
-            }
-            title={
-              <Typography variant="h5" sx={{ color: 'white' }}>
-                Việc làm gợi ý
-              </Typography>
-            }
-            sx={{ backgroundColor: '#441da0' }}
-          />
-          <CardContent>
-            <Box sx={{ p: 2 }}>
-              <JobPosts />
-            </Box>
-          </CardContent>
-        </Card>
+        {/* Start: Viec lam goi y */}
+        <SuggestedJobPostCard
+          title="Việc làm gợi ý"
+          titleIcon={<TipsAndUpdatesIcon color="secondary" />}
+        />
+        {/* End: Viec lam goi y */}
       </Box>
-      {/* End: Viec lam goi y */}
 
-      {/* Start: Viec lam nganh IT phan mem */}
       <Box sx={{ mt: 10 }}>
-        <Card variant="outlined">
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: 'white' }} aria-label="recipe">
-                <DevicesIcon color="secondary" />
-              </Avatar>
-            }
-            title={
-              <Typography variant="h5" sx={{ color: 'white' }}>
-                Việc làm nổi bậc ngành IT-Phần mềm
-              </Typography>
-            }
-            sx={{ backgroundColor: '#441da0' }}
-          />
-          <CardContent>
-            <Box sx={{ p: 2 }}>
-              <JobPosts />
-            </Box>
-          </CardContent>
-        </Card>
+        {/* Start: Viec lam nganh */}
+        <FilterJobPostCard
+          title={`Việc làm nổi bậc ngành ${HOME_FILTER_CAREER[0].name}`}
+          titleIcon={HOME_FILTER_CAREER[0].titleIcon}
+          params={{
+            careerId: HOME_FILTER_CAREER[0].id,
+          }}
+        />
+        {/* End: Viec lam nganh */}
       </Box>
-      {/* End: Viec lam nganh IT phan mem */}
 
-      {/* Start: Viec lam nganh IT phan cung */}
       <Box sx={{ mt: 10 }}>
-        <Card variant="outlined">
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: 'white' }} aria-label="recipe">
-                <DeveloperBoardIcon color="secondary" />
-              </Avatar>
-            }
-            title={
-              <Typography variant="h5" sx={{ color: 'white' }}>
-                Việc làm nổi bậc ngành IT-Phần cứng
-              </Typography>
-            }
-            sx={{
-              backgroundColor: '#441da0',
-            }}
-          />
-          <CardContent>
-            <Box sx={{ p: 2 }}>
-              <JobPosts />
-            </Box>
-          </CardContent>
-        </Card>
+        {/* Start: Viec lam nganh */}
+        <FilterJobPostCard
+          title={`Việc làm nổi bậc ngành ${HOME_FILTER_CAREER[1].name}`}
+          titleIcon={HOME_FILTER_CAREER[1].titleIcon}
+          params={{
+            careerId: HOME_FILTER_CAREER[1].id,
+          }}
+        />
+        {/* End: Viec lam nganh */}
       </Box>
-      {/* End: Viec lam nganh IT phan cung */}
 
-      {/* Start: Feedback */}
       <Box sx={{ mt: 10 }}>
+        {/* Start: Feedback */}
         <Typography variant="h5" sx={{ mb: 3 }} gutterBottom>
           Người dùng đánh giá
         </Typography>
         <FeedbackCarousel />
+        {/* End: Feedback */}
       </Box>
-      {/* End: Feedback */}
 
-      {/* Start: Job by category */}
       <Box sx={{ mt: 10 }}>
+        {/* Start: Job by category */}
         <Card sx={{ boxShadow: 0 }}>
           <CardContent>
             <Box sx={{ py: 4, px: 6 }}>
@@ -159,8 +96,8 @@ export default function HomePage() {
             </Box>
           </CardContent>
         </Card>
+        {/* End: Job by category */}
       </Box>
-      {/* End: Job by category */}
     </>
   );
 }

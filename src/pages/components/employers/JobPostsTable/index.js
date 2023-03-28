@@ -24,11 +24,12 @@ const JobPostsTable = (props) => {
               {dayjs(row.deadline).format('DD/MM/YYYY')}
             </TableCell>
             <TableCell align="left">{row.appliedNumber}</TableCell>
+            <TableCell align="left">{row.viewedNumber}</TableCell>
             <TableCell align="left">
               {row.isUrgent ? (
-                <Chip label="Tuyển gấp" color="error" />
+                <Chip label="Tuyển gấp" color="error" size='small'/>
               ) : (
-                <Chip label="Đang tuyển" color="info" />
+                <Chip label="Đang tuyển" color="info" size='small'/>
               )}
             </TableCell>
             <TableCell align="right">
