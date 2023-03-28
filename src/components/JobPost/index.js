@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import dayjs from 'dayjs';
 import {
   Avatar,
   Box,
@@ -8,26 +10,37 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-// import { makeStyles } from '@material-ui/core/styles';
 
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import RoomIcon from '@mui/icons-material/Room';
-import AlarmIcon from '@mui/icons-material/Alarm';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { salaryString } from '../../utils/customData';
 
-// const useStyles = makeStyles((theme) => ({
-//   customHoverFocus: {
-//     textDecoration: 'inherit',
-//     color: 'inherit',
-//     '&:hover, &.Mui-focusVisible': { borderColor: '#308edb' },
-//   },
-// }));
-
-const JobPost = () => {
-  // const classes = useStyles();
+const JobPost = ({
+  id,
+  slug,
+  companyImageUrl,
+  companyName,
+  jobName,
+  cityId,
+  deadline,
+  isUrgent,
+  isHot,
+  salaryMin,
+  salaryMax,
+}) => {
+  const { allConfig } = useSelector((state) => state.config);
 
   return (
-    <Card variant="outlined" sx={{ p: 1 }} 
-    // className={classes.customHoverFocus}
+    <Card
+      variant="outlined"
+      sx={{
+        cursor: 'pointer',
+        p: 1,
+        '&:hover': {
+          borderColor: '#441da0',
+        },
+      }}
     >
       <Stack direction="row" spacing={1}>
         <Box>
@@ -40,40 +53,64 @@ const JobPost = () => {
               borderRadius: 1.5,
               p: 0.5,
             }}
-            src="https://cdn1.vieclam24h.vn/images/employer_avatar/2023/02/27/fc86c14afad9208779c8_167748592630.w-62.h-62.padding-1.jpg?v=220513"
+            src={companyImageUrl}
             alt="H"
           />
         </Box>
         <Box flex={1}>
-          <Typography variant="subtitle2" sx={{ fontSize: 15 }} gutterBottom>
-            Hồ Chí Minh - Thư Ký Phó Tổng
-          </Typography>
-          <Typography variant="subtitle2" color="gray">
-            Công Ty Cổ Phần Thiết Bị Y Sinh
+          <Box>
+            <Typography
+              variant="subtitle2"
+              sx={{ fontSize: 15 }}
+              gutterBottom
+              style={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {jobName}
+            </Typography>
+          </Box>
+
+          <Typography
+            variant="subtitle2"
+            color="gray"
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {companyName}
           </Typography>
         </Box>
         <Box>
-          <span
-            style={{
-              padding: 0,
-              fontSize: 12,
-              fontWeight: 'bold',
-              color: 'red',
-            }}
-          >
-            HOT
-          </span>
-          <span style={{ color: '#bdbdbd' }}> | </span>
-          <span
-            style={{
-              padding: 0,
-              fontSize: 12,
-              fontWeight: 'bold',
-              color: 'orange',
-            }}
-          >
-            Tuyển gấp
-          </span>
+          {isHot && (
+            <span
+              style={{
+                padding: 0,
+                fontSize: 12,
+                fontWeight: 'bold',
+                color: 'red',
+              }}
+            >
+              HOT
+            </span>
+          )}
+          {isHot && isUrgent && <span style={{ color: '#bdbdbd' }}> | </span>}
+          {isUrgent && (
+            <span
+              style={{
+                padding: 0,
+                fontSize: 12,
+                fontWeight: 'bold',
+                color: 'orange',
+              }}
+            >
+              Tuyển gấp
+            </span>
+          )}
         </Box>
       </Stack>
       <Stack
@@ -84,22 +121,22 @@ const JobPost = () => {
       >
         <Box>
           <Chip
-            sx={{ mr: 0.75, fontSize: 12 }}
+            sx={{ mr: 0.75, fontSize: 12, cursor: 'pointer' }}
             size="small"
             icon={<MonetizationOnIcon />}
-            label="15tr - 20tr"
+            label={salaryString(salaryMin, salaryMax)}
           />
           <Chip
-            sx={{ mr: 0.75, fontSize: 12 }}
+            sx={{ mr: 0.75, fontSize: 12, cursor: 'pointer' }}
             size="small"
             icon={<RoomIcon />}
-            label="Thừa Thiên Huế"
+            label={allConfig?.cityDict[cityId] || 'Chưa cập nhật'}
           />
           <Chip
-            sx={{ fontSize: 12 }}
+            sx={{ fontSize: 12, cursor: 'pointer' }}
             size="small"
-            icon={<AlarmIcon />}
-            label="27/02/2001"
+            icon={<CalendarMonthIcon />}
+            label={dayjs(deadline).format('DD/MM/YYYY')}
           />
         </Box>
       </Stack>

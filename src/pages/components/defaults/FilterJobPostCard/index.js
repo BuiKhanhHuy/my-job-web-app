@@ -94,7 +94,19 @@ const FilterJobPostCard = ({ title, titleIcon, params = {} }) => {
                       key={value.id}
                     >
                       {/* Start: Job post */}
-                      <JobPost />
+                      <JobPost
+                        id={value.id}
+                        slug={value.slug}
+                        companyImageUrl={value?.companyDict?.companyImageUrl}
+                        companyName={value?.companyDict?.companyName}
+                        jobName={value?.jobName}
+                        cityId={value?.locationDict?.city}
+                        deadline={value?.deadline}
+                        isUrgent={value?.isUrgent}
+                        isHot={value?.isHot}
+                        salaryMin={value.salaryMin}
+                        salaryMax={value.salaryMax}
+                      />
                       {/* End: Job post */}
                     </Grid>
                   ))}

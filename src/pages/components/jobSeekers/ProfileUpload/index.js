@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
 import PublishIcon from '@mui/icons-material/Publish';
 
-import { CV_TYPES } from '../../../../configs/constants';
+import { CV_TYPES, IMAGE_SVG } from '../../../../configs/constants';
 import toastMessages from '../../../../utils/toastMessages';
 import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
@@ -16,6 +16,7 @@ import jobSeekerProfileService from '../../../../services/jobSeekerProfileServic
 import resumeService from '../../../../services/resumeService';
 import ProfileUploadCard from '../../../../components/ProfileUploadCard';
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
+import NoDataCard from '../../../../components/NoDataCard';
 
 const ProfileUpload = ({ title }) => {
   const nav = useNavigate();
@@ -103,29 +104,24 @@ const ProfileUpload = ({ title }) => {
         </Box>
         <Divider sx={{ mt: 2, mb: 3 }} />
         <Box sx={{ px: 1 }}>
-          <Stack spacing={2}>
+          <Box>
             <Box>
-              <Grid container spacing={2}>
-                {isLoadingResumes ? (
-                  Array(3)
-                    .fill(0)
-                    .map((value, index) => (
-                      <Grid
-                        key={index}
-                        item
-                        xs={12}
-                        sm={12}
-                        md={6}
-                        lg={4}
-                        xl={4}
-                      >
-                        <ProfileUploadCard.Loading />
-                      </Grid>
-                    ))
-                ) : resumes.length === 0 ? (
-                  <div>[]</div>
-                ) : (
-                  resumes.map((value) => (
+              {isLoadingResumes ? (
+                <Grid container spacing={2}>
+                  {Array.from(Array(5).keys()).map((value, index) => (
+                    <Grid key={index} item xs={12} sm={12} md={6} lg={4} xl={4}>
+                      <ProfileUploadCard.Loading />
+                    </Grid>
+                  ))}
+                </Grid>
+              ) : resumes.length === 0 ? (
+                <NoDataCard
+                  title="Bạn chưa tải lên CV nào"
+                  img={IMAGE_SVG.img2}
+                />
+              ) : (
+                resumes.map((value) => (
+                  <Grid container spacing={2}>
                     <Grid
                       item
                       xs={12}
@@ -145,11 +141,11 @@ const ProfileUpload = ({ title }) => {
                         handleDelete={handleDelete}
                       />
                     </Grid>
-                  ))
-                )}
-              </Grid>
+                  </Grid>
+                ))
+              )}
             </Box>
-            <Stack sx={{ pt: 3 }} direction="row" justifyContent="center">
+            <Stack sx={{ pt: 5 }} direction="row" justifyContent="center">
               <Button
                 startIcon={<PublishIcon />}
                 variant="contained"
@@ -158,7 +154,7 @@ const ProfileUpload = ({ title }) => {
                 Upload CV
               </Button>
             </Stack>
-          </Stack>
+          </Box>
         </Box>
       </Stack>
       {/* Start: form  */}
