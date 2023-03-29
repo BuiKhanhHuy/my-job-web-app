@@ -127,10 +127,10 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
           </Button>
         ) : (
           <>
-            <Button variant="contained" color="info" sx={{ color: 'white' }}>
+            <Button variant="contained" color="info" sx={{ color: 'white' }} onClick={() => nav("/dang-nhap-ung-vien")}>
               Đăng nhập
             </Button>
-            <Button variant="contained" color="warning" sx={{ color: 'white' }}>
+            <Button variant="contained" color="warning" sx={{ color: 'white' }} onClick={() => nav("/dang-ky-tai-khoan-ung-vien")}>
               Đăng ký
             </Button>
           </>
