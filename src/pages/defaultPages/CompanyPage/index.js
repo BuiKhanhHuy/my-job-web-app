@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Button, Card, Stack, Typography } from '@mui/material';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useForm } from 'react-hook-form';
 
 import CompanySearch from '../../components/defaults/CompanySearch';
@@ -59,7 +58,7 @@ const CompanyPage = () => {
           {/* End: companies */}
           
           <Stack sx={{ pt: 4, pb: 3 }} direction="row" justifyContent="center">
-            <Button variant="contained" endIcon={<MoreHorizIcon />}>
+            <Button variant="contained" >
               Xem thêm
             </Button>
           </Stack>

@@ -110,7 +110,7 @@ const ProfileUpload = ({ title }) => {
             <Box>
               {isLoadingResumes ? (
                 <Grid container spacing={2}>
-                  {Array.from(Array(5).keys()).map((value, index) => (
+                  {Array.from(Array(3).keys()).map((value, index) => (
                     <Grid key={index} item xs={12} sm={12} md={6} lg={4} xl={4}>
                       <ProfileUploadCard.Loading />
                     </Grid>

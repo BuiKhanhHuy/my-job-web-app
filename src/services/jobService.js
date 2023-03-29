@@ -2,17 +2,17 @@ import httpRequest from '../utils/httpRequest';
 
 const jobService = {
   addJobPost: (data) => {
-    const url = 'api/job/web/job-posts/';
+    const url = 'api/job/web/private-job-posts/';
 
     return httpRequest.post(url, data);
   },
   updateJobPostById: (id, data) => {
-    const url = `api/job/web/job-posts/${id}/`;
+    const url = `api/job/web/private-job-posts/${id}/`;
 
     return httpRequest.put(url, data);
   },
   deleteJobPostById: (id) => {
-    const url = `api/job/web/job-posts/${id}/`;
+    const url = `api/job/web/private-job-posts/${id}/`;
 
     return httpRequest.delete(url);
   },
@@ -24,8 +24,12 @@ const jobService = {
       params: params,
     });
   },
+  getJobPostDetailById: (slug) => {
+    const url = `api/job/web/job-posts/${slug}/`;
+
+    return httpRequest.get(url);
+  },
   getSuggestedJobPosts: () => {},
-  getJobPostDetailById: () => {},
 };
 
 export default jobService;

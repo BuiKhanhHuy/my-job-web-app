@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {
   Avatar,
@@ -29,6 +30,7 @@ const JobPost = ({
   salaryMin,
   salaryMax,
 }) => {
+  const nav = useNavigate();
   const { allConfig } = useSelector((state) => state.config);
 
   return (
@@ -41,6 +43,7 @@ const JobPost = ({
           borderColor: '#441da0',
         },
       }}
+      onClick={() => nav(`/viec-lam/${slug}`)}
     >
       <Stack direction="row" spacing={1}>
         <Box>
