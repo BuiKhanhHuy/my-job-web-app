@@ -29,6 +29,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CV_TYPES } from '../../../../configs/constants';
 import dayjs from 'dayjs';
 import { salaryString } from '../../../../utils/customData';
+import NoDataCard from '../../../../components/NoDataCard';
 
 const BoxProfile = ({ title }) => {
   const nav = useNavigate();
@@ -68,24 +69,26 @@ const BoxProfile = ({ title }) => {
         >
           <Typography variant="h6">{title}</Typography>
 
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Chip
-              sx={{ color: 'white' }}
-              size="small"
-              icon={<ReplyIcon />}
-              color="secondary"
-              label="Chia sẻ"
-              onClick={() => {}}
-            />
-            <Chip
-              sx={{ ml: 1, color: 'white' }}
-              size="small"
-              icon={<DownloadIcon />}
-              color="secondary"
-              label="Tải xuống"
-              onClick={() => {}}
-            />
-          </Stack>
+          {resume && (
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Chip
+                sx={{ color: 'white' }}
+                size="small"
+                icon={<ReplyIcon />}
+                color="secondary"
+                label="Chia sẻ"
+                onClick={() => {}}
+              />
+              <Chip
+                sx={{ ml: 1, color: 'white' }}
+                size="small"
+                icon={<DownloadIcon />}
+                color="secondary"
+                label="Tải xuống"
+                onClick={() => {}}
+              />
+            </Stack>
+          )}
         </Stack>
       </Box>
       <Divider sx={{ mt: 2, mb: 3 }} />
@@ -93,7 +96,9 @@ const BoxProfile = ({ title }) => {
         {isLoadingResume ? (
           <h1>Loading...</h1>
         ) : resume === null ? (
-          <h1>Profile NULL</h1>
+          <h1>
+            <NoDataCard />
+          </h1>
         ) : (
           <Grid container spacing={3}>
             <Grid item>

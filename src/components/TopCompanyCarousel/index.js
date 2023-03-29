@@ -41,8 +41,7 @@ const TopCompanyCarousel = () => {
                 variant="h6"
                 component="h6"
                 gutterBottom={true}
-                sx={{ textAlign: 'center', 
-                fontWeight: 'bold' }}
+                sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 16 }}
               >
                 Công ty TNHH MTV DV Viễn Thông Phương Nam
               </Typography>

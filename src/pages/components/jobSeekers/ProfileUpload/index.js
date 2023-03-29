@@ -100,7 +100,9 @@ const ProfileUpload = ({ title }) => {
     <>
       <Stack>
         <Box>
-          <Typography variant="h6">{title} (4)</Typography>
+          <Typography variant="h6">
+            {title} ({resumes.length})
+          </Typography>
         </Box>
         <Divider sx={{ mt: 2, mb: 3 }} />
         <Box sx={{ px: 1 }}>

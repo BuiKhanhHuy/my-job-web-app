@@ -10,6 +10,11 @@ const commonService = {
     const url = `api/common/districts/?cityId=${cityId}`;
     return httpRequest.get(url);
   },
+  getTop10Careers: () => {
+    const url = '/api/common/top-careers/';
+
+    return httpRequest.get(url);
+  },
 };
 
 export default commonService;

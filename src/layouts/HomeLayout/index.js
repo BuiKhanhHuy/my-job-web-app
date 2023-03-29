@@ -8,9 +8,8 @@ import TopSlide from '../components/commons/TopSlide';
 import Footer from '../components/commons/Footer';
 
 const HomeLayout = () => {
-
   return (
-    <>
+    <Box>
       <Header />
       <SubHeader />
       <Container maxWidth="xl">
@@ -32,7 +31,7 @@ const HomeLayout = () => {
       >
         <Footer />
       </Box>
-    </>
+    </Box>
   );
 };
 

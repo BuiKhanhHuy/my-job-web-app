@@ -57,7 +57,7 @@ export default function HomePage() {
       <Box sx={{ mt: 10 }}>
         {/* Start: Viec lam nganh */}
         <FilterJobPostCard
-          title={`Việc làm nổi bậc ngành ${HOME_FILTER_CAREER[0].name}`}
+          title={`Việc làm ngành ${HOME_FILTER_CAREER[0].name}`}
           titleIcon={HOME_FILTER_CAREER[0].titleIcon}
           params={{
             careerId: HOME_FILTER_CAREER[0].id,
@@ -69,7 +69,7 @@ export default function HomePage() {
       <Box sx={{ mt: 10 }}>
         {/* Start: Viec lam nganh */}
         <FilterJobPostCard
-          title={`Việc làm nổi bậc ngành ${HOME_FILTER_CAREER[1].name}`}
+          title={`Việc làm ngành ${HOME_FILTER_CAREER[1].name}`}
           titleIcon={HOME_FILTER_CAREER[1].titleIcon}
           params={{
             careerId: HOME_FILTER_CAREER[1].id,
@@ -91,7 +91,7 @@ export default function HomePage() {
         {/* Start: Job by category */}
         <Card sx={{ boxShadow: 0 }}>
           <CardContent>
-            <Box sx={{ py: 4, px: 6 }}>
+            <Box sx={{ py:  {xs: 1, sm: 1, md: 2, lg: 4, xl: 4}, px: {xs: 1, sm: 1, md: 2, lg: 6, xl: 6} }}>
               <JobByCategory />
             </Box>
           </CardContent>

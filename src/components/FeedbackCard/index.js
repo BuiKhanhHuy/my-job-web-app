@@ -37,6 +37,13 @@ const FeedbackCard = ({ id, avatarUrl, fullName, content }) => {
         display="block"
         gutterBottom
         sx={{ textAlign: 'center', color: '#757575' }}
+        style={{
+          WebkitBoxOrient: "horizontal",
+          overflow: 'hidden',
+          // whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+          height: '100px'
+        }}
       >
         {content}
       </Typography>

@@ -65,10 +65,10 @@ const FilterJobPostCard = ({ title, titleIcon, params = {} }) => {
             {title}
           </Typography>
         }
-        sx={{ backgroundColor: '#441da0' }}
+        sx={{ backgroundColor: '#441da0', p: { xs: 0.75, sm: 1, md: 1.5, lg: 1.5, xl: 1.5 }  }}
       />
       <CardContent>
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: { xs: 0, sm: 0, md: 0, lg: 2, xl: 2 } }}>
           <Stack spacing={4}>
             {isLoading ? (
               <Grid container spacing={2}>

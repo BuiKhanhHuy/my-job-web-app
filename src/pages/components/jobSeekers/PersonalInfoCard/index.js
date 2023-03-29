@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
+import NoDataCard from '../../../../components/NoDataCard';
 import toastMessages from '../../../../utils/toastMessages';
 import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
@@ -96,7 +97,6 @@ const PersonalInfoCard = ({ title }) => {
         const resData = await jobSeekerProfileService.getProfile();
 
         setProfile(resData.data);
-        console.log(resData.data);
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -130,30 +130,32 @@ const PersonalInfoCard = ({ title }) => {
     <>
       <Box>
         <Stack>
+          <Box>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography variant="h6">{title}</Typography>
+              {profile && (
+                <Fab
+                  size="small"
+                  color="secondary"
+                  aria-label="edit"
+                  onClick={() => setOpenPopup(true)}
+                >
+                  <EditIcon sx={{ color: 'white' }} />
+                </Fab>
+              )}
+            </Stack>
+          </Box>
+          <Divider sx={{ mt: 2, mb: 3 }} />
           {isLoadingProfile ? (
             Loading
           ) : profile === null ? (
-            <>Profile Null </>
+            <NoDataCard />
           ) : (
             <>
-              <Box>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Typography variant="h6">{title}</Typography>
-                  <Fab
-                    size="small"
-                    color="secondary"
-                    aria-label="edit"
-                    onClick={() => setOpenPopup(true)}
-                  >
-                    <EditIcon sx={{ color: 'white' }} />
-                  </Fab>
-                </Stack>
-              </Box>
-              <Divider sx={{ mt: 2, mb: 3 }} />
               <Stack sx={{ px: 1 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>

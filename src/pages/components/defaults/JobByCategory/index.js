@@ -15,8 +15,8 @@ const JobByCategory = () => {
   const jobTypeOptions = allConfig?.jobTypeOptions || [];
 
   return (
-    <Grid container>
-      <Grid item xs={4}>
+    <Grid container spacing={3}>
+      <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
         <Stack spacing={2}>
           <Typography variant="h6">Việc làm theo nghề nghiệp</Typography>
           <Stack>
@@ -40,7 +40,7 @@ const JobByCategory = () => {
         </Stack>
       </Grid>
 
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
         <Stack spacing={2}>
           <Typography variant="h6">Việc làm theo theo khu vực</Typography>
           <Stack>
@@ -64,7 +64,7 @@ const JobByCategory = () => {
         </Stack>
       </Grid>
 
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
         <Stack spacing={2}>
           <Typography variant="h6">Việc làm theo hình thức làm việc</Typography>
           <Stack>

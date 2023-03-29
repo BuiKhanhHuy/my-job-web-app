@@ -207,6 +207,7 @@ function App() {
             },
             h5: {
               fontWeight: 700,
+              fontSize: 22
             },
             h6: {
               fontSize: '1.2rem',

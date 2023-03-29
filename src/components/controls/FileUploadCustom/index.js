@@ -48,7 +48,7 @@ const FileUploadCustom = ({
         )}
         <Box>
           <Button
-            variant="outlined"
+            variant="contained"
             color="info"
             startIcon={<FileUploadIcon />}
             sx={{ textTransform: 'inherit' }}

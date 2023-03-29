@@ -7,89 +7,48 @@ import Typography from '@mui/material/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faListUl } from '@fortawesome/free-solid-svg-icons';
 import SubHeaderDialog from '../SubHeaderDialog';
+import commonService from '../../../../services/commonService';
 
-const listItems = () => (
+const listItems = (items) => (
   <Stack
     direction="row"
     spacing={4}
     alignContent="center"
     sx={{ overflow: 'hidden' }}
   >
-    <Typography
-      variant="body2"
-      sx={{
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        whiteSpace: 'nowrap',
-      }}
-    >
-      Bán buôn - Bán lẻ - Quản lý cửa hàng
-    </Typography>
-    <Typography
-      variant="body2"
-      sx={{
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        whiteSpace: 'nowrap',
-      }}
-    >
-      Kinh doanh
-    </Typography>
-    <Typography
-      variant="body2"
-      sx={{
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        whiteSpace: 'nowrap',
-      }}
-    >
-      Marketing
-    </Typography>
-    <Typography
-      variant="body2"
-      sx={{
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        whiteSpace: 'nowrap',
-      }}
-    >
-      Khoa học - Kỹ thuật
-    </Typography>
-    <Typography
-      variant="body2"
-      sx={{
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        whiteSpace: 'nowrap',
-      }}
-    >
-      Hành chính - Thư ký
-    </Typography>
-    <Typography
-      variant="body2"
-      sx={{
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        whiteSpace: 'nowrap',
-      }}
-    >
-      Kế toán
-    </Typography>
-    <Typography
-      variant="body2"
-      sx={{
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        whiteSpace: 'nowrap',
-      }}
-    >
-      Ngành nghề khác
-    </Typography>
+    {items.map((item) => (
+      <Typography
+        variant="body2"
+        key={item.id}
+        sx={{
+          fontWeight: 'bold',
+          cursor: 'pointer',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {item?.name}
+      </Typography>
+    ))}
   </Stack>
 );
 
 const SubHeader = () => {
   const [open, setOpen] = React.useState(false);
+  const [topCareers, setTopCareers] = React.useState([]);
+
+  React.useEffect(() => {
+    const getTopCarreers = async () => {
+      try {
+        const resData = await commonService.getTop10Careers();
+
+        setTopCareers(resData.data);
+      } catch (error) {
+      } finally {
+      }
+    };
+
+    getTopCarreers();
+  }, []);
 
   return (
     <>
@@ -115,14 +74,14 @@ const SubHeader = () => {
                   color="#441da0"
                 />
               </Box>
-              {listItems()}
+              {listItems(topCareers)}
             </Toolbar>
           </Container>
         </AppBar>
       </Box>
 
       {/* Start: Subheader Dialog */}
-      <SubHeaderDialog open={open} setOpen={setOpen} />
+      <SubHeaderDialog open={open} setOpen={setOpen} topCareers={topCareers} />
       {/* End: Subheader Dialog */}
     </>
   );
