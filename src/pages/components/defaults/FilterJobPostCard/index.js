@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-  Pagination,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Grid, Pagination, Stack } from '@mui/material';
 
 import jobService from '../../../../services/jobService';
 import JobPost from '../../../../components/JobPost';
@@ -17,7 +7,7 @@ import NoDataCard from '../../../../components/NoDataCard';
 
 const pageSize = 12;
 
-const FilterJobPostCard = ({ title, titleIcon, params = {} }) => {
+const FilterJobPostCard = ({ params = {} }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [jobPosts, setJobPosts] = React.useState([]);
   const [page, setPage] = React.useState(1);
@@ -36,8 +26,6 @@ const FilterJobPostCard = ({ title, titleIcon, params = {} }) => {
 
         setCount(data.count);
         setJobPosts(data.results);
-        console.log(title, ': ');
-        console.log(data);
       } catch (error) {
       } finally {
         setIsLoading(false);
@@ -53,83 +41,56 @@ const FilterJobPostCard = ({ title, titleIcon, params = {} }) => {
   };
 
   return (
-    <Card variant="outlined">
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: 'white' }} aria-label="recipe">
-            {titleIcon}
-          </Avatar>
-        }
-        title={
-          <Typography variant="h5" sx={{ color: 'white' }}>
-            {title}
-          </Typography>
-        }
-        sx={{ backgroundColor: '#441da0', p: { xs: 0.75, sm: 1, md: 1.5, lg: 1.5, xl: 1.5 }  }}
-      />
-      <CardContent>
-        <Box sx={{ p: { xs: 0, sm: 0, md: 0, lg: 2, xl: 2 } }}>
-          <Stack spacing={4}>
-            {isLoading ? (
-              <Grid container spacing={2}>
-                {Array.from(Array(pageSize).keys()).map((item) => (
-                  <Grid key={item} item xs={12} sm={12} md={4} lg={4} xl={4}>
-                    <JobPost.Loading></JobPost.Loading>
-                  </Grid>
-                ))}
+    <Stack spacing={4}>
+      {isLoading ? (
+        <Grid container spacing={2}>
+          {Array.from(Array(pageSize).keys()).map((item) => (
+            <Grid key={item} item xs={12} sm={12} md={4} lg={4} xl={4}>
+              <JobPost.Loading></JobPost.Loading>
+            </Grid>
+          ))}
+        </Grid>
+      ) : jobPosts.length === 0 ? (
+        <NoDataCard />
+      ) : (
+        <>
+          <Grid container spacing={2}>
+            {jobPosts.map((value) => (
+              <Grid item xs={12} sm={12} md={4} lg={4} xl={4} key={value.id}>
+                {/* Start: Job post */}
+                <JobPost
+                  id={value.id}
+                  slug={value.slug}
+                  companyImageUrl={value?.companyDict?.companyImageUrl}
+                  companyName={value?.companyDict?.companyName}
+                  jobName={value?.jobName}
+                  cityId={value?.locationDict?.city}
+                  deadline={value?.deadline}
+                  isUrgent={value?.isUrgent}
+                  isHot={value?.isHot}
+                  salaryMin={value.salaryMin}
+                  salaryMax={value.salaryMax}
+                />
+                {/* End: Job post */}
               </Grid>
-            ) : jobPosts.length === 0 ? (
-              <NoDataCard />
-            ) : (
-              <>
-                <Grid container spacing={2}>
-                  {jobPosts.map((value) => (
-                    <Grid
-                      item
-                      xs={12}
-                      sm={12}
-                      md={4}
-                      lg={4}
-                      xl={4}
-                      key={value.id}
-                    >
-                      {/* Start: Job post */}
-                      <JobPost
-                        id={value.id}
-                        slug={value.slug}
-                        companyImageUrl={value?.companyDict?.companyImageUrl}
-                        companyName={value?.companyDict?.companyName}
-                        jobName={value?.jobName}
-                        cityId={value?.locationDict?.city}
-                        deadline={value?.deadline}
-                        isUrgent={value?.isUrgent}
-                        isHot={value?.isHot}
-                        salaryMin={value.salaryMin}
-                        salaryMax={value.salaryMax}
-                      />
-                      {/* End: Job post */}
-                    </Grid>
-                  ))}
-                </Grid>
-                <Stack>
-                  {count > 0 && (
-                    <Pagination
-                      color="primary"
-                      size="medium"
-                      variant="outlined"
-                      sx={{ margin: '0 auto' }}
-                      count={Math.ceil(count / pageSize)}
-                      page={page}
-                      onChange={handleChangePage}
-                    />
-                  )}
-                </Stack>
-              </>
+            ))}
+          </Grid>
+          <Stack>
+            {count > 0 && (
+              <Pagination
+                color="primary"
+                size="medium"
+                variant="outlined"
+                sx={{ margin: '0 auto' }}
+                count={Math.ceil(count / pageSize)}
+                page={page}
+                onChange={handleChangePage}
+              />
             )}
           </Stack>
-        </Box>
-      </CardContent>
-    </Card>
+        </>
+      )}
+    </Stack>
   );
 };
 

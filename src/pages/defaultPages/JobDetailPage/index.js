@@ -1,5 +1,7 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import dayjs from 'dayjs';
 import {
   Avatar,
   Box,
@@ -13,7 +15,6 @@ import {
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faBell,
   faCalendarDay,
   faEye,
   faClockFour,
@@ -23,14 +24,179 @@ import ShareIcon from '@mui/icons-material/Share';
 
 import { salaryString } from '../../../utils/customData';
 import NoDataCard from '../../../components/NoDataCard';
-import JobPosts from '../../../components/JobPosts';
 import jobService from '../../../services/jobService';
-import { useSelector } from 'react-redux';
-import dayjs from 'dayjs';
+import Map from '../../../components/Map';
+import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
 
 const Loading = (
   <>
-    <h1>Loading</h1>
+    <Box sx={{ mt: 2 }}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+          {/* Start: thong tin chung */}
+          <Card sx={{ py: 2, px: 4 }}>
+            <Stack>
+              <Box>
+                <Stack direction="row" alignItems="center" spacing={2}>
+                  <Skeleton variant="circular" width={65} height={65} />
+                  <Box sx={{ flex: 1 }}>
+                    <Typography variant="h6">
+                      <Skeleton />
+                    </Typography>
+                    <Typography variant="subtitle2" gutterBottom>
+                      <Skeleton width={200} />
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Box>
+              <Box sx={{ my: 1 }}></Box>
+              <Stack spacing={2}>
+                <Box>
+                  <Typography variant="h5">
+                    <Skeleton height={50} />
+                  </Typography>
+                </Box>
+                <Stack direction="row" spacing={3}>
+                  <Typography variant="subtitle2" sx={{ flex: 1 }}>
+                    <Skeleton />
+                  </Typography>
+                  <Typography variant="subtitle2" sx={{ flex: 1 }}>
+                    <Skeleton />
+                  </Typography>
+                  <Typography variant="subtitle2" sx={{ flex: 1 }}>
+                    <Skeleton />
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={2}>
+                  <Skeleton variant="rounded" width={100} height={40} />
+                  <Skeleton variant="rounded" width={100} height={40} />
+                  <Skeleton variant="rounded" width={100} height={40} />
+                </Stack>
+              </Stack>
+              <Box sx={{ my: 1 }}></Box>
+              <Box>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
+                    <Skeleton />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
+                    <Skeleton />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
+                    <Skeleton />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
+                    <Skeleton />
+                  </Grid>
+                </Grid>
+              </Box>
+              <Box sx={{ my: 1 }}></Box>
+              <Box>
+                <Stack>
+                  <Typography variant="h5" gutterBottom>
+                    <Skeleton />
+                  </Typography>
+                  <Box>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Skeleton />
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Skeleton />
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Skeleton />
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Skeleton />
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Skeleton />
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Skeleton />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Stack>
+              </Box>
+              <Box></Box>
+            </Stack>
+          </Card>
+          {/* End: thong tin chung */}
+
+          {/* Start: mo ta chi tiet */}
+          <Card sx={{ p: 4, mt: 3 }}>
+            <Stack spacing={4}>
+              <Box>
+                <Typography variant="h5">
+                  <Skeleton />
+                </Typography>
+                <Box sx={{ pt: 1 }}>
+                  <Skeleton variant="rounded" height={100} />
+                </Box>
+              </Box>
+              <Box>
+                <Typography variant="h5">
+                  <Skeleton />
+                </Typography>
+                <Box sx={{ pt: 1 }}>
+                  <Skeleton variant="rounded" height={100} />
+                </Box>
+              </Box>
+              <Box>
+                <Typography variant="h5">
+                  <Skeleton />
+                </Typography>
+                <Box sx={{ pt: 1 }}>
+                  <Skeleton variant="rounded" height={100} />
+                </Box>
+              </Box>
+            </Stack>
+            <Box sx={{ my: 1 }}></Box>
+            <Stack direction="row" spacing={2}>
+              <Skeleton variant="rounded" width={100} height={40} />
+              <Skeleton variant="rounded" width={100} height={40} />
+              <Skeleton variant="rounded" width={100} height={40} />
+            </Stack>
+          </Card>
+          {/* End: mo ta chi tiet */}
+
+          {/* Start: thong tin lien he */}
+          <Card sx={{ p: 4, mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={8}>
+                <Box>
+                  <Typography variant="h5">
+                    <Skeleton />
+                  </Typography>
+                  <Stack sx={{ pt: 1 }} spacing={2}>
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                  </Stack>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box>
+                  <Typography variant="h5">
+                    <Skeleton />
+                  </Typography>
+                  <Stack sx={{ pt: 1 }} spacing={2}>
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                  </Stack>
+                </Box>
+              </Grid>
+            </Grid>
+          </Card>
+          {/* End: thong tin lien he */}
+        </Grid>
+      </Grid>
+    </Box>
   </>
 );
 
@@ -103,7 +269,12 @@ const JobDetailPage = () => {
                     />
                   </Box>
                   <Box sx={{ flex: 1 }}>
-                    <Typography variant="h6">
+                    <Typography
+                      variant="h6"
+                      component={Link}
+                      to={`/cong-ty/${jobPostDetail?.companyDict?.slug}`}
+                      sx={{ color: 'inherit', textDecoration: 'none' }}
+                    >
                       {jobPostDetail?.companyDict?.companyName}
                     </Typography>
                     <Typography
@@ -371,64 +542,63 @@ const JobDetailPage = () => {
 
           {/* Start: thong tin lien he */}
           <Card sx={{ p: 4, mt: 3 }}>
-            <Stack spacing={4}>
-              <Box>
-                <Typography variant="h5">Thông tin liên hệ</Typography>
-                <Stack sx={{ pt: 1 }} spacing={2}>
-                  <Box>
-                    {item('Người liên hệ', jobPostDetail?.contactPersonName)}
-                  </Box>
-                  <Box>
-                    {item('Email liên hệ', jobPostDetail?.contactPersonEmail)}
-                  </Box>
-                  <Box>
-                    {item('SĐT liên hệ', jobPostDetail?.contactPersonPhone)}
-                  </Box>
-                  <Box>{item('Địa chỉ', jobPostDetail?.location?.address)}</Box>
-                </Stack>
-              </Box>
-            </Stack>
+            <Grid container spacing={2}>
+              <Grid item xs={8}>
+                <Box>
+                  <Typography variant="h5">Thông tin liên hệ</Typography>
+                  <Stack sx={{ pt: 1 }} spacing={2}>
+                    <Box>
+                      {item('Người liên hệ', jobPostDetail?.contactPersonName)}
+                    </Box>
+                    <Box>
+                      {item('Email liên hệ', jobPostDetail?.contactPersonEmail)}
+                    </Box>
+                    <Box>
+                      {item('SĐT liên hệ', jobPostDetail?.contactPersonPhone)}
+                    </Box>
+                    <Box>
+                      {item('Địa chỉ', jobPostDetail?.location?.address)}
+                    </Box>
+                  </Stack>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box>
+                  <Typography
+                    variant="body2"
+                    color="#bdbdbd"
+                    sx={{ fontWeight: 'bold' }}
+                  >
+                    Bản đồ
+                  </Typography>
+                  <Stack sx={{ pt: 1 }} spacing={2}>
+                    <Box>{/* <Map /> */}</Box>
+                  </Stack>
+                </Box>
+              </Grid>
+            </Grid>
           </Card>
           {/* End: thong tin lien he */}
-
-          {/* Start: ban do */}
-          <Card sx={{ p: 4, mt: 3 }}>
-            <Stack spacing={4}>
-              <Box>
-                <Typography variant="h5">Bản đồ</Typography>
-                <Stack sx={{ pt: 1 }} spacing={2}>
-                  <Box>Map</Box>
-                </Stack>
-              </Box>
-            </Stack>
-          </Card>
-          {/* End: ban do */}
         </Grid>
 
         <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-          <Stack spacing={2}>
-            <Card sx={{ p: 2, border: 1, borderColor: '#441da0' }}>
-              <Stack direction="row">
-                <FontAwesomeIcon
-                  icon={faBell}
-                  color="#441da0"
-                  size="2x"
-                  style={{ marginRight: 8 }}
-                />
-                <Typography variant="h6" color="#441da0">
-                  Gửi tôi công việc tương tự
-                </Typography>
-              </Stack>
-            </Card>
-            <Card sx={{ py: 1, px: 2 }}>
-              <Box sx={{ mb: 2 }}>
-                <Typography variant="h6">Việc tương tự cho bạn</Typography>
-              </Box>
+          <Card sx={{ p: 2 }}>
+            <Stack spacing={2}>
+              <Typography variant="h5">Việc làm tương tự</Typography>
+              <Box
+                sx={{ width: 120, height: 5, backgroundColor: '#441da0' }}
+              ></Box>
               <Box>
-                <JobPosts />
+                {/* Start: FilterJobPostCard */}
+                <FilterJobPostCard
+                  params={{
+                    excludeSlug: jobPostDetail?.slug,
+                  }}
+                />
+                {/* End: FilterJobPostCard */}
               </Box>
-            </Card>
-          </Stack>
+            </Stack>
+          </Card>
         </Grid>
       </Grid>
     </Box>
