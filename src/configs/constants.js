@@ -3,6 +3,7 @@ import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 import DevicesIcon from '@mui/icons-material/Devices';
 import ImageSvg1 from '../assets/images/svg-images/empty-data.svg';
 import ImageSvg2 from '../assets/images/svg-images/online-gallery.svg';
+import ImageSvg3 from '../assets/images/svg-images/empty-street.svg';
 
 const AUTH_CONFIG = {
   CLIENT_ID: '0VdoWiB6AaDGv1OiQeRn5c3BOcxEDMv1t4o8eFTt',
@@ -54,11 +55,13 @@ const IMAGES = {
   getLogo: (size, mode) => {
     return require(`../assets/logo/${mode}-logo-${size}.png`);
   },
+  coverImageDefault: require('../assets/images/cover-image-default.webp')
 };
 
 const IMAGE_SVG = {
   img1: ImageSvg1,
   img2: ImageSvg2,
+  img3: ImageSvg3,
 };
 
 export {

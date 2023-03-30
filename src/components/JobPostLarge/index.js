@@ -2,14 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import {
-  Avatar,
-  Box,
-  Card,
-  Skeleton,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Avatar, Box, Card, Skeleton, Stack, Typography } from '@mui/material';
 
 import { salaryString } from '../../utils/customData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,7 +12,7 @@ import {
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 
-const JobPost = ({
+const JobPostLarge = ({
   id,
   slug,
   companyImageUrl,
@@ -39,20 +32,21 @@ const JobPost = ({
     <Card
       variant="outlined"
       sx={{
+        backgroundColor: '#fff5e7',
         cursor: 'pointer',
         p: 1,
         '&:hover': {
-          borderColor: '#441da0',
+          boxShadow: 5
         },
       }}
       onClick={() => nav(`/viec-lam/${slug}`)}
     >
-      <Stack direction="row" spacing={1}>
+      <Stack direction="row" spacing={2}>
         <Box>
           <Avatar
             sx={{
-              width: 60,
-              height: 60,
+              width: 100,
+              height: 100,
               border: 0.5,
               borderColor: '#e0e0e0',
               borderRadius: 1.5,
@@ -62,12 +56,10 @@ const JobPost = ({
             alt="H"
           />
         </Box>
-        <Box flex={1}>
+        <Stack flex={1} justifyContent="center" spacing={0.8}>
           <Box>
             <Typography
-              variant="subtitle2"
-              sx={{ fontSize: 15 }}
-              gutterBottom
+              sx={{ fontSize: 19, fontWeight: 'bold' }}
               style={{
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
@@ -79,7 +71,7 @@ const JobPost = ({
           </Box>
 
           <Typography
-            variant="subtitle2"
+            variant="body1"
             color="gray"
             style={{
               whiteSpace: 'nowrap',
@@ -89,7 +81,22 @@ const JobPost = ({
           >
             {companyName}
           </Typography>
-        </Box>
+
+          <Stack direction="row" spacing={1.5}>
+            <Typography sx={{ fontWeight: 'bold' }} variant="body1">
+              <FontAwesomeIcon icon={faCircleDollarToSlot} color="#bdbdbd" />{' '}
+              {salaryString(salaryMin, salaryMax)}
+            </Typography>
+            <Typography sx={{ fontWeight: 'bold' }} variant="body1">
+              <FontAwesomeIcon icon={faLocationDot} color="#bdbdbd" />{' '}
+              {allConfig?.cityDict[cityId] || 'Chưa cập nhật'}
+            </Typography>
+            <Typography sx={{ fontWeight: 'bold' }} variant="body1">
+              <FontAwesomeIcon icon={faCalendarDays} color="#bdbdbd" />{' '}
+              {dayjs(deadline).format('DD/MM/YYYY')}
+            </Typography>
+          </Stack>
+        </Stack>
         <Box>
           {isHot && (
             <span
@@ -118,27 +125,6 @@ const JobPost = ({
           )}
         </Box>
       </Stack>
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{ mt: 1 }}
-        justifyContent="space-between"
-      >
-        <Stack direction="row" spacing={1.5}>
-          <Typography sx={{ fontWeight: 'bold' }} variant="body2">
-            <FontAwesomeIcon icon={faCircleDollarToSlot} color="#bdbdbd" />{' '}
-            {salaryString(salaryMin, salaryMax)}
-          </Typography>
-          <Typography sx={{ fontWeight: 'bold' }} variant="body2">
-            <FontAwesomeIcon icon={faLocationDot} color="#bdbdbd" />{' '}
-            {allConfig?.cityDict[cityId] || 'Chưa cập nhật'}
-          </Typography>
-          <Typography sx={{ fontWeight: 'bold' }} variant="body2">
-            <FontAwesomeIcon icon={faCalendarDays} color="#bdbdbd" />{' '}
-            {dayjs(deadline).format('DD/MM/YYYY')}
-          </Typography>
-        </Stack>
-      </Stack>
     </Card>
   );
 };
@@ -146,38 +132,26 @@ const JobPost = ({
 const Loading = () => (
   <>
     <Card sx={{ p: 1, boxShadow: 0 }}>
-      <Stack direction="row" spacing={1}>
+      <Stack direction="row" spacing={2}>
         <Box>
-          <Skeleton variant="rounded" width={60} height={60} />
+          <Skeleton variant="rounded" width={100} height={100} />
         </Box>
-        <Box flex={1}>
-          <Typography variant="subtitle2" sx={{ fontSize: 15 }} gutterBottom>
+        <Box flex={1} justifyContent="center" spacing={0.8}>
+          <Typography variant="subtitle2">
+            <Skeleton height={40} />
+          </Typography>
+          <Typography variant="subtitle2">
             <Skeleton height={30} />
           </Typography>
-          <Typography variant="subtitle2" color="gray">
-            <Skeleton />
+          <Typography variant="body1">
+            <Skeleton height={25} />
           </Typography>
         </Box>
-        <Box>
-          <Skeleton height={30} width={60} />
-        </Box>
-      </Stack>
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{ mt: 0.75 }}
-        justifyContent="space-between"
-      >
-        <Stack direction="row" spacing={1} justifyContent="space-between">
-          <Skeleton width={80} />
-          <Skeleton width={80} />
-          <Skeleton width={80} />
-        </Stack>
       </Stack>
     </Card>
   </>
 );
 
-JobPost.Loading = Loading;
+JobPostLarge.Loading = Loading;
 
-export default JobPost;
+export default JobPostLarge;

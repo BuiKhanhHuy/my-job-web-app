@@ -17,6 +17,7 @@ const jobService = {
     return httpRequest.delete(url);
   },
 
+  // public
   getJobPosts: (params = {}) => {
     const url = 'api/job/web/job-posts/';
 

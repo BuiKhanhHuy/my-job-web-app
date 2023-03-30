@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -11,9 +12,31 @@ import {
   Typography,
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBriefcase,
+  faFontAwesome,
+  faMapLocation,
+  faUser,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
+import { IMAGES } from '../../configs/constants';
 
-const Company = () => {
+const Company = ({
+  id,
+  slug,
+  companyImageUrl,
+  companyCoverImageUrl,
+  companyName,
+  employeeSize,
+  fieldOperation,
+  city,
+  followNumber,
+  jobPostNumber,
+  isFollowed,
+}) => {
+  const nav = useNavigate();
+  const { allConfig } = useSelector((state) => state.config);
+
   return (
     <Card sx={{ p: 2 }} variant="outlined">
       <Stack>
@@ -21,14 +44,18 @@ const Company = () => {
           <CardMedia
             component="img"
             width="100%"
-            image="https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages02.vietnamworks.com%2Fcompanyprofile%2F3MVietnam%2Fen%2FTH_trip-full_country_2019.jpg&w=1920&q=75"
+            image={companyCoverImageUrl || IMAGES.coverImageDefault}
             alt="Paella dish"
             sx={{ borderRadius: 1.5 }}
           />
         </Box>
         <Box sx={{ px: 2 }}>
           <Stack direction="row" justifyContent="space-between">
-            <Box sx={{ width: 85, height: 85, marginTop: -5 }}>
+            <Box
+              sx={{ width: 85, height: 85, marginTop: -5 }}
+              component={Link}
+              to={`/cong-ty/${slug}`}
+            >
               <Avatar
                 sx={{
                   bgcolor: 'white',
@@ -38,45 +65,94 @@ const Company = () => {
                   height: '100%',
                 }}
                 variant="rounded"
-                src="https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages02.vietnamworks.com%2Fcompanyprofile%2Fgoldengategroup%2Fvi%2FLOGO_cac_chuoi-08_1464175772.png&w=1920&q=75"
+                src={companyImageUrl}
               />
             </Box>
             <Box sx={{ py: 1 }}>
               <Typography variant="caption" display="block">
                 <FontAwesomeIcon
-                  icon={faBriefcase}
+                  icon={faUsers}
                   style={{ marginRight: 2 }}
+                  color="#bdbdbd"
                 />{' '}
-                211 lượt theo dõi
+                {followNumber} lượt theo dõi
               </Typography>
             </Box>
           </Stack>
         </Box>
         <Box sx={{ p: 2 }}>
-          <Typography variant="h6" gutterBottom>
-            WOORI BANK VIETNAM LIMITED
+          <Typography
+            variant="h6"
+            gutterBottom
+            component={Link}
+            to={`/cong-ty/${slug}`}
+            sx={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            {companyName}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            <FontAwesomeIcon icon={faBriefcase} style={{ marginRight: 2 }} />{' '}
-            Công nghệ viễn thông
+            <FontAwesomeIcon
+              icon={faFontAwesome}
+              style={{ marginRight: 2 }}
+              color="#bdbdbd"
+            />{' '}
+            {fieldOperation || (
+              <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                Chưa cập nhật
+              </span>
+            )}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            <FontAwesomeIcon icon={faBriefcase} style={{ marginRight: 2 }} />{' '}
-            TP. Hồ Chí Minh
+            <FontAwesomeIcon
+              icon={faMapLocation}
+              style={{ marginRight: 2 }}
+              color="#bdbdbd"
+            />{' '}
+            {allConfig?.cityDict[city] || (
+              <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                Chưa cập nhật
+              </span>
+            )}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            <FontAwesomeIcon icon={faBriefcase} style={{ marginRight: 2 }} />{' '}
-            5000+ nhân viên
+            <FontAwesomeIcon
+              icon={faUser}
+              style={{ marginRight: 2 }}
+              color="#bdbdbd"
+            />{' '}
+            {allConfig?.employeeSizeDict[employeeSize] || (
+              <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                Chưa cập nhật
+              </span>
+            )}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            <FontAwesomeIcon icon={faBriefcase} style={{ marginRight: 2 }} /> 4
-            việc làm
+            <FontAwesomeIcon
+              icon={faBriefcase}
+              style={{ marginRight: 2 }}
+              color="#bdbdbd"
+            />{' '}
+            4{jobPostNumber}
           </Typography>
         </Box>
         <Box sx={{ py: 1, px: 2 }}>
-          <Button variant="outlined" color="warning" sx={{ width: '100%' }}>
-            Theo dõi
-          </Button>
+          {isFollowed ? (
+            <Button
+              variant="contained"
+              color="warning"
+              sx={{ width: '100%', color: 'white' }}
+            >
+              Đang theo dõi
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              color="warning"
+              sx={{ width: '100%', color: 'white' }}
+            >
+              Theo dõi
+            </Button>
+          )}
         </Box>
       </Stack>
     </Card>
@@ -85,7 +161,7 @@ const Company = () => {
 
 const Loading = () => (
   <>
-    <Card sx={{ p: 2 }} variant="outlined">
+    <Card sx={{ p: 2, boxShadow: 0 }}>
       <Stack>
         <Box>
           <Skeleton variant="rounded" height={150} />

@@ -3,7 +3,12 @@ import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-const SingleSelectSearchCustom = ({ placeholder = '', name, control, options=[] }) => {
+const SingleSelectSearchCustom = ({
+  placeholder = '',
+  name,
+  control,
+  options = [],
+}) => {
   return (
     <Controller
       name={name}
@@ -15,7 +20,8 @@ const SingleSelectSearchCustom = ({ placeholder = '', name, control, options=[] 
           options={options}
           autoHighlight={false}
           getOptionLabel={(option) => option.name}
-          onChange={(e, value) => field.onChange(value?.id)}
+          value={options.find((o) => o.id === field.value) || null}
+          onChange={(e, value) => field.onChange(value.id)}
           renderInput={(params) => (
             <TextField
               {...params}

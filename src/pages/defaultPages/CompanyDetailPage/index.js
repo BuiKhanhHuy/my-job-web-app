@@ -38,7 +38,7 @@ const CompanyDetailPage = () => {
             <CardMedia
               component="img"
               width="100%"
-              image="https://dxwd4tssreb4w.cloudfront.net/image/c99bd01a29b968ace8dd3d8cc47e5688"
+              image="https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages02.vietnamworks.com%2Fcompanyprofile%2FEY-Vietnam%2Fen%2Fbanner_final.jpg&w=1920&q=75"
               alt="Paella dish"
               sx={{ borderRadius: 1.5 }}
             />

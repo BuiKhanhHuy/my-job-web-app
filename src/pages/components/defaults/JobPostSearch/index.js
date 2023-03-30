@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import {
   Box,
@@ -9,7 +10,6 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -17,35 +17,37 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 import InputBaseSearchHomeCustom from '../../../../components/controls/InputBaseSearchHomeCustom';
 import SingleSelectSearchCustom from '../../../../components/controls/SingleSelectSearchCustom';
-import { useSelector } from 'react-redux';
+
+import {
+  resetSearchJobPostFilter,
+  searchJobPost,
+} from '../../../../redux/filterSlice';
 
 const JobPostSearch = () => {
+  const dispatch = useDispatch();
   const { allConfig } = useSelector((state) => state.config);
+  const { jobPostFilter } = useSelector((state) => state.filter);
   const [showAdvanceFilter, setShowAdvanceFilter] = React.useState(false);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      kw: '',
-      careers: '',
-      city: '',
-      experience: '',
-      position: '',
-      jobType: '',
-      typeOfWorkplace: '',
-      genderRequire: '',
-    },
-  });
+  const { control, handleSubmit, reset } = useForm();
 
-  const handleFiter = (data) => {
-    console.log('Data: ', data);
-  };
+  React.useEffect(() => {
+    reset((formValues) => ({
+      ...formValues,
+      ...jobPostFilter,
+    }));
+  }, [jobPostFilter, reset]);
 
   const handleChangeShowFilter = () => {
     setShowAdvanceFilter(!showAdvanceFilter);
+  };
+
+  const handleFilter = (data) => {
+    dispatch(searchJobPost(data));
+  };
+
+  const handleReset = () => {
+    dispatch(resetSearchJobPostFilter());
   };
 
   return (
@@ -61,7 +63,7 @@ const JobPostSearch = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3} xl={3}>
             <SingleSelectSearchCustom
-              name="careers"
+              name="careerId"
               placeholder="Tất cả ngành nghề"
               control={control}
               options={allConfig?.careerOptions || []}
@@ -69,7 +71,7 @@ const JobPostSearch = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={2} xl={2}>
             <SingleSelectSearchCustom
-              name="city"
+              name="cityId"
               placeholder="Tất cả tỉnh thành"
               control={control}
               options={allConfig?.cityOptions || []}
@@ -89,9 +91,8 @@ const JobPostSearch = () => {
             >
               <Button
                 variant="contained"
-                startIcon={<SearchIcon />}
                 color="info"
-                onClick={handleSubmit(handleFiter)}
+                onClick={handleSubmit(handleFilter)}
                 sx={{ py: 1 }}
               >
                 Tìm kiếm
@@ -131,7 +132,7 @@ const JobPostSearch = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
             <SingleSelectSearchCustom
-              name="position"
+              name="positionId"
               placeholder="Tất cả vị trí"
               control={control}
               options={allConfig?.positionOptions || []}
@@ -139,7 +140,7 @@ const JobPostSearch = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
             <SingleSelectSearchCustom
-              name="experience"
+              name="experienceId"
               placeholder="Tất cả kinh nghiệm"
               control={control}
               options={allConfig?.experienceOptions || []}
@@ -147,7 +148,7 @@ const JobPostSearch = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
             <SingleSelectSearchCustom
-              name="jobType"
+              name="jobTypeId"
               placeholder="Tất cả hình thức làm việc"
               control={control}
               options={allConfig?.jobTypeOptions || []}
@@ -155,7 +156,7 @@ const JobPostSearch = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
             <SingleSelectSearchCustom
-              name="typeOfWorkplace"
+              name="typeOfWorkplaceId"
               placeholder="Tất cả loại hình làm việc"
               control={control}
               options={allConfig?.typeOfWorkplaceOptions || []}
@@ -163,7 +164,7 @@ const JobPostSearch = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
             <SingleSelectSearchCustom
-              name="genderRequire"
+              name="genderId"
               placeholder="Tất cả giới tính"
               control={control}
               options={allConfig?.genderOptions || []}
@@ -174,7 +175,11 @@ const JobPostSearch = () => {
               direction="row"
               justifyContent={{ xs: 'flex-end', lg: 'center', xl: 'center' }}
             >
-              <IconButton color="primary" aria-label="add to shopping cart">
+              <IconButton
+                color="primary"
+                aria-label="add to shopping cart"
+                onClick={handleReset}
+              >
                 <DeleteForeverIcon color="secondary" />
               </IconButton>
               <IconButton

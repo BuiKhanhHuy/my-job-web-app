@@ -76,7 +76,7 @@ const FilterJobPostCard = ({ params = {} }) => {
             ))}
           </Grid>
           <Stack>
-            {count > 0 && (
+            {Math.ceil(count / pageSize) > 1 && (
               <Pagination
                 color="primary"
                 size="medium"
