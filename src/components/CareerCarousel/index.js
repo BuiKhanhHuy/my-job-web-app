@@ -4,8 +4,9 @@ import 'swiper/css/pagination';
 import React from 'react';
 import { Pagination, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Avatar, Box, Card, Skeleton, Typography } from '@mui/material';
+import { Avatar, Box, Card, Skeleton, Stack, Typography } from '@mui/material';
 import commonService from '../../services/commonService';
+import MuiImageCustom from '../MuiImageCustom';
 
 const Loading = (
   <>
@@ -98,17 +99,22 @@ const CareerCarousel = () => {
                       theme.palette.mode === 'light' ? '#F4F6FF' : '',
                   }}
                 >
-                  <Avatar
-                    variant="square"
-                    alt="Logo"
-                    src={value.iconUrl}
-                    sx={{ width: 64, height: 64, margin: '0 auto', padding: 2 }}
-                  />
+                  <Stack direction="row" justifyContent="center" sx={{ p: 2 }}>
+                    <MuiImageCustom
+                      width={64}
+                      height={64}
+                      src={value.iconUrl}
+                    />
+                  </Stack>
                   <Typography
                     variant="h6"
                     component="h6"
                     gutterBottom={true}
-                    sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}
+                    sx={{
+                      textAlign: 'center',
+                      fontWeight: 'bold',
+                      fontSize: 17,
+                    }}
                   >
                     {value?.name}
                   </Typography>

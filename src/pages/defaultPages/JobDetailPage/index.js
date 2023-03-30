@@ -13,6 +13,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCalendarDay,
@@ -20,13 +21,16 @@ import {
   faClockFour,
 } from '@fortawesome/free-solid-svg-icons';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 
+import toastMessages from '../../../utils/toastMessages';
+import errorHandling from '../../../utils/errorHandling';
 import { salaryString } from '../../../utils/customData';
 import NoDataCard from '../../../components/NoDataCard';
-import jobService from '../../../services/jobService';
 import Map from '../../../components/Map';
 import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
+import jobService from '../../../services/jobService';
 
 const Loading = (
   <>
@@ -221,10 +225,49 @@ const item = (title, value) => {
   );
 };
 
+const action = (
+  isApplied,
+  isSaved,
+  isLoadingApply,
+  isLoadingSave,
+  handleSave
+) => (
+  <Stack direction="row" spacing={2}>
+    <Button
+      variant="contained"
+      size="large"
+      sx={{ textTransform: 'inherit' }}
+      disabled={isApplied}
+    >
+      {isApplied ? 'Đã ứng tuyển' : 'Nộp hồ sơ'}
+    </Button>
+    <LoadingButton
+      onClick={handleSave}
+      startIcon={isSaved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+      loading={isLoadingSave}
+      loadingPosition="start"
+      variant="outlined"
+      sx={{ textTransform: 'inherit' }}
+    >
+      <span>{isSaved ? 'Đã lưu' : 'Lưu'}</span>
+    </LoadingButton>
+    <Button
+      variant="outlined"
+      size="large"
+      startIcon={<ShareIcon />}
+      sx={{ textTransform: 'inherit' }}
+    >
+      Chia sẻ
+    </Button>
+  </Stack>
+);
+
 const JobDetailPage = () => {
   const { slug } = useParams();
   const { allConfig } = useSelector((state) => state.config);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoadingApply, setIsLoadingApply] = React.useState(false);
+  const [isLoadingSave, setIsLoadingSave] = React.useState(false);
   const [jobPostDetail, setJobPostDetail] = React.useState(null);
 
   React.useEffect(() => {
@@ -241,6 +284,27 @@ const JobDetailPage = () => {
 
     getJobPostDetail(slug);
   }, [slug]);
+
+  const handleSave = () => {
+    const saveJobPost = async () => {
+      setIsLoadingSave(true);
+      try {
+        const resData = await jobService.saveJobPost(slug);
+        const isSaved = resData.data.isSaved;
+
+        setJobPostDetail({ ...jobPostDetail, isSaved: isSaved });
+        toastMessages.success(
+          isSaved ? 'Lưu thành công.' : 'Hủy lưu thành công.'
+        );
+      } catch (error) {
+        errorHandling(error);
+      } finally {
+        setIsLoadingSave(false);
+      }
+    };
+
+    saveJobPost();
+  };
 
   return isLoading ? (
     Loading
@@ -314,7 +378,7 @@ const JobDetailPage = () => {
                       icon={faEye}
                       style={{ marginRight: 6, fontSize: 15, color: '#bdbdbd' }}
                     />{' '}
-                    Lượt xem: {jobPostDetail?.viewedNumber}
+                    Lượt xem: {jobPostDetail?.views}
                   </Typography>
                   <Typography variant="subtitle2">
                     <FontAwesomeIcon
@@ -325,25 +389,13 @@ const JobDetailPage = () => {
                     {dayjs(jobPostDetail?.createAt).format('DD/MM/YYYY')}
                   </Typography>
                 </Stack>
-                <Stack direction="row" spacing={2}>
-                  <Button variant="contained" size="large">
-                    Nộp hồ sơ
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    startIcon={<FavoriteBorderIcon />}
-                  >
-                    Lưu
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    startIcon={<ShareIcon />}
-                  >
-                    Chia sẻ
-                  </Button>
-                </Stack>
+                {action(
+                  jobPostDetail.isApplied,
+                  jobPostDetail.isSaved,
+                  isLoadingApply,
+                  isLoadingSave,
+                  handleSave
+                )}
               </Stack>
               <Divider sx={{ my: 2 }} />
               <Box>
@@ -522,21 +574,13 @@ const JobDetailPage = () => {
               </Box>
             </Stack>
             <Divider sx={{ my: 2 }} />
-            <Stack direction="row" spacing={2}>
-              <Button variant="contained" size="large">
-                Nộp hồ sơ
-              </Button>
-              <Button
-                variant="outlined"
-                size="large"
-                startIcon={<FavoriteBorderIcon />}
-              >
-                Lưu
-              </Button>
-              <Button variant="outlined" size="large" startIcon={<ShareIcon />}>
-                Chia sẻ
-              </Button>
-            </Stack>
+            {action(
+              jobPostDetail.isApplied,
+              jobPostDetail.isSaved,
+              isLoadingApply,
+              isLoadingSave,
+              handleSave
+            )}
           </Card>
           {/* End: mo ta chi tiet */}
 
@@ -590,11 +634,11 @@ const JobDetailPage = () => {
               ></Box>
               <Box>
                 {/* Start: FilterJobPostCard */}
-                <FilterJobPostCard
+                {/* <FilterJobPostCard
                   params={{
                     excludeSlug: jobPostDetail?.slug,
                   }}
-                />
+                /> */}
                 {/* End: FilterJobPostCard */}
               </Box>
             </Stack>

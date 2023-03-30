@@ -35,6 +35,11 @@ const companyService = {
 
     return httpRequest.get(url);
   },
+  followCompany: (slug) => {
+    const url = `/api/info/web/companies/${slug}/followed/`;
+
+    return httpRequest.post(url);
+  },
 };
 
 export default companyService;

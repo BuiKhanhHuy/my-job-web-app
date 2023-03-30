@@ -1,7 +1,8 @@
 import React from 'react';
-import { Avatar, Card, Skeleton, Stack, Typography } from '@mui/material';
+import { Card, Skeleton, Stack, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
+import MuiImageCustom from '../MuiImageCustom';
 
 const FeedbackCard = ({ id, avatarUrl, fullName, content }) => {
   return (
@@ -14,10 +15,14 @@ const FeedbackCard = ({ id, avatarUrl, fullName, content }) => {
         boxShadow: 3,
       }}
     >
-      <Avatar
-        src={avatarUrl}
-        sx={{ width: 110, height: 110, margin: '0 auto', my: 2 }}
-      />
+      <Stack sx={{ my: 2 }} direction="row" justifyContent="center">
+        <MuiImageCustom
+          sx={{ borderRadius: '50%' }}
+          width={110}
+          height={110}
+          src={avatarUrl}
+        />
+      </Stack>
       <Typography
         variant="h6"
         component="h6"
@@ -38,11 +43,11 @@ const FeedbackCard = ({ id, avatarUrl, fullName, content }) => {
         gutterBottom
         sx={{ textAlign: 'center', color: '#757575' }}
         style={{
-          WebkitBoxOrient: "horizontal",
+          WebkitBoxOrient: 'horizontal',
           overflow: 'hidden',
           // whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
-          height: '100px'
+          height: '100px',
         }}
       >
         {content}

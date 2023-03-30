@@ -4,7 +4,8 @@ import 'swiper/css/pagination';
 import React from 'react';
 import { Pagination, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Avatar, Box, Card, Typography } from '@mui/material';
+import {  Box, Card, Stack, Typography } from '@mui/material';
+import MuiImageCustom from '../MuiImageCustom';
 
 const TopCompanyCarousel = () => {
   return (
@@ -31,12 +32,15 @@ const TopCompanyCarousel = () => {
               }}
               variant="outlined"
             >
-              <Avatar
-                variant="square"
-                alt="Logo"
-                src="https://vieclam24h.vn/_next/image?url=https%3A%2F%2Fcdn1.vieclam24h.vn%2Fupload%2Ffiles_cua_nguoi_dung%2Flogo%2F2019%2F02%2F12%2F1549951205_57a95198dda12_1470714264_300x300.w-150.h-150.png&w=96&q=75"
-                sx={{ width: 100, height: 100, margin: '0 auto' }}
-              />
+              <Stack direction="row" justifyContent="center">
+                <MuiImageCustom
+                  width={100}
+                  height={100}
+                  src="https://vieclam24h.vn/_next/image?url=https%3A%2F%2Fcdn1.vieclam24h.vn%2Fupload%2Ffiles_cua_nguoi_dung%2Flogo%2F2019%2F02%2F12%2F1549951205_57a95198dda12_1470714264_300x300.w-150.h-150.png&w=96&q=75"
+                  duration={1500}
+                  sx={{ margin: '0 auto' }}
+                />
+              </Stack>
               <Typography
                 variant="h6"
                 component="h6"

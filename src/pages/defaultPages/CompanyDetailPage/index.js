@@ -1,16 +1,19 @@
 import React from 'react';
-
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import dayjs from 'dayjs';
 import {
   Avatar,
   Box,
   Card,
-  CardMedia,
   Grid,
   IconButton,
   Link,
   Stack,
   Typography,
+  Button,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBriefcase,
@@ -23,24 +26,85 @@ import {
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 
-import JobPosts from '../../../components/JobPosts';
-import ImageGalleryCustom from '../../../components/ImageGalleryCustom';
+import { IMAGES } from '../../../configs/constants';
+import errorHandling from '../../../utils/errorHandling';
+import toastMessages from '../../../utils/toastMessages';
+import ShareIcon from '@mui/icons-material/Share';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import linkedinIconSvg from '../../../assets/icons/linkedin-icon.svg';
 import facebookIconSvg from '../../../assets/icons/facebook-icon.svg';
 import youtubeIconSvg from '../../../assets/icons/youtube-icon.svg';
-import linkedinIconSvg from '../../../assets/icons/linkedin-icon.svg';
+import MuiImageCustom from '../../../components/MuiImageCustom';
+import NoDataCard from '../../../components/NoDataCard';
+import ImageGalleryCustom from '../../../components/ImageGalleryCustom';
+import companyService from '../../../services/companyService';
+import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
 
 const CompanyDetailPage = () => {
-  return (
+  const { slug } = useParams();
+  const { allConfig } = useSelector((state) => state.config);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoadingFollow, setIsLoadingFollow] = React.useState(false);
+  const [companyDetail, setCompanyDetail] = React.useState(null);
+
+  React.useEffect(() => {
+    const getCompanyDetail = async (companySlug) => {
+      try {
+        const resData = await companyService.getCompanyDetailById(companySlug);
+
+        setCompanyDetail(resData.data);
+      } catch (error) {
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getCompanyDetail(slug);
+  }, [slug]);
+
+  const handleFollow = () => {
+    const follow = async () => {
+      setIsLoadingFollow(true);
+      try {
+        const resData = await companyService.followCompany(slug);
+        const isFollowed = resData.data.isFollowed;
+        setCompanyDetail({
+          ...companyDetail,
+          isFollowed: isFollowed,
+          followNumber: isFollowed
+            ? companyDetail.followNumber + 1
+            : companyDetail.followNumber - 1,
+        });
+        toastMessages.success(
+          isFollowed ? 'Theo dõi thành công.' : 'Hủy theo dõi thành công.'
+        );
+      } catch (error) {
+        errorHandling(error);
+      } finally {
+        setIsLoadingFollow(false);
+      }
+    };
+
+    follow();
+  };
+
+  return isLoading ? (
+    <h1>Loading</h1>
+  ) : companyDetail === null ? (
+    <NoDataCard />
+  ) : (
     <Box>
       <Stack>
-        <Card sx={{ boxShadow: 0 }}>
+        <Card>
           <Box>
-            <CardMedia
-              component="img"
+            <MuiImageCustom
               width="100%"
-              image="https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages02.vietnamworks.com%2Fcompanyprofile%2FEY-Vietnam%2Fen%2Fbanner_final.jpg&w=1920&q=75"
-              alt="Paella dish"
+              src={
+                companyDetail?.companyCoverImageUrl || IMAGES.coverImageDefault
+              }
               sx={{ borderRadius: 1.5 }}
+              duration={1500}
             />
           </Box>
           <Box sx={{ p: 3, pt: 1 }}>
@@ -52,17 +116,17 @@ const CompanyDetailPage = () => {
                     height: 120,
                     bgcolor: 'white',
                     boxShadow: 5,
-                    p: 1,
+                    p: 0.5,
                     mt: -7,
                   }}
                   variant="rounded"
-                  src="https://dxwd4tssreb4w.cloudfront.net/image/8ff0a39cc9f8b40853826f26a6fa60d6"
+                  src={companyDetail.companyImageUrl}
                 />
               </Box>
-              <Box>
+              <Box flex={1}>
                 <Box>
                   <Typography variant="h5" gutterBottom>
-                    SAPO Technology., JSC
+                    {companyDetail.companyName}
                   </Typography>
                 </Box>
                 <Stack direction="row" spacing={3}>
@@ -72,7 +136,7 @@ const CompanyDetailPage = () => {
                         icon={faBriefcase}
                         style={{ marginRight: 6 }}
                       />
-                      Mạng viễn thông
+                      {companyDetail.fieldOperation}
                     </Typography>
                   </Box>
                   <Box>
@@ -81,7 +145,13 @@ const CompanyDetailPage = () => {
                         icon={faUsers}
                         style={{ marginRight: 6 }}
                       />
-                      5000+ nhân viên
+                      {allConfig?.employeeSizeDict[
+                        companyDetail.employeeSize
+                      ] || (
+                        <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                          Chưa cập nhật
+                        </span>
+                      )}
                     </Typography>
                   </Box>
                   <Box>
@@ -90,17 +160,48 @@ const CompanyDetailPage = () => {
                         icon={faCalendarDays}
                         style={{ marginRight: 6 }}
                       />
-                      12/12/2010
+                      {dayjs(companyDetail?.since).format('DD/MM/YYYY')}
                     </Typography>
                   </Box>
                 </Stack>
               </Box>
+              <Stack spacing={1}>
+                <LoadingButton
+                  onClick={handleFollow}
+                  startIcon={
+                    companyDetail.isFollowed ? (
+                      <BookmarkIcon />
+                    ) : (
+                      <BookmarkBorderIcon />
+                    )
+                  }
+                  loading={isLoadingFollow}
+                  loadingPosition="start"
+                  variant="outlined"
+                  color="primary"
+                  sx={{ textTransform: 'inherit' }}
+                >
+                  <span>
+                    {' '}
+                    {companyDetail.isFollowed ? 'Đang theo dõi' : 'Theo dõi'} (
+                    {companyDetail.followNumber})
+                  </span>
+                </LoadingButton>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{ textTransform: 'inherit' }}
+                  startIcon={<ShareIcon />}
+                >
+                  Chia sẻ
+                </Button>
+              </Stack>
             </Stack>
           </Box>
         </Card>
         <Grid container spacing={2} sx={{ mt: 1 }}>
           <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-            <Card sx={{ boxShadow: 0, p: 3 }}>
+            <Card sx={{ p: 3 }}>
               <Stack spacing={4}>
                 {/* Start: mo ta cong ty */}
                 <Box>
@@ -113,24 +214,11 @@ const CompanyDetailPage = () => {
                   </Typography>
                   <Box sx={{ mt: 2 }}>
                     <Typography>
-                      Được thành lập ngày 20/08/2008 với sứ mệnh "Làm cho việc
-                      bán hàng trở nên dễ dàng". Nhờ chiến lược rõ ràng và hướng
-                      đi đúng, Sapo nhanh chóng phát triển và đạt được những
-                      thành công nhất định. Giai đoạn từ 2010 - 2015, chúng tôi
-                      liên tục đạt mức tăng trưởng 300%. Tính đến tháng 1 năm
-                      2019, Sapo có hơn 67,000 khách hàng là các doanh nghiệp,
-                      cửa hàng và mục tiêu sẽ đạt 200,000 khách hàng vào năm
-                      2023. Để đạt được những mục tiêu này, chúng tôi cần bạn:
-                      những người trẻ tài năng, có đam mê và khát vọng thành
-                      công, cùng chúng tôi giúp cho cuộc sống tốt đẹp hơn nhờ
-                      thương mại điện tử! Hiện nay, Sapo đang mang đến cho các
-                      doanh nghiệp bán lẻ một nền tảng quản lý và bán hàng tổng
-                      thể từ online đến offline: Sapo POS - Phần mềm quản lý bán
-                      hàng, Sapo GO - Giải pháp quản lý bán hàng online dành
-                      riêng cho nhà bán hàng trên Facebook và sàn TMĐT Sapo FnB
-                      - Phần mềm quản lý nhà hàng, quán cafe, Sapo Web - Giải
-                      pháp thiết kế website bán hàng và Sapo Omnichannel - giải
-                      pháp quản lý và bán hàng từ Online đến Offline
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: companyDetail?.description,
+                        }}
+                      ></div>
                     </Typography>
                   </Box>
                 </Box>
@@ -146,7 +234,11 @@ const CompanyDetailPage = () => {
                     Việc làm đang tuyển
                   </Typography>
                   <Box sx={{ mt: 2 }}>
-                    <JobPosts />
+                    {/* <FilterJobPostCard
+                      params={{
+                        companyId: companyDetail.id,
+                      }}
+                    /> */}
                   </Box>
                 </Box>
                 {/* End: viec lam */}
@@ -154,7 +246,7 @@ const CompanyDetailPage = () => {
             </Card>
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <Card sx={{ boxShadow: 0, p: 3 }}>
+            <Card sx={{ p: 3 }}>
               <Stack spacing={2}>
                 <Box>
                   <Typography variant="h6" sx={{ color: '#441da0' }}>
@@ -166,8 +258,8 @@ const CompanyDetailPage = () => {
                         icon={faGlobe}
                         style={{ marginRight: 6 }}
                       />{' '}
-                      <Link href="https://tuyendung.sapo.vn/">
-                        https://tuyendung.sapo.vn/
+                      <Link target="_blank" href={companyDetail.websiteUrl}>
+                        {companyDetail.websiteUrl}
                       </Link>
                     </Typography>
                   </Box>
@@ -177,15 +269,43 @@ const CompanyDetailPage = () => {
                     Theo dõi tại
                   </Typography>
                   <Box sx={{ mt: 1 }}>
-                    <IconButton color="primary" aria-label="facebook">
-                      <img width="30" src={facebookIconSvg} alt="" />
-                    </IconButton>
-                    <IconButton color="primary" aria-label="youtube">
-                      <img width="30" src={youtubeIconSvg} alt="" />
-                    </IconButton>
-                    <IconButton color="primary" aria-label="linked">
-                      <img width="30" src={linkedinIconSvg} alt="" />
-                    </IconButton>
+                    {companyDetail?.facebookUrl ||
+                    companyDetail?.youtubeUrl ||
+                    companyDetail?.linkedinUrl ? (
+                      <>
+                        {companyDetail?.facebookUrl && (
+                          <Link
+                            target="_blank"
+                            href={companyDetail.facebookUrl}
+                          >
+                            <IconButton color="primary" aria-label="facebook">
+                              <img width="30" src={facebookIconSvg} alt="" />
+                            </IconButton>
+                          </Link>
+                        )}
+                        {companyDetail?.youtubeUrl && (
+                          <Link target="_blank" href={companyDetail.youtubeUrl}>
+                            <IconButton color="primary" aria-label="youtube">
+                              <img width="30" src={youtubeIconSvg} alt="" />
+                            </IconButton>
+                          </Link>
+                        )}
+                        {companyDetail?.linkedinUrl && (
+                          <Link
+                            target="_blank"
+                            href={companyDetail.linkedinUrl}
+                          >
+                            <IconButton color="primary" aria-label="linked">
+                              <img width="30" src={linkedinIconSvg} alt="" />
+                            </IconButton>
+                          </Link>
+                        )}
+                      </>
+                    ) : (
+                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                        Chưa cập nhật
+                      </span>
+                    )}
                   </Box>
                 </Box>
                 <Box>
@@ -198,28 +318,32 @@ const CompanyDetailPage = () => {
                         icon={faEnvelope}
                         style={{ marginRight: 6 }}
                       />{' '}
-                      khuy220@gmail.com
+                      {companyDetail.companyEmail}
                     </Typography>
                     <Typography sx={{ mt: 1 }}>
                       <FontAwesomeIcon
                         icon={faPhoneVolume}
                         style={{ marginRight: 6 }}
                       />{' '}
-                      0888425094
+                      {companyDetail.companyPhone}
                     </Typography>
                     <Typography sx={{ mt: 1 }}>
                       <FontAwesomeIcon
                         icon={faHashtag}
                         style={{ marginRight: 6 }}
                       />{' '}
-                      12345678954321
+                      {companyDetail.taxCode}
                     </Typography>
                     <Typography sx={{ mt: 1 }}>
                       <FontAwesomeIcon
                         icon={faLocationDot}
                         style={{ marginRight: 6 }}
                       />{' '}
-                      1242 QL1A, Tân Tạo A, Bình Tân, TP. Hồ Chí Minh
+                      {companyDetail.location?.address || (
+                        <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                          Chưa cập nhật
+                        </span>
+                      )}
                     </Typography>
                   </Box>
                 </Box>

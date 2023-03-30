@@ -1,16 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Avatar,
   Box,
   Button,
   Card,
-  CardMedia,
   Skeleton,
   Stack,
   Typography,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBriefcase,
@@ -19,7 +19,10 @@ import {
   faUser,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { IMAGES } from '../../configs/constants';
+import MuiImageCustom from '../MuiImageCustom';
 
 const Company = ({
   id,
@@ -33,20 +36,28 @@ const Company = ({
   followNumber,
   jobPostNumber,
   isFollowed,
+  isLoadingFollow,
+  handleFollow,
 }) => {
-  const nav = useNavigate();
   const { allConfig } = useSelector((state) => state.config);
 
   return (
-    <Card sx={{ p: 2 }} variant="outlined">
+    <Card
+      sx={{
+        p: 2,
+        '&:hover': {
+          borderColor: '#441da0',
+        },
+      }}
+      variant="outlined"
+    >
       <Stack>
         <Box>
-          <CardMedia
-            component="img"
+          <MuiImageCustom
             width="100%"
-            image={companyCoverImageUrl || IMAGES.coverImageDefault}
-            alt="Paella dish"
+            src={companyCoverImageUrl || IMAGES.coverImageDefault}
             sx={{ borderRadius: 1.5 }}
+            duration={1500}
           />
         </Box>
         <Box sx={{ px: 2 }}>
@@ -60,7 +71,7 @@ const Company = ({
                 sx={{
                   bgcolor: 'white',
                   boxShadow: 2,
-                  p: 1,
+                  p: 0.75,
                   width: '100%',
                   height: '100%',
                 }}
@@ -132,27 +143,22 @@ const Company = ({
               style={{ marginRight: 2 }}
               color="#bdbdbd"
             />{' '}
-            4{jobPostNumber}
+            {jobPostNumber} việc làm
           </Typography>
         </Box>
         <Box sx={{ py: 1, px: 2 }}>
-          {isFollowed ? (
-            <Button
-              variant="contained"
-              color="warning"
-              sx={{ width: '100%', color: 'white' }}
-            >
-              Đang theo dõi
-            </Button>
-          ) : (
-            <Button
-              variant="outlined"
-              color="warning"
-              sx={{ width: '100%', color: 'white' }}
-            >
-              Theo dõi
-            </Button>
-          )}
+          <LoadingButton
+            fullWidth
+            onClick={() => handleFollow(slug)}
+            startIcon={isFollowed ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+            loading={isLoadingFollow}
+            loadingPosition="start"
+            variant={isFollowed ? 'contained' : 'outlined'}
+            color="secondary"
+            sx={{ textTransform: 'inherit' }}
+          >
+            <span>{isFollowed ? 'Đang theo dõi' : 'Theo dõi'}</span>
+          </LoadingButton>
         </Box>
       </Stack>
     </Card>
@@ -161,7 +167,12 @@ const Company = ({
 
 const Loading = () => (
   <>
-    <Card sx={{ p: 2, boxShadow: 0 }}>
+    <Card
+      sx={{
+        p: 2,
+        boxShadow: 0,
+      }}
+    >
       <Stack>
         <Box>
           <Skeleton variant="rounded" height={150} />

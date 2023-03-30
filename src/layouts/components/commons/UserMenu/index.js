@@ -19,6 +19,7 @@ import { removeUserInfo } from '../../../../redux/userSlice';
 
 import { ROLES_NAME } from '../../../../configs/constants';
 import tokenService from '../../../../services/tokenService';
+import MuiImageCustom from '../../../../components/MuiImageCustom';
 
 const jobSeekerUserMenu = [
   {
@@ -68,6 +69,11 @@ const employerUserMenu = [
     label: 'Tìm ứng viên mới',
     icon: <ContentPasteSearchOutlinedIcon fontSize="small" />,
     path: '/nha-tuyen-dung/danh-sach-ung-vien',
+  },
+  {
+    label: 'Tài khoản',
+    icon: <AccountCircleIcon fontSize="small" />,
+    path: '/nha-tuyen-dung/tai-khoan',
   },
 ];
 
@@ -141,12 +147,27 @@ const UserMenu = ({ anchorElUser, open, handleCloseUserMenu }) => {
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      <MenuItem>
-        <Avatar src={currentUser?.avatarUrl} /> {currentUser?.fullName}
+      <MenuItem
+        component={Link}
+        to={
+          currentUser.roleName === ROLES_NAME.JOB_SEEKER
+            ? '/ung-vien/tai-khoan'
+            : currentUser.roleName === ROLES_NAME.EMPLOYER
+            ? '/nha-tuyen-dung/tai-khoan'
+            : '/'
+        }
+      >
+        <Avatar src={currentUser?.avatarUrl} />
+        {currentUser?.fullName}
       </MenuItem>
       <Divider />
       {menuItems.map((item) => (
-        <MenuItem key={item.path} component={Link} to={item.path} onClick={handleCloseUserMenu}>
+        <MenuItem
+          key={item.path}
+          component={Link}
+          to={item.path}
+          onClick={handleCloseUserMenu}
+        >
           <ListItemIcon>{item.icon}</ListItemIcon>
           {item.label}
         </MenuItem>

@@ -4,7 +4,6 @@ import {
   Box,
   Slider,
   Button,
-  Avatar,
   Stack,
   IconButton,
   Typography,
@@ -22,6 +21,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import { updateAvatar } from '../../../../redux/userSlice';
 import toastMessages from '../../../../utils/toastMessages';
+import MuiImageCustom from '../../../../components/MuiImageCustom';
 
 const modalStyle = {
   display: 'flex',
@@ -150,10 +150,11 @@ const AvatarCard = () => {
           onChange={handleImgChange}
         />
         <Box>
-          <Avatar
-            variant="circular"
+          <MuiImageCustom
             src={currentUser?.avatarUrl}
-            sx={{ width: 120, height: 120 }}
+            width={120}
+            height={120}
+            sx={{ borderRadius: '50%' }}
           />
         </Box>
         <Box>

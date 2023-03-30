@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import {
-  Avatar,
   Box,
   Chip,
   Grid,
@@ -30,6 +29,7 @@ import { CV_TYPES } from '../../../../configs/constants';
 import dayjs from 'dayjs';
 import { salaryString } from '../../../../utils/customData';
 import NoDataCard from '../../../../components/NoDataCard';
+import MuiImageCustom from '../../../../components/MuiImageCustom';
 
 const BoxProfile = ({ title }) => {
   const nav = useNavigate();
@@ -103,9 +103,11 @@ const BoxProfile = ({ title }) => {
           <Grid container spacing={3}>
             <Grid item>
               <Stack direction="row" alignItems="center" spacing={3}>
-                <Avatar
+                <MuiImageCustom
+                  width={130}
+                  height={130}
                   src={resume?.user?.avatarUrl}
-                  sx={{ width: 130, height: 130 }}
+                  sx={{ borderRadius: '50%' }}
                 />
                 <Box
                   sx={{

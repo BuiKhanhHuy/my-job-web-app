@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -89,34 +89,37 @@ StyledTreeItem.propTypes = {
 const drawer = (location) => (
   <div>
     <Toolbar>
-      <Stack
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        spacing={1}
-      >
-        <Box>
-          <Avatar
-            src={IMAGES.getLogo('medium', 'dark')}
-            sx={{
-              width: 50,
-              height: 50,
-            }}
-            alt="LOGO"
-          />
-        </Box>
-        <Box>
-          <Typography
-            variant="h6"
-            sx={{
-              color: (theme) =>
-                theme.palette.mode === 'light' ? '#130160' : 'white',
-            }}
-          >
-            MyJob
-          </Typography>
-        </Box>
-      </Stack>
+      <Box component={Link} to="/nha-tuyen-dung">
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+        >
+          <Box>
+            <Avatar
+              src={IMAGES.getLogo('medium', 'dark')}
+              sx={{
+                width: 50,
+                height: 50,
+              }}
+              alt="LOGO"
+            />
+          </Box>
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{
+                textDecoration: 'none',
+                color: (theme) =>
+                  theme.palette.mode === 'light' ? '#130160' : 'white',
+              }}
+            >
+              MyJob
+            </Typography>
+          </Box>
+        </Stack>
+      </Box>
     </Toolbar>
     <Divider />
     <Box>

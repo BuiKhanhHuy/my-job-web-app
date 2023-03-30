@@ -17,7 +17,6 @@ const jobService = {
     return httpRequest.delete(url);
   },
 
-  // public
   getJobPosts: (params = {}) => {
     const url = 'api/job/web/job-posts/';
 
@@ -31,6 +30,11 @@ const jobService = {
     return httpRequest.get(url);
   },
   getSuggestedJobPosts: () => {},
+  saveJobPost: (slug) => {
+    const url = `api/job/web/job-posts/${slug}/job-saved/`;
+
+    return httpRequest.post(url);
+  },
 };
 
 export default jobService;

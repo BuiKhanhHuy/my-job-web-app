@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Grid, Stack, Tab, Typography } from '@mui/material';
+import SavedJobCard from '../../components/jobSeekers/SavedJobCard';
+import AppliedJobCard from '../../components/jobSeekers/AppliedJobCard';
 
 const MyJobPage = () => {
   const [value, setValue] = React.useState('1');
@@ -33,15 +35,23 @@ const MyJobPage = () => {
                       sx={{ textTransform: 'capitalize' }}
                       value="2"
                     />
-                     <Tab
+                    <Tab
                       label="Thông báo việc làm"
                       sx={{ textTransform: 'capitalize' }}
                       value="3"
                     />
                   </TabList>
                 </Box>
-                <TabPanel value="1">Việc làm đã lưu</TabPanel>
-                <TabPanel value="2">Việc làm đã ứng tuyển</TabPanel>
+                <TabPanel value="1">
+                  {/* Start: SavedJobCard */}
+                  <SavedJobCard />
+                  {/* End: SavedJobCard */}
+                </TabPanel>
+                <TabPanel value="2">
+                  {/* Start: AppliedJobCard */}
+                  <AppliedJobCard />
+                  {/* End: AppliedJobCard */}
+                </TabPanel>
                 <TabPanel value="3">Thông báo việc làm</TabPanel>
               </TabContext>
             </Box>
