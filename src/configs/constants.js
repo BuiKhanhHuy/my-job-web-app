@@ -5,6 +5,9 @@ import ImageSvg1 from '../assets/images/svg-images/empty-data.svg';
 import ImageSvg2 from '../assets/images/svg-images/online-gallery.svg';
 import ImageSvg3 from '../assets/images/svg-images/empty-street.svg';
 import ImageSvg4 from '../assets/images/svg-images/dreamer.svg';
+import ImageSvg5 from '../assets/images/svg-images/small_town.svg';
+import ImageSvg6 from '../assets/images/svg-images/blooming.svg';
+import ImageSvg7 from '../assets/images/svg-images/country_side.svg';
 
 const AUTH_CONFIG = {
   CLIENT_ID: '0VdoWiB6AaDGv1OiQeRn5c3BOcxEDMv1t4o8eFTt',
@@ -63,7 +66,10 @@ const IMAGE_SVG = {
   img1: ImageSvg1,
   img2: ImageSvg2,
   img3: ImageSvg3,
-  img4: ImageSvg4
+  img4: ImageSvg4,
+  img5: ImageSvg5,
+  img6: ImageSvg6,
+  img7: ImageSvg7
 };
 
 export {

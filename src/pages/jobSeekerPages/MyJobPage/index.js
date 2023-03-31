@@ -15,7 +15,7 @@ const MyJobPage = () => {
     <Grid container spacing={2}>
       <Grid xs={12} sm={12} md={7} lg={8} xl={8} item>
         <Stack spacing={2}>
-          <Card sx={{ p: 2 }}>
+          <Card sx={{ p: 1 }}>
             <Box sx={{ width: '100%', typography: 'body1' }}>
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -46,6 +46,12 @@ const MyJobPage = () => {
                   {/* Start: SavedJobCard */}
                   <SavedJobCard />
                   {/* End: SavedJobCard */}
+                  <Box>
+                    <Typography color="gray" variant="caption">
+                      Lưu ý: Bạn không xem được việc làm đã hết thời hạn đăng
+                      tuyển hoặc tạm ngưng nhận hồ sơ.
+                    </Typography>
+                  </Box>
                 </TabPanel>
                 <TabPanel value="2">
                   {/* Start: AppliedJobCard */}

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Grid, Stack, Tab, Typography } from '@mui/material';
+import CompanyViewedCard from '../../components/jobSeekers/CompanyViewedCard';
+import CompanyFollowedCard from '../../components/jobSeekers/CompanyFollowedCard';
 
 const MyCompanyPage = () => {
   const [value, setValue] = React.useState('1');
@@ -13,7 +15,7 @@ const MyCompanyPage = () => {
     <Grid container spacing={2}>
       <Grid xs={12} sm={12} md={7} lg={8} xl={8} item>
         <Stack spacing={2}>
-          <Card sx={{ p: 2  }}>
+          <Card sx={{ p: 1 }}>
             <Box sx={{ width: '100%', typography: 'body1' }}>
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -35,8 +37,21 @@ const MyCompanyPage = () => {
                     />
                   </TabList>
                 </Box>
-                <TabPanel value="1">Nhà tuyển dụng xem hồ sơ</TabPanel>
-                <TabPanel value="2">Theo dõi công ty</TabPanel>
+                <TabPanel value="1">
+                  {/* Start: CompanyViewedCard */}
+                  <CompanyViewedCard />
+                  {/* End: CompanyViewedCard */}
+                  <Box>
+                    <Typography color="gray" variant="caption">
+                      Lưu ý: Đây là những nhà tuyển dụng đã xem hồ sơ đang hoạt động của bạn.
+                    </Typography>
+                  </Box>
+                </TabPanel>
+                <TabPanel value="2">
+                  {/* Start: CompanyFollowedCard */}
+                  <CompanyFollowedCard />
+                  {/* End: CompanyFollowedCard */}
+                </TabPanel>
               </TabContext>
             </Box>
           </Card>
@@ -44,7 +59,7 @@ const MyCompanyPage = () => {
       </Grid>
       <Grid xs={12} sm={12} md={5} lg={4} xl={4} item>
         <Stack spacing={2}>
-          <Card sx={{ p: 2  }}>
+          <Card sx={{ p: 2 }}>
             <Stack>
               <Box sx={{ mb: 2 }}>
                 <Typography variant="h6">Việc làm bạn sẽ thích</Typography>

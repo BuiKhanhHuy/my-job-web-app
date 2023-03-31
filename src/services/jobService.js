@@ -30,6 +30,11 @@ const jobService = {
     return httpRequest.get(url);
   },
   getSuggestedJobPosts: () => {},
+  getJobPostsSaved: (params = {}) => {
+    const url = `api/job/web/job-posts/job-posts-saved/`;
+
+    return httpRequest.get(url, { params: params });
+  },
   saveJobPost: (slug) => {
     const url = `api/job/web/job-posts/${slug}/job-saved/`;
 
