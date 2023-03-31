@@ -104,7 +104,7 @@ const UserMenu = ({ anchorElUser, open, handleCloseUserMenu }) => {
         {menuItems.map((item) => (
           <Button
             key={item.path}
-            variant="outlined"
+            variant="contained"
             sx={{ textTransform: 'inherit' }}
             fullWidth
             component={Link}
@@ -115,7 +115,7 @@ const UserMenu = ({ anchorElUser, open, handleCloseUserMenu }) => {
         ))}
         <Button
           startIcon={<LogoutIcon />}
-          variant="outlined"
+          variant="contained"
           color="error"
           sx={{ textTransform: 'inherit' }}
           fullWidth
