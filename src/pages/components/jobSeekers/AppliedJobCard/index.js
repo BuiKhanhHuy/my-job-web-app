@@ -34,7 +34,9 @@ const AppliedJobCard = () => {
           Tải danh sách
         </Button>
       </Stack> */}
-      <Divider />
+      <Stack>
+      </Stack>
+
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

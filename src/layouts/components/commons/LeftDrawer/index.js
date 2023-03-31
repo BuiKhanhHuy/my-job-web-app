@@ -22,6 +22,7 @@ import errorHandling from '../../../../utils/errorHandling';
 import { IMAGES, ROLES_NAME } from '../../../../configs/constants';
 import { removeUserInfo } from '../../../../redux/userSlice';
 import tokenService from '../../../../services/tokenService';
+import AccountSwitchMenu from '../AccountSwitchMenu';
 
 const drawerWidth = 240;
 
@@ -108,6 +109,12 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
         ))}
       </List>
 
+      {/* Start: Account switch menu */}
+      <AccountSwitchMenu isShowButton={true} />
+      {/* Start: Account switch menu */}
+
+      <Divider variant="middle" sx={{ mt: 2 }} />
+
       <Stack spacing={1} sx={{ p: 2 }}>
         {isAuthenticated ? (
           <Button
@@ -127,10 +134,20 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
           </Button>
         ) : (
           <>
-            <Button variant="contained" color="info" sx={{ color: 'white' }} onClick={() => nav("/dang-nhap-ung-vien")}>
+            <Button
+              variant="contained"
+              color="info"
+              sx={{ color: 'white' }}
+              onClick={() => nav('/dang-nhap-ung-vien')}
+            >
               Đăng nhập
             </Button>
-            <Button variant="contained" color="warning" sx={{ color: 'white' }} onClick={() => nav("/dang-ky-tai-khoan-ung-vien")}>
+            <Button
+              variant="contained"
+              color="warning"
+              sx={{ color: 'white' }}
+              onClick={() => nav('/dang-ky-tai-khoan-ung-vien')}
+            >
               Đăng ký
             </Button>
           </>

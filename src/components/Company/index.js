@@ -154,7 +154,7 @@ const Company = ({
             loading={isLoadingFollow}
             loadingPosition="start"
             variant={isFollowed ? 'contained' : 'outlined'}
-            color="secondary"
+            color="warning"
             sx={{ textTransform: 'inherit' }}
           >
             <span>{isFollowed ? 'Đang theo dõi' : 'Theo dõi'}</span>

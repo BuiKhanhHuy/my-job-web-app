@@ -15,7 +15,7 @@ import {
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 
-const AccountSwitchMenu = () => {
+const AccountSwitchMenu = ({ isShowButton = false }) => {
   const nav = useNavigate();
   const dispath = useDispatch();
   const { isAuthenticated, currentUser } = useSelector((state) => state.user);
@@ -115,7 +115,7 @@ const AccountSwitchMenu = () => {
             Đăng tin miễn phí
           </Typography>
         </Stack>
-  </Stack>
+      </Stack>
     ) : currentUser?.roleName === ROLES_NAME.EMPLOYER ? (
       <Stack direction="row" alignItems="center">
         <FontAwesomeIcon
@@ -151,63 +151,93 @@ const AccountSwitchMenu = () => {
 
   return (
     <div>
-      <Typography sx={{ ml: 1, cursor: 'pointer' }} onClick={handleClick}>
-        {title}
-      </Typography>
-      <Menu
-        id="account-switch-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-            mt: 1.5,
-            '& .MuiAvatar-root': {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            '&:before': {
-              content: '""',
-              display: 'block',
-              position: 'absolute',
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: 'background.paper',
-              transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0,
-            },
-          },
-        }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-      >
-        <Stack spacing={1} sx={{ p: 1 }}>
+      {isShowButton ? (
+        <Stack spacing={1} sx={{ px: 2 }}>
           <Button
             variant="contained"
             fullWidth
             onClick={handleLogin}
-            sx={{ color: 'white' }}
+            size="small"
+            sx={{ color: 'white', textTransform: 'inherit' }}
           >
-            Đăng nhập
+            {currentUser?.roleName === ROLES_NAME.EMPLOYER
+              ? 'Đăng nhập ứng viên'
+              : 'Đăng nhập NTD'}
           </Button>
           <Button
             variant="contained"
             fullWidth
+            size="small"
             color="warning"
-            sx={{ color: 'white' }}
+            sx={{ color: 'white', textTransform: 'inherit' }}
             onClick={handleSignUp}
           >
-            Đăng ký
+            {currentUser?.roleName === ROLES_NAME.EMPLOYER
+              ? 'Đăng ký ứng viên'
+              : 'Đăng ký NTD'}
           </Button>
         </Stack>
-      </Menu>
+      ) : (
+        <>
+          <Typography sx={{ ml: 1, cursor: 'pointer' }} onClick={handleClick}>
+            {title}
+          </Typography>
+          <Menu
+            id="account-switch-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                overflow: 'visible',
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                mt: 1.5,
+                '& .MuiAvatar-root': {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                '&:before': {
+                  content: '""',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: 'background.paper',
+                  transform: 'translateY(-50%) rotate(45deg)',
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          >
+            <Stack spacing={1} sx={{ p: 1 }}>
+              <Button
+                variant="contained"
+                fullWidth
+                onClick={handleLogin}
+                sx={{ color: 'white' }}
+              >
+                Đăng nhập
+              </Button>
+              <Button
+                variant="contained"
+                fullWidth
+                color="warning"
+                sx={{ color: 'white' }}
+                onClick={handleSignUp}
+              >
+                Đăng ký
+              </Button>
+            </Stack>
+          </Menu>{' '}
+        </>
+      )}
     </div>
   );
 };

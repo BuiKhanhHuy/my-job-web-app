@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTheme } from '@mui/material/styles';
 import {
   AppBar,
   Avatar,
@@ -16,6 +17,7 @@ import {
   Stack,
   Toolbar,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -35,6 +37,8 @@ const pages = [
 ];
 
 const Header = (props) => {
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down('md'));
   const nav = useNavigate();
   const { currentUser, isAuthenticated } = useSelector((state) => state.user);
 
@@ -179,7 +183,7 @@ const Header = (props) => {
                 aria-label="open drawer"
                 edge="start"
                 onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { sm: 'none' } }}
+                sx={{ mr: 2, display: { md: 'none' } }}
               >
                 <MenuIcon />
               </IconButton>
@@ -260,16 +264,20 @@ const Header = (props) => {
             {authArea}
             {/* End: authArea */}
 
-            <Divider
-              orientation="vertical"
-              flexItem
-              variant="middle"
-              sx={{ mx: 2, borderColor: 'lightgray' }}
-            />
+            {!isSmall && (
+              <>
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  variant="middle"
+                  sx={{ mx: 2, borderColor: 'lightgray' }}
+                />
 
-            {/* Start: Account switch menu */}
-            <AccountSwitchMenu />
-            {/* Start: Account switch menu */}
+                {/* Start: Account switch menu */}
+                <AccountSwitchMenu />
+                {/* Start: Account switch menu */}
+              </>
+            )}
           </Toolbar>
         </Container>
       </AppBar>

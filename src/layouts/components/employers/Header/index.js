@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useTheme } from '@mui/material/styles';
 import {
   AppBar,
   Avatar,
@@ -10,6 +11,7 @@ import {
   Stack,
   Toolbar,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -21,6 +23,8 @@ import UserMenu from '../../commons/UserMenu';
 import AccountSwitchMenu from '../../commons/AccountSwitchMenu';
 
 const Header = ({ drawerWidth, handleDrawerToggle }) => {
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down('md'));
   const { currentUser } = useSelector((state) => state.user);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -95,10 +99,12 @@ const Header = ({ drawerWidth, handleDrawerToggle }) => {
           >
             <MenuIcon />
           </IconButton>
+
           {/* Start: Account switch menu */}
-          <AccountSwitchMenu />
+          {!isSmall && <AccountSwitchMenu />}
           {/* Start: Account switch menu */}
         </Toolbar>
+
         <Toolbar>
           <IconButton
             size="large"
@@ -118,7 +124,6 @@ const Header = ({ drawerWidth, handleDrawerToggle }) => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-
           {/* Start: SwitchModeButton */}
           <SwitchModeButton />
           {/* End: SwitchModeButton */}
