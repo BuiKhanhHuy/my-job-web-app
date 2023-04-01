@@ -2,16 +2,19 @@ import React from 'react';
 
 import FormPopup from '../controls/FormPopup';
 import ApplyForm from '../ApplyForm';
+import { Typography } from '@mui/material';
 
 const ApplyCard = ({ title = '', openPopup, setOpenPopup }) => {
-  const handleApply = (data) => {};
+  const handleApply = (data) => {
+    console.log("APPLY: ", data)
+  };
 
   return (
     <FormPopup
       title={
         <>
-          Ứng tuyển vị trí{' '}
-          <span style={{ color: '#fca34d' }}>{title}</span>
+          <Typography color="gray">Ứng tuyển vị trí </Typography>
+          <span>{title}</span>
         </>
       }
       openPopup={openPopup}

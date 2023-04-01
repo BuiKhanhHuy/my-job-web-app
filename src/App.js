@@ -77,6 +77,7 @@ import { default as EmployerChatPage } from './pages/employerPages/ChatPage';
 import { default as EmployerNotificationPage } from './pages/employerPages/NotificationPage';
 import { default as EmployerCompanyPage } from './pages/employerPages/CompanyPage';
 import { default as EmployerAccountPage } from './pages/employerPages/AccountPage';
+import CVPdf from './components/CVPdf';
 
 function App() {
   const dispatch = useDispatch();
@@ -216,7 +217,7 @@ function App() {
             },
             h5: {
               fontWeight: 700,
-              fontSize: 22
+              fontSize: 22,
             },
             h6: {
               fontSize: '1.2rem',
@@ -244,168 +245,182 @@ function App() {
   }, []);
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline enableColorScheme />
-        {loading ? (
-          <BackdropLoading />
-        ) : (
-          <Routes>
-            <Route path="/" element={<Outlet />}>
-              {/* Start: Home */}
-              <Route path="" element={<HomeLayout />}>
-                <Route path="" element={<HomePage />} />
-              </Route>
-              {/* End: Home */}
-              {/* Start: Common */}
-              <Route path="" element={<DefaultLayout />}>
-                <Route path="viec-lam" element={<JobPage />} />
-                <Route path="viec-lam/:slug" element={<JobDetailPage />} />
-                <Route path="cong-ty" element={<CompanyPage />} />
-                <Route path="cong-ty/:slug" element={<CompanyDetailPage />} />
-                <Route path="viec-lam-theo-nganh-nghe" element={<JobsByCareerPage />} />
-                <Route path="viec-lam-theo-tinh-thanh" element={<JobsByCityPage />} />
-                <Route path="viec-lam-theo-hinh-thuc-lam-viec" element={<JobsByJobTypePage />} />
-              </Route>
-              {/* End: Common */}
-              {/* Start: Job seeker */}
-              <Route
-                path="ung-vien"
-                element={
-                  <PrivateRoutes
-                    isAuthenticated={
-                      isAuthenticated &&
-                      currentUser?.roleName === ROLES_NAME.JOB_SEEKER
-                    }
-                    redirectUrl="/dang-nhap-ung-vien"
-                  >
-                    <JobSeekerLayout />
-                  </PrivateRoutes>
-                }
-              >
-                <Route path="" element={<JobSeekerDashboardPage />} />
-                <Route path="ho-so" element={<JobSeekerProfilePage />} />
+    <>
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline enableColorScheme />
+          {loading ? (
+            <BackdropLoading />
+          ) : (
+            <Routes>
+              <Route path="/" element={<Outlet />}>
+                {/* Start: Home */}
+                <Route path="" element={<HomeLayout />}>
+                  <Route path="" element={<HomePage />} />
+                </Route>
+                {/* End: Home */}
+                {/* Start: Common */}
+                <Route path="" element={<DefaultLayout />}>
+                  <Route path="viec-lam" element={<JobPage />} />
+                  <Route path="viec-lam/:slug" element={<JobDetailPage />} />
+                  <Route path="cong-ty" element={<CompanyPage />} />
+                  <Route path="cong-ty/:slug" element={<CompanyDetailPage />} />
+                  <Route
+                    path="viec-lam-theo-nganh-nghe"
+                    element={<JobsByCareerPage />}
+                  />
+                  <Route
+                    path="viec-lam-theo-tinh-thanh"
+                    element={<JobsByCityPage />}
+                  />
+                  <Route
+                    path="viec-lam-theo-hinh-thuc-lam-viec"
+                    element={<JobsByJobTypePage />}
+                  />
+                </Route>
+                {/* End: Common */}
+                {/* Start: Job seeker */}
                 <Route
-                  path="ho-so-tung-buoc/:slug"
-                  element={<OnlineProfilePage />}
-                />
-                <Route
-                  path="ho-so-dinh-kem/:slug"
-                  element={<JobSeekerAttachedProfilePage />}
-                />
-                <Route
-                  path="viec-lam-cua-toi"
-                  element={<JobSeekerMyJobPage />}
-                />
-                <Route
-                  path="cong-ty-cua-toi"
-                  element={<JobSeekerMyCompanyPage />}
-                />
-                <Route path="bang-tin" element={<JobSeekerPostPage />} />
-                <Route path="tin-nhan" element={<JobSeekerChatPage />} />
-                <Route
-                  path="thong-bao-viec-lam"
-                  element={<JobSeekerNotificationJobPostPage />}
-                />
-                <Route path="tai-khoan" element={<JobSeekerAccountPage />} />
-              </Route>
-              {/* End: Job seeker */}
-              {/* Start: Employer */}
-              <Route
-                path="nha-tuyen-dung"
-                element={
-                  <PrivateRoutes
-                    isAuthenticated={
-                      isAuthenticated &&
-                      currentUser?.roleName === ROLES_NAME.EMPLOYER
-                    }
-                    redirectUrl="/dang-nhap-nha-tuyen-dung"
-                  >
-                    <EmployerLayout />
-                  </PrivateRoutes>
-                }
-              >
-                <Route path="" element={<EmployerDashboardPage />} />
-                <Route
-                  path="tin-tuyen-dung"
-                  element={<EmployerJobPostPage />}
-                />
-
-                <Route
-                  path="ho-so-ung-tuyen"
-                  element={<EmployerProfileAppliedPage />}
-                />
-                <Route
-                  path="ho-so-da-luu"
-                  element={<EmployerSavedProfilePage />}
-                />
-                <Route
-                  path="danh-sach-ung-vien"
-                  element={<EmployerProfilePage />}
-                />
-                <Route path="tro-chuyen" element={<EmployerChatPage />} />
-                <Route
-                  path="thong-bao"
-                  element={<EmployerNotificationPage />}
-                />
-                <Route path="cong-ty" element={<EmployerCompanyPage />} />
-                <Route path="tai-khoan" element={<EmployerAccountPage />} />
-              </Route>
-              {/* End: Employer */}
-              {/* Start: Auth */}s
-              <Route
-                path=""
-                element={
-                  <PrivateRoutes
-                    isAuthenticated={!isAuthenticated}
-                    redirectUrl="/"
-                  >
-                    <DefaultLayout />
-                  </PrivateRoutes>
-                }
-              >
-                <Route
-                  path="email-verification-required"
+                  path="ung-vien"
                   element={
                     <PrivateRoutes
-                      isAuthenticated={isAllowVerifyEmail}
-                      redirectUrl={
-                        roleName === ROLES_NAME.EMPLOYER
-                          ? '/dang-nhap-nha-tuyen-dung'
-                          : '/dang-nhap-ung-vien'
+                      isAuthenticated={
+                        isAuthenticated &&
+                        currentUser?.roleName === ROLES_NAME.JOB_SEEKER
                       }
+                      redirectUrl="/dang-nhap-ung-vien"
                     >
-                      <EmailVerificationRequiredPage />
+                      <JobSeekerLayout />
                     </PrivateRoutes>
                   }
-                />
-                <Route path="dang-nhap-ung-vien" element={<JobSeekerLogin />} />
+                >
+                  <Route path="" element={<JobSeekerDashboardPage />} />
+                  <Route path="ho-so" element={<JobSeekerProfilePage />} />
+                  <Route
+                    path="ho-so-tung-buoc/:slug"
+                    element={<OnlineProfilePage />}
+                  />
+                  <Route
+                    path="ho-so-dinh-kem/:slug"
+                    element={<JobSeekerAttachedProfilePage />}
+                  />
+                  <Route
+                    path="viec-lam-cua-toi"
+                    element={<JobSeekerMyJobPage />}
+                  />
+                  <Route
+                    path="cong-ty-cua-toi"
+                    element={<JobSeekerMyCompanyPage />}
+                  />
+                  <Route path="bang-tin" element={<JobSeekerPostPage />} />
+                  <Route path="tin-nhan" element={<JobSeekerChatPage />} />
+                  <Route
+                    path="thong-bao-viec-lam"
+                    element={<JobSeekerNotificationJobPostPage />}
+                  />
+                  <Route path="tai-khoan" element={<JobSeekerAccountPage />} />
+                </Route>
+                {/* End: Job seeker */}
+                {/* Start: Employer */}
                 <Route
-                  path="dang-ky-tai-khoan-ung-vien"
-                  element={<JobSeekerSignUp />}
-                />
+                  path="nha-tuyen-dung"
+                  element={
+                    <PrivateRoutes
+                      isAuthenticated={
+                        isAuthenticated &&
+                        currentUser?.roleName === ROLES_NAME.EMPLOYER
+                      }
+                      redirectUrl="/dang-nhap-nha-tuyen-dung"
+                    >
+                      <EmployerLayout />
+                    </PrivateRoutes>
+                  }
+                >
+                  <Route path="" element={<EmployerDashboardPage />} />
+                  <Route
+                    path="tin-tuyen-dung"
+                    element={<EmployerJobPostPage />}
+                  />
+
+                  <Route
+                    path="ho-so-ung-tuyen"
+                    element={<EmployerProfileAppliedPage />}
+                  />
+                  <Route
+                    path="ho-so-da-luu"
+                    element={<EmployerSavedProfilePage />}
+                  />
+                  <Route
+                    path="danh-sach-ung-vien"
+                    element={<EmployerProfilePage />}
+                  />
+                  <Route path="tro-chuyen" element={<EmployerChatPage />} />
+                  <Route
+                    path="thong-bao"
+                    element={<EmployerNotificationPage />}
+                  />
+                  <Route path="cong-ty" element={<EmployerCompanyPage />} />
+                  <Route path="tai-khoan" element={<EmployerAccountPage />} />
+                </Route>
+                {/* End: Employer */}
+                {/* Start: Auth */}s
                 <Route
-                  path="dang-nhap-nha-tuyen-dung"
-                  element={<EmployerLogin />}
-                />
-                <Route
-                  path="dang-ky-tai-khoan-nha-tuyen-dung"
-                  element={<EmployerSignUp />}
-                />
+                  path=""
+                  element={
+                    <PrivateRoutes
+                      isAuthenticated={!isAuthenticated}
+                      redirectUrl="/"
+                    >
+                      <DefaultLayout />
+                    </PrivateRoutes>
+                  }
+                >
+                  <Route
+                    path="email-verification-required"
+                    element={
+                      <PrivateRoutes
+                        isAuthenticated={isAllowVerifyEmail}
+                        redirectUrl={
+                          roleName === ROLES_NAME.EMPLOYER
+                            ? '/dang-nhap-nha-tuyen-dung'
+                            : '/dang-nhap-ung-vien'
+                        }
+                      >
+                        <EmailVerificationRequiredPage />
+                      </PrivateRoutes>
+                    }
+                  />
+                  <Route
+                    path="dang-nhap-ung-vien"
+                    element={<JobSeekerLogin />}
+                  />
+                  <Route
+                    path="dang-ky-tai-khoan-ung-vien"
+                    element={<JobSeekerSignUp />}
+                  />
+                  <Route
+                    path="dang-nhap-nha-tuyen-dung"
+                    element={<EmployerLogin />}
+                  />
+                  <Route
+                    path="dang-ky-tai-khoan-nha-tuyen-dung"
+                    element={<EmployerSignUp />}
+                  />
+                </Route>
+                {/* End: Auth */}
               </Route>
-              {/* End: Auth */}
-            </Route>
-            {/* Start: Errors */}
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="/forbidden" element={<ForbiddenPage />} />
-            {/* Start: Errors */}
-          </Routes>
-        )}
-        {/* Start: toast */}
-        <ToastContainer autoClose={1300} />
-        {/* End: toast */}
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+              {/* Start: Errors */}
+              <Route path="*" element={<NotFoundPage />} />
+              <Route path="/forbidden" element={<ForbiddenPage />} />
+              {/* Start: Errors */}
+            </Routes>
+          )}
+          {/* Start: toast */}
+          <ToastContainer autoClose={1300} />
+          {/* End: toast */}
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+    </>
   );
 }
 
