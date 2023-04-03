@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Card,
@@ -38,12 +39,21 @@ const JobSeekerProfile = ({
   user,
   jobSeekerProfile,
   type,
-  handleSave
+  handleSave,
 }) => {
+  const nav = useNavigate();
   const { allConfig } = useSelector((state) => state.config);
 
   return (
-    <Card sx={{ p: 1.5 }} variant="outlined">
+    <Card
+      sx={{
+        p: 1.5,
+        '&:hover': {
+          borderColor: '#441da0',
+        },
+      }}
+      variant="outlined"
+    >
       <Stack
         direction={{
           xs: 'column',
@@ -57,19 +67,11 @@ const JobSeekerProfile = ({
       >
         <Stack spacing={0.5}>
           <Typography variant="subtitle2" sx={{ fontSize: 16 }}>
-            {user?.fullName || (
-              <span
-                style={{
-                  color: '#9e9e9e',
-                  fontStyle: 'italic',
-                }}
-              >
-                Chưa cập nhật
-              </span>
-            )}
-            <span style={{ color: 'gray' }}>
-              (
-              {jobSeekerProfile?.old || (
+            <span
+              style={{ cursor: 'pointer' }}
+              onClick={() => nav(`/nha-tuyen-dung/chi-tiet-ung-vien/${slug}`)}
+            >
+              {user?.fullName || (
                 <span
                   style={{
                     color: '#9e9e9e',
@@ -78,22 +80,46 @@ const JobSeekerProfile = ({
                 >
                   Chưa cập nhật
                 </span>
-              )}{' '}
-              tuổi)
+              )}
+              <span style={{ color: 'gray' }}>
+                (
+                {jobSeekerProfile?.old || (
+                  <span
+                    style={{
+                      color: '#9e9e9e',
+                      fontStyle: 'italic',
+                    }}
+                  >
+                    Chưa cập nhật
+                  </span>
+                )}{' '}
+                tuổi)
+              </span>
             </span>
           </Typography>
           <Typography gutterBottom variant="body1">
-            {type === CV_TYPES.CV_UPLOAD && <FontAwesomeIcon icon={faFilePdf} style={{marginRight: 5}} color='red'/>}
-            {title || (
-              <span
-                style={{
-                  color: '#9e9e9e',
-                  fontStyle: 'italic',
-                }}
-              >
-                Chưa cập nhật
-              </span>
-            )}
+            <span
+              style={{ cursor: 'pointer' }}
+              onClick={() => nav(`/nha-tuyen-dung/chi-tiet-ung-vien/${slug}`)}
+            >
+              {type === CV_TYPES.cvUpload && (
+                <FontAwesomeIcon
+                  icon={faFilePdf}
+                  style={{ marginRight: 5 }}
+                  color="red"
+                />
+              )}
+              {title || (
+                <span
+                  style={{
+                    color: '#9e9e9e',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  Chưa cập nhật
+                </span>
+              )}
+            </span>
           </Typography>
           <Stack direction="row" spacing={1}>
             <Box>
@@ -161,7 +187,11 @@ const JobSeekerProfile = ({
         >
           <Box>
             <Tooltip title="Lưu hồ sơ" arrow>
-              <IconButton aria-label="save" size="small" onClick={() => handleSave(slug)}>
+              <IconButton
+                aria-label="save"
+                size="small"
+                onClick={() => handleSave(slug)}
+              >
                 {isSaved ? (
                   <FavoriteIcon fontSize="small" color="error" />
                 ) : (
@@ -171,7 +201,7 @@ const JobSeekerProfile = ({
             </Tooltip>
             <Tooltip title="Xem hồ sơ" arrow>
               <IconButton aria-label="view" size="small">
-                <RemoveRedEyeOutlinedIcon fontSize="small" color='primary'/>
+                <RemoveRedEyeOutlinedIcon fontSize="small" color="primary" />
               </IconButton>
             </Tooltip>
           </Box>

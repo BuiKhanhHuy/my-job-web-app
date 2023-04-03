@@ -74,6 +74,7 @@ import { default as EmployerJobPostPage } from './pages/employerPages/JobPostPag
 import { default as EmployerProfileAppliedPage } from './pages/employerPages/ProfileAppliedPage';
 import { default as EmployerSavedProfilePage } from './pages/employerPages/SavedProfilePage';
 import { default as EmployerProfilePage } from './pages/employerPages/ProfilePage';
+import { default as ProfileDetailPage } from './pages/employerPages/ProfileDetailPage';
 import { default as EmployerChatPage } from './pages/employerPages/ChatPage';
 import { default as EmployerNotificationPage } from './pages/employerPages/NotificationPage';
 import { default as EmployerCompanyPage } from './pages/employerPages/CompanyPage';
@@ -221,7 +222,8 @@ function App() {
               fontSize: 22,
             },
             h6: {
-              fontSize: '1.2rem',
+              fontSize: '20px',
+              fontWeight: 'bold'
             },
             caption: {
               fontSize: '0.85rem',
@@ -353,6 +355,10 @@ function App() {
                   <Route
                     path="danh-sach-ung-vien"
                     element={<EmployerProfilePage />}
+                  />
+                  <Route
+                    path="chi-tiet-ung-vien/:slug"
+                    element={<ProfileDetailPage />}
                   />
                   <Route path="tro-chuyen" element={<EmployerChatPage />} />
                   <Route

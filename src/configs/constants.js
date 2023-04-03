@@ -25,11 +25,6 @@ const ROLES_NAME = {
   JOB_SEEKER: 'JOB_SEEKER',
 };
 
-const CV_TYPES = {
-  CV_WEBSITE: 'WEBSITE',
-  CV_UPLOAD: 'UPLOAD',
-};
-
 const HOME_FILTER_CAREER = [
   {
     id: 37,
@@ -48,6 +43,11 @@ const REGEX_VATIDATE = {
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
   urlRegExp:
     /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
+};
+
+const CV_TYPES = {
+  cvWebsite: 'WEBSITE',
+  cvUpload: 'UPLOAD',
 };
 
 const DATE_OPTIONS = {
@@ -77,9 +77,9 @@ const IMAGE_SVG = {
 export {
   AUTH_CONFIG,
   ROLES_NAME,
-  CV_TYPES,
   HOME_FILTER_CAREER,
   REGEX_VATIDATE,
+  CV_TYPES,
   DATE_OPTIONS,
   IMAGES,
   IMAGE_SVG,

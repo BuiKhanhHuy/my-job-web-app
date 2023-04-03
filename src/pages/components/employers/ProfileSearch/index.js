@@ -90,7 +90,7 @@ const ProfileSearch = () => {
           >
             <Typography variant="h6">Bộ lọc nâng cao: </Typography>
             <Button
-              variant="outlined"
+              variant="text"
               color="error"
               size="small"
               startIcon={<HighlightOffIcon />}

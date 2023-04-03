@@ -6,6 +6,11 @@ const resumeService = {
 
     return httpRequest.get(url, { params: params });
   },
+  getResumeDetail: (resumeSlug) => {
+    const url = `api/info/web/resumes/${resumeSlug}/`;
+
+    return httpRequest.get(url);
+  },
   saveResume: (slug) => {
     const url = `api/info/web/resumes/${slug}/resume-saved/`;
 
