@@ -1,19 +1,19 @@
 import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
-import { PacmanLoader } from 'react-spinners';
+import { HashLoader } from 'react-spinners';
 
-const BackdropLoading = () => {
+const BackdropLoading = ({ bgColor = 'rgba(0, 0, 0, 0.4)' }) => {
   return (
     <div>
       <Backdrop
         sx={{
           color: '#fff',
           zIndex: (theme) => 9999,
-          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          backgroundColor: bgColor,
         }}
         open={true}
       >
-        <PacmanLoader color="#fca34d" size={30} speedMultiplier={1} />
+        <HashLoader color="#fca34d" size={100} speedMultiplier={2} />
       </Backdrop>
     </div>
   );

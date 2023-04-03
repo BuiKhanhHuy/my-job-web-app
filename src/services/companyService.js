@@ -11,16 +11,6 @@ const companyService = {
 
     return httpRequest.put(url, data);
   },
-  getJobPosts: () => {
-    const url = `api/info/web/company/job-posts/`;
-
-    return httpRequest.get(url);
-  },
-  getJobPostDetailById: (id) => {
-    const url = `api/info/web/company/job-posts/${id}/`;
-
-    return httpRequest.get(url);
-  },
 
   // public
   getCompanies: (params = {}) => {

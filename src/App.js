@@ -47,6 +47,8 @@ import JobsByJobTypePage from './pages/defaultPages/JobsByJobTypePage';
 
 // auth pages
 import EmailVerificationRequiredPage from './pages/authPages/EmailVerificationRequiredPage';
+import ForgotPasswordPage from './pages/authPages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/authPages/ResetPasswordPage';
 import JobSeekerLogin from './pages/authPages/JobSeekerLogin';
 import JobSeekerSignUp from './pages/authPages/JobSeekerSignUp';
 import EmployerLogin from './pages/authPages/EmployerLogin';
@@ -62,7 +64,6 @@ import { default as OnlineProfilePage } from './pages/jobSeekerPages/OnlineProfi
 import { default as JobSeekerAttachedProfilePage } from './pages/jobSeekerPages/AttachedProfilePage';
 import { default as JobSeekerMyJobPage } from './pages/jobSeekerPages/MyJobPage';
 import { default as JobSeekerMyCompanyPage } from './pages/jobSeekerPages/MyCompanyPage';
-import { default as JobSeekerPostPage } from './pages/jobSeekerPages/PostPage';
 import { default as JobSeekerChatPage } from './pages/jobSeekerPages/ChatPage';
 import { default as JobSeekerNotificationJobPostPage } from './pages/jobSeekerPages/NotificationJobPostPage';
 import { default as JobSeekerAccountPage } from './pages/jobSeekerPages/AccountPage';
@@ -250,7 +251,7 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline enableColorScheme />
           {loading ? (
-            <BackdropLoading />
+            <BackdropLoading bgColor='white'/>
           ) : (
             <Routes>
               <Route path="/" element={<Outlet />}>
@@ -312,7 +313,6 @@ function App() {
                     path="cong-ty-cua-toi"
                     element={<JobSeekerMyCompanyPage />}
                   />
-                  <Route path="bang-tin" element={<JobSeekerPostPage />} />
                   <Route path="tin-nhan" element={<JobSeekerChatPage />} />
                   <Route
                     path="thong-bao-viec-lam"
@@ -391,6 +391,14 @@ function App() {
                     }
                   />
                   <Route
+                    path="quen-mat-khau"
+                    element={<ForgotPasswordPage />}
+                  />
+                   <Route
+                    path="cap-nhat-mat-khau/:token"
+                    element={<ResetPasswordPage />}
+                  />
+                  <Route
                     path="dang-nhap-ung-vien"
                     element={<JobSeekerLogin />}
                   />
@@ -406,6 +414,7 @@ function App() {
                     path="dang-ky-tai-khoan-nha-tuyen-dung"
                     element={<EmployerSignUp />}
                   />
+                  
                 </Route>
                 {/* End: Auth */}
               </Route>

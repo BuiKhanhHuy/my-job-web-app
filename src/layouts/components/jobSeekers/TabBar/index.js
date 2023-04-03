@@ -9,7 +9,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import WorkIcon from '@mui/icons-material/Work';
 import ApartmentIcon from '@mui/icons-material/Apartment';
-import InterestsIcon from '@mui/icons-material/Interests';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -36,24 +35,18 @@ const tabItems = [
   },
   {
     id: 5,
-    label: 'Bảng tin',
-    icon: <InterestsIcon />,
-    path: '/ung-vien/bang-tin',
-  },
-  {
-    id: 6,
     label: 'Tin nhắn',
     icon: <ChatIcon />,
     path: '/ung-vien/tin-nhan',
   },
   {
-    id: 7,
+    id: 6,
     label: 'MyJob thông báo',
     icon: <NotificationsActiveIcon />,
     path: '/ung-vien/thong-bao',
   },
   {
-    id: 8,
+    id: 7,
     label: 'Tài khoản',
     icon: <AccountCircleIcon />,
     path: '/ung-vien/tai-khoan',

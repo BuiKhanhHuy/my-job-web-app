@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Alert,
   AlertTitle,
@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { ROLES_NAME } from '../../../configs/constants';
 import toastMessages from '../../../utils/toastMessages';
+import BackdropLoading from '../../../components/loading/BackdropLoading';
 
 import { updateVerifyEmail } from '../../../redux/authSlice';
 import { getUserInfo } from '../../../redux/userSlice';
@@ -27,10 +28,25 @@ import EmployerLoginForm from '../../components/auths/EmployerLoginForm';
 const EmployerLogin = () => {
   const dispatch = useDispatch();
   const nav = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState(null);
+  const [successMessage, setSuccessMessage] = React.useState(null);
+
+  React.useEffect(() => {
+    const successMsg = searchParams.get('successMessage');
+    const errorMsg = searchParams.get('errorMessage');
+
+    if (successMsg !== null) {
+      setSuccessMessage(successMsg);
+    }
+
+    setErrorMessage(errorMsg);
+  }, [searchParams]);
 
   const handleLogin = (data) => {
     const getAccesToken = async (email, password, roleName) => {
+      setIsFullScreenLoading(true);
       try {
         const resData = await authService.getToken(email, password, roleName);
         const { access_token: accessToken, refresh_token: refreshToken } =
@@ -58,10 +74,12 @@ const EmployerLogin = () => {
         // 400 bad request
         setErrorMessage('Email hoặc mật khẩu không chính xác!');
       } finally {
+        setIsFullScreenLoading(false);
       }
     };
 
     const checkCreds = async (email, password, roleName) => {
+      setIsFullScreenLoading(true);
       try {
         const resData = await authService.checkCreds(email, roleName);
 
@@ -88,6 +106,8 @@ const EmployerLogin = () => {
         getAccesToken(resEmail, password, roleName);
       } catch (error) {
         toastMessages.error('Đã xảy ra lỗi, vui lòng đăng nhập lại!');
+      } finally {
+        setIsFullScreenLoading(false);
       }
     };
 
@@ -95,61 +115,81 @@ const EmployerLogin = () => {
   };
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        marginTop: 8,
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Card sx={{ p: 6, pt: 2, boxShadow: 0 }}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            mb: 2,
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'error.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Đăng nhập tài khoản nhà tuyển dụng
-          </Typography>
-        </Box>
-
-        {/* Start: Error alert here */}
-        {errorMessage && (
-          <Box>
-            <Alert severity="error">
-              <AlertTitle>Đăng nhập thất bại</AlertTitle>
-              {errorMessage}
-            </Alert>
+    <>
+      <Container
+        maxWidth="sm"
+        sx={{
+          marginTop: 8,
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Card sx={{ p: 6, pt: 2, boxShadow: 0 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              mb: 2,
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'error.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Đăng nhập tài khoản nhà tuyển dụng
+            </Typography>
           </Box>
-        )}
-        {/* End: Error alert here */}
 
-        <Box sx={{ mt: 4 }}>
-          {/* Start: login form */}
-          <EmployerLoginForm onLogin={handleLogin} />
-          {/* End: login form */}
-        </Box>
-        <Grid container sx={{ mt: 3 }}>
-          <Grid item xs>
-            <Link href="#" variant="body2">
-              Quên mật khẩu?
-            </Link>
+          {errorMessage ? (
+            <Box>
+              <Alert severity="error">
+                <AlertTitle>Thất bại</AlertTitle>
+                {errorMessage}
+              </Alert>
+            </Box>
+          ) : successMessage ? (
+            <Box>
+              <Alert severity="success">
+                <AlertTitle>Thành công</AlertTitle>
+                {successMessage}
+              </Alert>
+            </Box>
+          ) : (
+            ''
+          )}
+
+          <Box sx={{ mt: 4 }}>
+            {/* Start: login form */}
+            <EmployerLoginForm onLogin={handleLogin} />
+            {/* End: login form */}
+          </Box>
+          <Grid container sx={{ mt: 3 }}>
+            <Grid item xs>
+              <Link
+                to="/quen-mat-khau"
+                variant="body2"
+                style={{ textDecoration: 'none', color: '#441da0' }}
+              >
+                Quên mật khẩu?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link
+                to="/dang-ky-tai-khoan-nha-tuyen-dung"
+                variant="body2"
+                style={{ textDecoration: 'none', color: '#441da0' }}
+              >
+                {'Chưa có tài khoản? Đăng ký'}
+              </Link>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Link href="#" variant="body2">
-              {'Chưa có tài khoản? Đăng ký'}
-            </Link>
-          </Grid>
-        </Grid>
-      </Card>
-    </Container>
+        </Card>
+      </Container>
+      {/* Start: full screen loading */}
+      {isFullScreenLoading && <BackdropLoading />}
+      {/* End: full screen loading */}
+    </>
   );
 };
 

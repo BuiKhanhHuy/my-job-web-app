@@ -72,6 +72,16 @@ const authService = {
 
     return httpRequest.put(url, data);
   },
+  forgotPassword: (data) => {
+    const url = 'api/auth/forgot-password/';
+
+    return httpRequest.post(url, data);
+  },
+  resetPassword: (data) => {
+    const url = 'api/auth/reset-password/';
+
+    return httpRequest.post(url, data);
+  },
 };
 
 export default authService;

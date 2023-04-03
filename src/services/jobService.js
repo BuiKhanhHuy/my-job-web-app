@@ -1,6 +1,21 @@
 import httpRequest from '../utils/httpRequest';
 
 const jobService = {
+  getEmployerJobPost: (params = {}) => {
+    const url = 'api/job/web/private-job-posts/';
+
+    return httpRequest.get(url, { params: params });
+  },
+  exportEmployerJobPosts:  (params = {}) => {
+    const url = 'api/job/web/private-job-posts/export/';
+
+    return httpRequest.get(url, { params: params });
+  },
+  getEmployerJobPostDetailById: (slug) => {
+    const url = `api/job/web/private-job-posts/${slug}/`;
+
+    return httpRequest.get(url);
+  },
   addJobPost: (data) => {
     const url = 'api/job/web/private-job-posts/';
 

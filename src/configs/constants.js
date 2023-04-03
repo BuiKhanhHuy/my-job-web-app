@@ -10,11 +10,13 @@ import ImageSvg6 from '../assets/images/svg-images/blooming.svg';
 import ImageSvg7 from '../assets/images/svg-images/country_side.svg';
 
 const AUTH_CONFIG = {
-  CLIENT_ID: '0VdoWiB6AaDGv1OiQeRn5c3BOcxEDMv1t4o8eFTt',
+  CLIENT_ID: 'Vf4qQABzoS9TdZ8PQiSKowMbojNVygTZsAySqLXp',
   CLIENT_SECRECT:
-    'daVqY2XSmkHfWUM2ufS5tn3vjnJFae77OqAXWQllFVqO3JQgCbz25e7npeGJlTXdXcNHwn1uo6amYm2Yq1zOOcG5uQbvG7xiAq6DWIjAvdmSNJN2xewAOpsk7ulKVqDb',
+  'SnvEBr7AvsoNNHouoF4TqZdvyjYeO16gk6RdF6IAek6GwkGGwK0jWTuWgo1ffzZmd6IIQUYLLfOTzRtCeyjYDfrm0bMcmAnPentRlHo3W9xmxbnKnNwXJ75Atj3m1yxr',
   ACCESS_TOKEN_KEY: 'access_token',
   REFRESH_TOKEN_KEY: 'refresh_token',
+
+  CAPTCHA_SITE_KEY: '6LfVR1AlAAAAAFyoz2dUHujHwecK0GwosYex_Gd4',
 };
 
 const ROLES_NAME = {
@@ -59,7 +61,7 @@ const IMAGES = {
   getLogo: (size, mode) => {
     return require(`../assets/logo/${mode}-logo-${size}.png`);
   },
-  coverImageDefault: require('../assets/images/cover-image-default.webp')
+  coverImageDefault: require('../assets/images/cover-image-default.webp'),
 };
 
 const IMAGE_SVG = {
@@ -69,7 +71,7 @@ const IMAGE_SVG = {
   img4: ImageSvg4,
   img5: ImageSvg5,
   img6: ImageSvg6,
-  img7: ImageSvg7
+  img7: ImageSvg7,
 };
 
 export {

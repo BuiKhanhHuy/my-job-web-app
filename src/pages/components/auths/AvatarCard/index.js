@@ -15,7 +15,6 @@ import {
 } from '@mui/material';
 import AvatarEditor from 'react-avatar-editor';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
@@ -131,8 +130,6 @@ const AvatarCard = () => {
       .finally(() => setIsFullScreenLoading(false));
   };
 
-  const handleDelete = () => {};
-
   return (
     <>
       <Stack alignItems="center">
@@ -166,15 +163,6 @@ const AvatarCard = () => {
           >
             <EditIcon />
           </IconButton>
-          {currentUser?.avatarUrl && (
-            <IconButton
-              aria-label="delete"
-              color="error"
-              onClick={handleDelete}
-            >
-              <DeleteIcon />
-            </IconButton>
-          )}
         </Box>
         <Typography variant="subtitle2" gutterBottom sx={{ mt: 1 }}>
           Ảnh đại diện

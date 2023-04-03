@@ -28,7 +28,7 @@ function EnhancedTableHead({ headCells, order, orderBy, onRequestSort }) {
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
-              disabled={headCell.id === 'action' ? true : false}
+              disabled={!headCell.showOrder || false}
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
@@ -60,6 +60,7 @@ const DataTableCustom = ({
   orderBy,
   page,
   rowsPerPage,
+  count,
   handleRequestSort,
   handleChangePage,
   handleChangeRowsPerPage,
@@ -87,7 +88,7 @@ const DataTableCustom = ({
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={rows.length}
+        count={count}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

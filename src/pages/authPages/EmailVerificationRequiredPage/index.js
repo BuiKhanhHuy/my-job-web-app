@@ -18,7 +18,7 @@ const EmailVerificationRequiredPage = () => {
     >
       <Stack sx={{ pb: 2 }} alignItems="center">
         <Typography variant="h5" gutterBottom>
-          Xác minh email
+          Xác nhận email
         </Typography>
         <Typography variant="subtitle2 ">
           Cảm ơn bạn đã đăng ký tài khoản MyJob
@@ -35,12 +35,12 @@ const EmailVerificationRequiredPage = () => {
           </Box>
           <Box>
             <Typography variant="h5" gutterBottom>
-              Xác minh địa chỉ email của bạn
+              Xác nhận địa chỉ email của bạn
             </Typography>
           </Box>
           <Box>
             <Typography variant="body1" gutterBottom>
-              Email xác minh đã được gửi đến:
+              Email xác nhận đã được gửi đến:
             </Typography>
             <Typography variant="subtitle2" sx={{ textAlign: 'center' }}>
               {email}

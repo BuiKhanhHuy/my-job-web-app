@@ -26,7 +26,6 @@ import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 import { IMAGES } from '../../../../configs/constants';
-import AccountSwitchMenu from '../../commons/AccountSwitchMenu';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -296,10 +295,6 @@ const drawer = (location) => (
         </StyledTreeItem>
       </TreeView>
     </Box>
-    <Divider variant="middle" sx={{ my: 2 }} />
-    <Stack sx={{ pb: 2 }}>
-      <AccountSwitchMenu isShowButton={true} />
-    </Stack>
   </div>
 );
 

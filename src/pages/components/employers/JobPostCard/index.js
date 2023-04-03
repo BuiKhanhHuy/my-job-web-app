@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
@@ -12,65 +11,78 @@ import toastMessages from '../../../../utils/toastMessages';
 import errorHandling from '../../../../utils/errorHandling';
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
+import xlsxUtils from '../../../../utils/xlsxUtils';
 import FormPopup from '../../../../components/controls/FormPopup';
 import JobPostFilterForm from '../JobPostFilterForm';
 import JobPostForm from '../JobPostForm';
 
-import companyService from '../../../../services/companyService';
 import jobService from '../../../../services/jobService';
 import JobPostsTable from '../JobPostsTable';
 
 const headCells = [
   {
     id: 'jobName',
+    showOrder: true,
     numeric: false,
     disablePadding: true,
     label: 'Tên tin đăng',
   },
   {
     id: 'createAt',
+    showOrder: true,
     numeric: false,
     disablePadding: false,
     label: 'Ngày đăng',
   },
   {
     id: 'deadline',
+    showOrder: true,
     numeric: false,
     disablePadding: false,
     label: 'Thời hạn nộp',
   },
   {
-    id: 'appliedNumber',
+    id: 'appliedTotal',
+    showOrder: true,
     numeric: false,
     disablePadding: false,
     label: 'Lượt nộp',
   },
   {
-    id: 'viewedNumber',
+    id: 'viewedTotal',
+    showOrder: true,
     numeric: false,
     disablePadding: false,
     label: 'Lượt xem',
   },
   {
     id: 'isUrgent',
+    showOrder: false,
     numeric: false,
     disablePadding: false,
     label: 'Trạng thái',
   },
   {
     id: 'action',
+    showOrder: false,
     numeric: true,
     disablePadding: false,
     label: 'Hành động',
   },
 ];
 
+const pageSize = 5;
+
 const JobPostCard = () => {
-  const { currentUser } = useSelector((state) => state.user);
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('createAt');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [count, setCount] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(pageSize);
+  const [filterData, setFilterData] = React.useState({
+    kw: '',
+    isUrgent: '',
+  });
   const [openPopup, setOpenPopup] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isLoadingJobPost, setIsLoadingJobPost] = React.useState(true);
@@ -83,9 +95,6 @@ const JobPostCard = () => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-
-    console.log(isAsc ? 'desc' : 'asc');
-    console.log(property);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -98,14 +107,16 @@ const JobPostCard = () => {
   };
 
   React.useEffect(() => {
-    const loadJobPosts = async () => {
+    const loadJobPosts = async (params) => {
       setIsLoadingJobPost(true);
 
       try {
-        const resData = await companyService.getJobPosts();
+        const resData = await jobService.getEmployerJobPost(params);
 
-        console.log(resData.data);
-        setJobPosts(resData.data);
+        const data = resData.data;
+
+        setCount(data.count);
+        setJobPosts(data.results);
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -113,14 +124,21 @@ const JobPostCard = () => {
       }
     };
 
-    loadJobPosts();
-  }, [isSuccess]);
+    loadJobPosts({
+      page: page + 1,
+      pageSize: rowsPerPage,
+      ordering: `${order === 'desc' ? '-' : ''}${orderBy}`,
+      ...filterData,
+    });
+  }, [isSuccess, page, rowsPerPage, order, orderBy, filterData]);
 
   const handleShowUpdate = (id) => {
     const loadJobPostDetailById = async (jobPostId) => {
       setIsFullScreenLoading(true);
       try {
-        const resData = await companyService.getJobPostDetailById(jobPostId);
+        const resData = await jobService.getEmployerJobPostDetailById(
+          jobPostId
+        );
 
         var data = resData.data;
         data = {
@@ -220,6 +238,39 @@ const JobPostCard = () => {
     );
   };
 
+  const handleFilter = (data) => {
+    setFilterData({
+      ...data,
+      pageSize: pageSize,
+    });
+    setPage(0);
+  };
+
+  const handleExport = () => {
+    const exportJobPosts = async (params) => {
+      setIsFullScreenLoading(true);
+
+      try {
+        const resData = await jobService.exportEmployerJobPosts(params);
+        const data = resData.data;
+
+        // export
+        xlsxUtils.exportToXLSX(data, "DanhS");
+      } catch (error) {
+        errorHandling(error);
+      } finally {
+        setIsFullScreenLoading(false);
+      }
+    };
+
+    exportJobPosts({
+      page: page + 1,
+      pageSize: rowsPerPage,
+      ordering: `${order === 'desc' ? '-' : ''}${orderBy}`,
+      ...filterData,
+    });
+  };
+
   return (
     <>
       <Stack
@@ -244,13 +295,16 @@ const JobPostCard = () => {
           <Typography variant="subtitle2">Bộ lọc: </Typography>
         </Box>
         <Box flex={1}>
-          <JobPostFilterForm />
+          {/* Start: JobPostFilterForm */}
+          <JobPostFilterForm handleFilter={handleFilter} />
+          {/* End: JobPostFilterForm */}
         </Box>
         <Stack direction="row" justifyContent="flex-end" spacing={1}>
           <Button
             variant="outlined"
             color="secondary"
             startIcon={<FileDownloadOutlinedIcon />}
+            onClick={handleExport}
           >
             Tải danh sách
           </Button>
@@ -272,6 +326,7 @@ const JobPostCard = () => {
         orderBy={orderBy}
         page={page}
         rowsPerPage={rowsPerPage}
+        count={count}
         handleRequestSort={handleRequestSort}
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
