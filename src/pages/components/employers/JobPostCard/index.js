@@ -255,7 +255,7 @@ const JobPostCard = () => {
         const data = resData.data;
 
         // export
-        xlsxUtils.exportToXLSX(data, "DanhS");
+        xlsxUtils.exportToXLSX(data, "DanhSachViecLam");
       } catch (error) {
         errorHandling(error);
       } finally {

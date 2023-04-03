@@ -12,7 +12,7 @@ import ImageSvg7 from '../assets/images/svg-images/country_side.svg';
 const AUTH_CONFIG = {
   CLIENT_ID: 'Vf4qQABzoS9TdZ8PQiSKowMbojNVygTZsAySqLXp',
   CLIENT_SECRECT:
-  'SnvEBr7AvsoNNHouoF4TqZdvyjYeO16gk6RdF6IAek6GwkGGwK0jWTuWgo1ffzZmd6IIQUYLLfOTzRtCeyjYDfrm0bMcmAnPentRlHo3W9xmxbnKnNwXJ75Atj3m1yxr',
+    'SnvEBr7AvsoNNHouoF4TqZdvyjYeO16gk6RdF6IAek6GwkGGwK0jWTuWgo1ffzZmd6IIQUYLLfOTzRtCeyjYDfrm0bMcmAnPentRlHo3W9xmxbnKnNwXJ75Atj3m1yxr',
   ACCESS_TOKEN_KEY: 'access_token',
   REFRESH_TOKEN_KEY: 'refresh_token',
 
@@ -23,6 +23,11 @@ const ROLES_NAME = {
   ADMIN: 'ADMIN',
   EMPLOYER: 'EMPLOYER',
   JOB_SEEKER: 'JOB_SEEKER',
+};
+
+const CV_TYPES = {
+  CV_WEBSITE: 'WEBSITE',
+  CV_UPLOAD: 'UPLOAD',
 };
 
 const HOME_FILTER_CAREER = [
@@ -43,11 +48,6 @@ const REGEX_VATIDATE = {
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
   urlRegExp:
     /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
-};
-
-const CV_TYPES = {
-  cvWebsite: 'WEBSITE',
-  cvUpload: 'UPLOAD',
 };
 
 const DATE_OPTIONS = {
@@ -77,9 +77,9 @@ const IMAGE_SVG = {
 export {
   AUTH_CONFIG,
   ROLES_NAME,
+  CV_TYPES,
   HOME_FILTER_CAREER,
   REGEX_VATIDATE,
-  CV_TYPES,
   DATE_OPTIONS,
   IMAGES,
   IMAGE_SVG,

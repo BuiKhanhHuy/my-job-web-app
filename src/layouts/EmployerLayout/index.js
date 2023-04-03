@@ -5,7 +5,6 @@ import { Box  } from '@mui/material';
 
 import Header from '../components/employers/Header';
 import Sidebar from '../components/employers/Sidebar';
-import Footer from '../components/employers/Footer';
 
 const drawerWidth = 240;
 
@@ -53,12 +52,6 @@ function EmployerLayout(props) {
         <Box sx={{ p: 3, mt: 7 }}>
           <Outlet />
         </Box>
-
-        {/* Start: Footer */}
-        <Box>
-          <Footer />
-        </Box>
-        {/* End: Footer */}
       </Box>
     </Box>
   );

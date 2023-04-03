@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, Pagination, Stack } from '@mui/material';
+import { Grid, Pagination, Stack } from '@mui/material';
 
 import jobService from '../../../../services/jobService';
 import JobPost from '../../../../components/JobPost';

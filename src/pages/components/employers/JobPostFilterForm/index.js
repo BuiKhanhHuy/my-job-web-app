@@ -4,7 +4,6 @@ import { Grid, Button, Stack } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
-import CheckboxCustom from '../../../../components/controls/CheckboxCustom';
 import SingleSelectCustom from '../../../../components/controls/SingleSelectCustom';
 
 const JobPostFilterForm = ({ handleFilter }) => {

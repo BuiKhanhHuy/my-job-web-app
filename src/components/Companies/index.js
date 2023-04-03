@@ -8,7 +8,6 @@ import Company from '../Company';
 import companyService from '../../services/companyService';
 import toastMessages from '../../utils/toastMessages';
 import errorHandling from '../../utils/errorHandling';
-import { LocalConvenienceStoreOutlined } from '@mui/icons-material';
 
 const Companies = () => {
   const { companyFilter } = useSelector((state) => state.filter);

@@ -21,7 +21,20 @@ export const userSlice = createSlice({
       page: 1,
       pageSize: 12,
     },
-    resumeFilter: {},
+    resumeFilter: {
+      kw: '',
+      cityId: '',
+      careerId: '',
+      experienceId: '',
+      positionId: '',
+      academicLevelId: '',
+      typeOfWorkplaceId: '',
+      jobTypeId: '',
+      genderId: '',
+      maritalStatusId: '',
+      page: 1,
+      pageSize: 10,
+    },
   },
   reducers: {
     searchJobPost: (state, action) => {
@@ -55,6 +68,22 @@ export const userSlice = createSlice({
     searchResume: (state, action) => {
       state.resumeFilter = action.payload;
     },
+    resetSearchResume: (state) => {
+      state.resumeFilter = {
+        kw: '',
+        cityId: '',
+        careerId: '',
+        experienceId: '',
+        positionId: '',
+        academicLevelId: '',
+        typeOfWorkplaceId: '',
+        jobTypeId: '',
+        genderId: '',
+        maritalStatusId: '',
+        page: 1,
+        pageSize: 10,
+      };
+    },
   },
 });
 
@@ -65,6 +94,7 @@ const {
   searchCompany,
   resetSearchCompany,
   searchResume,
+  resetSearchResume
 } = userSlice.actions;
 
 export default reducer;
@@ -74,4 +104,5 @@ export {
   searchCompany,
   resetSearchCompany,
   searchResume,
+  resetSearchResume
 };
