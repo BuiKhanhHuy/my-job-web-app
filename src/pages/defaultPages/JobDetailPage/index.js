@@ -721,6 +721,9 @@ const JobDetailPage = () => {
       <SocialNetworkSharingPopup
         open={openSharePopup}
         setOpenPopup={setOpenSharePopup}
+        facebook={{
+          url: window.location.href,
+        }}
       />
     </>
   );

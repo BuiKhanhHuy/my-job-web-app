@@ -24,7 +24,15 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 
 const SocialNetworkSharingPopup = (props) => {
-  const { setOpenPopup, open } = props;
+  const {
+    setOpenPopup,
+    open,
+    facebook ,
+    facebookMessenger = null,
+    linkedin = null,
+    twitter = null,
+    email = null,
+  } = props;
 
   return (
     <Dialog onClose={() => setOpenPopup(false)} open={open}>
@@ -47,46 +55,56 @@ const SocialNetworkSharingPopup = (props) => {
       <List sx={{ pt: 0 }}>
         <ListItem>
           <Stack direction="row" spacing={1}>
-            <FacebookShareButton
-              url={'https://www.example.com'}
-              quote={'Dummy text!'}
-              hashtag="#muo"
-            >
-              <FacebookIcon size={32} round />
-            </FacebookShareButton>
+            {facebook && (
+              <FacebookShareButton
+                url={facebook?.url || ""}
+                quote={facebook?.quote || ""}
+                hashtag={facebook?.hashtag || ""}
+              >
+                <FacebookIcon size={32} round />
+              </FacebookShareButton>
+            )}
 
-            <FacebookMessengerShareButton
-              url={'https://www.example.com'}
-              appId=""
-              redirectUri=""
-              to=""
-            >
-              <FacebookMessengerIcon size={32} round />
-            </FacebookMessengerShareButton>
+            {facebookMessenger && (
+              <FacebookMessengerShareButton
+                url={'https://www.example.com'}
+                appId=""
+                redirectUri=""
+                to=""
+              >
+                <FacebookMessengerIcon size={32} round />
+              </FacebookMessengerShareButton>
+            )}
 
-            <LinkedinShareButton
-              url={'https://www.example.com'}
-              quote={'Dummy text!'}
-              hashtag="#muo"
-            >
-              <LinkedinIcon size={32} round />
-            </LinkedinShareButton>
+            {linkedin && (
+              <LinkedinShareButton
+                url={'https://www.example.com'}
+                quote={'Dummy text!'}
+                hashtag="#muo"
+              >
+                <LinkedinIcon size={32} round />
+              </LinkedinShareButton>
+            )}
 
-            <TwitterShareButton
-              url={'https://www.example.com'}
-              quote={'Dummy text!'}
-              hashtag="#muo"
-            >
-              <TwitterIcon size={32} round />
-            </TwitterShareButton>
+            {twitter && (
+              <TwitterShareButton
+                url={'https://www.example.com'}
+                quote={'Dummy text!'}
+                hashtag="#muo"
+              >
+                <TwitterIcon size={32} round />
+              </TwitterShareButton>
+            )}
 
-            <EmailShareButton
-              url={'https://www.example.com'}
-              subject="Tiêu đề"
-              body="Body nè!"
-            >
-              <EmailIcon size={32} round />
-            </EmailShareButton>
+            {email && (
+              <EmailShareButton
+                url={'https://www.example.com'}
+                subject="Tiêu đề"
+                body="Body nè!"
+              >
+                <EmailIcon size={32} round />
+              </EmailShareButton>
+            )}
           </Stack>
         </ListItem>
       </List>
