@@ -100,7 +100,7 @@ const CompanyCard = () => {
         const data = resData.data;
 
         toastMessages.success('Cập nhật ảnh bìa công ty thành công.');
-        companyCoverImageUrl(data?.companyCoverImageUrl);
+        setCompanyCoverImageUrl(data?.companyCoverImageUrl);
       } catch (error) {
         errorHandling(error);
       } finally {

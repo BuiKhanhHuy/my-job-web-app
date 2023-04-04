@@ -40,6 +40,7 @@ import NoDataCard from '../../../components/NoDataCard';
 import ImageGalleryCustom from '../../../components/ImageGalleryCustom';
 import companyService from '../../../services/companyService';
 import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
+import QRCode from 'react-qr-code';
 
 const CompanyDetailPage = () => {
   const { slug } = useParams();
@@ -108,7 +109,7 @@ const CompanyDetailPage = () => {
             />
           </Box>
           <Box sx={{ p: 3, pt: 1 }}>
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={2} alignItems="center">
               <Box>
                 <Avatar
                   sx={{
@@ -165,7 +166,15 @@ const CompanyDetailPage = () => {
                   </Box>
                 </Stack>
               </Box>
-              <Stack spacing={1}>
+              <Box sx={{pt: 1}}>
+                <QRCode
+                  size={75}
+                  style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
+                  value={window.location.href}
+                  viewBox={`0 0 256 256`}
+                />
+              </Box>
+              <Stack spacing={1} justifyContent="center">
                 <LoadingButton
                   onClick={handleFollow}
                   startIcon={

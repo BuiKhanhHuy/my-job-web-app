@@ -13,6 +13,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import QRCode from 'react-qr-code';
 import { LoadingButton } from '@mui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -31,6 +32,7 @@ import NoDataCard from '../../../components/NoDataCard';
 import Map from '../../../components/Map';
 import jobService from '../../../services/jobService';
 import ApplyCard from '../../../components/ApplyCard';
+import SocialNetworkSharingPopup from '../../../components/SocialNetworkSharingPopup/SocialNetworkSharingPopup';
 
 const Loading = (
   <>
@@ -231,7 +233,8 @@ const action = (
   isLoadingApply,
   isLoadingSave,
   handleSave,
-  handleShowApplyForm
+  handleShowApplyForm,
+  setOpenSharePopup
 ) => (
   <Stack direction="row" spacing={2}>
     <Button
@@ -258,6 +261,7 @@ const action = (
       size="large"
       startIcon={<ShareIcon />}
       sx={{ textTransform: 'inherit' }}
+      onClick={() => setOpenSharePopup(true)}
     >
       Chia sẻ
     </Button>
@@ -267,6 +271,7 @@ const action = (
 const JobDetailPage = () => {
   const { slug } = useParams();
   const { allConfig } = useSelector((state) => state.config);
+  const [openSharePopup, setOpenSharePopup] = React.useState(false);
   const [openPopup, setOpenPopup] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isLoadingApply, setIsLoadingApply] = React.useState(false);
@@ -366,6 +371,18 @@ const JobDetailPage = () => {
                           )}
                         </Typography>
                       </Box>
+                      <Box>
+                        <QRCode
+                          size={75}
+                          style={{
+                            height: 'auto',
+                            maxWidth: '100%',
+                            width: '100%',
+                          }}
+                          value={window.location.href}
+                          viewBox={`0 0 256 256`}
+                        />
+                      </Box>
                     </Stack>
                   </Box>
                   <Divider sx={{ my: 2 }} />
@@ -418,7 +435,8 @@ const JobDetailPage = () => {
                       isLoadingApply,
                       isLoadingSave,
                       handleSave,
-                      handleShowApplyForm
+                      handleShowApplyForm,
+                      setOpenSharePopup
                     )}
                   </Stack>
                   <Divider sx={{ my: 2 }} />
@@ -614,7 +632,8 @@ const JobDetailPage = () => {
                   isLoadingApply,
                   isLoadingSave,
                   handleSave,
-                  handleShowApplyForm
+                  handleShowApplyForm,
+                  setOpenSharePopup
                 )}
               </Card>
               {/* End: mo ta chi tiet */}
@@ -698,6 +717,11 @@ const JobDetailPage = () => {
         setOpenPopup={setOpenPopup}
       />
       {/* End: ApplyCard */}
+
+      <SocialNetworkSharingPopup
+        open={openSharePopup}
+        setOpenPopup={setOpenSharePopup}
+      />
     </>
   );
 };

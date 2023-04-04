@@ -125,6 +125,7 @@ const JobSeekerLogin = () => {
 
   return (
     <>
+   
       <Container
         maxWidth="sm"
         sx={{
@@ -133,7 +134,7 @@ const JobSeekerLogin = () => {
           alignItems: 'center',
         }}
       >
-        <Card sx={{ p: 6, pt: 2, boxShadow: 0 }}>
+        <Card sx={{ p: 6, pt: 2 }} >
           <Box
             sx={{
               display: 'flex',
@@ -146,7 +147,7 @@ const JobSeekerLogin = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Đăng nhập tài khoản ứng viên
+              Đăng nhập tài khoản ứng viên  sdfsdf
             </Typography>
           </Box>
 

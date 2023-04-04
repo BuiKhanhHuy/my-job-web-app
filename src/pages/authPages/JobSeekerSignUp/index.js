@@ -60,7 +60,7 @@ const JobSeekerSignUp = () => {
           alignItems: 'center',
         }}
       >
-        <Card sx={{ p: 6, pt: 2, boxShadow: 0 }}>
+        <Card sx={{ p: 6, pt: 2 }}>
           <Box
             sx={{
               display: 'flex',

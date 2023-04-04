@@ -9,7 +9,7 @@ const DefaultLayout = () => {
   return (
     <Box>
       <Header />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" >
         <section>
           <Outlet />
         </section>
