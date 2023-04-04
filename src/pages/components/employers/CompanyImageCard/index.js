@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Box, Grid, IconButton, Button } from '@mui/material';
+import { Box, Grid, IconButton, Button, Skeleton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
+import NoDataCard from '../../../../components/NoDataCard';
 import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
@@ -14,11 +15,14 @@ import { confirmModal } from '../../../../utils/sweetalert2Modal';
 const CompanyImageCard = () => {
   const [open, setOpen] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
   const [companyImages, setCompanyImages] = React.useState([]);
 
   React.useEffect(() => {
     const getImages = async () => {
+      setIsLoading(true);
+
       try {
         const resData = await companyImageService.getCompanyImages();
         const data = resData.data;
@@ -26,6 +30,8 @@ const CompanyImageCard = () => {
         setCompanyImages(data.results);
       } catch (error) {
         errorHandling(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -85,30 +91,43 @@ const CompanyImageCard = () => {
         color="primary"
         startIcon={<CloudUploadIcon />}
         onClick={() => setOpen(true)}
+        disabled={isLoading}
       >
         Tải ảnh lên
       </Button>
 
-      <Grid container spacing={2}>
-        {companyImages.map((value) => (
-          <Grid key={value.id} item xs={3}>
-            <Box>
-              <IconButton
-                aria-label="delte"
-                onClick={() => handleDelete(value.id)}
-                sx={{ color: 'white', bottom: -40, zIndex: 1 }}
-              >
-                <DeleteOutlineIcon />
-              </IconButton>
-              <MuiImageCustom
-                src={value?.imageUrl}
-                height={222}
-                sx={{ borderRadius: 2 }}
-              />
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
+      {isLoading ? (
+        <Grid container spacing={2}>
+          {Array.from(Array(12).keys()).map((value) => (
+            <Grid key={value.id} item xs={3}>
+              <Skeleton height={222} width="100%" />
+            </Grid>
+          ))}
+        </Grid>
+      ) : companyImages.length === 0 ? (
+        <NoDataCard title="Chưa có hình ảnh nào được tải lên." />
+      ) : (
+        <Grid container spacing={2}>
+          {companyImages.map((value) => (
+            <Grid key={value.id} item xs={3}>
+              <Box>
+                <IconButton
+                  aria-label="delte"
+                  onClick={() => handleDelete(value.id)}
+                  sx={{ color: 'white', bottom: -40, zIndex: 1 }}
+                >
+                  <DeleteOutlineIcon />
+                </IconButton>
+                <MuiImageCustom
+                  src={value?.imageUrl}
+                  height={222}
+                  sx={{ borderRadius: 2 }}
+                />
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      )}
 
       {/* Start: DropzoneDialog */}
       <DropzoneDialogCustom
