@@ -11,6 +11,24 @@ const companyService = {
 
     return httpRequest.put(url, data);
   },
+  updateCompanyImageUrl: (data) => {
+    const url = `api/info/web/private-companies/company-image-url/`;
+
+    return httpRequest.put(url, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
+  updateCompanyCoverImageUrl: (data) => {
+    const url = `api/info/web/private-companies/company-cover-image-url/`;
+
+    return httpRequest.put(url, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
 
   // public
   getCompanies: (params = {}) => {

@@ -117,14 +117,14 @@ const AvatarCard = () => {
     formData.append('file', blob, 'avatar.png');
 
     setIsFullScreenLoading(true);
+    setModalOpen(false);
+    
     dispatch(updateAvatar(formData))
       .unwrap()
       .then(() => {
-        setModalOpen(false);
         toastMessages.success('Cập nhật ảnh đại diện thành công.');
       })
       .catch(() => {
-        setModalOpen(false);
         toastMessages.error('Đã xảy ra lỗi, vui lòng thử lại.');
       })
       .finally(() => setIsFullScreenLoading(false));
