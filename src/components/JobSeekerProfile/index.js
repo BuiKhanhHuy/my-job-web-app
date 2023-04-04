@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Box,
   Card,
@@ -201,7 +201,13 @@ const JobSeekerProfile = ({
             </Tooltip>
             <Tooltip title="Xem hồ sơ" arrow>
               <IconButton aria-label="view" size="small">
-                <RemoveRedEyeOutlinedIcon fontSize="small" color="primary" />
+                <RemoveRedEyeOutlinedIcon
+                  fontSize="small"
+                  color="primary"
+                  onClick={() =>
+                    nav(`/nha-tuyen-dung/chi-tiet-ung-vien/${slug}`)
+                  }
+                />
               </IconButton>
             </Tooltip>
           </Box>

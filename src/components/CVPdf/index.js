@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
 
 const CVPdf = () => {
   return (
-    <PDFViewer style={{ width: '100%', height: 800 }}>
-      <Document>
-        <Page size="A4" style={styles.body}>
+    <PDFViewer style={{ width: '100%', height: 800 }} >
+      <Document >
+        <Page size="A4" style={styles.body} >
           <View style={{ alignItems: 'center' }}>
             <View>
               <Image

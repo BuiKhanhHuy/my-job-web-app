@@ -15,7 +15,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
 
-const Popup = ({ title, openPopup, setOpenPopup, children }) => {
+const Popup = ({
+  title,
+  openPopup,
+  setOpenPopup,
+  showDialogAction = true,
+  children,
+}) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -43,19 +49,21 @@ const Popup = ({ title, openPopup, setOpenPopup, children }) => {
         </DialogTitle>
         <Divider />
         <DialogContent>{children}</DialogContent>
-        <DialogActions sx={{ py: 2 }}>
-          <LoadingButton
-            loading={false}
-            loadingPosition="start"
-            startIcon={<SaveIcon />}
-            variant="contained"
-            sx={{ margin: '0 auto' }}
-            type="submit"
-            form="modal-form"
-          >
-            Lưu
-          </LoadingButton>
-        </DialogActions>
+        {showDialogAction && (
+          <DialogActions sx={{ py: 2 }}>
+            <LoadingButton
+              loading={false}
+              loadingPosition="start"
+              startIcon={<SaveIcon />}
+              variant="contained"
+              sx={{ margin: '0 auto' }}
+              type="submit"
+              form="modal-form"
+            >
+              Lưu
+            </LoadingButton>
+          </DialogActions>
+        )}
       </Dialog>
     </div>
   );
