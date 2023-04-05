@@ -16,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Container } from '@mui/system';
 import { useSelector } from 'react-redux';
 
-const DesktopContent = (setOpen, careers) => {
+const DesktopContent = (setOpen, careers, handleFilter) => {
   return (
     <Box>
       <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
@@ -53,7 +53,18 @@ const DesktopContent = (setOpen, careers) => {
                     .filter((value) => value.isHot === true)
                     .map((career) => (
                       <Grid key={career.id} xs={12} item>
-                        <Typography>{career?.name}</Typography>
+                        <Typography
+                          sx={{
+                            cursor: 'pointer',
+                            '&:hover': {
+                              color: '#fca34d',
+                              fontWeight: 'bold',
+                            },
+                          }}
+                          onClick={() => handleFilter(career.id)}
+                        >
+                          {career?.name}
+                        </Typography>
                       </Grid>
                     ))}
                 </Grid>
@@ -77,7 +88,18 @@ const DesktopContent = (setOpen, careers) => {
                       xl={4}
                       item
                     >
-                      <Typography>{career?.name}</Typography>
+                      <Typography
+                        sx={{
+                          cursor: 'pointer',
+                          '&:hover': {
+                            color: '#fca34d',
+                            fontWeight: 'bold',
+                          },
+                        }}
+                        onClick={() => handleFilter(career.id)}
+                      >
+                        {career?.name}
+                      </Typography>
                     </Grid>
                   ))}
               </Grid>
@@ -89,7 +111,7 @@ const DesktopContent = (setOpen, careers) => {
   );
 };
 
-const MobileContent = (setOpen, careers) => {
+const MobileContent = (setOpen, careers, handleFilter) => {
   return (
     <Box>
       <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
@@ -111,7 +133,16 @@ const MobileContent = (setOpen, careers) => {
         <Grid container spacing={2}>
           {careers.map((career) => (
             <Grid key={career.id} xs={12} sm={6} md={6} item>
-              <Typography>
+              <Typography
+                sx={{
+                  cursor: 'pointer',
+                  '&:hover': {
+                    color: '#fca34d',
+                    fontWeight: 'bold',
+                  },
+                }}
+                onClick={() => handleFilter(career.id)}
+              >
                 {career?.name}{' '}
                 {career.isHot && (
                   <Chip label="Hot" size="small" color="error" />
@@ -125,7 +156,7 @@ const MobileContent = (setOpen, careers) => {
   );
 };
 
-const SubHeaderDialog = ({ open, setOpen, topCareers }) => {
+const SubHeaderDialog = ({ open, setOpen, topCareers, handleFilter }) => {
   const { allConfig } = useSelector((state) => state.config);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -166,8 +197,8 @@ const SubHeaderDialog = ({ open, setOpen, topCareers }) => {
     >
       <Container maxWidth="xl" sx={{ mt: 1 }}>
         {fullScreen
-          ? MobileContent(setOpen, careers)
-          : DesktopContent(setOpen, careers)}
+          ? MobileContent(setOpen, careers, handleFilter)
+          : DesktopContent(setOpen, careers, handleFilter)}
       </Container>
     </Dialog>
   );

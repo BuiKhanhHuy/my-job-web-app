@@ -10,7 +10,10 @@ const JobsByJobTypePage = () => {
     <Container maxWidth="lg" sx={{ py: 2 }}>
       <Typography variant="h4">Việc làm theo Hình thức là việc</Typography>
       <Divider sx={{ mt: 1, mb: 4 }} />
-      <CategoryCard options={allConfig?.jobTypeOptions || []} />
+      <CategoryCard
+        options={allConfig?.jobTypeOptions || []}
+        type={'JOB_TYPE'}
+      />
     </Container>
   );
 };

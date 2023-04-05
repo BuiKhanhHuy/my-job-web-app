@@ -185,25 +185,19 @@ const Footer = () => {
             </ListItem>
             <ListItem>
               <Stack direction="row" spacing={2}>
-                <Link
-                  href={LINKS.CHPLAY_LINK}
-                  target="_blank"
-                  height="50"
-                  width="150"
-                >
+                <Link href={LINKS.CHPLAY_LINK} target="_blank">
                   <CardMedia
+                    height="50"
+                    width="150"
                     component="img"
                     image={require('../../../../assets/images/app-android-download.png')}
                     alt="Paella dish"
                   />
                 </Link>
-                <Link
-                  href={LINKS.APPSTORE_LINK}
-                  target="_blank"
-                  height="50"
-                  width="150"
-                >
+                <Link href={LINKS.APPSTORE_LINK} target="_blank">
                   <CardMedia
+                    height="50"
+                    width="150"
                     component="img"
                     image={require('../../../../assets/images/app-ios-download.png')}
                     alt="Paella dish"
@@ -223,13 +217,10 @@ const Footer = () => {
             </ListItem>
             <ListItem>
               <Stack direction="row" spacing={2}>
-                <Link
-                  href={LINKS.CERTIFICATE_LINK}
-                  target="_blank"
-                  height="30"
-                  width="100"
-                >
+                <Link href={LINKS.CERTIFICATE_LINK} target="_blank">
                   <CardMedia
+                    height="50"
+                    width="100"
                     component="img"
                     image={require('../../../../assets/images/certification-logo.png')}
                     alt="Paella dish"

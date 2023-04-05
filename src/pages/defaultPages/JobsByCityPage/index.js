@@ -10,7 +10,7 @@ const JobsByCityPage = () => {
     <Container maxWidth="lg" sx={{ py: 2 }}>
       <Typography variant="h4">Việc làm theo Tỉnh thành</Typography>
       <Divider sx={{ mt: 1, mb: 4 }} />
-      <CategoryCard options={allConfig?.cityOptions || []} />
+      <CategoryCard options={allConfig?.cityOptions || []}  type={"CITY"}/>
     </Container>
   );
 };

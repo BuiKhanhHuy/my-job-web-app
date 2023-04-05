@@ -1,18 +1,41 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Grid, Stack, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+
+import { searchJobPost } from '../../../../redux/filterSlice';
 
 const maxItem = 6;
 
 const JobByCategory = () => {
   const { allConfig } = useSelector((state) => state.config);
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+  const { jobPostFilter } = useSelector((state) => state.filter);
 
   const careerOptions = allConfig?.careerOptions || [];
   const cityOptions = allConfig?.cityOptions || [];
   const jobTypeOptions = allConfig?.jobTypeOptions || [];
+
+  const handleFilter = (id, type) => {
+    switch (type) {
+      case 'CARRER':
+        dispatch(searchJobPost({ ...jobPostFilter, careerId: id }));
+        break;
+      case 'CITY':
+        dispatch(searchJobPost({ ...jobPostFilter, cityId: id }));
+        break;
+      case 'JOB_TYPE':
+        dispatch(searchJobPost({ ...jobPostFilter, jobTypeId: id }));
+        break;
+      default:
+        break;
+    }
+    nav('/viec-lam');
+  };
 
   return (
     <Grid container spacing={3}>
@@ -21,8 +44,19 @@ const JobByCategory = () => {
           <Typography variant="h6">Việc làm theo nghề nghiệp</Typography>
           <Stack>
             {careerOptions?.slice(0, maxItem).map((item) => (
-              <Typography key={item.id} gutterBottom>
-                {item.name}
+              <Typography
+                sx={{
+                  cursor: 'pointer',
+                  '&:hover': {
+                    color: '#fca34d',
+                    fontWeight: 'bold',
+                  },
+                }}
+                key={item.id}
+                gutterBottom
+                onClick={() => handleFilter(item.id, "CARRER")}
+              >
+                <span> {item.name}</span>
               </Typography>
             ))}
             {careerOptions.length > maxItem && (
@@ -45,7 +79,18 @@ const JobByCategory = () => {
           <Typography variant="h6">Việc làm theo theo khu vực</Typography>
           <Stack>
             {cityOptions?.slice(0, maxItem).map((item) => (
-              <Typography key={item.id} gutterBottom>
+              <Typography
+                sx={{
+                  cursor: 'pointer',
+                  '&:hover': {
+                    color: '#fca34d',
+                    fontWeight: 'bold',
+                  },
+                }}
+                key={item.id}
+                gutterBottom
+                onClick={() => handleFilter(item.id, "CITY")}
+              >
                 {item.name}
               </Typography>
             ))}
@@ -69,7 +114,18 @@ const JobByCategory = () => {
           <Typography variant="h6">Việc làm theo hình thức làm việc</Typography>
           <Stack>
             {jobTypeOptions?.slice(0, maxItem).map((item) => (
-              <Typography key={item.id} gutterBottom>
+              <Typography
+                sx={{
+                  cursor: 'pointer',
+                  '&:hover': {
+                    color: '#fca34d',
+                    fontWeight: 'bold',
+                  },
+                }}
+                key={item.id}
+                gutterBottom
+                onClick={() => handleFilter(item.id, "JOB_TYPE")}
+              >
                 {item.name}
               </Typography>
             ))}

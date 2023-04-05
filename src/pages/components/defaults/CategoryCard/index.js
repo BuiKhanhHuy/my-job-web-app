@@ -1,8 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Grid, InputBase, Paper, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const CategoryCard = ({ options }) => {
+import { searchJobPost } from '../../../../redux/filterSlice';
+
+const CategoryCard = ({ options, type }) => {
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+  const { jobPostFilter } = useSelector((state) => state.filter);
   const [items, setItems] = React.useState(options);
 
   const handleFilterChange = (value) => {
@@ -10,6 +17,23 @@ const CategoryCard = ({ options }) => {
       option.name.toLowerCase().includes(value.toLowerCase())
     );
     setItems(filterItems);
+  };
+
+  const handleFilter = (id) => {
+    switch (type) {
+      case 'CARRER':
+        dispatch(searchJobPost({ ...jobPostFilter, careerId: id }));
+        break;
+      case 'CITY':
+        dispatch(searchJobPost({ ...jobPostFilter, cityId: id }));
+        break;
+      case 'JOB_TYPE':
+        dispatch(searchJobPost({ ...jobPostFilter, jobTypeId: id }));
+        break;
+      default:
+        break;
+    }
+    nav('/viec-lam');
   };
 
   return (
@@ -48,7 +72,18 @@ const CategoryCard = ({ options }) => {
       </Grid>
       {items.map((item) => (
         <Grid item xs={12} sm={6} md={4} lg={4} xl={3} key={item.id}>
-          <Typography>{item.name}</Typography>
+          <Typography
+            sx={{
+              cursor: 'pointer',
+              '&:hover': {
+                color: '#fca34d',
+                fontWeight: 'bold',
+              },
+            }}
+            onClick={() => handleFilter(item.id)}
+          >
+            {item.name}
+          </Typography>
         </Grid>
       ))}
     </Grid>

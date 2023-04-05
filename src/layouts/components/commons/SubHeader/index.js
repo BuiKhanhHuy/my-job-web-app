@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Container, Stack } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -9,7 +11,9 @@ import { faListUl } from '@fortawesome/free-solid-svg-icons';
 import SubHeaderDialog from '../SubHeaderDialog';
 import commonService from '../../../../services/commonService';
 
-const listItems = (items) => (
+import { searchJobPost } from '../../../../redux/filterSlice';
+
+const listItems = (items, handleFilter) => (
   <Stack
     direction="row"
     spacing={4}
@@ -25,6 +29,7 @@ const listItems = (items) => (
           cursor: 'pointer',
           whiteSpace: 'nowrap',
         }}
+        onClick={() => handleFilter(item.id)}
       >
         {item?.name}
       </Typography>
@@ -33,6 +38,9 @@ const listItems = (items) => (
 );
 
 const SubHeader = () => {
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+  const { jobPostFilter } = useSelector((state) => state.filter);
   const [open, setOpen] = React.useState(false);
   const [topCareers, setTopCareers] = React.useState([]);
 
@@ -49,6 +57,12 @@ const SubHeader = () => {
 
     getTopCarreers();
   }, []);
+
+  const handleFilter = (id) => {
+    dispatch(searchJobPost({ ...jobPostFilter, careerId: id }));
+
+    nav('/viec-lam');
+  };
 
   return (
     <>
@@ -74,14 +88,19 @@ const SubHeader = () => {
                   color="#441da0"
                 />
               </Box>
-              {listItems(topCareers)}
+              {listItems(topCareers, handleFilter)}
             </Toolbar>
           </Container>
         </AppBar>
       </Box>
 
       {/* Start: Subheader Dialog */}
-      <SubHeaderDialog open={open} setOpen={setOpen} topCareers={topCareers} />
+      <SubHeaderDialog
+        open={open}
+        setOpen={setOpen}
+        topCareers={topCareers}
+        handleFilter={handleFilter}
+      />
       {/* End: Subheader Dialog */}
     </>
   );
