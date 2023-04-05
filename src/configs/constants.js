@@ -10,13 +10,19 @@ import ImageSvg6 from '../assets/images/svg-images/blooming.svg';
 import ImageSvg7 from '../assets/images/svg-images/country_side.svg';
 
 const AUTH_CONFIG = {
+  // BACKEND
   CLIENT_ID: 'Vf4qQABzoS9TdZ8PQiSKowMbojNVygTZsAySqLXp',
   CLIENT_SECRECT:
     'SnvEBr7AvsoNNHouoF4TqZdvyjYeO16gk6RdF6IAek6GwkGGwK0jWTuWgo1ffzZmd6IIQUYLLfOTzRtCeyjYDfrm0bMcmAnPentRlHo3W9xmxbnKnNwXJ75Atj3m1yxr',
   ACCESS_TOKEN_KEY: 'access_token',
   REFRESH_TOKEN_KEY: 'refresh_token',
 
-  CAPTCHA_SITE_KEY: '6LfVR1AlAAAAAFyoz2dUHujHwecK0GwosYex_Gd4',
+  // GOONG
+  GOONGAPI_KEY: 'UMRiT4CiOH9UU9Ju9L1YJLSYZM5EQberRoSsyfDW',
+  GOONGAPI_ACCESS_TOKEN: 'q2ehn14wfdLdZkDXejl5d1X6pBxZf0ssca6jrEOo',
+
+  // BING MAP
+  BING_MAPS_KEY: "Av0DmLVNRE8m7HZGSTySLkyPaLX3Gg3b3cdt7I0ArXWxSmtKwqCpsUW6OE21t2z2",
 };
 
 const ROLES_NAME = {

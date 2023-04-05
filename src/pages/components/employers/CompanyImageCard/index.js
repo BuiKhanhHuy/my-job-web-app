@@ -11,9 +11,11 @@ import DropzoneDialogCustom from '../../../../components/DropzoneDialogCustom';
 import companyImageService from '../../../../services/companyImageService';
 import toastMessages from '../../../../utils/toastMessages';
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
+import FsLightboxCustom from '../../../../components/FsLightboxCustom';
 
 const CompanyImageCard = () => {
   const [open, setOpen] = React.useState(false);
+  const [srcImagePreview, setSrcImagePreview] = React.useState('');
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
@@ -47,6 +49,7 @@ const CompanyImageCard = () => {
 
         setIsSuccess(!isSuccess);
       } catch (error) {
+        errorHandling(error);
       } finally {
         setIsFullScreenLoading(false);
       }
@@ -82,6 +85,10 @@ const CompanyImageCard = () => {
       'Hình ảnh này sẽ được xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn?',
       'warning'
     );
+  };
+
+  const handleOpenImagePreview = (src) => {
+    setSrcImagePreview(src);
   };
 
   return (
@@ -122,6 +129,7 @@ const CompanyImageCard = () => {
                   src={value?.imageUrl}
                   height={222}
                   sx={{ borderRadius: 2 }}
+                  onClick={() => handleOpenImagePreview(value?.imageUrl)}
                 />
               </Box>
             </Grid>
@@ -141,6 +149,10 @@ const CompanyImageCard = () => {
       {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}
       {/* End: full screen loading */}
+
+      {/* Start: FsLightboxCustom */}
+      <FsLightboxCustom src={srcImagePreview} />
+      {/* End: FsLightboxCustom */}
     </Box>
   );
 };

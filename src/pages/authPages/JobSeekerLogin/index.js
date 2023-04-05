@@ -147,7 +147,7 @@ const JobSeekerLogin = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Đăng nhập tài khoản ứng viên  sdfsdf
+              Đăng nhập tài khoản ứng viên
             </Typography>
           </Box>
 

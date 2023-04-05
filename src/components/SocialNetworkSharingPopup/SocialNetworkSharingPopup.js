@@ -27,7 +27,7 @@ const SocialNetworkSharingPopup = (props) => {
   const {
     setOpenPopup,
     open,
-    facebook ,
+    facebook,
     facebookMessenger = null,
     linkedin = null,
     twitter = null,
@@ -57,9 +57,9 @@ const SocialNetworkSharingPopup = (props) => {
           <Stack direction="row" spacing={1}>
             {facebook && (
               <FacebookShareButton
-                url={facebook?.url || ""}
-                quote={facebook?.quote || ""}
-                hashtag={facebook?.hashtag || ""}
+                url={facebook?.url || ''}
+                quote={facebook?.quote || ''}
+                hashtag={facebook?.hashtag || ''}
               >
                 <FacebookIcon size={32} round />
               </FacebookShareButton>
@@ -67,10 +67,10 @@ const SocialNetworkSharingPopup = (props) => {
 
             {facebookMessenger && (
               <FacebookMessengerShareButton
-                url={'https://www.example.com'}
+                url={facebookMessenger?.url || ''}
                 appId=""
-                redirectUri=""
-                to=""
+                redirectUri={facebookMessenger?.url || ''}
+                to={facebookMessenger?.to || ''}
               >
                 <FacebookMessengerIcon size={32} round />
               </FacebookMessengerShareButton>
@@ -78,9 +78,10 @@ const SocialNetworkSharingPopup = (props) => {
 
             {linkedin && (
               <LinkedinShareButton
-                url={'https://www.example.com'}
-                quote={'Dummy text!'}
-                hashtag="#muo"
+                url={linkedin?.url || ''}
+                title={linkedin?.title || ''}
+                summary={linkedin?.summary || ''}
+                source={linkedin?.source || ''}
               >
                 <LinkedinIcon size={32} round />
               </LinkedinShareButton>
@@ -88,9 +89,11 @@ const SocialNetworkSharingPopup = (props) => {
 
             {twitter && (
               <TwitterShareButton
-                url={'https://www.example.com'}
-                quote={'Dummy text!'}
-                hashtag="#muo"
+                url={twitter?.url || ''}
+                title={twitter?.title || ''}
+                via={twitter?.via || ''}
+                hashtags={twitter?.hashtags || []}
+                related={twitter?.related || []}
               >
                 <TwitterIcon size={32} round />
               </TwitterShareButton>
@@ -98,9 +101,9 @@ const SocialNetworkSharingPopup = (props) => {
 
             {email && (
               <EmailShareButton
-                url={'https://www.example.com'}
-                subject="Tiêu đề"
-                body="Body nè!"
+                url={email?.url || ""}
+                subject={email?.subject || ""}
+                body={email?.body || ""}
               >
                 <EmailIcon size={32} round />
               </EmailShareButton>

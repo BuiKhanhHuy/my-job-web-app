@@ -1,22 +1,38 @@
 import * as React from 'react';
-import { useState } from 'react';
-import ReactMapGL from '@goongmaps/goong-map-react';
+import BingMapsReact from 'bingmaps-react';
 
-const Map = () => {
-  const [viewport, setViewport] = useState({
-    width: 250,
-    height: 250,
-    latitude: 37.7577,
-    longitude: -122.4376,
-    zoom: 8,
-  });
+import { AUTH_CONFIG } from '../../configs/constants';
 
-  return (
-    <ReactMapGL
-      {...viewport}
-      goongApiAccessToken="q2ehn14wfdLdZkDXejl5d1X6pBxZf0ssca6jrEOo"
-      onViewportChange={(nextViewport) => setViewport(nextViewport)}
+const Map = ({ title, subTitle, latitude, longitude }) => {
+  const pushPin = {
+    center: {
+      latitude: latitude,
+      longitude: longitude,
+    },
+    options: {
+      title: title || '',
+      description: subTitle || '',
+    },
+  };
+
+  return latitude && longitude ? (
+    <BingMapsReact
+      bingMapsKey={AUTH_CONFIG.BING_MAPS_KEY}
+      height="250px"
+      mapOptions={{
+        navigationBarMode: 'square',
+      }}
+      width="100%"
+      viewOptions={{
+        center: { latitude: latitude, longitude: longitude },
+        mapTypeId: 'road',
+      }}
+      pushPinsWithInfoboxes={[pushPin]}
     />
+  ) : (
+    <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+      Chưa thể xác định vị trí trên bản đồ
+    </span>
   );
 };
 

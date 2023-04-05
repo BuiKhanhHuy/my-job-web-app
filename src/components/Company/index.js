@@ -55,7 +55,7 @@ const Company = ({
           <MuiImageCustom
             width="100%"
             src={companyCoverImageUrl || IMAGES.coverImageDefault}
-            sx={{ borderRadius: 1.5 }}
+            sx={{ borderRadius: 1.5, maxHeight: 150 }}
             duration={1500}
           />
         </Box>

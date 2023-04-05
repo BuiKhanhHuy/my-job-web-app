@@ -679,7 +679,14 @@ const JobDetailPage = () => {
                         Bản đồ
                       </Typography>
                       <Stack sx={{ pt: 1 }} spacing={2}>
-                        <Box>{/* <Map /> */}</Box>
+                        <Box>
+                          <Map
+                            title={jobPostDetail?.jobName}
+                            subTitle={jobPostDetail?.location?.address}
+                            latitude={jobPostDetail?.location?.lat}
+                            longitude={jobPostDetail?.location?.lng}
+                          />
+                        </Box>
                       </Stack>
                     </Box>
                   </Grid>
@@ -718,13 +725,36 @@ const JobDetailPage = () => {
       />
       {/* End: ApplyCard */}
 
+      {/* Start: SocialNetworkSharingPopup */}
       <SocialNetworkSharingPopup
         open={openSharePopup}
         setOpenPopup={setOpenSharePopup}
         facebook={{
           url: window.location.href,
         }}
+        facebookMessenger={{
+          url: window.location.href,
+        }}
+        linkedin={{
+          url: window.location.href,
+          source: '',
+          title: '',
+          summary: '',
+        }}
+        twitter={{
+          url: window.location.href,
+          title: '',
+          via: '',
+          hashtags: [],
+          related: [],
+        }}
+        email={{
+          url: window.location.href,
+          subject: '',
+          body: '',
+        }}
       />
+      {/* End: SocialNetworkSharingPopup */}
     </>
   );
 };
