@@ -27,7 +27,7 @@ import {
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { IMAGES } from '../../../configs/constants';
+import { ICONS, IMAGES } from '../../../configs/constants';
 import errorHandling from '../../../utils/errorHandling';
 import toastMessages from '../../../utils/toastMessages';
 import Map from '../../../components/Map';
@@ -35,9 +35,6 @@ import SocialNetworkSharingPopup from '../../../components/SocialNetworkSharingP
 import ShareIcon from '@mui/icons-material/Share';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import linkedinIconSvg from '../../../assets/icons/linkedin-icon.svg';
-import facebookIconSvg from '../../../assets/icons/facebook-icon.svg';
-import youtubeIconSvg from '../../../assets/icons/youtube-icon.svg';
 import MuiImageCustom from '../../../components/MuiImageCustom';
 import NoDataCard from '../../../components/NoDataCard';
 import ImageGalleryCustom from '../../../components/ImageGalleryCustom';
@@ -311,7 +308,7 @@ const CompanyDetailPage = () => {
                               href={companyDetail.facebookUrl}
                             >
                               <IconButton color="primary" aria-label="facebook">
-                                <img width="30" src={facebookIconSvg} alt="" />
+                                <img width="30" src={ICONS.FACEBOOK} alt="" />
                               </IconButton>
                             </Link>
                           )}
@@ -321,7 +318,7 @@ const CompanyDetailPage = () => {
                               href={companyDetail.youtubeUrl}
                             >
                               <IconButton color="primary" aria-label="youtube">
-                                <img width="30" src={youtubeIconSvg} alt="" />
+                                <img width="30" src={ICONS.YOUTUBE} alt="" />
                               </IconButton>
                             </Link>
                           )}
@@ -331,7 +328,7 @@ const CompanyDetailPage = () => {
                               href={companyDetail.linkedinUrl}
                             >
                               <IconButton color="primary" aria-label="linked">
-                                <img width="30" src={linkedinIconSvg} alt="" />
+                                <img width="30" src={ICONS.LINKEDIN} alt="" />
                               </IconButton>
                             </Link>
                           )}

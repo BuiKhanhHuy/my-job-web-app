@@ -153,28 +153,16 @@ const Header = (props) => {
           <Toolbar disableGutters>
             <Stack direction="row" alignItems="center" component={Link} to="/">
               <Avatar
-                src={IMAGES.getLogo('medium', 'light')}
+                src={IMAGES.getTextLogo('light')}
                 sx={{
                   display: { xs: 'none', md: 'flex' },
                   mr: 1,
-                  width: 50,
-                  height: 50,
+                  width: '100%',
+                  height: 45,
                 }}
+                variant="square"
                 alt="LOGO"
               />
-              <Typography
-                variant="h6"
-                noWrap
-                sx={{
-                  mr: 2,
-                  display: { xs: 'none', md: 'flex' },
-                  fontFamily: 'monospace',
-                  fontWeight: 700,
-                  color: 'white',
-                }}
-              >
-                MyJob
-              </Typography>
             </Stack>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

@@ -22,7 +22,8 @@ const AUTH_CONFIG = {
   GOONGAPI_ACCESS_TOKEN: 'q2ehn14wfdLdZkDXejl5d1X6pBxZf0ssca6jrEOo',
 
   // BING MAP
-  BING_MAPS_KEY: "Av0DmLVNRE8m7HZGSTySLkyPaLX3Gg3b3cdt7I0ArXWxSmtKwqCpsUW6OE21t2z2",
+  BING_MAPS_KEY:
+    'Av0DmLVNRE8m7HZGSTySLkyPaLX3Gg3b3cdt7I0ArXWxSmtKwqCpsUW6OE21t2z2',
 };
 
 const ROLES_NAME = {
@@ -67,7 +68,31 @@ const IMAGES = {
   getLogo: (size, mode) => {
     return require(`../assets/logo/${mode}-logo-${size}.png`);
   },
+  getTextLogo: (mode) => {
+    return require(`../assets/logo/${mode}-text-logo.png`);
+  },
   coverImageDefault: require('../assets/images/cover-image-default.webp'),
+};
+
+const ICONS = {
+  INSTAGRAM: require('../assets/icons/instagram-icon.png'),
+  FACEBOOK: require('../assets/icons/facebook-icon.png'),
+  FACEBOOK_MESSENGER: require('../assets/icons/facebook-messenger-icon.png'),
+  LINKEDIN: require('../assets/icons/linkedin-icon.png'),
+  TWITTER: require('../assets/icons/twitter-icon.png'),
+  YOUTUBE: require('../assets/icons/youtube-icon.png'),
+};
+
+const LINKS = {
+  CHPLAY_LINK: 'https://play.google.com/store/',
+  APPSTORE_LINK: 'https://www.apple.com/app-store/',
+  CERTIFICATE_LINK: 'http://online.gov.vn/',
+  INSTAGRAM_LINK: 'https://www.instagram.com/huybk2/',
+  FACEBOOK_LINK: 'https://www.facebook.com/bkhuy/',
+  FACEBOOK_MESSENGER_LINK: 'https://www.facebook.com/bkhuy/',
+  LINKEDIN_LINK: 'https://www.linkedin.com/in/huy-khanh-10041b20b/',
+  TWITTER_LINK: 'https://twitter.com/HuyBuiKhanh',
+  YOUTUBE_LINK: 'https://www.youtube.com/channel/UCn49BvcP1w1mamaOSGTKVZw',
 };
 
 const IMAGE_SVG = {
@@ -88,5 +113,7 @@ export {
   CV_TYPES,
   DATE_OPTIONS,
   IMAGES,
+  LINKS,
+  ICONS,
   IMAGE_SVG,
 };

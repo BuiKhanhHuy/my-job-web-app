@@ -61,31 +61,23 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Stack
+        sx={{ py: 1 }}
         justifyContent="center"
         alignItems="center"
         component={Link}
         to="/"
       >
         <Avatar
-          src={IMAGES.getLogo(
-            'medium',
+          src={IMAGES.getTextLogo(
             theme.palette.mode === 'light' ? 'dark' : 'light'
           )}
           sx={{
-            width: 50,
-            height: 50,
+            width: '55%',
+            height: 44,
           }}
+          variant="square"
           alt="LOGO"
         />
-        <Typography
-          variant="h6"
-          sx={{
-            color: (theme) =>
-              theme.palette.mode === 'light' ? '#130160' : 'white',
-          }}
-        >
-          MyJob
-        </Typography>
       </Stack>
       <Divider />
       <List>
