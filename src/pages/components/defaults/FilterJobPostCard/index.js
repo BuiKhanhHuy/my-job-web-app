@@ -54,7 +54,7 @@ const FilterJobPostCard = ({ params = {} }) => {
         <NoDataCard />
       ) : (
         <>
-          <Grid container spacing={2}>
+          <Grid container spacing={2}  >
             {jobPosts.map((value) => (
               <Grid item xs={12} sm={12} md={4} lg={4} xl={4} key={value.id}>
                 {/* Start: Job post */}
@@ -94,4 +94,4 @@ const FilterJobPostCard = ({ params = {} }) => {
   );
 };
 
-export default FilterJobPostCard;
+export default React.memo(FilterJobPostCard);

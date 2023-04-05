@@ -10,6 +10,7 @@ const InputBaseSearchHomeCustom = ({
   control,
   onHandleSubmit = null,
   placeholder,
+  showSubmitButton=false
 }) => {
   return (
     <Paper
@@ -40,7 +41,7 @@ const InputBaseSearchHomeCustom = ({
           />
         )}
       />
-      {onhashchange !== null && (
+      {showSubmitButton && (
         <Button variant="contained" color="primary" onClick={onHandleSubmit}>
           Tìm kiếm
         </Button>

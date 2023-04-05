@@ -1,20 +1,33 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Card, Grid } from '@mui/material';
 
 import InputBaseSearchHomeCustom from '../../../../components/controls/InputBaseSearchHomeCustom';
 import SingleSelectSearchCustom from '../../../../components/controls/SingleSelectSearchCustom';
-import MultiSelectSearchCustom from '../../../../components/controls/MultiSelectSearchCustom';
+
+import {
+  resetSearchJobPostFilter,
+  searchJobPost,
+} from '../../../../redux/filterSlice';
+import { useNavigate } from 'react-router-dom';
 
 const HomeSearch = () => {
-  const { control, handleSubmit } = useForm({
-    default: {
-      kw: '',
-    },
-  });
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+  const { allConfig } = useSelector((state) => state.config);
+
+  const { control, handleSubmit } = useForm();
+
+  React.useEffect(() => {
+    dispatch(resetSearchJobPostFilter());
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleFilter = (data) => {
-    console.log(data);
+    dispatch(searchJobPost(data));
+    nav('/viec-lam');
   };
 
   return (
@@ -35,20 +48,23 @@ const HomeSearch = () => {
             control={control}
             onHandleSubmit={handleSubmit(handleFilter)}
             placeholder="Tìm kiếm cơ hội việc làm"
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-          <MultiSelectSearchCustom
-            name="careers"
-            placeholder="Tất cả nghề nghiệp"
-            control={control}
+            showSubmitButton={true}
           />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
           <SingleSelectSearchCustom
-            name="city"
+            name="careerId"
+            placeholder="Tất cả ngành nghề"
             control={control}
+            options={allConfig?.careerOptions || []}
+          />
+        </Grid>
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          <SingleSelectSearchCustom
+            name="cityId"
             placeholder="Tất cả tỉnh thành"
+            control={control}
+            options={allConfig?.cityOptions || []}
           />
         </Grid>
       </Grid>

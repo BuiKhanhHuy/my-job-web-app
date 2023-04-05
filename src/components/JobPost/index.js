@@ -56,6 +56,7 @@ const JobPost = ({
               variant="subtitle2"
               sx={{ fontSize: 15 }}
               gutterBottom
+              noWrap
               style={{
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',

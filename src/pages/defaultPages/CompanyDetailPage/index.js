@@ -51,6 +51,7 @@ const CompanyDetailPage = () => {
   const [companyDetail, setCompanyDetail] = React.useState(null);
   const [imageList, setImageList] = React.useState([]);
 
+
   React.useEffect(() => {
     const getCompanyDetail = async (companySlug) => {
       try {
@@ -263,11 +264,11 @@ const CompanyDetailPage = () => {
                       Việc làm đang tuyển
                     </Typography>
                     <Box sx={{ mt: 2 }}>
-                      {/* <FilterJobPostCard
+                      <FilterJobPostCard
                       params={{
                         companyId: companyDetail.id,
                       }}
-                    /> */}
+                    />
                     </Box>
                   </Box>
                   {/* End: viec lam */}

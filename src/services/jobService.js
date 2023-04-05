@@ -6,7 +6,7 @@ const jobService = {
 
     return httpRequest.get(url, { params: params });
   },
-  exportEmployerJobPosts:  (params = {}) => {
+  exportEmployerJobPosts: (params = {}) => {
     const url = 'api/job/web/private-job-posts/export/';
 
     return httpRequest.get(url, { params: params });
@@ -44,7 +44,13 @@ const jobService = {
 
     return httpRequest.get(url);
   },
-  getSuggestedJobPosts: () => {},
+  getSuggestedJobPosts: (params = {}) => {
+    const url = 'api/job/web/private-job-posts/suggested-job-posts/';
+
+    return httpRequest.get(url, {
+      params: params,
+    });
+  },
   getJobPostsSaved: (params = {}) => {
     const url = `api/job/web/job-posts/job-posts-saved/`;
 

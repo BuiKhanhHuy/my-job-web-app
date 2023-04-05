@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import {
   Avatar,
   Box,
@@ -11,7 +12,7 @@ import {
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 
-import { HOME_FILTER_CAREER } from '../../../configs/constants';
+import { HOME_FILTER_CAREER, ROLES_NAME } from '../../../configs/constants';
 import TopCompanyCarousel from '../../../components/TopCompanyCarousel';
 import CareerCarousel from '../../../components/CareerCarousel';
 import FeedbackCarousel from '../../../components/FeedbackCarousel';
@@ -20,6 +21,8 @@ import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
 import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
 
 export default function HomePage() {
+  const { isAuthenticated, currentUser } = useSelector((state) => state.user);
+
   return (
     <>
       <Box sx={{ mt: 6 }}>
@@ -72,35 +75,37 @@ export default function HomePage() {
         {/* End: Cac nganh nghe */}
       </Box>
 
-      <Box sx={{ mt: 10 }}>
-        {/* Start: Viec lam goi y */}
-        <Card variant="outlined">
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: 'white' }} aria-label="recipe">
-                <TipsAndUpdatesIcon color="secondary" />
-              </Avatar>
-            }
-            title={
-              <Typography variant="h5" sx={{ color: 'white' }}>
-                Việc làm gợi ý
-              </Typography>
-            }
-            sx={{
-              backgroundColor: '#441da0',
-              p: { xs: 0.75, sm: 1, md: 1.5, lg: 1.5, xl: 1.5 },
-            }}
-          />
-          <CardContent>
-            <Box sx={{ p: { xs: 0, sm: 0, md: 0, lg: 2, xl: 2 } }}>
-              {/* Start: SuggestedJobPostCard */}
-              <SuggestedJobPostCard />
-              {/* End: SuggestedJobPostCard */}
-            </Box>
-          </CardContent>
-        </Card>
-        {/* End: Viec lam goi y */}
-      </Box>
+      {isAuthenticated && currentUser?.roleName === ROLES_NAME.JOB_SEEKER && (
+        <Box sx={{ mt: 10 }}>
+          {/* Start: Viec lam goi y */}
+          <Card variant="outlined">
+            <CardHeader
+              avatar={
+                <Avatar sx={{ bgcolor: 'white' }} aria-label="recipe">
+                  <TipsAndUpdatesIcon color="secondary" />
+                </Avatar>
+              }
+              title={
+                <Typography variant="h5" sx={{ color: 'white' }}>
+                  Việc làm gợi ý
+                </Typography>
+              }
+              sx={{
+                backgroundColor: '#441da0',
+                p: { xs: 0.75, sm: 1, md: 1.5, lg: 1.5, xl: 1.5 },
+              }}
+            />
+            <CardContent>
+              <Box sx={{ p: { xs: 0, sm: 0, md: 0, lg: 2, xl: 2 } }}>
+                {/* Start: SuggestedJobPostCard */}
+                <SuggestedJobPostCard />
+                {/* End: SuggestedJobPostCard */}
+              </Box>
+            </CardContent>
+          </Card>
+          {/* End: Viec lam goi y */}
+        </Box>
+      )}
 
       <Box sx={{ mt: 10 }}>
         {/* Start: Viec lam nganh */}
