@@ -11,7 +11,7 @@ import ImageSvg7 from '../assets/images/svg-images/country_side.svg';
 
 const AUTH_PROVIDER = {
   FACEBOOK: 'facebook',
-  GOOGLE: 'google'
+  GOOGLE: 'google-oauth2'
 }
 
 const AUTH_CONFIG = {
@@ -29,6 +29,8 @@ const AUTH_CONFIG = {
   FACEBOOK_CLIENT_SECRET: "87054023f865721b313376d492bb4c04",
 
   // GOOGLE AUTH
+  GOOGLE_CLIENT_ID: "138562701986-5pm1ojcmu4chrhakorjn57mt1qb0go0o.apps.googleusercontent.com",
+  GOOGLE_CLIENT_SECRET: "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",
 
   // GOONG
   GOONGAPI_KEY: 'UMRiT4CiOH9UU9Ju9L1YJLSYZM5EQberRoSsyfDW',

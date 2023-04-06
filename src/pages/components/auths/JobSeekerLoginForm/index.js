@@ -5,11 +5,11 @@ import * as yup from 'yup';
 import { Box, Button, Divider, Stack } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
-import { OldSocialLogin as SocialLogin } from 'react-social-login';
+import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login';
 
 import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
 import PasswordTextFieldCustom from '../../../../components/controls/PasswordTextFieldCustom';
-import { AUTH_CONFIG, AUTH_PROVIDER } from '../../../../configs/constants';
+import { AUTH_CONFIG } from '../../../../configs/constants';
 
 const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
   const schema = yup.object().shape({
@@ -53,11 +53,17 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
         Đăng nhập
       </Button>
       <Divider>HOẶC</Divider>
-      <SocialLogin
-        provider={AUTH_PROVIDER.FACEBOOK}
+
+      <LoginSocialFacebook
         appId={AUTH_CONFIG.FACEBOOK_CLIENT_ID}
-        callback={onFacebookLogin}
-        onLoginFailure={() => console.log('LOGIN FACEBOOK FAILED')}
+        fieldsProfile={'id'}
+        // onLoginStart={onLoginStart}
+        // onLogoutSuccess={onLogoutSuccess}
+        // redirect_uri={REDIRECT_URI}
+        onResolve={onFacebookLogin}
+        onReject={(err) => {
+          console.log(err);
+        }}
       >
         <Button
           fullWidth
@@ -67,24 +73,29 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
         >
           Đăng nhập với Facebook
         </Button>
-      </SocialLogin>
+      </LoginSocialFacebook>
 
-      <SocialLogin
-        provider="google"
-        appId=""
-        callback={onGoogleLogin}
-        onLoginFailure={() => console.log('LOGIN GOOGLE FAILED')}
+      <LoginSocialGoogle
+        client_id={AUTH_CONFIG.GOOGLE_CLIENT_ID}
+        // onLoginStart={onLoginStart}
+        // redirect_uri={REDIRECT_URI}
+        access_type="offline"
+        scope="openid profile email"
+        discoveryDocs="claims_supported"
+        onResolve={onGoogleLogin}
+        onReject={(err) => {
+          console.log(err);
+        }}
       >
         <Button
           fullWidth
           variant="contained"
           sx={{ mb: 2, backgroundColor: '#CF4332' }}
           startIcon={<GoogleIcon />}
-          onClick={onGoogleLogin}
         >
           Đăng nhập với Google
         </Button>
-      </SocialLogin>
+      </LoginSocialGoogle>
     </Box>
   );
 };

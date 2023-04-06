@@ -179,24 +179,28 @@ const JobSeekerLogin = () => {
     }
   };
 
-  const handleSocialLoginFailed = () => {
-
-  }
-
-  const handleFacebookLogin = (user) => {
-    const token = user._token;
-    if (token) {
+  const handleFacebookLogin = (result) => {
+    const accessToken = result?.data?.accessToken;
+    if (accessToken) {
       handleSocialLogin(
         AUTH_CONFIG.FACEBOOK_CLIENT_ID,
         AUTH_CONFIG.FACEBOOK_CLIENT_SECRET,
         AUTH_PROVIDER.FACEBOOK,
-        token.accessToken
+        accessToken
       );
     }
   };
 
-  const handleGoogleLogin = () => {
-    alert('Google Login');
+  const handleGoogleLogin = (result) => {
+    const accessToken = result?.data?.access_token;
+    if (accessToken) {
+      handleSocialLogin(
+        AUTH_CONFIG.GOOGLE_CLIENT_ID,
+        AUTH_CONFIG.GOOGLE_CLIENT_SECRET,
+        AUTH_PROVIDER.GOOGLE,
+        accessToken
+      );
+    }
   };
 
   return (
