@@ -80,7 +80,7 @@ const JobSeekerLogin = () => {
         if (res.status === 400) {
           const errors = res.data?.errors;
           if ('errorMessage' in errors) {
-            setErrorMessage.error(errors.errorMessage.join(' '));
+            setErrorMessage(errors.errorMessage.join(' '));
           } else {
             toastMessages.error('Đã xảy ra lỗi, vui lòng thử lại!');
           }

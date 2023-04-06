@@ -4,8 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Box, Button, Divider, Stack } from '@mui/material';
 
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GoogleIcon from '@mui/icons-material/Google';
+import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login';
+
 import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
 import PasswordTextFieldCustom from '../../../../components/controls/PasswordTextFieldCustom';
+import { AUTH_CONFIG } from '../../../../configs/constants';
 
 const JobSeekerSignUpForm = ({
   onRegister,
@@ -13,7 +18,6 @@ const JobSeekerSignUpForm = ({
   onGoogleRegister,
   serverErrors = {},
 }) => {
-
   const schema = yup.object().shape({
     fullName: yup.string().required('Họ và tên là bắt buộc.'),
     email: yup
@@ -31,7 +35,7 @@ const JobSeekerSignUpForm = ({
       .oneOf([yup.ref('password')], 'Mật khẩu xác nhận không chính xác.'),
   });
 
-  const {control, setError, handleSubmit} = useForm({
+  const { control, setError, handleSubmit } = useForm({
     defaultValues: {
       fullName: '',
       email: '',
@@ -46,6 +50,8 @@ const JobSeekerSignUpForm = ({
       setError(err, { type: 400, message: serverErrors[err]?.join(' ') });
     }
   }, [serverErrors, setError]);
+
+  
 
   return (
     <Box>
@@ -84,22 +90,48 @@ const JobSeekerSignUpForm = ({
         Đăng ký
       </Button>
       <Divider>HOẶC</Divider>
-      <Button
-        fullWidth
-        variant="outlined"
-        sx={{ mt: 3, mb: 2 }}
-        onClick={onFacebookRegister}
+      <LoginSocialFacebook
+        appId={AUTH_CONFIG.FACEBOOK_CLIENT_ID}
+        fieldsProfile={'id'}
+        // onLoginStart={onLoginStart}
+        // onLogoutSuccess={onLogoutSuccess}
+        // redirect_uri={REDIRECT_URI}
+        onResolve={onFacebookRegister}
+        onReject={(err) => {
+          console.log(err);
+        }}
       >
-        Đăng ký với Facebook
-      </Button>
-      <Button
-        fullWidth
-        variant="outlined"
-        sx={{ mb: 2 }}
-        onClick={onGoogleRegister}
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2, backgroundColor: '#3B66C4' }}
+          startIcon={<FacebookIcon />}
+        >
+          Đăng ký với Facebook
+        </Button>
+      </LoginSocialFacebook>
+
+      <LoginSocialGoogle
+        client_id={AUTH_CONFIG.GOOGLE_CLIENT_ID}
+        // onLoginStart={onLoginStart}
+        // redirect_uri={REDIRECT_URI}
+        access_type="offline"
+        scope="openid profile email"
+        discoveryDocs="claims_supported"
+        onResolve={onGoogleRegister}
+        onReject={(err) => {
+          console.log(err);
+        }}
       >
-        Đăng ký với Google
-      </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ mb: 2, backgroundColor: '#CF4332' }}
+          startIcon={<GoogleIcon />}
+        >
+          Đăng ký với Google
+        </Button>
+      </LoginSocialGoogle>
     </Box>
   );
 };

@@ -1,20 +1,37 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Avatar, Box, Card, Container, Grid, Typography } from '@mui/material';
+import {
+  Alert,
+  AlertTitle,
+  Avatar,
+  Box,
+  Card,
+  Container,
+  Grid,
+  Typography,
+} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { ROLES_NAME } from '../../../configs/constants';
+import {
+  AUTH_CONFIG,
+  AUTH_PROVIDER,
+  ROLES_NAME,
+} from '../../../configs/constants';
 
+import toastMessages from '../../../utils/toastMessages';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
 import errorHandling from '../../../utils/errorHandling';
 import JobSeekerSignUpForm from '../../components/auths/JobSeekerSignUpForm';
 
-import { updateVerifyEmail } from '../../../redux/authSlice';
+import tokenService from '../../../services/tokenService';
 import authService from '../../../services/authService';
+import { getUserInfo } from '../../../redux/userSlice';
+import { updateVerifyEmail } from '../../../redux/authSlice';
 
 const JobSeekerSignUp = () => {
   const dispatch = useDispatch();
   const nav = useNavigate();
+  const [errorMessage, setErrorMessage] = React.useState(null);
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
   const [serverErrors, setServerErrors] = React.useState({});
 
@@ -42,12 +59,80 @@ const JobSeekerSignUp = () => {
     register(data, ROLES_NAME.JOB_SEEKER);
   };
 
-  const handleFacebookRegister = () => {
-    alert('Facebook Login');
+  const handleSocialRegister = async (
+    clientId,
+    clientSecrect,
+    provider,
+    token
+  ) => {
+    setIsFullScreenLoading(true);
+
+    try {
+      const resData = await authService.convertToken(
+        clientId,
+        clientSecrect,
+        provider,
+        token
+      );
+      const { access_token: accessToken, refresh_token: refreshToken } =
+        resData.data;
+
+      // save cookie
+      const isSaveTokenToCookie =
+        tokenService.saveAccessTokenAndRefreshTokenToCookie(
+          accessToken,
+          refreshToken
+        );
+      if (isSaveTokenToCookie) {
+        dispatch(getUserInfo())
+          .unwrap()
+          .then(() => {
+            nav('/');
+          })
+          .catch(() => {
+            toastMessages.error('Đã xảy ra lỗi, vui lòng đăng nhập lại!');
+          });
+      } else {
+        toastMessages.error('Đã xảy ra lỗi, vui lòng đăng nhập lại!');
+      }
+    } catch (error) {
+      // 400 bad request
+      const res = error.response;
+      if (res.status === 400) {
+        const errors = res.data?.errors;
+        if ('errorMessage' in errors) {
+          setErrorMessage(errors.errorMessage.join(' '));
+        } else {
+          toastMessages.error('Đã xảy ra lỗi, vui lòng thử lại!');
+        }
+      }
+    } finally {
+      setIsFullScreenLoading(false);
+    }
   };
 
-  const handleGoogleRegister = () => {
-    alert('Google Login');
+  const handleFacebookRegister = (result) => {
+    const accessToken = result?.data?.accessToken;
+    if (accessToken) {
+      handleSocialRegister(
+        AUTH_CONFIG.FACEBOOK_CLIENT_ID,
+        AUTH_CONFIG.FACEBOOK_CLIENT_SECRET,
+        AUTH_PROVIDER.FACEBOOK,
+        accessToken
+      );
+    }
+  };
+
+  const handleGoogleRegister = (result) => {
+    const accessToken = result?.data?.access_token;
+    if (accessToken) {
+      handleSocialRegister(
+        AUTH_CONFIG.GOOGLE_CLIENT_ID,
+        AUTH_CONFIG.GOOGLE_CLIENT_SECRET,
+        AUTH_PROVIDER.GOOGLE,
+        accessToken
+      );
+    }
   };
 
   return (
@@ -76,6 +161,16 @@ const JobSeekerSignUp = () => {
               Đăng ký tài khoản ứng viên
             </Typography>
           </Box>
+
+          {errorMessage && (
+            <Box>
+              <Alert severity="error">
+                <AlertTitle>Thất bại</AlertTitle>
+                {errorMessage}
+              </Alert>
+            </Box>
+          )}
+
           <Box sx={{ mt: 4 }}>
             {/* Start: login form */}
             <JobSeekerSignUpForm

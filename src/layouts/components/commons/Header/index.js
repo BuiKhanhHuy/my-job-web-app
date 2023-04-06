@@ -22,13 +22,13 @@ import {
 
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import { IMAGES } from '../../../../configs/constants';
 import SwitchModeButton from '../../../../components/SwitchModeButton';
 import UserMenu from '../UserMenu';
 import LeftDrawer from '../LeftDrawer';
 import AccountSwitchMenu from '../AccountSwitchMenu';
+import NotificationCard from '../../../../components/NotificationCard';
 
 const pages = [
   { id: 1, label: 'Việc làm', path: '/viec-lam' },
@@ -225,6 +225,7 @@ const Header = (props) => {
                 </Button>
               ))}
             </Box>
+
             <IconButton
               size="large"
               aria-label="show 4 new mails"
@@ -234,15 +235,10 @@ const Header = (props) => {
                 <ChatIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+
+            {/* start: NotificationCard */}
+            <NotificationCard />
+            {/* End: NotificationCard */}
 
             {/* Start: SwitchModeButton */}
             <SwitchModeButton />

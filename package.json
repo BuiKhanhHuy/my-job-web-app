@@ -32,6 +32,7 @@
     "dayjs": "^1.11.7",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
+    "firebase": "^9.19.1",
     "fslightbox-react": "^1.7.2",
     "js-cookie": "^3.0.1",
     "material-ui-popup-state": "^5.0.5",

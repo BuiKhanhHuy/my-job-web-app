@@ -79,7 +79,9 @@ import { default as EmployerChatPage } from './pages/employerPages/ChatPage';
 import { default as EmployerNotificationPage } from './pages/employerPages/NotificationPage';
 import { default as EmployerCompanyPage } from './pages/employerPages/CompanyPage';
 import { default as EmployerAccountPage } from './pages/employerPages/AccountPage';
-import CVPdf from './components/CVPdf';
+
+// chatbot
+import { MyJobChatBot } from './chatbox';
 
 function App() {
   const dispatch = useDispatch();
@@ -223,7 +225,7 @@ function App() {
             },
             h6: {
               fontSize: '20px',
-              fontWeight: 'bold'
+              fontWeight: 'bold',
             },
             caption: {
               fontSize: '0.85rem',
@@ -253,7 +255,7 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline enableColorScheme />
           {loading ? (
-            <BackdropLoading bgColor='white'/>
+            <BackdropLoading bgColor="white" />
           ) : (
             <Routes>
               <Route path="/" element={<Outlet />}>
@@ -400,7 +402,7 @@ function App() {
                     path="quen-mat-khau"
                     element={<ForgotPasswordPage />}
                   />
-                   <Route
+                  <Route
                     path="cap-nhat-mat-khau/:token"
                     element={<ResetPasswordPage />}
                   />
@@ -420,7 +422,6 @@ function App() {
                     path="dang-ky-tai-khoan-nha-tuyen-dung"
                     element={<EmployerSignUp />}
                   />
-                  
                 </Route>
                 {/* End: Auth */}
               </Route>
@@ -435,6 +436,9 @@ function App() {
           {/* End: toast */}
         </ThemeProvider>
       </ColorModeContext.Provider>
+      {/* Start: Chatbot */}
+      <MyJobChatBot />
+      {/* End: Chatbot */}
     </>
   );
 }
