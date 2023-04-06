@@ -13,7 +13,11 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import { ROLES_NAME } from '../../../configs/constants';
+import {
+  AUTH_CONFIG,
+  AUTH_PROVIDER,
+  ROLES_NAME,
+} from '../../../configs/constants';
 import toastMessages from '../../../utils/toastMessages';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
 
@@ -72,7 +76,15 @@ const JobSeekerLogin = () => {
         }
       } catch (error) {
         // 400 bad request
-        setErrorMessage('Email hoặc mật khẩu không chính xác!');
+        const res = error.response;
+        if (res.status === 400) {
+          const errors = res.data?.errors;
+          if ('errorMessage' in errors) {
+            setErrorMessage.error(errors.errorMessage.join(' '));
+          } else {
+            toastMessages.error('Đã xảy ra lỗi, vui lòng thử lại!');
+          }
+        }
       } finally {
         setIsFullScreenLoading(false);
       }
@@ -115,8 +127,72 @@ const JobSeekerLogin = () => {
     checkCreds(data.email, data.password, ROLES_NAME.JOB_SEEKER);
   };
 
-  const handleFacebookLogin = () => {
-    alert('Facebook Login');
+  const handleSocialLogin = async (
+    clientId,
+    clientSecrect,
+    provider,
+    token
+  ) => {
+    setIsFullScreenLoading(true);
+
+    try {
+      const resData = await authService.convertToken(
+        clientId,
+        clientSecrect,
+        provider,
+        token
+      );
+      const { access_token: accessToken, refresh_token: refreshToken } =
+        resData.data;
+
+      // save cookie
+      const isSaveTokenToCookie =
+        tokenService.saveAccessTokenAndRefreshTokenToCookie(
+          accessToken,
+          refreshToken
+        );
+      if (isSaveTokenToCookie) {
+        dispatch(getUserInfo())
+          .unwrap()
+          .then(() => {
+            nav('/');
+          })
+          .catch(() => {
+            toastMessages.error('Đã xảy ra lỗi, vui lòng đăng nhập lại!');
+          });
+      } else {
+        toastMessages.error('Đã xảy ra lỗi, vui lòng đăng nhập lại!');
+      }
+    } catch (error) {
+      // 400 bad request
+      const res = error.response;
+      if (res.status === 400) {
+        const errors = res.data?.errors;
+        if ('errorMessage' in errors) {
+          setErrorMessage(errors.errorMessage.join(' '));
+        } else {
+          toastMessages.error('Đã xảy ra lỗi, vui lòng thử lại!');
+        }
+      }
+    } finally {
+      setIsFullScreenLoading(false);
+    }
+  };
+
+  const handleSocialLoginFailed = () => {
+
+  }
+
+  const handleFacebookLogin = (user) => {
+    const token = user._token;
+    if (token) {
+      handleSocialLogin(
+        AUTH_CONFIG.FACEBOOK_CLIENT_ID,
+        AUTH_CONFIG.FACEBOOK_CLIENT_SECRET,
+        AUTH_PROVIDER.FACEBOOK,
+        token.accessToken
+      );
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -125,7 +201,6 @@ const JobSeekerLogin = () => {
 
   return (
     <>
-   
       <Container
         maxWidth="sm"
         sx={{
@@ -134,7 +209,7 @@ const JobSeekerLogin = () => {
           alignItems: 'center',
         }}
       >
-        <Card sx={{ p: 6, pt: 2 }} >
+        <Card sx={{ p: 6, pt: 2 }}>
           <Box
             sx={{
               display: 'flex',

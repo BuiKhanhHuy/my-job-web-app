@@ -6,7 +6,7 @@ const authService = {
     const url = 'api/auth/token/';
 
     const data = {
-      grant_type: 'password',
+      grant_type: AUTH_CONFIG.PASSWORD_KEY,
       client_id: AUTH_CONFIG.CLIENT_ID,
       client_secret: AUTH_CONFIG.CLIENT_SECRECT,
       username: email,
@@ -16,7 +16,19 @@ const authService = {
 
     return httpRequest.post(url, data);
   },
-  convertToken: () => {},
+  convertToken: (clientId, clientSecrect, provider, token) => {
+    const url = 'api/auth/convert-token/';
+
+    const data = {
+      grant_type: AUTH_CONFIG.CONVERT_TOKEN_KEY,
+      client_id: clientId,
+      client_secret: clientSecrect,
+      backend: provider,
+      token: token,
+    };
+
+    return httpRequest.post(url, data);
+  },
   revokToken: (accessToken) => {
     const url = 'api/auth/revoke-token/';
 

@@ -9,6 +9,11 @@ import ImageSvg5 from '../assets/images/svg-images/small_town.svg';
 import ImageSvg6 from '../assets/images/svg-images/blooming.svg';
 import ImageSvg7 from '../assets/images/svg-images/country_side.svg';
 
+const AUTH_PROVIDER = {
+  FACEBOOK: 'facebook',
+  GOOGLE: 'google'
+}
+
 const AUTH_CONFIG = {
   // BACKEND
   CLIENT_ID: 'Vf4qQABzoS9TdZ8PQiSKowMbojNVygTZsAySqLXp',
@@ -16,6 +21,14 @@ const AUTH_CONFIG = {
     'SnvEBr7AvsoNNHouoF4TqZdvyjYeO16gk6RdF6IAek6GwkGGwK0jWTuWgo1ffzZmd6IIQUYLLfOTzRtCeyjYDfrm0bMcmAnPentRlHo3W9xmxbnKnNwXJ75Atj3m1yxr',
   ACCESS_TOKEN_KEY: 'access_token',
   REFRESH_TOKEN_KEY: 'refresh_token',
+  PASSWORD_KEY: 'password',
+  CONVERT_TOKEN_KEY: 'convert_token',
+
+  // FACEBOOK AUTH
+  FACEBOOK_CLIENT_ID: "503591871851468",
+  FACEBOOK_CLIENT_SECRET: "87054023f865721b313376d492bb4c04",
+
+  // GOOGLE AUTH
 
   // GOONG
   GOONGAPI_KEY: 'UMRiT4CiOH9UU9Ju9L1YJLSYZM5EQberRoSsyfDW',
@@ -106,6 +119,7 @@ const IMAGE_SVG = {
 };
 
 export {
+  AUTH_PROVIDER,
   AUTH_CONFIG,
   ROLES_NAME,
   HOME_FILTER_CAREER,

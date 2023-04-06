@@ -3,9 +3,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Box, Button, Divider, Stack } from '@mui/material';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GoogleIcon from '@mui/icons-material/Google';
+import { OldSocialLogin as SocialLogin } from 'react-social-login';
 
 import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
 import PasswordTextFieldCustom from '../../../../components/controls/PasswordTextFieldCustom';
+import { AUTH_CONFIG, AUTH_PROVIDER } from '../../../../configs/constants';
 
 const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
   const schema = yup.object().shape({
@@ -49,22 +53,38 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
         Đăng nhập
       </Button>
       <Divider>HOẶC</Divider>
-      <Button
-        fullWidth
-        variant="outlined"
-        sx={{ mt: 3, mb: 2 }}
-        onClick={onFacebookLogin}
+      <SocialLogin
+        provider={AUTH_PROVIDER.FACEBOOK}
+        appId={AUTH_CONFIG.FACEBOOK_CLIENT_ID}
+        callback={onFacebookLogin}
+        onLoginFailure={() => console.log('LOGIN FACEBOOK FAILED')}
       >
-        Đăng nhập với Facebook
-      </Button>
-      <Button
-        fullWidth
-        variant="outlined"
-        sx={{ mb: 2 }}
-        onClick={onGoogleLogin}
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2, backgroundColor: '#3B66C4' }}
+          startIcon={<FacebookIcon />}
+        >
+          Đăng nhập với Facebook
+        </Button>
+      </SocialLogin>
+
+      <SocialLogin
+        provider="google"
+        appId=""
+        callback={onGoogleLogin}
+        onLoginFailure={() => console.log('LOGIN GOOGLE FAILED')}
       >
-        Đăng nhập với Google
-      </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ mb: 2, backgroundColor: '#CF4332' }}
+          startIcon={<GoogleIcon />}
+          onClick={onGoogleLogin}
+        >
+          Đăng nhập với Google
+        </Button>
+      </SocialLogin>
     </Box>
   );
 };

@@ -72,7 +72,15 @@ const EmployerLogin = () => {
         }
       } catch (error) {
         // 400 bad request
-        setErrorMessage('Email hoặc mật khẩu không chính xác!');
+        const res = error.response;
+        if (res.status === 400) {
+          const errors = res.data?.errors;
+          if ('errorMessage' in errors) {
+            setErrorMessage(errors.errorMessage.join(' '));
+          } else {
+            toastMessages.error('Đã xảy ra lỗi, vui lòng thử lại!');
+          }
+        }
       } finally {
         setIsFullScreenLoading(false);
       }
@@ -140,7 +148,6 @@ const EmployerLogin = () => {
               Đăng nhập tài khoản nhà tuyển dụng
             </Typography>
           </Box>
-
           {errorMessage ? (
             <Box>
               <Alert severity="error">
