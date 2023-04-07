@@ -1,7 +1,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
+import {
+  Badge,
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+} from '@mui/material';
 import PublishIcon from '@mui/icons-material/Publish';
 
 import { CV_TYPES, IMAGE_SVG } from '../../../../configs/constants';
@@ -122,7 +130,7 @@ const ProfileUpload = ({ title }) => {
       <Stack>
         <Box>
           <Typography variant="h6">
-            {title} ({resumes.length})
+            {title} (<span style={{ color: 'red' }}>{resumes.length}</span>)
           </Typography>
         </Box>
         <Divider sx={{ mt: 2, mb: 3 }} />

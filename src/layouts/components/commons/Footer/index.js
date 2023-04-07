@@ -190,7 +190,7 @@ const Footer = () => {
                     height="50"
                     width="150"
                     component="img"
-                    image={require('../../../../assets/images/app-android-download.png')}
+                    image={IMAGES.chPlayDownload}
                     alt="Paella dish"
                   />
                 </Link>
@@ -199,7 +199,7 @@ const Footer = () => {
                     height="50"
                     width="150"
                     component="img"
-                    image={require('../../../../assets/images/app-ios-download.png')}
+                    image={IMAGES.appStoreDownload}
                     alt="Paella dish"
                   />
                 </Link>

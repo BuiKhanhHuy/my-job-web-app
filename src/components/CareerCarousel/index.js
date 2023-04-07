@@ -2,11 +2,14 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Pagination, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Avatar, Box, Card, Skeleton, Stack, Typography } from '@mui/material';
+import { Box, Card, Skeleton, Stack, Typography } from '@mui/material';
 import commonService from '../../services/commonService';
 import MuiImageCustom from '../MuiImageCustom';
+import { searchJobPost } from '../../redux/filterSlice';
 
 const Loading = (
   <>
@@ -48,6 +51,9 @@ const Loading = (
 );
 
 const CareerCarousel = () => {
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+  const { jobPostFilter } = useSelector((state) => state.filter);
   const [isLoading, setIsLoading] = React.useState(true);
   const [topCareers, setTopCareers] = React.useState([]);
 
@@ -68,6 +74,11 @@ const CareerCarousel = () => {
     getTopCarreers();
   }, []);
 
+  const handleFilter = (id) => {
+    dispatch(searchJobPost({ ...jobPostFilter, careerId: id }));
+    nav('/viec-lam');
+  };
+
   return (
     <Box>
       <Swiper
@@ -84,7 +95,7 @@ const CareerCarousel = () => {
       >
         {isLoading
           ? Array.from(Array(10).keys()).map((value) => (
-              <SwiperSlide>{Loading}</SwiperSlide>
+              <SwiperSlide key={value}>{Loading}</SwiperSlide>
             ))
           : topCareers.map((value) => (
               <SwiperSlide key={value.id}>
@@ -95,9 +106,15 @@ const CareerCarousel = () => {
                     py: 1,
                     mb: 0.5,
                     boxShadow: 0,
+                    cursor: 'pointer',
+                    '&:hover': {
+                      borderColor: '#441da0',
+                      color: '#fca34d',
+                    },
                     backgroundColor: (theme) =>
                       theme.palette.mode === 'light' ? '#F4F6FF' : '',
                   }}
+                  onClick={() => handleFilter(value.id)}
                 >
                   <Stack direction="row" justifyContent="center" sx={{ p: 2 }}>
                     <MuiImageCustom

@@ -3,6 +3,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import JobPostSearch from '../../components/defaults/JobPostSearch';
 import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
 import MainJobPostCard from '../../components/defaults/MainJobPostCard';
+import AppIntroductionCard from '../../../components/AppIntroductionCard';
 
 const JobPage = () => {
   return (
@@ -30,7 +31,11 @@ const JobPage = () => {
             </Grid>
           </Grid>
         </Box>
-        <Box>Việc làm theo khu vực ngành nghề</Box>
+        <Box sx={{ mt: 4 }}>
+          {/* Start: AppIntroductionCard */}
+          <AppIntroductionCard />
+          {/* End: AppIntroductionCard */}
+        </Box>
       </Box>
     </>
   );

@@ -41,11 +41,6 @@ const MyCompanyPage = () => {
                   {/* Start: CompanyViewedCard */}
                   <CompanyViewedCard />
                   {/* End: CompanyViewedCard */}
-                  <Box>
-                    <Typography color="gray" variant="caption">
-                      Lưu ý: Đây là những nhà tuyển dụng đã xem hồ sơ đang hoạt động của bạn.
-                    </Typography>
-                  </Box>
                 </TabPanel>
                 <TabPanel value="2">
                   {/* Start: CompanyFollowedCard */}
@@ -62,7 +57,7 @@ const MyCompanyPage = () => {
           <Card sx={{ p: 2 }}>
             <Stack>
               <Box sx={{ mb: 2 }}>
-                <Typography variant="h6">Việc làm bạn sẽ thích</Typography>
+                <Typography variant="h6">Công ty bạn sẽ thích</Typography>
               </Box>
               <Box>
                 <div>HERE</div>

@@ -48,6 +48,11 @@ const companyService = {
 
     return httpRequest.post(url);
   },
+  getTopCompanies: () => {
+    const url = `/api/info/web/companies/top/`;
+
+    return httpRequest.get(url);
+  },
 };
 
 export default companyService;

@@ -28,7 +28,7 @@ export default function HomePage() {
       <Box sx={{ mt: 6 }}>
         {/*Start: Top cong ty */}
         <Typography variant="h5" sx={{ mb: 3 }} gutterBottom>
-          Các công ty hàng đầu
+          Các công ty nổi bậc
         </Typography>
         <TopCompanyCarousel />
         {/*End: Top cong ty */}

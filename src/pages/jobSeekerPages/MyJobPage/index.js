@@ -3,6 +3,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Grid, Stack, Tab, Typography } from '@mui/material';
 import SavedJobCard from '../../components/jobSeekers/SavedJobCard';
 import AppliedJobCard from '../../components/jobSeekers/AppliedJobCard';
+import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
 
 const MyJobPage = () => {
   const [value, setValue] = React.useState('1');
@@ -69,10 +70,12 @@ const MyJobPage = () => {
           <Card sx={{ p: 2 }}>
             <Stack>
               <Box sx={{ mb: 2 }}>
-                <Typography variant="h6">Việc làm bạn sẽ thích</Typography>
+                <Typography variant="h6">Việc làm phù hợp</Typography>
               </Box>
               <Box>
-                <div>HERE</div>
+                {/* Start: SuggestedJobPostCard */}
+                <SuggestedJobPostCard />
+                {/* End: SuggestedJobPostCardf */}
               </Box>
             </Stack>
           </Card>

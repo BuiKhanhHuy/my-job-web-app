@@ -44,6 +44,7 @@ import CompanyDetailPage from './pages/defaultPages/CompanyDetailPage';
 import JobsByCareerPage from './pages/defaultPages/JobsByCareerPage';
 import JobsByCityPage from './pages/defaultPages/JobsByCityPage';
 import JobsByJobTypePage from './pages/defaultPages/JobsByJobTypePage';
+import AboutUsPage from './pages/defaultPages/AboutUsPage';
 
 // auth pages
 import EmailVerificationRequiredPage from './pages/authPages/EmailVerificationRequiredPage';
@@ -270,6 +271,7 @@ function App() {
                   <Route path="viec-lam/:slug" element={<JobDetailPage />} />
                   <Route path="cong-ty" element={<CompanyPage />} />
                   <Route path="cong-ty/:slug" element={<CompanyDetailPage />} />
+                  <Route path="ve-chung-toi" element={<AboutUsPage />} />
                   <Route
                     path="viec-lam-theo-nganh-nghe"
                     element={<JobsByCareerPage />}

@@ -1,10 +1,19 @@
 import React from 'react';
 
-import { Box, Card, Divider, Grid, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+  Button,
+} from '@mui/material';
 
 import BoxProfile from '../../components/jobSeekers/BoxProfile';
 import ProfileUpload from '../../components/jobSeekers/ProfileUpload';
 import CompanyViewedCard from '../../components/jobSeekers/CompanyViewedCard';
+import { Link } from 'react-router-dom';
 
 const ProfilePage = () => {
   return (
@@ -37,11 +46,17 @@ const ProfilePage = () => {
                   <CompanyViewedCard />
                   {/* End: CompanyViewedCard */}
                 </Box>
-                <Box>
-                    <Typography color="gray" variant="caption">
-                      Lưu ý: Đây là những nhà tuyển dụng đã xem hồ sơ đang hoạt động của bạn.
-                    </Typography>
-                  </Box>
+                <Stack direction="row" justifyContent="center">
+                  <Button
+                    sx={{ textTransform: 'inherit' }}
+                    variant="text"
+                    color="primary"
+                    component={Link}
+                    to="/ung-vien/cong-ty-cua-toi"
+                  >
+                    Xem chi tiết
+                  </Button>
+                </Stack>
               </Stack>
             </Card>
           </Stack>

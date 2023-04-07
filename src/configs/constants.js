@@ -8,11 +8,12 @@ import ImageSvg4 from '../assets/images/svg-images/dreamer.svg';
 import ImageSvg5 from '../assets/images/svg-images/small_town.svg';
 import ImageSvg6 from '../assets/images/svg-images/working_remotely.svg';
 import ImageSvg7 from '../assets/images/svg-images/country_side.svg';
+import ImageSvg8 from '../assets/images/svg-images/thoughts.svg';
 
 const AUTH_PROVIDER = {
   FACEBOOK: 'facebook',
-  GOOGLE: 'google-oauth2'
-}
+  GOOGLE: 'google-oauth2',
+};
 
 const AUTH_CONFIG = {
   // BACKEND
@@ -25,12 +26,13 @@ const AUTH_CONFIG = {
   CONVERT_TOKEN_KEY: 'convert_token',
 
   // FACEBOOK AUTH
-  FACEBOOK_CLIENT_ID: "503591871851468",
-  FACEBOOK_CLIENT_SECRET: "87054023f865721b313376d492bb4c04",
+  FACEBOOK_CLIENT_ID: '503591871851468',
+  FACEBOOK_CLIENT_SECRET: '87054023f865721b313376d492bb4c04',
 
   // GOOGLE AUTH
-  GOOGLE_CLIENT_ID: "717983009047-l046emjuhge9p8s9rqs4p7j9idsrnsb9.apps.googleusercontent.com",
-  GOOGLE_CLIENT_SECRET: "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",
+  GOOGLE_CLIENT_ID:
+    '717983009047-l046emjuhge9p8s9rqs4p7j9idsrnsb9.apps.googleusercontent.com',
+  GOOGLE_CLIENT_SECRET: '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',
 
   // GOONG
   GOONGAPI_KEY: 'UMRiT4CiOH9UU9Ju9L1YJLSYZM5EQberRoSsyfDW',
@@ -87,6 +89,8 @@ const IMAGES = {
     return require(`../assets/logo/${mode}-text-logo.png`);
   },
   coverImageDefault: require('../assets/images/cover-image-default.webp'),
+  chPlayDownload: require('../assets/images/app-android-download.png'),
+  appStoreDownload: require('../assets/images/app-ios-download.png'),
 };
 
 const ICONS = {
@@ -118,6 +122,7 @@ const IMAGE_SVG = {
   img5: ImageSvg5,
   img6: ImageSvg6,
   img7: ImageSvg7,
+  img8: ImageSvg8,
 };
 
 export {

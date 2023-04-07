@@ -9,7 +9,7 @@ import Footer from '../components/commons/Footer';
 
 const JobSeekerLayout = () => {
   return (
-    <Box >
+    <Box>
       <Header />
       <Box sx={{ backgroundColor: 'white' }}>
         <Container maxWidth="xl">
@@ -19,7 +19,17 @@ const JobSeekerLayout = () => {
       <Container maxWidth="xl" sx={{ my: 4 }}>
         <Outlet />
       </Container>
-      <Footer />
+      <Box
+        sx={{
+          mt: 8,
+          px: 14,
+          py: 5,
+          color: 'white',
+          bgcolor: '#441da0',
+        }}
+      >
+        <Footer />
+      </Box>
     </Box>
   );
 };

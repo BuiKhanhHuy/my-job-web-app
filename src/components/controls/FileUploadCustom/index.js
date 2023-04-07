@@ -1,12 +1,6 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import {
-  Stack,
-  Alert,
-  Box,
-  Button,
-  Typography,
-} from '@mui/material';
+import { Stack, Alert, Box, Button, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import FileUploadIcon from '@mui/icons-material/FileUpload';

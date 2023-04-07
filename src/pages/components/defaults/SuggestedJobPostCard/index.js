@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Grid, Pagination, Stack } from '@mui/material';
 
+import { IMAGE_SVG } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import jobService from '../../../../services/jobService';
 import JobPost from '../../../../components/JobPost';
@@ -49,7 +50,7 @@ const SuggestedJobPostCard = ({ pageSize = 12 }) => {
           ))}
         </Grid>
       ) : jobPosts.length === 0 ? (
-        <NoDataCard />
+        <NoDataCard img={IMAGE_SVG.img8}/>
       ) : (
         <>
           <Grid container spacing={2}>
