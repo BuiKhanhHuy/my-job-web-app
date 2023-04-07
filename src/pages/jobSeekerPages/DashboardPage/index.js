@@ -6,6 +6,7 @@ import QuantityStatistics from '../../components/jobSeekers/QuantityStatistics';
 import SidebarProfile from '../../components/jobSeekers/SidebarProfile';
 import SidebarViewTotal from '../../components/jobSeekers/SidebarViewTotal';
 import DemoChart from '../../../components/charts/DemoChart';
+import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
 
 const DashboardPage = () => {
   return (
@@ -13,23 +14,17 @@ const DashboardPage = () => {
       <Grid container spacing={2}>
         <Grid xs={12} sm={12} md={5} lg={3} xl={3} item>
           <Stack spacing={2}>
-            <Card
-              sx={{ p: 2  }}
-            >
+            <Card sx={{ p: 2 }}>
               {/* Start: Sidebar profile */}
               <SidebarProfile />
               {/* End: Sidebar profile */}
             </Card>
-            <Card
-              sx={{ p: 2  }}
-            >
+            <Card sx={{ p: 2 }}>
               {/* Start: Sidebar view total */}
               <SidebarViewTotal />
               {/* End: Sidebar view total */}
             </Card>
-            <Card
-              sx={{ p: 2  }}
-            >
+            <Card sx={{ p: 2 }}>
               {/* Start: Chart */}
               <DemoChart />
               {/* End: Chart */}
@@ -38,33 +33,15 @@ const DashboardPage = () => {
         </Grid>
         <Grid xs={12} sm={12} md={7} lg={9} xl={9} item>
           <Stack spacing={2}>
-            <Card
-              sx={{ p: 2  }}
-            >
+            <Card sx={{ p: 2 }}>
               {/* Start: Quantity statistics */}
               <QuantityStatistics />
               {/* End: Quantity statistics */}
             </Card>
-            <Card
-              sx={{ p: 2  }}
-            >
+            <Card sx={{ p: 2 }}>
               <Stack>
                 <Box sx={{ mb: 2 }}>
-                  <Typography variant="h6">MyJob profile</Typography>
-                </Box>
-                <Box>
-                  {/* Start:  */}
-                  <h1>Thống kê chỗ này cũng được</h1>
-                  {/* End:  */}
-                </Box>
-              </Stack>
-            </Card>
-            <Card
-              sx={{ p: 2 }}
-            >
-              <Stack>
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="h6">CV đã tải lên MyJob</Typography>
+                  <Typography variant="h6">Hoạt động của bạn</Typography>
                 </Box>
                 <Box>
                   {/* Start:  */}
@@ -73,14 +50,16 @@ const DashboardPage = () => {
                 </Box>
               </Stack>
             </Card>
-            <Card
-              sx={{ p: 2  }}
-            >
+            <Card sx={{ p: 2 }}>
               <Stack>
                 <Box sx={{ mb: 2 }}>
                   <Typography variant="h6">Việc làm gợi ý</Typography>
                 </Box>
-                <Box>{/* <JobPosts /> */}</Box>
+                <Box>
+                  {/* Start: SuggestedJobPostCard */}
+                  <SuggestedJobPostCard pageSize={10}/>
+                  {/* End: SuggestedJobPostCard */}
+                </Box>
               </Stack>
             </Card>
           </Stack>

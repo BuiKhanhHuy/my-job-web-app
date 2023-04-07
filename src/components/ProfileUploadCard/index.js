@@ -8,13 +8,16 @@ import {
   Stack,
   Chip,
   Skeleton,
+  Tooltip,
 } from '@mui/material';
 
+import HelpIcon from '@mui/icons-material/Help';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarIcon from '@mui/icons-material/Star';
 import EditIcon from '@mui/icons-material/Edit';
-import ReplyIcon from '@mui/icons-material/Reply';
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteForever from '@mui/icons-material/DeleteForever';
+import downloadPdf from '../../utils/funcUtils';
 
 const ProfileUploadCard = ({
   resumeImage,
@@ -23,7 +26,9 @@ const ProfileUploadCard = ({
   updateAt,
   slug,
   id,
+  isActive,
   handleDelete,
+  handleActive,
 }) => {
   const nav = useNavigate();
 
@@ -60,17 +65,34 @@ const ProfileUploadCard = ({
           background: 'linear-gradient(180deg,hsla(0,0%,100%,0),#212f3f)',
         }}
       >
-        <Box sx={{ position: 'absolute', right: 16, top: 16 }}>
-          {' '}
-          <Chip
-            sx={{ ml: 1 }}
-            size="small"
-            icon={<StarIcon color="warning" />}
-            color="success"
-            label="Đặt làm CV chính"
-            onClick={() => {}}
-          />
-        </Box>
+        <Stack direction="row" justifyContent="flex-end" sx={{ marginTop: 1 }}>
+          {isActive ? (
+            <Chip
+              sx={{ ml: 1 }}
+              size="small"
+              icon={<StarIcon color="warning" />}
+              color="success"
+              label="Cho phép tìm kiếm"
+              onClick={() => handleActive(slug)}
+            />
+          ) : (
+            <Chip
+              variant="outlined"
+              sx={{ ml: 1 }}
+              size="small"
+              icon={<StarOutlineIcon color="warning" />}
+              color="success"
+              label="Cho phép tìm kiếm"
+              onClick={() => handleActive(slug)}
+            />
+          )}
+          <Tooltip
+           title={`Bật "Cho phép tìm kiếm" sẽ giúp nhà tuyển dụng tìm thấy hồ sơ của bạn và họ có thể liên hệ với bạn về công việc mới. Chỉ có duy nhất một hồ được bật trạng thái "cho phép tìm kiếm" trong tất cả hồ sơ của bạn.`}
+            arrow
+          >
+            <HelpIcon color="disabled" />
+          </Tooltip>
+        </Stack>
         <Box
           sx={{
             position: 'absolute',
@@ -105,21 +127,13 @@ const ProfileUploadCard = ({
             <Stack direction="row" justifyContent="space-between">
               <Stack direction="row" spacing={1} alignItems="center">
                 <Chip
-                  sx={{ color: 'white' }}
+                  sx={{ ml: 1, color: 'white' }}
                   size="small"
-                  icon={<ReplyIcon />}
+                  icon={<DownloadIcon />}
                   color="secondary"
-                  label="Chia sẻ"
-                  onClick={() => {}}
+                  label="Tải xuống"
+                  onClick={() => downloadPdf(fileUrl, title)}
                 />
-                  <Chip
-                    sx={{ ml: 1, color: 'white' }}
-                    size="small"
-                    icon={<DownloadIcon />}
-                    color="secondary"
-                    label="Tải xuống"
-                    onClick={() => {}}
-                  />
               </Stack>
               <IconButton
                 aria-label="delete"

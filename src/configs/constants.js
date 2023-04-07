@@ -6,7 +6,7 @@ import ImageSvg2 from '../assets/images/svg-images/online-gallery.svg';
 import ImageSvg3 from '../assets/images/svg-images/empty-street.svg';
 import ImageSvg4 from '../assets/images/svg-images/dreamer.svg';
 import ImageSvg5 from '../assets/images/svg-images/small_town.svg';
-import ImageSvg6 from '../assets/images/svg-images/blooming.svg';
+import ImageSvg6 from '../assets/images/svg-images/working_remotely.svg';
 import ImageSvg7 from '../assets/images/svg-images/country_side.svg';
 
 const AUTH_PROVIDER = {

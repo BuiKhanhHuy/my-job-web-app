@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Grid } from '@mui/material';
+import { Alert, Grid } from '@mui/material';
 
 import { DATE_OPTIONS, REGEX_VATIDATE } from '../../../../configs/constants';
 import useDebounce from '../../../../hooks/useDebounce';
@@ -228,6 +228,14 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
   return (
     <form id="modal-form" onSubmit={handleSubmit(handleAddOrUpdate)}>
       <Grid container spacing={2}>
+        {editData?.isVerify && (
+          <Grid item xs={12}>
+            <Alert severity="warning">
+              Bài đăng sẽ được chuyển về trang thái chờ kiểm duyệt nếu bạn cập
+              nhật!
+            </Alert>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <TextFieldCustom
             name="jobName"

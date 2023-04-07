@@ -99,4 +99,4 @@ const CompanyViewedCard = () => {
   );
 };
 
-export default CompanyViewedCard;
+export default React.memo(CompanyViewedCard);

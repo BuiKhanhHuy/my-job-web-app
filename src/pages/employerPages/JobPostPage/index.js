@@ -5,7 +5,7 @@ import JobPostCard from '../../components/employers/JobPostCard';
 
 const JobPostPage = () => {
   return (
-    <Card sx={{ boxShadow: 0, p: 3 }}>
+    <Card sx={{ p: 3 }}>
       <JobPostCard />
     </Card>
   );

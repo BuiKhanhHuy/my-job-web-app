@@ -56,7 +56,7 @@ const headCells = [
     label: 'Lượt xem',
   },
   {
-    id: 'isUrgent',
+    id: 'isVerify',
     showOrder: false,
     numeric: false,
     disablePadding: false,

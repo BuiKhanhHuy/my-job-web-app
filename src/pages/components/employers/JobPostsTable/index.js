@@ -15,7 +15,15 @@ const JobPostsTable = (props) => {
         return (
           <TableBody key={row.id}>
             <TableCell component="th" scope="row" padding="none">
-              {row.jobName}
+              {row.jobName}{' '}
+              {row.isUrgent && (
+                <Chip
+                  label="Tuyển gấp"
+                  color="error"
+                  variant="outlined"
+                  size="small"
+                />
+              )}
             </TableCell>
             <TableCell align="left">
               {dayjs(row.createAt).format('DD/MM/YYYY')}
@@ -26,10 +34,10 @@ const JobPostsTable = (props) => {
             <TableCell align="left">{row.appliedNumber}</TableCell>
             <TableCell align="left">{row.views}</TableCell>
             <TableCell align="left">
-              {row.isUrgent ? (
-                <Chip label="Tuyển gấp" color="error" size='small'/>
+              {row.isVerify ? (
+                <Chip label="Đã duyệt" color="success" size="small" />
               ) : (
-                <Chip label="Đang tuyển" color="info" size='small'/>
+                <Chip label="Chưa duyệt" color="warning" size="small" />
               )}
             </TableCell>
             <TableCell align="right">

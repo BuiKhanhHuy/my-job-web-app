@@ -29,6 +29,7 @@ const ForgotPasswordForm = ({ handleRequestResetPassword }) => {
           name="email"
           control={control}
           title="Email"
+          showRequired={true}
           placeholder="Nhập email"
         />
       </Stack>

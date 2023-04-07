@@ -1,6 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
 import PublishIcon from '@mui/icons-material/Publish';
@@ -18,8 +17,13 @@ import ProfileUploadCard from '../../../../components/ProfileUploadCard';
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
 import NoDataCard from '../../../../components/NoDataCard';
 
+import { reloadResume } from '../../../../redux/profileSlice';
+
 const ProfileUpload = ({ title }) => {
-  const nav = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    resume: { isReloadResume },
+  } = useSelector((state) => state.profile);
   const { currentUser } = useSelector((state) => state.user);
   const [isLoadingResumes, setIsLoadingResumes] = React.useState(false);
   const [resumes, setResumes] = React.useState([]);
@@ -48,10 +52,9 @@ const ProfileUpload = ({ title }) => {
     getOnlineProfile(currentUser?.jobSeekerProfileId, {
       resumeType: CV_TYPES.cvUpload,
     });
-  }, [currentUser, isSuccess]);
+  }, [currentUser, isSuccess, isReloadResume]);
 
   const handleAdd = (data) => {
-    console.log(data);
     const addResumeUpload = async (formData) => {
       setIsFullScreenLoading(true);
       try {
@@ -94,6 +97,24 @@ const ProfileUpload = ({ title }) => {
       'CV này sẽ được xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn?',
       'warning'
     );
+  };
+
+  const handleActive = (slug) => {
+    const activeResume = async (resumeSlug) => {
+      setIsFullScreenLoading(true);
+      try {
+        await resumeService.activeResume(resumeSlug);
+
+        dispatch(reloadResume());
+        toastMessages.success('Thay đổi trạng thái hồ sơ thành công.');
+      } catch (error) {
+        errorHandling(error);
+      } finally {
+        setIsFullScreenLoading(false);
+      }
+    };
+
+    activeResume(slug);
   };
 
   return (
@@ -140,7 +161,9 @@ const ProfileUpload = ({ title }) => {
                         updateAt={value?.updateAt}
                         slug={value.slug}
                         id={value.id}
+                        isActive={value.isActive}
                         handleDelete={handleDelete}
+                        handleActive={handleActive}
                       />
                     </Grid>
                   </Grid>
