@@ -1,22 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Stack, Button, Pagination } from '@mui/material';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import SendIcon from '@mui/icons-material/Send';
+import {
+  Box,
+  Stack,
+  Button,
+  Pagination,
+  Chip,
+  Typography,
+} from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
 
-import { IMAGE_SVG } from '../../../../configs/constants';
+import { CV_TYPES, IMAGE_SVG } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import JobPostAction from '../../../../components/JobPostAction';
 import jobService from '../../../../services/jobService';
 import errorHandling from '../../../../utils/errorHandling';
 import toastMessages from '../../../../utils/toastMessages';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFile, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import jobPostActivityService from '../../../../services/jobPostActivityService';
+import dayjs from 'dayjs';
 
 const pageSize = 10;
 
 const AppliedJobCard = () => {
-  const [isSuccess, setIsSuccess] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [jobPosts, setJobPosts] = React.useState([]);
+  const [jobPostsApplied, setJobPostsApplied] = React.useState([]);
   const [page, setPage] = React.useState(1);
   const [count, setCount] = React.useState(0);
 
@@ -24,16 +33,17 @@ const AppliedJobCard = () => {
     const getJobPosts = async (params) => {
       setIsLoading(true);
       try {
-        const resData = await jobService.getJobPostsSaved({
+        const resData = await jobPostActivityService.getJobPostActivity({
           pageSize: pageSize,
           page: page,
         });
         const data = resData.data;
 
-        setCount(data.count);
-        setJobPosts(data.results);
         console.log(data);
+        setCount(data.count);
+        setJobPostsApplied(data.results);
       } catch (error) {
+        errorHandling(error);
       } finally {
         setIsLoading(false);
       }
@@ -41,28 +51,10 @@ const AppliedJobCard = () => {
 
     getJobPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, isSuccess]);
+  }, [page]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-  };
-
-  const handleSave = (slug) => {
-    const saveJobPost = async (slug) => {
-      try {
-        const resData = await jobService.saveJobPost(slug);
-        const isSaved = resData.data.isSaved;
-
-        toastMessages.success(
-          isSaved ? 'Lưu thành công.' : 'Hủy lưu thành công.'
-        );
-        setIsSuccess(!isSuccess);
-      } catch (error) {
-        errorHandling(error);
-      }
-    };
-
-    saveJobPost(slug);
   };
 
   return (
@@ -74,8 +66,11 @@ const AppliedJobCard = () => {
               <JobPostAction.Loading key={value} />
             ))}
           </Stack>
-        ) : jobPosts.length === 0 ? (
-          <NoDataCard title="Bạn chưa lưu công việc nào" img={IMAGE_SVG.img5}>
+        ) : jobPostsApplied.length === 0 ? (
+          <NoDataCard
+            title="Bạn chưa ứng tuyển công việc nào"
+            img={IMAGE_SVG.img5}
+          >
             <Button
               component={Link}
               to="/viec-lam"
@@ -88,40 +83,56 @@ const AppliedJobCard = () => {
           </NoDataCard>
         ) : (
           <Stack spacing={2}>
-            {jobPosts.map((value) => (
+            {jobPostsApplied.map((value) => (
               <JobPostAction
                 key={value.id}
-                id={value.id}
-                slug={value.slug}
-                companyImageUrl={value?.companyDict?.companyImageUrl}
-                companyName={value?.companyDict?.companyName}
-                jobName={value?.jobName}
-                cityId={value?.locationDict?.city}
-                deadline={value?.deadline}
-                isUrgent={value?.isUrgent}
-                isHot={value?.isHot}
-                salaryMin={value.salaryMin}
-                salaryMax={value.salaryMax}
+                id={value?.jobPostDict.id}
+                slug={value?.jobPostDict.slug}
+                companyImageUrl={
+                  value?.jobPostDict?.companyDict?.companyImageUrl
+                }
+                companyName={value?.jobPostDict?.companyDict?.companyName}
+                jobName={value?.jobPostDict?.jobName}
+                cityId={value?.jobPostDict?.locationDict?.city}
+                deadline={value?.jobPostDict?.deadline}
+                isUrgent={value?.jobPostDict?.isUrgent}
+                isHot={value?.jobPostDict?.isHot}
+                salaryMin={value?.jobPostDict.salaryMin}
+                salaryMax={value?.jobPostDict.salaryMax}
               >
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="error"
-                  sx={{ textTransform: 'inherit' }}
-                  startIcon={<BookmarkIcon />}
-                  onClick={() => handleSave(value.slug)}
-                >
-                  Hủy lưu
-                </Button>
-                <Button
-                  size="small"
-                  variant="contained"
-                  color="warning"
-                  sx={{ textTransform: 'inherit', color: 'white' }}
-                  startIcon={<SendIcon />}
-                >
-                  Ứng tuyển
-                </Button>
+                <Stack spacing={1}>
+                  <Chip
+                    label={`Ứng tuyển ngày: ${dayjs(value?.createAt).format(
+                      'DD/MM/YYYY'
+                    )}`}
+                    size="small"
+                    color="success"
+                    icon={<DoneIcon />}
+                  />
+                  <Typography variant="subtitle2" color="GrayText">
+                    {value?.resumeDict?.type === CV_TYPES.cvWebsite ? (
+                      <>
+                        <FontAwesomeIcon
+                          icon={faFile}
+                          style={{ marginRight: 1 }}
+                          color="#441da0"
+                        />{' '}
+                        Hồ sơ trực tuyến
+                      </>
+                    ) : value?.resumeDict?.type === CV_TYPES.cvUpload ? (
+                      <>
+                        <FontAwesomeIcon
+                          icon={faFilePdf}
+                          style={{ marginRight: 1 }}
+                          color="red"
+                        />{' '}
+                        Hồ sơ đính kèm
+                      </>
+                    ) : (
+                      ''
+                    )}
+                  </Typography>
+                </Stack>
               </JobPostAction>
             ))}
             <Stack sx={{ pt: 2 }} alignItems="center">

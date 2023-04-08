@@ -119,8 +119,9 @@ const SavedJobCard = () => {
                   color="warning"
                   sx={{ textTransform: 'inherit', color: 'white' }}
                   startIcon={<SendIcon />}
+                  disabled={value?.isApplied}
                 >
-                  Ứng tuyển
+                  {value?.isApplied ? 'Đã ứng tuyển' : 'Ứng tuyển'}
                 </Button>
               </JobPostAction>
             ))}
@@ -140,6 +141,7 @@ const SavedJobCard = () => {
           </Stack>
         )}
       </Box>
+
     </>
   );
 };

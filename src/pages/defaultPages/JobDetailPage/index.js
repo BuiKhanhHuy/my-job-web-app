@@ -33,6 +33,7 @@ import Map from '../../../components/Map';
 import jobService from '../../../services/jobService';
 import ApplyCard from '../../../components/ApplyCard';
 import SocialNetworkSharingPopup from '../../../components/SocialNetworkSharingPopup/SocialNetworkSharingPopup';
+import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
 
 const Loading = (
   <>
@@ -230,7 +231,6 @@ const item = (title, value) => {
 const action = (
   isApplied,
   isSaved,
-  isLoadingApply,
   isLoadingSave,
   handleSave,
   handleShowApplyForm,
@@ -273,8 +273,8 @@ const JobDetailPage = () => {
   const { allConfig } = useSelector((state) => state.config);
   const [openSharePopup, setOpenSharePopup] = React.useState(false);
   const [openPopup, setOpenPopup] = React.useState(false);
+  const [isApplySucces, setIsApplySuccess] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [isLoadingApply, setIsLoadingApply] = React.useState(false);
   const [isLoadingSave, setIsLoadingSave] = React.useState(false);
   const [jobPostDetail, setJobPostDetail] = React.useState(null);
 
@@ -292,6 +292,13 @@ const JobDetailPage = () => {
 
     getJobPostDetail(slug);
   }, [slug]);
+
+  React.useEffect(() => {
+    if (isApplySucces) {
+      setJobPostDetail({ ...jobPostDetail, isApplied: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isApplySucces]);
 
   const handleSave = () => {
     const saveJobPost = async () => {
@@ -432,7 +439,6 @@ const JobDetailPage = () => {
                     {action(
                       jobPostDetail.isApplied,
                       jobPostDetail.isSaved,
-                      isLoadingApply,
                       isLoadingSave,
                       handleSave,
                       handleShowApplyForm,
@@ -629,7 +635,6 @@ const JobDetailPage = () => {
                 {action(
                   jobPostDetail.isApplied,
                   jobPostDetail.isSaved,
-                  isLoadingApply,
                   isLoadingSave,
                   handleSave,
                   handleShowApplyForm,
@@ -704,11 +709,11 @@ const JobDetailPage = () => {
                   ></Box>
                   <Box>
                     {/* Start: FilterJobPostCard */}
-                    {/* <FilterJobPostCard
-                  params={{
-                    excludeSlug: jobPostDetail?.slug,
-                  }}
-                /> */}
+                    <FilterJobPostCard
+                      params={{
+                        excludeSlug: jobPostDetail?.slug,
+                      }}
+                    />
                     {/* End: FilterJobPostCard */}
                   </Box>
                 </Stack>
@@ -720,8 +725,10 @@ const JobDetailPage = () => {
       {/* Start: ApplyCard */}
       <ApplyCard
         title={jobPostDetail?.jobName}
+        jobPostId={jobPostDetail?.id}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
+        setIsApplySuccess={setIsApplySuccess}
       />
       {/* End: ApplyCard */}
 

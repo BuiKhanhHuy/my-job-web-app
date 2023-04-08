@@ -1,24 +1,32 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
   Card,
+  CircularProgress,
   Grid,
+  Link,
   Radio,
   RadioGroup,
   Stack,
   Typography,
 } from '@mui/material';
 
-import { REGEX_VATIDATE } from '../../configs/constants';
-import TextFieldCustom from '../controls/TextFieldCustom';
-import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faFile, faFilePdf } from '@fortawesome/free-regular-svg-icons';
+import errorHandling from '../../utils/errorHandling';
+import { CV_TYPES, REGEX_VATIDATE } from '../../configs/constants';
 
-const ApplyForm = ({ handleApply }) => {
+import TextFieldCustom from '../controls/TextFieldCustom';
+import jobSeekerProfileService from '../../services/jobSeekerProfileService';
+
+const ApplyForm = ({ handleApplyJob }) => {
   const { currentUser } = useSelector((state) => state.user);
+  const [isLoadingResumes, setIsLoadingResumes] = React.useState(false);
+
+  const [resumes, setResumes] = React.useState([]);
 
   const schema = yup.object().shape({
     fullName: yup
@@ -47,106 +55,137 @@ const ApplyForm = ({ handleApply }) => {
     resolver: yupResolver(schema),
   });
 
+  React.useEffect(() => {
+    const getOnlineProfile = async (jobSeekerProfileId, params) => {
+      setIsLoadingResumes(true);
+      try {
+        const resData = await jobSeekerProfileService.getResumes(
+          jobSeekerProfileId,
+          params
+        );
+
+        setResumes(resData.data);
+      } catch (error) {
+        errorHandling(error);
+      } finally {
+        setIsLoadingResumes(false);
+      }
+    };
+
+    getOnlineProfile(currentUser?.jobSeekerProfileId);
+  }, [currentUser]);
+
   return (
-    <form id="modal-form" onSubmit={handleSubmit(handleApply)}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <RadioGroup
-            aria-labelledby="resume"
-            name="resume"
-            onChange={(event) => setValue('resume', event.target.value)}
-          >
-            <Stack spacing={1}>
-              <Card sx={{ p: 1 }} variant="outlined">
-                <Stack direction="row" sx={{ width: '100%' }}>
-                  <Stack>
-                    <Radio value={1} />
-                  </Stack>
-                  <Stack flex={1}>
-                    <Typography variant="h6" sx={{ fontSize: 17 }}>
-                      Thực tập sinh Backend
-                    </Typography>
-                    <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
-                      <FontAwesomeIcon
-                        icon={faFile}
-                        style={{ marginRight: 1 }}
-                        color="#441da0"
-                      />{' '}
-                      Hồ sơ trực tuyến
-                    </Typography>
-                  </Stack>
-                  <Stack justifyContent="center">
-                    <Typography
-                      sx={{ fontWeight: 'bold', cursor: 'pointer' }}
-                      color="#441da0"
-                    >
-                      <FontAwesomeIcon icon={faEye} /> Xem hồ sơ
-                    </Typography>
-                  </Stack>
-                </Stack>
-              </Card>
-              <Card sx={{ p: 1 }} variant="outlined">
-                <Stack direction="row" sx={{ width: '100%' }}>
-                  <Stack>
-                    <Radio value={2} />
-                  </Stack>
-                  <Stack flex={1}>
-                    <Typography variant="h6" sx={{ fontSize: 17 }}>
-                      Python Backend Developer
-                    </Typography>
-                    <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
-                      <FontAwesomeIcon
-                        icon={faFilePdf}
-                        style={{ marginRight: 1 }}
-                        color="red"
-                      />{' '}
-                      Hồ sơ đính kèm
-                    </Typography>
-                  </Stack>
-                  <Stack justifyContent="center">
-                    <Typography
-                      sx={{ fontWeight: 'bold', cursor: 'pointer' }}
-                      color="#441da0"
-                    >
-                      <FontAwesomeIcon icon={faEye} /> Xem hồ sơ
-                    </Typography>
-                  </Stack>
-                </Stack>
-              </Card>
-            </Stack>
-          </RadioGroup>
+    <>
+      <form id="modal-form" onSubmit={handleSubmit(handleApplyJob)}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <RadioGroup
+              aria-labelledby="resume"
+              name="resume"
+              onChange={(event) => setValue('resume', event.target.value)}
+            >
+              <Stack spacing={1} justifyContent="center">
+                {isLoadingResumes ? (
+                  <CircularProgress
+                    color="secondary"
+                    sx={{ margin: '0 auto' }}
+                  />
+                ) : (
+                  resumes.map((value) => (
+                    <Card sx={{ p: 1 }} variant="outlined" key={value.id}>
+                      <Stack direction="row" sx={{ width: '100%' }}>
+                        <Stack>
+                          <Radio value={value.id} />
+                        </Stack>
+                        <Stack flex={1}>
+                          <Typography variant="h6" sx={{ fontSize: 17 }}>
+                            {value?.title}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            sx={{ fontStyle: 'italic' }}
+                          >
+                            {value.type === CV_TYPES.cvWebsite ? (
+                              <>
+                                <FontAwesomeIcon
+                                  icon={faFile}
+                                  style={{ marginRight: 1 }}
+                                  color="#441da0"
+                                />{' '}
+                                Hồ sơ trực tuyến
+                              </>
+                            ) : value.type === CV_TYPES.cvUpload ? (
+                              <>
+                                <FontAwesomeIcon
+                                  icon={faFilePdf}
+                                  style={{ marginRight: 1 }}
+                                  color="red"
+                                />{' '}
+                                Hồ sơ đính kèm
+                              </>
+                            ) : (
+                              ''
+                            )}
+                          </Typography>
+                        </Stack>
+                        <Stack justifyContent="center">
+                          <Link
+                            target="_blank"
+                            href={
+                              value.type === CV_TYPES.cvWebsite
+                                ? `/ung-vien/ho-so-tung-buoc/${value.slug}`
+                                : `/ung-vien/ho-so-dinh-kem/${value.slug}`
+                            }
+                            style={{
+                              textDecoration: 'none',
+                            }}
+                          >
+                            <Typography
+                              sx={{ fontWeight: 'bold', cursor: 'pointer' }}
+                              color="#441da0"
+                            >
+                              <FontAwesomeIcon icon={faEye} /> Xem hồ sơ
+                            </Typography>
+                          </Link>
+                        </Stack>
+                      </Stack>
+                    </Card>
+                  ))
+                )}
+              </Stack>
+            </RadioGroup>
+          </Grid>
+          <Grid item xs={12}>
+            <TextFieldCustom
+              name="fullName"
+              title="Họ và tên"
+              showRequired={true}
+              placeholder="Nhập họ và tên"
+              control={control}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextFieldCustom
+              name="email"
+              title="Email"
+              showRequired={true}
+              placeholder="Nhập email"
+              control={control}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextFieldCustom
+              name="phone"
+              title="Số điện thoại"
+              showRequired={true}
+              placeholder="Nhập số điện thoại"
+              control={control}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TextFieldCustom
-            name="fullName"
-            title="Họ và tên"
-            showRequired={true}
-            placeholder="Nhập họ và tên"
-            control={control}
-            disabled={true}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextFieldCustom
-            name="email"
-            title="Email"
-            showRequired={true}
-            placeholder="Nhập email"
-            control={control}
-            disabled={true}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextFieldCustom
-            name="phone"
-            title="Số điện thoại"
-            showRequired={true}
-            placeholder="Nhập số điện thoại"
-            control={control}
-          />
-        </Grid>
-      </Grid>
-    </form>
+      </form>
+    </>
   );
 };
 

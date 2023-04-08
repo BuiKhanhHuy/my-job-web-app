@@ -1,16 +1,18 @@
 import React from 'react';
-import { Card, Divider, Typography } from '@mui/material';
+import { Box, Card, Divider, Typography } from '@mui/material';
 import SavedResumeCard from '../../components/employers/SavedResumeCard';
 
 const SavedProfilePage = () => {
   return (
-    <Card sx={{ p: 3, boxShadow: 0 }}>
+    <Card sx={{ p: 3 }}>
       <Typography variant="h5">Hồ sơ đã lưu</Typography>
 
       <Divider sx={{ mt: 2, mb: 3 }} />
-      {/* Start: SavedResume card */}
-      <SavedResumeCard />
-      {/* End: SavedResume card */}
+      <Box>
+        {/* Start: Saved Resume Card */}
+        <SavedResumeCard />
+        {/* End: Saved Resume Card */}
+      </Box>
     </Card>
   );
 };

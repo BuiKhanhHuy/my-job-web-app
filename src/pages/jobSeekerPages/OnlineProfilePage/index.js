@@ -29,8 +29,8 @@ import LanguageSkillCard from '../../components/jobSeekers/LanguageSkillCard';
 import AdvancedSkillCard from '../../components/jobSeekers/AdvancedSkillCard';
 
 const items = [
-  { id: 0, value: 'Thông tin chung', icon: <PersonPinOutlinedIcon /> },
-  { id: 1, value: 'Thông tin hồ sơ', icon: <WorkOutlineOutlinedIcon /> },
+  { id: 0, value: 'Thông tin cá nhân', icon: <PersonPinOutlinedIcon /> },
+  { id: 1, value: 'Thông tin chung', icon: <WorkOutlineOutlinedIcon /> },
   { id: 2, value: 'Kinh nghiệm làm việc', icon: <ReceiptLongOutlinedIcon /> },
   { id: 3, value: 'Thông tin học vấn', icon: <SchoolOutlinedIcon /> },
   { id: 4, value: 'Chứng chỉ', icon: <ThumbsUpDownOutlinedIcon /> },

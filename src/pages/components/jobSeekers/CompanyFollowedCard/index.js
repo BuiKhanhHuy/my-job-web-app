@@ -94,7 +94,7 @@ const CompanyFollowedCard = () => {
                 <Button
                   sx={{ textTransform: 'inherit' }}
                   variant="outlined"
-                  color="secondary"
+                  color="error"
                   size="small"
                   onClick={() => handleFollow(value.company?.slug)}
                 >
