@@ -239,8 +239,10 @@ const JobPostCard = () => {
   };
 
   const handleFilter = (data) => {
+    console.log(data);
     setFilterData({
       ...data,
+      isUrgent: data.isUrgent === 1 ? true : data.isUrgent === 2 ? false : '',
       pageSize: pageSize,
     });
     setPage(0);
@@ -255,7 +257,7 @@ const JobPostCard = () => {
         const data = resData.data;
 
         // export
-        xlsxUtils.exportToXLSX(data, "DanhSachViecLam");
+        xlsxUtils.exportToXLSX(data, 'DanhSachViecLam');
       } catch (error) {
         errorHandling(error);
       } finally {

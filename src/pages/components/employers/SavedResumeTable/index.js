@@ -1,11 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
-import { Button, TableBody, TableCell } from '@mui/material';
+import { Button, TableBody, TableCell, Tooltip } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import DataTableCustom from '../../../../components/DataTableCustom';
 import { salaryString } from '../../../../utils/customData';
+import { faFile, faFilePdf } from '@fortawesome/free-regular-svg-icons';
+import { CV_TYPES } from '../../../../configs/constants';
 
 const SavedResumeTable = (props) => {
   const { rows, handleUnsave } = props;
@@ -17,6 +20,23 @@ const SavedResumeTable = (props) => {
         return (
           <TableBody key={row.id}>
             <TableCell component="th" scope="row" padding="none">
+              {row?.resume?.type === CV_TYPES.cvWebsite ? (
+                <Tooltip title="Hồ sơ Online" arrow>
+                  <FontAwesomeIcon
+                    icon={faFile}
+                    style={{ marginRight: 1 }}
+                    color="#441da0"
+                  />
+                </Tooltip>
+              ) : (
+                <Tooltip title="Hồ sơ Đính kèm" arrow>
+                  <FontAwesomeIcon
+                    icon={faFilePdf}
+                    style={{ marginRight: 1 }}
+                    color="red"
+                  />
+                </Tooltip>
+              )}{' '}
               {row?.resume?.title || (
                 <span
                   style={{

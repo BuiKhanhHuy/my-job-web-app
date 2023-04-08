@@ -1,8 +1,9 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { Autocomplete, TextField, Typography } from '@mui/material';
+import { Autocomplete, IconButton, TextField, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { Clear } from '@mui/icons-material';
 
 const SingleSelectCustom = ({
   name,
@@ -32,9 +33,13 @@ const SingleSelectCustom = ({
               autoHighlight={false}
               getOptionLabel={(option) => option.name}
               value={options.find((o) => o.id === field.value) || null}
-              onChange={(e, value) => field.onChange(value.id)}
+              onChange={(e, value) => field.onChange(value?.id || "" )}
               renderInput={(params) => (
-                <TextField {...params} size="small" placeholder={placeholder} />
+                <TextField
+                  {...params}
+                  size="small"
+                  placeholder={placeholder}
+                />
               )}
             />
             {fieldState.invalid && (

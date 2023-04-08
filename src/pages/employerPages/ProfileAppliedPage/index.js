@@ -1,17 +1,13 @@
-import React from 'react';  
-import { Box, Card, Divider, Typography } from '@mui/material';
+import React from 'react';
+import { Card } from '@mui/material';
+import AppliedResumeCard from '../../components/employers/AppliedResumeCard';
 
 const ProfileAppliedPage = () => {
   return (
     <Card sx={{ p: 3 }}>
-      <Typography variant="h5">Hồ sơ ứng tuyển</Typography>
-
-      <Divider sx={{ mt: 2, mb: 3 }} />
-      <Box>
-        {/* Start: Profile card */}
-        {/* <ProfileCard /> */}
-        {/* End: Profile card */}
-      </Box>
+      {/* Start: Applied Resume Card */}
+      <AppliedResumeCard title="Hồ sơ đã ứng tuyển"/>
+      {/* End: Applied Resume Card */}
     </Card>
   );
 };

@@ -29,8 +29,8 @@ const JobPostFilterForm = ({ handleFilter }) => {
             name="isUrgent"
             control={control}
             options={[
-              { id: true, name: 'Tuyển gấp' },
-              { id: false, name: 'Không tuyển gấp' },
+              { id: 1, name: 'Tuyển gấp' },
+              { id: 2, name: 'Không tuyển gấp' },
             ]}
             showRequired={true}
             placeholder="Trạng thái tuyển dụng"

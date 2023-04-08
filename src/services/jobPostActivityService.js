@@ -14,6 +14,11 @@ const jobPostActivityService = {
   },
 
   // employer
+  getAppliedResume: (params = {}) => {
+    const url = '/api/job/web/employer-job-posts-activity/';
+
+    return httpRequest.get(url, { params: params });
+  },
 };
 
 export default jobPostActivityService;

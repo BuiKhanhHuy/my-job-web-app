@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Stack, Button, Pagination } from '@mui/material';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import SendIcon from '@mui/icons-material/Send';
 
 import { IMAGE_SVG } from '../../../../configs/constants';
@@ -105,16 +105,6 @@ const SavedJobCard = () => {
               >
                 <Button
                   size="small"
-                  variant="outlined"
-                  color="error"
-                  sx={{ textTransform: 'inherit' }}
-                  startIcon={<BookmarkIcon />}
-                  onClick={() => handleSave(value.slug)}
-                >
-                  Hủy lưu
-                </Button>
-                <Button
-                  size="small"
                   variant="contained"
                   color="warning"
                   sx={{ textTransform: 'inherit', color: 'white' }}
@@ -122,6 +112,16 @@ const SavedJobCard = () => {
                   disabled={value?.isApplied}
                 >
                   {value?.isApplied ? 'Đã ứng tuyển' : 'Ứng tuyển'}
+                </Button>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="error"
+                  sx={{ textTransform: 'inherit' }}
+                  startIcon={<FavoriteIcon />}
+                  onClick={() => handleSave(value.slug)}
+                >
+                  Hủy lưu
                 </Button>
               </JobPostAction>
             ))}
@@ -141,7 +141,6 @@ const SavedJobCard = () => {
           </Stack>
         )}
       </Box>
-
     </>
   );
 };

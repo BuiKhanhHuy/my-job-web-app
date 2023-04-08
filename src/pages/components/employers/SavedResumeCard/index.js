@@ -6,7 +6,6 @@ import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import xlsxUtils from '../../../../utils/xlsxUtils';
 
-import jobService from '../../../../services/jobService';
 import SavedResumeTable from '../SavedResumeTable';
 import resumeSavedService from '../../../../services/resumeSavedService';
 import SavedResumeFilterForm from '../SavedResumeFilterForm';
@@ -67,7 +66,7 @@ const headCells = [
 
 const pageSize = 5;
 
-const SavedResumeCard = () => {
+const SavedResumeCard = ({ title }) => {
   const [page, setPage] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(pageSize);
@@ -140,15 +139,15 @@ const SavedResumeCard = () => {
   };
 
   const handleExport = () => {
-    const exportJobPosts = async (params) => {
+    const exportResumes = async (params) => {
       setIsFullScreenLoading(true);
 
       try {
-        const resData = await jobService.exportEmployerJobPosts(params);
+        const resData = await resumeSavedService.exportResumesSaved(params);
         const data = resData.data;
 
         // export
-        xlsxUtils.exportToXLSX(data, 'DanhSachViecLam');
+        xlsxUtils.exportToXLSX(data, 'DanhSachHoSoDaLuu');
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -156,16 +155,35 @@ const SavedResumeCard = () => {
       }
     };
 
-    // exportJobPosts({
-    //   page: page + 1,
-    //   pageSize: rowsPerPage,
-    //   ordering: `${order === 'desc' ? '-' : ''}${orderBy}`,
-    //   ...filterData,
-    // });
+    exportResumes({
+      page: page + 1,
+      pageSize: rowsPerPage,
+      ...filterData,
+    });
   };
 
   return (
     <>
+      <Box>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography variant="h5">{title}</Typography>
+          <Button
+            variant="outlined"
+            color="secondary"
+            startIcon={<FileDownloadOutlinedIcon />}
+            onClick={handleExport}
+          >
+            Tải danh sách
+          </Button>
+        </Stack>
+      </Box>
+
+      <Divider sx={{ mt: 2, mb: 3 }} />
+
       <Stack
         direction={{
           xs: 'column',
@@ -192,16 +210,6 @@ const SavedResumeCard = () => {
           <SavedResumeFilterForm handleFilter={handleFilter} />
           {/* End: SavedResumeFilterForm */}
         </Box>
-        <Stack direction="row" justifyContent="flex-end" spacing={1}>
-          <Button
-            variant="outlined"
-            color="secondary"
-            startIcon={<FileDownloadOutlinedIcon />}
-            onClick={handleExport}
-          >
-            Tải danh sách
-          </Button>
-        </Stack>
       </Stack>
       <Divider />
       <Divider />
@@ -215,7 +223,6 @@ const SavedResumeCard = () => {
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      {/* <DataTableCustom.Loading /> */}
 
       {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}

@@ -21,7 +21,7 @@ const SingleSelectSearchCustom = ({
           autoHighlight={false}
           getOptionLabel={(option) => option.name}
           value={options.find((o) => o.id === field.value) || null}
-          onChange={(e, value) => field.onChange(value.id)}
+          onChange={(e, value) => field.onChange(value?.id || '')}
           renderInput={(params) => (
             <TextField
               {...params}
