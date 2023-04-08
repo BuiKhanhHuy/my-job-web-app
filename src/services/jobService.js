@@ -31,6 +31,12 @@ const jobService = {
 
     return httpRequest.delete(url);
   },
+  getJobPostOptions: () => {
+    const url = 'api/job/web/private-job-posts/job-posts-options/';
+
+    return httpRequest.get(url);
+  },
+
 
   getJobPosts: (params = {}) => {
     const url = 'api/job/web/job-posts/';

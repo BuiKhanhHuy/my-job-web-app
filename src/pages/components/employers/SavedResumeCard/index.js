@@ -1,5 +1,12 @@
 import React from 'react';
-import { Box, Button, Divider, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  LinearProgress,
+  Stack,
+  Typography,
+} from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 import errorHandling from '../../../../utils/errorHandling';
@@ -211,10 +218,11 @@ const SavedResumeCard = ({ title }) => {
           {/* End: SavedResumeFilterForm */}
         </Box>
       </Stack>
-      <Divider />
-      <Divider />
+
+      {isLoading ? <LinearProgress color="primary" /> : <Divider />}
       <SavedResumeTable
         headCells={headCells}
+        isLoading={isLoading}
         rows={resumes}
         page={page}
         rowsPerPage={rowsPerPage}

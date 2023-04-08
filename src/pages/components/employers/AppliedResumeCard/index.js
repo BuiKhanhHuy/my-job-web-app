@@ -5,6 +5,7 @@ import {
   Button,
   Divider,
   Grid,
+  LinearProgress,
   Stack,
   TextField,
   Typography,
@@ -17,13 +18,11 @@ import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import xlsxUtils from '../../../../utils/xlsxUtils';
 
-import toastMessages from '../../../../utils/toastMessages';
 import FormPopup from '../../../../components/controls/FormPopup';
 import AppliedResumeFilterForm from '../AppliedResumeFilterForm';
-import resumeSavedService from '../../../../services/resumeSavedService';
-import resumeService from '../../../../services/resumeService';
 import AppliedResumeTable from '../AppliedResumeTable';
 import jobPostActivityService from '../../../../services/jobPostActivityService';
+import jobService from '../../../../services/jobService';
 
 const headCells = [
   {
@@ -84,16 +83,40 @@ const AppliedResumeCard = ({ title }) => {
   });
   const [isLoading, setIsLoading] = React.useState(true);
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
+  const [jobPostOptions, setJobPostOptions] = React.useState([]);
+  const [jobPostIdSelect, setJobPostIdSelect] = React.useState('');
   const [resumes, retResumes] = React.useState([]);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  let numbersFilter = React.useMemo(() => {
+    let count = 0;
+    let keys = Object.keys(filterData);
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+    for (let i = 0; i < keys.length; i++) {
+      if (
+        keys[i] !== 'jobPostId' &&
+        keys[i] !== 'pageSize' &&
+        filterData[keys[i]] !== ''
+      ) {
+        count = count + 1;
+      }
+    }
+
+    return count;
+  }, [filterData]);
+
+  React.useEffect(() => {
+    const loadJobPostOptions = async (params) => {
+      try {
+        const resData = await jobService.getJobPostOptions(params);
+
+        setJobPostOptions(resData.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadJobPostOptions();
+  }, []);
 
   React.useEffect(() => {
     const loadJobPostActivity = async (params) => {
@@ -117,8 +140,9 @@ const AppliedResumeCard = ({ title }) => {
       page: page + 1,
       pageSize: rowsPerPage,
       ...filterData,
+      jobPostId: jobPostIdSelect,
     });
-  }, [page, rowsPerPage, filterData]);
+  }, [page, rowsPerPage, filterData, jobPostIdSelect]);
 
   const handleFilter = (data) => {
     setOpenPopup(false);
@@ -130,11 +154,13 @@ const AppliedResumeCard = ({ title }) => {
   };
 
   const handleExport = () => {
-    const exportResumes = async (params) => {
+    const exportJobPostsActivity = async (params) => {
       setIsFullScreenLoading(true);
 
       try {
-        const resData = await resumeSavedService.exportResumesSaved(params);
+        const resData = await jobPostActivityService.exportAppliedResume(
+          params
+        );
         const data = resData.data;
 
         // export
@@ -146,11 +172,21 @@ const AppliedResumeCard = ({ title }) => {
       }
     };
 
-    exportResumes({
+    exportJobPostsActivity({
       page: page + 1,
       pageSize: rowsPerPage,
       ...filterData,
+      jobPostId: jobPostIdSelect,
     });
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
@@ -183,11 +219,16 @@ const AppliedResumeCard = ({ title }) => {
         </Grid>
         <Grid item xs={6}>
           <Autocomplete
+            getOptionLabel={(option) => option.jobName}
+            value={jobPostOptions.find((o) => o.id === jobPostIdSelect) || null}
+            onChange={(e, value) => setJobPostIdSelect(value?.id || '')}
             disablePortal
             id="jobPosts"
             size="small"
-            options={[]}
-            renderInput={(params) => <TextField {...params} />}
+            options={jobPostOptions}
+            renderInput={(params) => (
+              <TextField {...params} placeholder="Tất cả tin đăng" />
+            )}
           />
         </Grid>
         <Grid item xs={2}>
@@ -198,14 +239,15 @@ const AppliedResumeCard = ({ title }) => {
             endIcon={<ExpandMoreIcon />}
             onClick={() => setOpenPopup(true)}
           >
-            Lọc nâng cao
+            Lọc nâng cao ({numbersFilter})
           </Button>
         </Grid>
       </Grid>
-      <Divider />
+      {isLoading ? <LinearProgress color="primary" /> : <Divider />}
       <AppliedResumeTable
         headCells={headCells}
         rows={resumes}
+        isLoading={isLoading}
         page={page}
         rowsPerPage={rowsPerPage}
         count={count}

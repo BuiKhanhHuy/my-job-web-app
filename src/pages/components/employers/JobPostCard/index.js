@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Divider, Stack, Typography } from '@mui/material';
+import { Box, Button, Divider, LinearProgress, Stack, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
@@ -320,10 +320,11 @@ const JobPostCard = () => {
           </Button>
         </Stack>
       </Stack>
-      <Divider />
+      {isLoadingJobPost ? <LinearProgress color="primary" /> : <Divider />}
       <JobPostsTable
         headCells={headCells}
         rows={JobPosts}
+        isLoading={isLoadingJobPost}
         order={order}
         orderBy={orderBy}
         page={page}
