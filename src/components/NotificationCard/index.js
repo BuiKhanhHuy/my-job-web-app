@@ -5,6 +5,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Paper,
   Stack,
   Typography,
 } from '@mui/material';
@@ -37,7 +38,6 @@ const NotificationCard = () => {
         </IconButton>
       </Box>
       <Menu
-        style={{ width: 400 }}
         anchorEl={anchorEl}
         id="noti-menu"
         open={open}
@@ -72,7 +72,7 @@ const NotificationCard = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose} sx={{width: '100%'}}>
+        <MenuItem onClick={handleClose} sx={{ width: '100%' }}>
           <Stack direction="row" spacing={1} alignItems="center">
             <Stack>
               <IconButton aria-label="view" size="small" color="primary">
@@ -80,11 +80,15 @@ const NotificationCard = () => {
               </IconButton>
             </Stack>
             <Stack>
-              <Typography variant='subtitle2'>
+              <Typography variant="subtitle2">
                 Công Ty Cổ Phần Đầu Tư Digital Kingdom đã xem hồ sơ Python
                 Backend Developer của bạn
               </Typography>
-              <Typography variant='caption'>16 ngày trước</Typography>
+              <Typography variant="inherit" noWrap>
+                A very long text that overflows A very long text that overflows
+                A very long text that overflows
+              </Typography>
+              <Typography variant="caption">16 ngày trước</Typography>
             </Stack>
             <Stack>
               <IconButton aria-label="delete" color="error" size="small">

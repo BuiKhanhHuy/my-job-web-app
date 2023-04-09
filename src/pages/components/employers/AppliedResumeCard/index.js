@@ -1,18 +1,22 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   Autocomplete,
   Box,
   Button,
   Divider,
   Grid,
+  IconButton,
   LinearProgress,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
@@ -23,6 +27,7 @@ import AppliedResumeFilterForm from '../AppliedResumeFilterForm';
 import AppliedResumeTable from '../AppliedResumeTable';
 import jobPostActivityService from '../../../../services/jobPostActivityService';
 import jobService from '../../../../services/jobService';
+import toastMessages from '../../../../utils/toastMessages';
 
 const headCells = [
   {
@@ -56,7 +61,7 @@ const headCells = [
   {
     id: 'city',
     showOrder: false,
-    numeric: false,
+    numeric: true,
     disablePadding: false,
     label: 'Trạng thái tuyển dụng',
   },
@@ -64,27 +69,32 @@ const headCells = [
 
 const pageSize = 5;
 
+const defaultFilterData = {
+  cityId: '',
+  careerId: '',
+  experienceId: '',
+  positionId: '',
+  academicLevelId: '',
+  typeOfWorkplaceId: '',
+  jobTypeId: '',
+  genderId: '',
+  maritalStatusId: '',
+  jobPostId: '',
+};
+
 const AppliedResumeCard = ({ title }) => {
+  const { allConfig } = useSelector((state) => state.config);
   const [openPopup, setOpenPopup] = React.useState(false);
   const [page, setPage] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(pageSize);
-  const [filterData, setFilterData] = React.useState({
-    cityId: '',
-    careerId: '',
-    experienceId: '',
-    positionId: '',
-    academicLevelId: '',
-    typeOfWorkplaceId: '',
-    jobTypeId: '',
-    genderId: '',
-    maritalStatusId: '',
-    jobPostId: '',
-  });
+  const [filterData, setFilterData] = React.useState(defaultFilterData);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
   const [jobPostOptions, setJobPostOptions] = React.useState([]);
   const [jobPostIdSelect, setJobPostIdSelect] = React.useState('');
+  const [applicationStatusSelect, setApplicationStatusSelect] =
+    React.useState('');
   const [resumes, retResumes] = React.useState([]);
 
   let numbersFilter = React.useMemo(() => {
@@ -141,8 +151,9 @@ const AppliedResumeCard = ({ title }) => {
       pageSize: rowsPerPage,
       ...filterData,
       jobPostId: jobPostIdSelect,
+      status: applicationStatusSelect,
     });
-  }, [page, rowsPerPage, filterData, jobPostIdSelect]);
+  }, [page, rowsPerPage, filterData, jobPostIdSelect, applicationStatusSelect]);
 
   const handleFilter = (data) => {
     setOpenPopup(false);
@@ -177,7 +188,25 @@ const AppliedResumeCard = ({ title }) => {
       pageSize: rowsPerPage,
       ...filterData,
       jobPostId: jobPostIdSelect,
+      status: applicationStatusSelect,
     });
+  };
+
+  const handleChangeApplicationStatus = (id, value) => {
+    const changeStatus = async (id, data) => {
+      setIsFullScreenLoading(true);
+      try {
+        await jobPostActivityService.changeApplicationStatus(id, data);
+
+        toastMessages.success('Cập nhật thành công.');
+      } catch (error) {
+        errorHandling(error);
+      } finally {
+        setIsFullScreenLoading(false);
+      }
+    };
+
+    changeStatus(id, { status: value });
   };
 
   const handleChangePage = (event, newPage) => {
@@ -188,6 +217,12 @@ const AppliedResumeCard = ({ title }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const handleResetFilterData = () => {
+    setFilterData(defaultFilterData)
+    setJobPostIdSelect('')
+    setApplicationStatusSelect('')
+  }
 
   return (
     <>
@@ -217,7 +252,7 @@ const AppliedResumeCard = ({ title }) => {
             <Typography variant="subtitle2">Bộ lọc: </Typography>
           </Stack>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <Autocomplete
             getOptionLabel={(option) => option.jobName}
             value={jobPostOptions.find((o) => o.id === jobPostIdSelect) || null}
@@ -232,6 +267,35 @@ const AppliedResumeCard = ({ title }) => {
           />
         </Grid>
         <Grid item xs={2}>
+          <Autocomplete
+            getOptionLabel={(option) => option.name}
+            value={
+              allConfig?.applicationStatusOptions.find(
+                (o) => o.id === applicationStatusSelect
+              ) || null
+            }
+            onChange={(e, value) => setApplicationStatusSelect(value?.id || '')}
+            disablePortal
+            id="status"
+            size="small"
+            options={allConfig?.applicationStatusOptions || []}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder="Tất cả trạng thái tuyển dụng"
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <Tooltip title="Đặt lại" arrow sx={{ mr: 1 }}>
+            <IconButton
+              aria-label="refresh"
+              onClick={handleResetFilterData}
+            >
+              <RefreshIcon />
+            </IconButton>
+          </Tooltip>
           <Button
             variant="contained"
             color="primary"
@@ -251,6 +315,7 @@ const AppliedResumeCard = ({ title }) => {
         page={page}
         rowsPerPage={rowsPerPage}
         count={count}
+        handleChangeApplicationStatus={handleChangeApplicationStatus}
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
       />
@@ -258,6 +323,8 @@ const AppliedResumeCard = ({ title }) => {
       {/* Start: form  */}
       <FormPopup
         title="Lọc nâng cao"
+        buttonText="Lọc"
+        buttonIcon={<FilterListIcon />}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >

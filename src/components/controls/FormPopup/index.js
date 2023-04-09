@@ -20,6 +20,8 @@ const Popup = ({
   openPopup,
   setOpenPopup,
   showDialogAction = true,
+  buttonText = 'Lưu',
+  buttonIcon = <SaveIcon />,
   children,
 }) => {
   const theme = useTheme();
@@ -54,13 +56,13 @@ const Popup = ({
             <LoadingButton
               loading={false}
               loadingPosition="start"
-              startIcon={<SaveIcon />}
+              startIcon={buttonIcon}
               variant="contained"
               sx={{ margin: '0 auto' }}
               type="submit"
               form="modal-form"
             >
-              Lưu
+              {buttonText}
             </LoadingButton>
           </DialogActions>
         )}

@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { Grid, Button, Stack } from '@mui/material';
+import { Grid, Button, Stack, IconButton, Tooltip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
 import SingleSelectCustom from '../../../../components/controls/SingleSelectCustom';
@@ -10,7 +11,12 @@ import SingleSelectCustom from '../../../../components/controls/SingleSelectCust
 const SavedResumeFilterForm = ({ handleFilter }) => {
   const { allConfig } = useSelector((state) => state.config);
 
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    reset,
+    handleSubmit,
+    formState: { defaultValues },
+  } = useForm({
     defaultValues: {
       kw: '',
       salaryMax: '',
@@ -34,6 +40,7 @@ const SavedResumeFilterForm = ({ handleFilter }) => {
             name="salaryMax"
             placeholder="Nhập mức lương tối đa"
             control={control}
+            type="number"
           />
         </Grid>
         <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
@@ -54,6 +61,17 @@ const SavedResumeFilterForm = ({ handleFilter }) => {
         </Grid>
         <Grid item xs={12} sm={12} md={5} lg={2} xl={2}>
           <Stack direction="row" spacing={2}>
+            <Tooltip title="Đặt lại" arrow>
+              <IconButton
+                aria-label="refresh"
+                onClick={() => {
+                  reset();
+                  handleSubmit(handleFilter(defaultValues));
+                }}
+              >
+                <RefreshIcon />
+              </IconButton>
+            </Tooltip>
             <Button
               sx={{ color: 'white' }}
               variant="contained"

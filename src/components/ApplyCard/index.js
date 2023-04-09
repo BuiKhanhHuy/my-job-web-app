@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 
 import toastMessages from '../../utils/toastMessages';
 import errorHandling from '../../utils/errorHandling';
@@ -8,7 +9,13 @@ import FormPopup from '../controls/FormPopup';
 import ApplyForm from '../ApplyForm';
 import jobPostActivityService from '../../services/jobPostActivityService';
 
-const ApplyCard = ({ title = '', jobPostId,  openPopup, setOpenPopup, setIsApplySuccess }) => {
+const ApplyCard = ({
+  title = '',
+  jobPostId,
+  openPopup,
+  setOpenPopup,
+  setIsApplySuccess,
+}) => {
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
 
   const handleApplyJob = (data) => {
@@ -18,8 +25,8 @@ const ApplyCard = ({ title = '', jobPostId,  openPopup, setOpenPopup, setIsApply
         await jobPostActivityService.applyJob(data);
 
         toastMessages.success('Ứng tuyển thành công.');
-        setIsApplySuccess(true)
-        setOpenPopup(false)
+        setIsApplySuccess(true);
+        setOpenPopup(false);
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -27,7 +34,7 @@ const ApplyCard = ({ title = '', jobPostId,  openPopup, setOpenPopup, setIsApply
       }
     };
 
-    applyJob({...data, job_post: jobPostId});
+    applyJob({ ...data, job_post: jobPostId });
   };
 
   return (
@@ -39,6 +46,8 @@ const ApplyCard = ({ title = '', jobPostId,  openPopup, setOpenPopup, setIsApply
             <span>{title}</span>
           </>
         }
+        buttonText="Ứng tuyển"
+        buttonIcon={<SendIcon />}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >

@@ -14,6 +14,7 @@ const TextFieldCustom = ({
   helperText = '',
   disabled = false,
   icon = null,
+  type = 'text',
 }) => {
   return (
     <div>
@@ -41,6 +42,10 @@ const TextFieldCustom = ({
               disabled={disabled}
               helperText={!fieldState.invalid ? helperText : ''}
               InputProps={{
+                inputProps: {
+                  min: 0,
+                  type: type,
+                },
                 startAdornment: icon && (
                   <InputAdornment position="start">{icon}</InputAdornment>
                 ),

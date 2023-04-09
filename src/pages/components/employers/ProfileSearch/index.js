@@ -15,7 +15,7 @@ import {
   faPeopleRoof,
 } from '@fortawesome/free-solid-svg-icons';
 import SearchIcon from '@mui/icons-material/Search';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
 import SingleSelectCustom from '../../../../components/controls/SingleSelectCustom';
 
@@ -93,7 +93,7 @@ const ProfileSearch = () => {
               variant="text"
               color="error"
               size="small"
-              startIcon={<HighlightOffIcon />}
+              startIcon={<RefreshIcon />}
               sx={{textTransform: 'inherit'}}
               onClick={handleReset}
             >

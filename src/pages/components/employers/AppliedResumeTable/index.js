@@ -1,7 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
-import { Chip, TableBody, TableCell, Tooltip, Typography } from '@mui/material';
+import {
+  MenuItem,
+  TableBody,
+  TableCell,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import DataTableCustom from '../../../../components/DataTableCustom';
@@ -10,7 +17,7 @@ import { CV_TYPES } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 
 const AppliedResumeTable = (props) => {
-  const { rows, isLoading } = props;
+  const { rows, isLoading, handleChangeApplicationStatus } = props;
   const { allConfig } = useSelector((state) => state.config);
 
   return (
@@ -66,15 +73,23 @@ const AppliedResumeTable = (props) => {
                   ? 'Hồ sơ Online'
                   : 'Hồ sơ đính kèm'}
               </TableCell>
-              <TableCell align="left">
-                <Chip
-                  label={
-                    allConfig?.applicationStatusDict[row?.status] ||
-                    'Đang chờ duyệt'
-                  }
+              <TableCell align="right">
+                <TextField
+                  id="jobPostActivityStatus"
                   size="small"
-                  onClick={() => alert('ID')}
-                />
+                  fullWidth
+                  select
+                  defaultValue={row?.status}
+                  onChange={(e) =>
+                    handleChangeApplicationStatus(row.id, e.target.value)
+                  }
+                >
+                  {(allConfig?.applicationStatusOptions || []).map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </TableCell>
             </TableBody>
           );

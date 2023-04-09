@@ -1,13 +1,19 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Grid, Button, Stack } from '@mui/material';
+import { Grid, Button, Stack, Tooltip, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
 import SingleSelectCustom from '../../../../components/controls/SingleSelectCustom';
 
 const JobPostFilterForm = ({ handleFilter }) => {
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { defaultValues },
+  } = useForm({
     defaultValues: {
       kw: '',
       isUrgent: '',
@@ -38,6 +44,17 @@ const JobPostFilterForm = ({ handleFilter }) => {
         </Grid>
         <Grid item xs={12} sm={12} md={5} lg={2} xl={2}>
           <Stack direction="row" spacing={2}>
+            <Tooltip title="Đặt lại" arrow>
+              <IconButton
+                aria-label="refresh"
+                onClick={() => {
+                  reset();
+                  handleSubmit(handleFilter(defaultValues));
+                }}
+              >
+                <RefreshIcon />
+              </IconButton>
+            </Tooltip>
             <Button
               sx={{ color: 'white' }}
               variant="contained"

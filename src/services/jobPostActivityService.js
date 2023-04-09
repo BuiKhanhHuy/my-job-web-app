@@ -24,6 +24,11 @@ const jobPostActivityService = {
 
     return httpRequest.get(url, { params: params });
   },
+  changeApplicationStatus: (id, data) => {
+    const url = `/api/job/web/employer-job-posts-activity/${id}/application-status/`;
+
+    return httpRequest.put(url, data);
+  },
 };
 
 export default jobPostActivityService;
