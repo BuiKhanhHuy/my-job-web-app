@@ -8,7 +8,6 @@ import {
   ListItemButton,
   ListItemText,
   Stack,
-  Typography,
   useTheme,
   Button,
 } from '@mui/material';

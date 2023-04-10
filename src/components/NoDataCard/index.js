@@ -16,7 +16,7 @@ const NoDataCard = ({
       sx={{ py: 4 }}
     >
       <img src={img} alt="mySvgImage" style={{ width: '30vh' }} />
-      <Typography variant="body1" sx={{ color: '#9e9e9e' }}>
+      <Typography variant="body1" sx={{ color: '#9e9e9e', textAlign: 'center'}}>
         {title}
       </Typography>
       <Box>{children}</Box>

@@ -6,6 +6,11 @@ const myjobService = {
 
     return httpRequest.get(url);
   },
+  createFeedback: (data) => {
+    const url = '/api/myjob/web/feedbacks/';
+
+    return httpRequest.post(url, data);
+  },
   sendSMSDownloadApp: (data) => {
     const url = '/api/myjob/web/sms-download-app/';
 

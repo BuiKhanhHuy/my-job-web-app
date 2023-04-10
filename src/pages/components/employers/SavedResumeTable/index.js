@@ -1,9 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { Button,TableBody, TableCell, Tooltip } from '@mui/material';
+import {
+  Button,
+  IconButton,
+  Stack,
+  TableBody,
+  TableCell,
+  Tooltip,
+} from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 
 import NoDataCard from '../../../../components/NoDataCard';
 import DataTableCustom from '../../../../components/DataTableCustom';
@@ -12,6 +21,7 @@ import { faFile, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { CV_TYPES } from '../../../../configs/constants';
 
 const SavedResumeTable = (props) => {
+  const nav = useNavigate();
   const { rows, isLoading, handleUnsave } = props;
   const { allConfig } = useSelector((state) => state.config);
 
@@ -102,16 +112,31 @@ const SavedResumeTable = (props) => {
                 {dayjs(row?.createAt).format('DD/MM/YYYY')}
               </TableCell>
               <TableCell align="right">
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="error"
-                  sx={{ textTransform: 'inherit' }}
-                  startIcon={<FavoriteIcon />}
-                  onClick={() => handleUnsave(row?.resume?.slug)}
-                >
-                  Hủy lưu
-                </Button>
+                <Stack direction="row" spacing={1} justifyContent="flex-end">
+                  <Tooltip title="Xem hồ sơ" arrow>
+                    <IconButton aria-label="view" size="small">
+                      <RemoveRedEyeOutlinedIcon
+                        fontSize="small"
+                        color="primary"
+                        onClick={() =>
+                          nav(
+                            `/nha-tuyen-dung/chi-tiet-ung-vien/${row?.resume?.slug}`
+                          )
+                        }
+                      />
+                    </IconButton>
+                  </Tooltip>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="error"
+                    sx={{ textTransform: 'inherit' }}
+                    startIcon={<FavoriteIcon />}
+                    onClick={() => handleUnsave(row?.resume?.slug)}
+                  >
+                    Hủy lưu
+                  </Button>
+                </Stack>
               </TableCell>
             </TableBody>
           );

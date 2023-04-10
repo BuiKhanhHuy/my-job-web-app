@@ -5,7 +5,7 @@ import {
   Box,
   Divider,
   Drawer,
-  Stack,
+  useTheme,
   Toolbar,
   Typography,
 } from '@mui/material';
@@ -86,39 +86,22 @@ StyledTreeItem.propTypes = {
   labelText: PropTypes.string.isRequired,
 };
 
-const drawer = (location) => (
+const drawer = (location, theme) => (
   <div>
     <Toolbar>
       <Box component={Link} to="/nha-tuyen-dung">
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={1}
-        >
-          <Box>
-            <Avatar
-              src={IMAGES.getLogo('medium', 'dark')}
-              sx={{
-                width: 50,
-                height: 50,
-              }}
-              alt="LOGO"
-            />
-          </Box>
-          <Box>
-            <Typography
-              variant="h6"
-              sx={{
-                textDecoration: 'none',
-                color: (theme) =>
-                  theme.palette.mode === 'light' ? '#130160' : 'white',
-              }}
-            >
-              MyJob
-            </Typography>
-          </Box>
-        </Stack>
+        <Avatar
+          src={IMAGES.getTextLogo(
+            theme.palette.mode === 'light' ? 'dark' : 'light'
+          )}
+          sx={{
+            height: 44,
+            width: '100%',
+            margin: '0 auto',
+          }}
+          variant="square"
+          alt="LOGO"
+        />
       </Box>
     </Toolbar>
     <Divider />
@@ -300,6 +283,7 @@ const drawer = (location) => (
 
 const Sidebar = ({ drawerWidth }) => {
   const location = useLocation();
+  const theme = useTheme();
 
   return (
     <Drawer
@@ -313,7 +297,7 @@ const Sidebar = ({ drawerWidth }) => {
       }}
       open
     >
-      {drawer(location)}
+      {drawer(location, theme)}
     </Drawer>
   );
 };
@@ -324,6 +308,7 @@ const MobileSidebar = ({
   mobileOpen,
   handleDrawerToggle,
 }) => {
+  const theme = useTheme();
   const location = useLocation();
 
   return (
@@ -343,7 +328,7 @@ const MobileSidebar = ({
         },
       }}
     >
-      {drawer(location)}
+      {drawer(location, theme)}
     </Drawer>
   );
 };

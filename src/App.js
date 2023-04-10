@@ -83,6 +83,7 @@ import { default as EmployerAccountPage } from './pages/employerPages/AccountPag
 
 // chatbot
 import { MyJobChatBot } from './chatbox';
+import Feedback from './components/Feedback';
 
 function App() {
   const dispatch = useDispatch();
@@ -436,6 +437,11 @@ function App() {
           {/* Start: toast */}
           <ToastContainer autoClose={1300} />
           {/* End: toast */}
+
+          {/* Start: Feedback */}
+          {isAuthenticated && <Feedback />}
+          {/* End: Feedback */}
+          
         </ThemeProvider>
       </ColorModeContext.Provider>
       {/* Start: Chatbot */}

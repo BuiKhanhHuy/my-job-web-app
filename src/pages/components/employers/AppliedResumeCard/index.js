@@ -28,6 +28,7 @@ import AppliedResumeTable from '../AppliedResumeTable';
 import jobPostActivityService from '../../../../services/jobPostActivityService';
 import jobService from '../../../../services/jobService';
 import toastMessages from '../../../../utils/toastMessages';
+import SendMailCard from '../SendMailCard';
 
 const headCells = [
   {
@@ -65,6 +66,13 @@ const headCells = [
     disablePadding: false,
     label: 'Trạng thái tuyển dụng',
   },
+  {
+    id: 'action',
+    showOrder: false,
+    numeric: true,
+    disablePadding: false,
+    label: 'Hành động',
+  },
 ];
 
 const pageSize = 5;
@@ -85,6 +93,8 @@ const defaultFilterData = {
 const AppliedResumeCard = ({ title }) => {
   const { allConfig } = useSelector((state) => state.config);
   const [openPopup, setOpenPopup] = React.useState(false);
+  const [openSendMailPopup, setOpenSendMailPopup] = React.useState(false);
+  const [sendMailData, setSendMailData] = React.useState(null);
   const [page, setPage] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(pageSize);
@@ -219,10 +229,18 @@ const AppliedResumeCard = ({ title }) => {
   };
 
   const handleResetFilterData = () => {
-    setFilterData(defaultFilterData)
-    setJobPostIdSelect('')
-    setApplicationStatusSelect('')
-  }
+    setFilterData(defaultFilterData);
+    setJobPostIdSelect('');
+    setApplicationStatusSelect('');
+  };
+
+  const handleSendMail = (email, fullName) => {
+    setSendMailData({
+      fullName: fullName,
+      email: email
+    })
+    setOpenSendMailPopup(true);
+  };
 
   return (
     <>
@@ -289,10 +307,7 @@ const AppliedResumeCard = ({ title }) => {
         </Grid>
         <Grid item xs={4}>
           <Tooltip title="Đặt lại" arrow sx={{ mr: 1 }}>
-            <IconButton
-              aria-label="refresh"
-              onClick={handleResetFilterData}
-            >
+            <IconButton aria-label="refresh" onClick={handleResetFilterData}>
               <RefreshIcon />
             </IconButton>
           </Tooltip>
@@ -318,6 +333,7 @@ const AppliedResumeCard = ({ title }) => {
         handleChangeApplicationStatus={handleChangeApplicationStatus}
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
+        handleSendMail={handleSendMail}
       />
 
       {/* Start: form  */}
@@ -334,6 +350,14 @@ const AppliedResumeCard = ({ title }) => {
         />
       </FormPopup>
       {/* End: form */}
+
+      {/* Start: send mail */}
+      <SendMailCard
+        openPopup={openSendMailPopup}
+        setOpenPopup={setOpenSendMailPopup}
+        sendMailData={sendMailData}
+      />
+      {/* Start:  send mail */}
 
       {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}

@@ -183,6 +183,12 @@ const ApplyForm = ({ handleApplyJob }) => {
               control={control}
             />
           </Grid>
+          <Grid item xs={12}>
+            <Typography color="GrayText" variant="caption">
+              Lưu ý: Họ tên, email, số điện thoại cần chính xác để nhà tuyển
+              dụng liên hệ với bạn.
+            </Typography>
+          </Grid>
         </Grid>
       </form>
     </>
