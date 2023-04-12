@@ -1,9 +1,9 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { Autocomplete, IconButton, TextField, Typography } from '@mui/material';
+import { Autocomplete, TextField, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { Clear } from '@mui/icons-material';
+ 
 
 const SingleSelectCustom = ({
   name,

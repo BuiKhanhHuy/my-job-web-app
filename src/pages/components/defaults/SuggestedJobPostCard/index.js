@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Grid, Pagination, Stack } from '@mui/material';
 
 import { IMAGE_SVG } from '../../../../configs/constants';
@@ -31,7 +30,7 @@ const SuggestedJobPostCard = ({ pageSize = 12 }) => {
       }
     };
 
-    getJobPosts();
+    getJobPosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
@@ -50,7 +49,7 @@ const SuggestedJobPostCard = ({ pageSize = 12 }) => {
           ))}
         </Grid>
       ) : jobPosts.length === 0 ? (
-        <NoDataCard img={IMAGE_SVG.img8}/>
+        <NoDataCard img={IMAGE_SVG.img8} />
       ) : (
         <>
           <Grid container spacing={2}>
