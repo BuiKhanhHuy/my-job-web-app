@@ -96,7 +96,6 @@ const GeneralInfoCard = ({ title }) => {
       try {
         const resData = await resumeService.getResumeOwner(resumeSlug);
 
-        console.log(resData.data);
         setResumeDetail(resData.data);
       } catch (error) {
         errorHandling(error);
