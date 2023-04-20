@@ -32,7 +32,6 @@ const SavedJobCard = () => {
 
         setCount(data.count);
         setJobPosts(data.results);
-        console.log(data);
       } catch (error) {
       } finally {
         setIsLoading(false);

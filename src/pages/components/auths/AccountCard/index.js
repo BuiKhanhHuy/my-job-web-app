@@ -66,7 +66,7 @@ const AccountCard = ({ title }) => {
             toastMessages.error('Đã xảy ra lỗi!');
           });
       } catch (error) {
-        errorHandling(error.setServerErrors);
+        errorHandling(error, setServerErrors);
       } finally {
         setIsFullScreenLoading(false);
       }
