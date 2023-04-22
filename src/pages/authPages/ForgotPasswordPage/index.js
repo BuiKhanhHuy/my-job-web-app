@@ -3,6 +3,7 @@ import { Alert, Box, Card, Container, Stack, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopeCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
+import { PLATFORM } from '../../../configs/constants';
 import errorHandling from '../../../utils/errorHandling';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
 import ForgotPasswordForm from '../../components/auths/ForgotPasswordForm';
@@ -29,7 +30,10 @@ const ForgotPasswordPage = () => {
       }
     };
 
-    requestResetPassword(data);
+    requestResetPassword({
+      ...data,
+      platform: PLATFORM,
+    });
   };
 
   return (

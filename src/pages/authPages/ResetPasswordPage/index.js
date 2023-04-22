@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 
+import { PLATFORM } from '../../../configs/constants';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
 import authService from '../../../services/authService';
 import ResetPasswordForm from '../../components/auths/ResetPasswordForm';
@@ -52,7 +53,7 @@ const ResetPasswordPage = () => {
       }
     };
 
-    const newData = { ...data, token: token };
+    const newData = { ...data, token: token, platform: PLATFORM };
     resetPassword(newData);
   };
 

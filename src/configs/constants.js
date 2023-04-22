@@ -10,6 +10,8 @@ import ImageSvg6 from '../assets/images/svg-images/working_remotely.svg';
 import ImageSvg7 from '../assets/images/svg-images/country_side.svg';
 import ImageSvg8 from '../assets/images/svg-images/thoughts.svg';
 
+const PLATFORM = "WEB"
+
 const AUTH_PROVIDER = {
   FACEBOOK: 'facebook',
   GOOGLE: 'google-oauth2',
@@ -126,6 +128,7 @@ const IMAGE_SVG = {
 };
 
 export {
+  PLATFORM,
   AUTH_PROVIDER,
   AUTH_CONFIG,
   ROLES_NAME,
