@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, Box, Card, Container, Grid, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import { ROLES_NAME } from '../../../configs/constants';
+import { PLATFORM, ROLES_NAME } from '../../../configs/constants';
 import errorHandling from '../../../utils/errorHandling';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
 
@@ -41,7 +41,13 @@ const EmployerSignUp = () => {
       }
     };
 
-    register(data, ROLES_NAME.EMPLOYER);
+    register(
+      {
+        ...data,
+        platform: PLATFORM,
+      },
+      ROLES_NAME.EMPLOYER
+    );
   };
 
   const checkCreds = async (email, roleName) => {

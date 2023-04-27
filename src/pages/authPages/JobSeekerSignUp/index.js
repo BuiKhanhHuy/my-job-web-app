@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
   AUTH_CONFIG,
   AUTH_PROVIDER,
+  PLATFORM,
   ROLES_NAME,
 } from '../../../configs/constants';
 
@@ -56,7 +57,7 @@ const JobSeekerSignUp = () => {
       }
     };
 
-    register(data, ROLES_NAME.JOB_SEEKER);
+    register({ ...data, platform: PLATFORM }, ROLES_NAME.JOB_SEEKER);
   };
 
   const handleSocialRegister = async (
