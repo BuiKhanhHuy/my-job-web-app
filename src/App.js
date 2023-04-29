@@ -65,7 +65,6 @@ import { default as OnlineProfilePage } from './pages/jobSeekerPages/OnlineProfi
 import { default as JobSeekerAttachedProfilePage } from './pages/jobSeekerPages/AttachedProfilePage';
 import { default as JobSeekerMyJobPage } from './pages/jobSeekerPages/MyJobPage';
 import { default as JobSeekerMyCompanyPage } from './pages/jobSeekerPages/MyCompanyPage';
-import { default as JobSeekerChatPage } from './pages/jobSeekerPages/ChatPage';
 import { default as JobSeekerNotificationJobPostPage } from './pages/jobSeekerPages/NotificationJobPostPage';
 import { default as JobSeekerAccountPage } from './pages/jobSeekerPages/AccountPage';
 
@@ -76,7 +75,6 @@ import { default as EmployerProfileAppliedPage } from './pages/employerPages/Pro
 import { default as EmployerSavedProfilePage } from './pages/employerPages/SavedProfilePage';
 import { default as EmployerProfilePage } from './pages/employerPages/ProfilePage';
 import { default as ProfileDetailPage } from './pages/employerPages/ProfileDetailPage';
-import { default as EmployerChatPage } from './pages/employerPages/ChatPage';
 import { default as EmployerNotificationPage } from './pages/employerPages/NotificationPage';
 import { default as EmployerCompanyPage } from './pages/employerPages/CompanyPage';
 import { default as EmployerAccountPage } from './pages/employerPages/AccountPage';
@@ -320,7 +318,6 @@ function App() {
                     path="cong-ty-cua-toi"
                     element={<JobSeekerMyCompanyPage />}
                   />
-                  <Route path="tin-nhan" element={<JobSeekerChatPage />} />
                   <Route
                     path="thong-bao-viec-lam"
                     element={<JobSeekerNotificationJobPostPage />}
@@ -365,7 +362,6 @@ function App() {
                     path="chi-tiet-ung-vien/:slug"
                     element={<ProfileDetailPage />}
                   />
-                  <Route path="tro-chuyen" element={<EmployerChatPage />} />
                   <Route
                     path="thong-bao"
                     element={<EmployerNotificationPage />}
@@ -441,7 +437,6 @@ function App() {
           {/* Start: Feedback */}
           {isAuthenticated && <Feedback />}
           {/* End: Feedback */}
-          
         </ThemeProvider>
       </ColorModeContext.Provider>
       {/* Start: Chatbot */}

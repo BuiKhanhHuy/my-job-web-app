@@ -187,8 +187,7 @@ const Footer = () => {
               <Stack direction="row" spacing={2}>
                 <Link href={LINKS.CHPLAY_LINK} target="_blank">
                   <CardMedia
-                    height="50"
-                    width="150"
+                    width="120"
                     component="img"
                     image={IMAGES.chPlayDownload}
                     alt="Paella dish"
@@ -196,8 +195,7 @@ const Footer = () => {
                 </Link>
                 <Link href={LINKS.APPSTORE_LINK} target="_blank">
                   <CardMedia
-                    height="50"
-                    width="150"
+                    width="120"
                     component="img"
                     image={IMAGES.appStoreDownload}
                     alt="Paella dish"

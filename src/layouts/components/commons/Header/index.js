@@ -5,7 +5,6 @@ import { useTheme } from '@mui/material/styles';
 import {
   AppBar,
   Avatar,
-  Badge,
   Box,
   Button,
   Card,
@@ -21,7 +20,6 @@ import {
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
-import ChatIcon from '@mui/icons-material/Chat';
 
 import { IMAGES } from '../../../../configs/constants';
 import SwitchModeButton from '../../../../components/SwitchModeButton';
@@ -225,16 +223,6 @@ const Header = (props) => {
                 </Button>
               ))}
             </Box>
-
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <ChatIcon />
-              </Badge>
-            </IconButton>
 
             {/* start: NotificationCard */}
             <NotificationCard />

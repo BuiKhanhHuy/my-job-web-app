@@ -1,14 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  Avatar,
-  Box,
-  Card,
-  Skeleton,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Avatar, Box, Card, Skeleton, Stack, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -20,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import { IMAGES } from '../../configs/constants';
+import { IMAGES, ROLES_NAME } from '../../configs/constants';
 import MuiImageCustom from '../MuiImageCustom';
 
 const Company = ({
@@ -39,6 +32,7 @@ const Company = ({
   handleFollow,
 }) => {
   const { allConfig } = useSelector((state) => state.config);
+  const { isAuthenticated, currentUser } = useSelector((state) => state.user);
 
   return (
     <Card
@@ -48,6 +42,7 @@ const Company = ({
           borderColor: '#441da0',
         },
       }}
+      style={{ height: 400 }}
       variant="outlined"
     >
       <Stack>
@@ -90,16 +85,22 @@ const Company = ({
             </Box>
           </Stack>
         </Box>
-        <Box sx={{ p: 2 }}>
-          <Typography
-            variant="h6"
-            gutterBottom
-            component={Link}
-            to={`/cong-ty/${slug}`}
-            sx={{ textDecoration: 'none', color: 'inherit' }}
-          >
-            {companyName}
-          </Typography>
+        <Box sx={{ p: 2, width: '100%' }}>
+          <Box>
+            <Typography
+              variant="h6"
+              gutterBottom
+              component={Link}
+              to={`/cong-ty/${slug}`}
+              sx={{
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
+            >
+              {companyName.substr(0, 60)}
+              {companyName.length > 60 && '...'}
+            </Typography>
+          </Box>
           <Typography variant="body2" gutterBottom>
             <FontAwesomeIcon
               icon={faFontAwesome}
@@ -145,20 +146,22 @@ const Company = ({
             {jobPostNumber} việc làm
           </Typography>
         </Box>
-        <Box sx={{ py: 1, px: 2 }}>
-          <LoadingButton
-            fullWidth
-            onClick={() => handleFollow(slug)}
-            startIcon={isFollowed ? <BookmarkIcon /> : <BookmarkBorderIcon />}
-            loading={isLoadingFollow}
-            loadingPosition="start"
-            variant={isFollowed ? 'contained' : 'outlined'}
-            color="warning"
-            sx={{ textTransform: 'inherit' }}
-          >
-            <span>{isFollowed ? 'Đang theo dõi' : 'Theo dõi'}</span>
-          </LoadingButton>
-        </Box>
+        {isAuthenticated && currentUser?.roleName === ROLES_NAME.JOB_SEEKER && (
+          <Box sx={{ py: 1, px: 2 }}>
+            <LoadingButton
+              fullWidth
+              onClick={() => handleFollow(slug)}
+              startIcon={isFollowed ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+              loading={isLoadingFollow}
+              loadingPosition="start"
+              variant={isFollowed ? 'contained' : 'outlined'}
+              color="warning"
+              sx={{ textTransform: 'inherit' }}
+            >
+              <span>{isFollowed ? 'Đang theo dõi' : 'Theo dõi'}</span>
+            </LoadingButton>
+          </Box>
+        )}
       </Stack>
     </Card>
   );

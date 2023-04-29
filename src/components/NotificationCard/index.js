@@ -2,18 +2,37 @@ import * as React from 'react';
 import {
   Badge,
   Box,
+  Grid,
   IconButton,
   Menu,
-  MenuItem,
-  Paper,
   Stack,
   Typography,
 } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import DeleteIcon from '@mui/icons-material/Delete';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import ClearIcon from '@mui/icons-material/Clear';
+
+import {
+  ref,
+  query,
+  orderByChild,
+  limitToFirst,
+  startAt,
+  get,
+  onValue,
+  remove,
+} from 'firebase/database';
+import database from '../../configs/firebase-config';
+
+import MuiImageCustom from '../MuiImageCustom';
+import { useSelector } from 'react-redux';
+
+const PAGE_SIZE = 10;
 
 const NotificationCard = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  const [count, setCount] = React.useState(0);
+  const [notifications, setNotifications] = React.useState([]);
+  const [lastKey, setLastKey] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -21,6 +40,113 @@ const NotificationCard = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  React.useEffect(() => {
+    const notificationsRef = ref(database, `notifications/${currentUser.id}`);
+    let notificationsQuery = query(notificationsRef, orderByChild('time'));
+
+    // Lắng nghe sự thay đổi số lượng thông báo
+    const unsubscribe = onValue(notificationsQuery, (snapshot) => {
+      const data = snapshot.val();
+      const countNoti = data ? Object.keys(data).length : 0;
+      setCount(countNoti);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [currentUser.id]);
+
+  React.useEffect(() => {
+    const notificationsRef = ref(database, `notifications/${currentUser.id}`);
+    let notificationsQuery = query(
+      notificationsRef,
+      orderByChild('time'),
+      limitToFirst(PAGE_SIZE)
+    );
+    const unsubscribe = onValue(notificationsQuery, (snapshot) => {
+      const data = snapshot.val();
+
+      console.log(data);
+      if (data) {
+        const newNotifications = Object.values(data).map((notification) => ({
+          ...notification,
+          key: Object.keys(data).find((key) => data[key] === notification),
+        }));
+
+        setNotifications(newNotifications || []);
+      } else {
+        setNotifications([]);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [currentUser.id]);
+
+  React.useEffect(() => {
+    const notificationsRef = ref(database, `notifications/${currentUser.id}`);
+    let notificationsQuery = query(
+      notificationsRef,
+      orderByChild('time'),
+      limitToFirst(PAGE_SIZE)
+    );
+
+    if (lastKey) {
+      notificationsQuery = query(
+        notificationsRef,
+        orderByChild('time'),
+        startAt(lastKey),
+        limitToFirst(PAGE_SIZE)
+      );
+    }
+
+    const getNotifications = async () => {
+      const snapshot = await get(notificationsQuery);
+      const data = snapshot.val();
+      if (data) {
+        const newNotifications = Object.values(data).map((notification) => ({
+          ...notification,
+          key: Object.keys(data).find((key) => data[key] === notification),
+        }));
+        setNotifications([...notifications, ...newNotifications]);
+      }
+    };
+
+    getNotifications();
+
+    return () => {};
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastKey, currentUser.id]);
+
+  const loadMore = () => {
+    const lastKeyInList = notifications[notifications.length - 1].time;
+    if (lastKeyInList !== lastKey) setLastKey(lastKeyInList + 1);
+  };
+
+  const handleRemove = (key) => {
+    const notiRef = ref(database, `notifications/${currentUser.id}/${key}`);
+    remove(notiRef)
+      .then(() => {
+        console.log('Node deleted successfully.');
+      })
+      .catch((error) => {
+        console.error('Error deleting node:', error);
+      });
+  };
+
+  const handleRemoveAll = () => {
+    const notiRef = ref(database, `notifications/${currentUser.id}`);
+    remove(notiRef)
+      .then(() => {
+        console.log('Node deleted successfully.');
+      })
+      .catch((error) => {
+        console.error('Error deleting node:', error);
+      });
   };
 
   return (
@@ -32,7 +158,7 @@ const NotificationCard = () => {
           color="inherit"
           onClick={handleClick}
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={count} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -42,7 +168,6 @@ const NotificationCard = () => {
         id="noti-menu"
         open={open}
         onClose={handleClose}
-        onClick={handleClose}
         PaperProps={{
           elevation: 0,
           sx: {
@@ -72,31 +197,100 @@ const NotificationCard = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose} sx={{ width: '100%' }}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Stack>
-              <IconButton aria-label="view" size="small" color="primary">
-                <RemoveRedEyeIcon fontSize="small" />
-              </IconButton>
+        <Box style={{ width: 500, maxHeight: 500 }} sx={{ py: 1, px: 1.5 }}>
+          <Box style={{ overflowY: 'auto', maxHeight: 450 }}>
+            <Stack spacing={2}>
+              {notifications.length === 0 ? (
+                <Typography textAlign="center" variant="body2" color="gray">
+                  Chưa có thông báo nào
+                </Typography>
+              ) : (
+                notifications.map((value, idx) => (
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    alignItems="center"
+                    key={idx}
+                  >
+                    <Box>
+                      <MuiImageCustom
+                        width={50}
+                        height={50}
+                        src={
+                          'https://cdn1.vieclam24h.vn/images/default/2021/09/21/images/img_vieclam24h_vn_163219231433.w-62.h-62.padding-1.png?v=220513'
+                        }
+                        sx={{ borderRadius: 1.5, maxHeight: 150 }}
+                        duration={500}
+                      />
+                    </Box>
+                    <Box flex={1}>
+                      <Stack>
+                        <Box>
+                          <Typography variant="subtitle2">
+                            {value.title} - {value.time}
+                          </Typography>
+                        </Box>
+                        <Box>
+                          <Typography variant="caption" color="gray">
+                            {value.content}
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    </Box>
+                    <Box>
+                      <IconButton
+                        aria-label="delete"
+                        color="error"
+                        size="small"
+                        onClick={() => handleRemove(value.key)}
+                      >
+                        <ClearIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                  </Stack>
+                ))
+              )}
             </Stack>
-            <Stack>
-              <Typography variant="subtitle2">
-                Công Ty Cổ Phần Đầu Tư Digital Kingdom đã xem hồ sơ Python
-                Backend Developer của bạn
-              </Typography>
-              <Typography variant="inherit" noWrap>
-                A very long text that overflows A very long text that overflows
-                A very long text that overflows
-              </Typography>
-              <Typography variant="caption">16 ngày trước</Typography>
-            </Stack>
-            <Stack>
-              <IconButton aria-label="delete" color="error" size="small">
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-            </Stack>
-          </Stack>
-        </MenuItem>
+          </Box>
+          <Box>
+            <Grid container>
+              <Grid item xs={4}></Grid>
+              <Grid item xs={4}>
+                {Math.ceil(count / PAGE_SIZE) > 1 && (
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Typography fontWeight="bold" textAlign="center">
+                      <span style={{ cursor: 'pointer' }} onClick={loadMore}>
+                        Xem thêm
+                      </span>
+                    </Typography>
+                  </Stack>
+                )}
+              </Grid>
+              <Grid item xs={4}>
+                {notifications.length > 0 && (
+                  <Stack direction="row" justifyContent="flex-end">
+                    <Typography
+                      variant="caption"
+                      color="red"
+                      textAlign="center"
+                    >
+                      <span
+                        style={{ cursor: 'pointer' }}
+                        onClick={handleRemoveAll}
+                      >
+                        Xóa tất cả
+                      </span>
+                    </Typography>
+                  </Stack>
+                )}
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
       </Menu>
     </React.Fragment>
   );

@@ -27,7 +27,7 @@ import {
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { ICONS, IMAGES } from '../../../configs/constants';
+import { ICONS, IMAGES, ROLES_NAME } from '../../../configs/constants';
 import errorHandling from '../../../utils/errorHandling';
 import toastMessages from '../../../utils/toastMessages';
 import Map from '../../../components/Map';
@@ -45,12 +45,12 @@ import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
 const CompanyDetailPage = () => {
   const { slug } = useParams();
   const { allConfig } = useSelector((state) => state.config);
+  const { isAuthenticated, currentUser } = useSelector((state) => state.user);
   const [openSharePopup, setOpenSharePopup] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isLoadingFollow, setIsLoadingFollow] = React.useState(false);
   const [companyDetail, setCompanyDetail] = React.useState(null);
   const [imageList, setImageList] = React.useState([]);
-
 
   React.useEffect(() => {
     const getCompanyDetail = async (companySlug) => {
@@ -193,29 +193,31 @@ const CompanyDetailPage = () => {
                   />
                 </Box>
                 <Stack spacing={1} justifyContent="center">
-                  <LoadingButton
-                    onClick={handleFollow}
-                    startIcon={
-                      companyDetail.isFollowed ? (
-                        <BookmarkIcon />
-                      ) : (
-                        <BookmarkBorderIcon />
-                      )
-                    }
-                    loading={isLoadingFollow}
-                    loadingPosition="start"
-                    variant="outlined"
-                    color="primary"
-                    sx={{ textTransform: 'inherit' }}
-                  >
-                    <span>
-                      {' '}
-                      {companyDetail.isFollowed
-                        ? 'Đang theo dõi'
-                        : 'Theo dõi'}{' '}
-                      ({companyDetail.followNumber})
-                    </span>
-                  </LoadingButton>
+                  {isAuthenticated &&
+                    currentUser?.roleName === ROLES_NAME.JOB_SEEKER && (
+                      <LoadingButton
+                        onClick={handleFollow}
+                        startIcon={
+                          companyDetail.isFollowed ? (
+                            <BookmarkIcon />
+                          ) : (
+                            <BookmarkBorderIcon />
+                          )
+                        }
+                        loading={isLoadingFollow}
+                        loadingPosition="start"
+                        variant="outlined"
+                        color="primary"
+                        sx={{ textTransform: 'inherit' }}
+                      >
+                        <span>
+                          {companyDetail.isFollowed
+                            ? 'Đang theo dõi'
+                            : 'Theo dõi'}{' '}
+                          ({companyDetail.followNumber})
+                        </span>
+                      </LoadingButton>
+                    )}
                   <Button
                     variant="contained"
                     color="secondary"
@@ -265,10 +267,10 @@ const CompanyDetailPage = () => {
                     </Typography>
                     <Box sx={{ mt: 2 }}>
                       <FilterJobPostCard
-                      params={{
-                        companyId: companyDetail.id,
-                      }}
-                    />
+                        params={{
+                          companyId: companyDetail.id,
+                        }}
+                      />
                     </Box>
                   </Box>
                   {/* End: viec lam */}

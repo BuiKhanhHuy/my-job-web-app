@@ -34,6 +34,7 @@ import jobService from '../../../services/jobService';
 import ApplyCard from '../../../components/ApplyCard';
 import SocialNetworkSharingPopup from '../../../components/SocialNetworkSharingPopup/SocialNetworkSharingPopup';
 import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
+import { ROLES_NAME } from '../../../configs/constants';
 
 const Loading = (
   <>
@@ -228,34 +229,40 @@ const item = (title, value) => {
   );
 };
 
-const action = (
+const ActionComponent = ({
   isApplied,
   isSaved,
   isLoadingSave,
   handleSave,
   handleShowApplyForm,
-  setOpenSharePopup
-) => (
+  setOpenSharePopup,
+  isAuthenticated,
+  currentUser,
+}) => (
   <Stack direction="row" spacing={2}>
-    <Button
-      variant="contained"
-      size="large"
-      sx={{ textTransform: 'inherit' }}
-      disabled={isApplied}
-      onClick={handleShowApplyForm}
-    >
-      {isApplied ? 'Đã ứng tuyển' : 'Nộp hồ sơ'}
-    </Button>
-    <LoadingButton
-      onClick={handleSave}
-      startIcon={isSaved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-      loading={isLoadingSave}
-      loadingPosition="start"
-      variant="outlined"
-      sx={{ textTransform: 'inherit' }}
-    >
-      <span>{isSaved ? 'Đã lưu' : 'Lưu'}</span>
-    </LoadingButton>
+    {isAuthenticated && currentUser?.roleName === ROLES_NAME.JOB_SEEKER && (
+      <>
+        <Button
+          variant="contained"
+          size="large"
+          sx={{ textTransform: 'inherit' }}
+          disabled={isApplied}
+          onClick={handleShowApplyForm}
+        >
+          {isApplied ? 'Đã ứng tuyển' : 'Nộp hồ sơ'}
+        </Button>
+        <LoadingButton
+          onClick={handleSave}
+          startIcon={isSaved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          loading={isLoadingSave}
+          loadingPosition="start"
+          variant="outlined"
+          sx={{ textTransform: 'inherit' }}
+        >
+          <span>{isSaved ? 'Đã lưu' : 'Lưu'}</span>
+        </LoadingButton>
+      </>
+    )}
     <Button
       variant="outlined"
       size="large"
@@ -271,6 +278,7 @@ const action = (
 const JobDetailPage = () => {
   const { slug } = useParams();
   const { allConfig } = useSelector((state) => state.config);
+  const { isAuthenticated, currentUser } = useSelector((state) => state.user);
   const [openSharePopup, setOpenSharePopup] = React.useState(false);
   const [openPopup, setOpenPopup] = React.useState(false);
   const [isApplySucces, setIsApplySuccess] = React.useState(false);
@@ -436,14 +444,18 @@ const JobDetailPage = () => {
                         {dayjs(jobPostDetail?.createAt).format('DD/MM/YYYY')}
                       </Typography>
                     </Stack>
-                    {action(
-                      jobPostDetail.isApplied,
-                      jobPostDetail.isSaved,
-                      isLoadingSave,
-                      handleSave,
-                      handleShowApplyForm,
-                      setOpenSharePopup
-                    )}
+                    {/* Start: ActionComponent */}
+                    <ActionComponent
+                      isApplied={jobPostDetail.isApplied}
+                      isSaved={jobPostDetail.isSaved}
+                      isLoadingSave={isLoadingSave}
+                      handleSave={handleSave}
+                      handleShowApplyForm={handleShowApplyForm}
+                      setOpenSharePopup={setOpenSharePopup}
+                      isAuthenticated={isAuthenticated}
+                      currentUser={currentUser}
+                    />
+                    {/* End: ActionComponent */}
                   </Stack>
                   <Divider sx={{ my: 2 }} />
                   <Box>
@@ -632,14 +644,18 @@ const JobDetailPage = () => {
                   </Box>
                 </Stack>
                 <Divider sx={{ my: 2 }} />
-                {action(
-                  jobPostDetail.isApplied,
-                  jobPostDetail.isSaved,
-                  isLoadingSave,
-                  handleSave,
-                  handleShowApplyForm,
-                  setOpenSharePopup
-                )}
+                {/* Start: ActionComponent */}
+                <ActionComponent
+                  isApplied={jobPostDetail.isApplied}
+                  isSaved={jobPostDetail.isSaved}
+                  isLoadingSave={isLoadingSave}
+                  handleSave={handleSave}
+                  handleShowApplyForm={handleShowApplyForm}
+                  setOpenSharePopup={setOpenSharePopup}
+                  isAuthenticated={isAuthenticated}
+                  currentUser={currentUser}
+                />
+                {/* End: ActionComponent */}
               </Card>
               {/* End: mo ta chi tiet */}
 

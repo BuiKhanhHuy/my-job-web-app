@@ -20,7 +20,6 @@ import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 import BookmarkAddedOutlinedIcon from '@mui/icons-material/BookmarkAddedOutlined';
 import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSearchOutlined';
-import MarkUnreadChatAltOutlinedIcon from '@mui/icons-material/MarkUnreadChatAltOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
@@ -204,24 +203,7 @@ const drawer = (location, theme) => (
             />
           </NavLink>
         </StyledTreeItem>
-        <StyledTreeItem nodeId="4" labelText="Trò chuyện và thông báo">
-          <NavLink
-            to="/nha-tuyen-dung/tro-chuyen"
-            style={{
-              textDecoration: 'none',
-              display: 'block',
-              backgroundColor:
-                location.pathname === '/nha-tuyen-dung/tro-chuyen'
-                  ? 'rgba(68, 29, 160, 0.08)'
-                  : 'inherit',
-            }}
-          >
-            <StyledTreeItem
-              nodeId="12"
-              labelText="Chat"
-              labelIcon={MarkUnreadChatAltOutlinedIcon}
-            />
-          </NavLink>
+        <StyledTreeItem nodeId="4" labelText="Thông báo">
           <NavLink
             to="/nha-tuyen-dung/thong-bao"
             style={{
@@ -234,7 +216,7 @@ const drawer = (location, theme) => (
             }}
           >
             <StyledTreeItem
-              nodeId="13"
+              nodeId="12"
               labelText="Quản lý thông báo"
               labelIcon={NotificationsOutlinedIcon}
             />
@@ -253,7 +235,7 @@ const drawer = (location, theme) => (
             }}
           >
             <StyledTreeItem
-              nodeId="14"
+              nodeId="13"
               labelText="Thông tin công ty"
               labelIcon={BusinessOutlinedIcon}
             />
@@ -270,7 +252,7 @@ const drawer = (location, theme) => (
             }}
           >
             <StyledTreeItem
-              nodeId="15"
+              nodeId="14"
               labelText="Tài khoản"
               labelIcon={AccountCircleOutlinedIcon}
             />

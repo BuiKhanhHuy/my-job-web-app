@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import {
   AppBar,
   Avatar,
-  Badge,
   Box,
+  Badge,
   Card,
   IconButton,
   Stack,
@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import SwitchModeButton from '../../../../components/SwitchModeButton';
@@ -102,15 +101,6 @@ const Header = ({ drawerWidth, handleDrawerToggle }) => {
         </Toolbar>
 
         <Toolbar>
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
-          >
-            <Badge badgeContent={4} color="error">
-              <MailIcon />
-            </Badge>
-          </IconButton>
           <IconButton
             size="large"
             aria-label="show 17 new notifications"
