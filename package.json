@@ -37,6 +37,7 @@
     "js-cookie": "^3.0.1",
     "material-ui-popup-state": "^5.0.5",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "mui-file-dropzone": "^4.0.2",
     "mui-image": "^1.0.7",
     "pdfjs-dist": "^3.4.120",

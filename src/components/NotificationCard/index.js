@@ -1,4 +1,6 @@
 import * as React from 'react';
+import Moment from 'react-moment';
+import 'moment/locale/vi';
 import {
   Badge,
   Box,
@@ -23,6 +25,7 @@ import {
 } from 'firebase/database';
 import database from '../../configs/firebase-config';
 
+import { IMAGES } from '../../configs/constants';
 import MuiImageCustom from '../MuiImageCustom';
 import { useSelector } from 'react-redux';
 
@@ -149,6 +152,23 @@ const NotificationCard = () => {
       });
   };
 
+  const handleClickItem = (item) => {
+    switch (item.type) {
+      case 'SYSTEM':
+        break;
+      case 'EMPLOYER_VIEWED_RESUME':
+        break;
+      case 'EMPLOYER_SAVED_RESUME':
+        break;
+      case 'APPLY_STATUS':
+        break;
+      case 'COMPANY_FOLLOWED':
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -199,7 +219,7 @@ const NotificationCard = () => {
       >
         <Box style={{ width: 500, maxHeight: 500 }} sx={{ py: 1, px: 1.5 }}>
           <Box style={{ overflowY: 'auto', maxHeight: 450 }}>
-            <Stack spacing={2}>
+            <Stack spacing={2} sx={{ p: 1 }}>
               {notifications.length === 0 ? (
                 <Typography textAlign="center" variant="body2" color="gray">
                   Chưa có thông báo nào
@@ -211,28 +231,54 @@ const NotificationCard = () => {
                     spacing={2}
                     alignItems="center"
                     key={idx}
+                    sx={{
+                      boxShadow: 1,
+                      p: 1,
+                      borderRadius: 1.5,
+                    }}
                   >
-                    <Box>
+                    <Box
+                      sx={{ cursor: 'pointer' }}
+                      onClick={() => handleClickItem(value)}
+                    >
                       <MuiImageCustom
-                        width={50}
-                        height={50}
-                        src={
-                          'https://cdn1.vieclam24h.vn/images/default/2021/09/21/images/img_vieclam24h_vn_163219231433.w-62.h-62.padding-1.png?v=220513'
-                        }
-                        sx={{ borderRadius: 1.5, maxHeight: 150 }}
+                        width={65}
+                        height={65}
+                        src={value?.image || IMAGES.notificationImageDefault}
+                        sx={{
+                          borderRadius: 1.5,
+                          maxHeight: 150,
+                          border: 0.5,
+                          borderColor: '#d1c4e9',
+                        }}
                         duration={500}
                       />
                     </Box>
-                    <Box flex={1}>
+                    <Box
+                      sx={{ cursor: 'pointer' }}
+                      flex={1}
+                      onClick={() => handleClickItem(value)}
+                    >
                       <Stack>
                         <Box>
                           <Typography variant="subtitle2">
-                            {value.title} - {value.time}
+                            {value.title}
                           </Typography>
                         </Box>
                         <Box>
-                          <Typography variant="caption" color="gray">
+                          <Typography variant="caption" color="#616161">
                             {value.content}
+                          </Typography>
+                        </Box>
+                        <Box>
+                          <Typography
+                            variant="caption"
+                            fontSize={12}
+                            color="#bdbdbd"
+                          >
+                            <Moment tz="Asia/Ho_Chi_Minh" fromNow>
+                              {value.time * 1000}
+                            </Moment>
                           </Typography>
                         </Box>
                       </Stack>
@@ -262,7 +308,11 @@ const NotificationCard = () => {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    <Typography fontWeight="bold" textAlign="center">
+                    <Typography
+                      fontWeight="bold"
+                      textAlign="center"
+                      color="GrayText"
+                    >
                       <span style={{ cursor: 'pointer' }} onClick={loadMore}>
                         Xem thêm
                       </span>

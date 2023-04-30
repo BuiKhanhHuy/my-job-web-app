@@ -93,6 +93,7 @@ const IMAGES = {
   coverImageDefault: require('../assets/images/cover-image-default.webp'),
   chPlayDownload: require('../assets/images/app-android-download.png'),
   appStoreDownload: require('../assets/images/app-ios-download.png'),
+  notificationImageDefault: require('../assets/images/noti-img-default.png')
 };
 
 const ICONS = {

@@ -225,7 +225,7 @@ const Header = (props) => {
             </Box>
 
             {/* start: NotificationCard */}
-            <NotificationCard />
+            {isAuthenticated && <NotificationCard />}
             {/* End: NotificationCard */}
 
             {/* Start: SwitchModeButton */}

@@ -4,7 +4,6 @@ import {
   AppBar,
   Avatar,
   Box,
-  Badge,
   Card,
   IconButton,
   Stack,
@@ -13,14 +12,14 @@ import {
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import SwitchModeButton from '../../../../components/SwitchModeButton';
 import UserMenu from '../../commons/UserMenu';
 import AccountSwitchMenu from '../../commons/AccountSwitchMenu';
+import NotificationCard from '../../../../components/NotificationCard';
 
 const Header = ({ drawerWidth, handleDrawerToggle }) => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, isAuthenticated } = useSelector((state) => state.user);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -101,15 +100,10 @@ const Header = ({ drawerWidth, handleDrawerToggle }) => {
         </Toolbar>
 
         <Toolbar>
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
-            <Badge badgeContent={17} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          {/* start: NotificationCard */}
+          {isAuthenticated && <NotificationCard />}
+            {/* End: NotificationCard */}
+
           {/* Start: SwitchModeButton */}
           <SwitchModeButton />
           {/* End: SwitchModeButton */}

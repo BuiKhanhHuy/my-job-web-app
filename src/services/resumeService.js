@@ -16,6 +16,11 @@ const resumeService = {
 
     return httpRequest.post(url);
   },
+  viewResume: (slug) => {
+    const url = `api/info/web/resumes/${slug}/view-resume/`;
+
+    return httpRequest.post(url);
+  },
   getResumeOwner: (resumeSlug) => {
     const url = `api/info/web/private-resumes/${resumeSlug}/resume-owner/`;
 

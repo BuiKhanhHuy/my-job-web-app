@@ -56,7 +56,7 @@ const Feedback = () => {
       setIsFullScreenLoading(true);
       try {
         await myjobService.createFeedback(data);
-        handleClose()
+        handleClose();
         toastMessages.success('Gửi phản hồi thành công.');
       } catch (error) {
         errorHandling(error);
@@ -81,6 +81,7 @@ const Feedback = () => {
           borderBottomLeftRadius: 0,
           textTransform: 'inherit',
           color: 'white',
+          zIndex: 10,
         }}
         startIcon={<SentimentVerySatisfiedIcon />}
       >

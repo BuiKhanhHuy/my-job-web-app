@@ -179,6 +179,18 @@ const ProfileDetailCard = () => {
   let printContainerRef = React.useRef();
 
   React.useEffect(() => {
+    const viewResume = async (resumeSlug) => {
+      try {
+        await resumeService.viewResume(resumeSlug);
+      } catch (error) {
+        console.error('Lỗi khi xem CV! ', error);
+      }
+    };
+
+    viewResume(resumeSlug);
+  }, [resumeSlug]);
+
+  React.useEffect(() => {
     const getProfileDetail = async (resumeSlug) => {
       setIsLoading(true);
 
