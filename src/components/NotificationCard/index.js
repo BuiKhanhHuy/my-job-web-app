@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Moment from 'react-moment';
 import 'moment/locale/vi';
 import {
@@ -27,11 +29,11 @@ import database from '../../configs/firebase-config';
 
 import { IMAGES } from '../../configs/constants';
 import MuiImageCustom from '../MuiImageCustom';
-import { useSelector } from 'react-redux';
 
 const PAGE_SIZE = 10;
 
 const NotificationCard = () => {
+  const nav = useNavigate()
   const { currentUser } = useSelector((state) => state.user);
   const [count, setCount] = React.useState(0);
   const [notifications, setNotifications] = React.useState([]);
@@ -155,18 +157,25 @@ const NotificationCard = () => {
   const handleClickItem = (item) => {
     switch (item.type) {
       case 'SYSTEM':
+        nav("/")
         break;
       case 'EMPLOYER_VIEWED_RESUME':
+        nav("/ung-vien/cong-ty-cua-toi")
         break;
       case 'EMPLOYER_SAVED_RESUME':
+        nav("/ung-vien/cong-ty-cua-toi")
         break;
       case 'APPLY_STATUS':
+        nav("/ung-vien/viec-lam-cua-toi")
         break;
       case 'COMPANY_FOLLOWED':
+        nav("/nha-tuyen-dung/danh-sach-ung-vien")
         break;
       default:
         break;
     }
+
+    handleClose();
   };
 
   return (
@@ -246,6 +255,7 @@ const NotificationCard = () => {
                         height={65}
                         src={value?.image || IMAGES.notificationImageDefault}
                         sx={{
+                          p: 0.5,
                           borderRadius: 1.5,
                           maxHeight: 150,
                           border: 0.5,
@@ -276,7 +286,7 @@ const NotificationCard = () => {
                             fontSize={12}
                             color="#bdbdbd"
                           >
-                            <Moment tz="Asia/Ho_Chi_Minh" fromNow>
+                            <Moment fromNow>
                               {value.time * 1000}
                             </Moment>
                           </Typography>

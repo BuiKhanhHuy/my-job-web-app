@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { Avatar, Box, Card, Skeleton, Stack, Typography } from '@mui/material';
+import { Box, Card, Skeleton, Stack, Typography } from '@mui/material';
 
 import { salaryString } from '../../utils/customData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,6 +11,7 @@ import {
   faCircleDollarToSlot,
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
+import MuiImageCustom from '../MuiImageCustom';
 
 const JobPostLarge = ({
   id,
@@ -36,24 +37,24 @@ const JobPostLarge = ({
         cursor: 'pointer',
         p: 1,
         '&:hover': {
-          boxShadow: 5
+          boxShadow: 5,
         },
       }}
       onClick={() => nav(`/viec-lam/${slug}`)}
     >
       <Stack direction="row" spacing={2}>
         <Box>
-          <Avatar
+          <MuiImageCustom
+            width={100}
+            height={100}
+            src={companyImageUrl}
             sx={{
-              width: 100,
-              height: 100,
               border: 0.5,
               borderColor: '#e0e0e0',
               borderRadius: 1.5,
               p: 0.5,
+              backgroundColor: 'white',
             }}
-            src={companyImageUrl}
-            alt="H"
           />
         </Box>
         <Stack flex={1} justifyContent="center" spacing={0.8}>

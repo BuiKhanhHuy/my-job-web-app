@@ -24,16 +24,22 @@ const createEditorStateFromHTMLString = (htmlString) => {
   return EditorState.createWithContent(content);
 };
 
+const convertMoney = n => {
+  if (n >= 1000000000) {
+    return `${Math.trunc(n / 1000000000)} tỉ`;
+  } else if (n >= 1000000) {
+    return `${Math.trunc(n / 1000000)} triệu`;
+  } else {
+    return `${Math.trunc(n)}`;
+  }
+};
+
 const salaryString = (salaryFrom, salaryTo) => {
-  if (!salaryFrom && !salaryTo) return null;
+  if (!salaryFrom && !salaryTo) return '---';
   else
-    return `${salaryFrom?.toLocaleString('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-    })} - ${salaryTo?.toLocaleString('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-    })}`;
+    return `${!salaryFrom ? '?' : convertMoney(salaryFrom)} - ${
+      !salaryTo ? '?' : convertMoney(salaryTo)
+    }`;
 };
 
 const toSlug = (str) => {
@@ -63,6 +69,7 @@ export default toSlug;
 export {
   convertEditorStateToHTMLString,
   createEditorStateFromHTMLString,
+  convertMoney,
   salaryString,
   toSlug,
 };

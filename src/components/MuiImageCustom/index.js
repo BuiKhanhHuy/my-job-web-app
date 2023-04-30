@@ -4,7 +4,7 @@ import Image from 'mui-image';
 const MuiImageCustom = (props) => {
   return (
     <Image
-      fit="cover"
+      fit="contain"
       duration={500}
       easing="ease-in"
       showLoading={false}

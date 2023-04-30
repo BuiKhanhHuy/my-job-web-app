@@ -20,7 +20,6 @@ import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 import BookmarkAddedOutlinedIcon from '@mui/icons-material/BookmarkAddedOutlined';
 import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSearchOutlined';
-import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
@@ -203,26 +202,7 @@ const drawer = (location, theme) => (
             />
           </NavLink>
         </StyledTreeItem>
-        <StyledTreeItem nodeId="4" labelText="Thông báo">
-          <NavLink
-            to="/nha-tuyen-dung/thong-bao"
-            style={{
-              textDecoration: 'none',
-              display: 'block',
-              backgroundColor:
-                location.pathname === '/nha-tuyen-dung/thong-bao'
-                  ? 'rgba(68, 29, 160, 0.08)'
-                  : 'inherit',
-            }}
-          >
-            <StyledTreeItem
-              nodeId="12"
-              labelText="Quản lý thông báo"
-              labelIcon={NotificationsOutlinedIcon}
-            />
-          </NavLink>
-        </StyledTreeItem>
-        <StyledTreeItem nodeId="5" labelText="Quản lý tài khoản">
+        <StyledTreeItem nodeId="4" labelText="Quản lý tài khoản">
           <NavLink
             to="/nha-tuyen-dung/cong-ty"
             style={{
@@ -235,7 +215,7 @@ const drawer = (location, theme) => (
             }}
           >
             <StyledTreeItem
-              nodeId="13"
+              nodeId="12"
               labelText="Thông tin công ty"
               labelIcon={BusinessOutlinedIcon}
             />
@@ -252,7 +232,7 @@ const drawer = (location, theme) => (
             }}
           >
             <StyledTreeItem
-              nodeId="14"
+              nodeId="13"
               labelText="Tài khoản"
               labelIcon={AccountCircleOutlinedIcon}
             />

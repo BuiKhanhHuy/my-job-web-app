@@ -65,7 +65,6 @@ import { default as OnlineProfilePage } from './pages/jobSeekerPages/OnlineProfi
 import { default as JobSeekerAttachedProfilePage } from './pages/jobSeekerPages/AttachedProfilePage';
 import { default as JobSeekerMyJobPage } from './pages/jobSeekerPages/MyJobPage';
 import { default as JobSeekerMyCompanyPage } from './pages/jobSeekerPages/MyCompanyPage';
-import { default as JobSeekerNotificationJobPostPage } from './pages/jobSeekerPages/NotificationJobPostPage';
 import { default as JobSeekerAccountPage } from './pages/jobSeekerPages/AccountPage';
 
 // employer pages
@@ -75,7 +74,6 @@ import { default as EmployerProfileAppliedPage } from './pages/employerPages/Pro
 import { default as EmployerSavedProfilePage } from './pages/employerPages/SavedProfilePage';
 import { default as EmployerProfilePage } from './pages/employerPages/ProfilePage';
 import { default as ProfileDetailPage } from './pages/employerPages/ProfileDetailPage';
-import { default as EmployerNotificationPage } from './pages/employerPages/NotificationPage';
 import { default as EmployerCompanyPage } from './pages/employerPages/CompanyPage';
 import { default as EmployerAccountPage } from './pages/employerPages/AccountPage';
 
@@ -318,10 +316,6 @@ function App() {
                     path="cong-ty-cua-toi"
                     element={<JobSeekerMyCompanyPage />}
                   />
-                  <Route
-                    path="thong-bao-viec-lam"
-                    element={<JobSeekerNotificationJobPostPage />}
-                  />
                   <Route path="tai-khoan" element={<JobSeekerAccountPage />} />
                 </Route>
                 {/* End: Job seeker */}
@@ -361,10 +355,6 @@ function App() {
                   <Route
                     path="chi-tiet-ung-vien/:slug"
                     element={<ProfileDetailPage />}
-                  />
-                  <Route
-                    path="thong-bao"
-                    element={<EmployerNotificationPage />}
                   />
                   <Route path="cong-ty" element={<EmployerCompanyPage />} />
                   <Route path="tai-khoan" element={<EmployerAccountPage />} />

@@ -37,6 +37,7 @@ const JobPost = ({
         p: 1,
         '&:hover': {
           borderColor: '#441da0',
+          boxShadow: 5,
         },
       }}
       onClick={() => nav(`/viec-lam/${slug}`)}
@@ -47,7 +48,12 @@ const JobPost = ({
             width={60}
             height={60}
             src={companyImageUrl}
-            sx={{ border: 0.5, borderRadius: 1.5, borderColor: '#e0e0e0' }}
+            sx={{
+              border: 0.5,
+              borderRadius: 1.5,
+              borderColor: '#e0e0e0',
+              p: 0.5,
+            }}
           />
         </Stack>
         <Box flex={1}>

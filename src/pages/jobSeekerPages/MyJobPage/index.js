@@ -4,6 +4,7 @@ import { Box, Card, Grid, Stack, Tab, Typography } from '@mui/material';
 import SavedJobCard from '../../components/jobSeekers/SavedJobCard';
 import AppliedJobCard from '../../components/jobSeekers/AppliedJobCard';
 import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
+import JobPostNotificationCard from '../../components/jobSeekers/JobPostNotificationCard';
 
 const MyJobPage = () => {
   const [value, setValue] = React.useState('1');
@@ -59,7 +60,11 @@ const MyJobPage = () => {
                   <AppliedJobCard />
                   {/* End: AppliedJobCard */}
                 </TabPanel>
-                <TabPanel value="3">Thông báo việc làm</TabPanel>
+                <TabPanel value="3">
+                  {/* Start: JobPostNotificationCard */}
+                  <JobPostNotificationCard />
+                  {/* End: JobPostNotificationCard */}
+                </TabPanel>
               </TabContext>
             </Box>
           </Card>

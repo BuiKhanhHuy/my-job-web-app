@@ -42,7 +42,7 @@ const Company = ({
           borderColor: '#441da0',
         },
       }}
-      style={{ height: 400 }}
+      style={{ height: 450 }}
       variant="outlined"
     >
       <Stack>
@@ -50,7 +50,7 @@ const Company = ({
           <MuiImageCustom
             width="100%"
             src={companyCoverImageUrl || IMAGES.coverImageDefault}
-            sx={{ borderRadius: 1.5, maxHeight: 150 }}
+            sx={{ borderRadius: 1.5, maxHeight: 200 }}
             duration={1500}
           />
         </Box>
@@ -61,16 +61,16 @@ const Company = ({
               component={Link}
               to={`/cong-ty/${slug}`}
             >
-              <Avatar
+              <MuiImageCustom
+                width={80}
+                height={80}
+                src={companyImageUrl}
                 sx={{
                   bgcolor: 'white',
-                  boxShadow: 2,
+                  boxShadow: 4,
                   p: 0.75,
-                  width: '100%',
-                  height: '100%',
+                  borderRadius: 2,
                 }}
-                variant="rounded"
-                src={companyImageUrl}
               />
             </Box>
             <Box sx={{ py: 1 }}>

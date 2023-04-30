@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import {
-  Avatar,
   Box,
   Card,
   Grid,
@@ -122,22 +121,24 @@ const CompanyDetailPage = () => {
                 sx={{ borderRadius: 1.5, maxHeight: 250 }}
                 duration={1500}
                 width="100%"
+                fit="cover"
               />
             </Box>
             <Box sx={{ p: 3, pt: 1 }}>
               <Stack direction="row" spacing={2} alignItems="center">
                 <Box>
-                  <Avatar
+                  <MuiImageCustom
+                    src={companyDetail.companyImageUrl}
                     sx={{
-                      width: 120,
-                      height: 120,
+                      borderRadius: 2,
+                      mt: -7,
+                      p: 0.5,
                       bgcolor: 'white',
                       boxShadow: 5,
-                      p: 0.5,
-                      mt: -7,
                     }}
-                    variant="rounded"
-                    src={companyDetail.companyImageUrl}
+                    duration={1500}
+                    width={120}
+                    height={120}
                   />
                 </Box>
                 <Box flex={1}>

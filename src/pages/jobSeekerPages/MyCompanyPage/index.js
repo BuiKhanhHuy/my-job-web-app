@@ -3,6 +3,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Grid, Stack, Tab, Typography } from '@mui/material';
 import CompanyViewedCard from '../../components/jobSeekers/CompanyViewedCard';
 import CompanyFollowedCard from '../../components/jobSeekers/CompanyFollowedCard';
+import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
 
 const MyCompanyPage = () => {
   const [value, setValue] = React.useState('1');
@@ -57,10 +58,12 @@ const MyCompanyPage = () => {
           <Card sx={{ p: 2 }}>
             <Stack>
               <Box sx={{ mb: 2 }}>
-                <Typography variant="h6">Công ty bạn sẽ thích</Typography>
+                <Typography variant="h6">Việc làm phù hợp</Typography>
               </Box>
               <Box>
-                <div>HERE</div>
+                {/* Start: SuggestedJobPostCard */}
+                <SuggestedJobPostCard />
+                {/* End: SuggestedJobPostCardf */}
               </Box>
             </Stack>
           </Card>
