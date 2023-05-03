@@ -13,15 +13,19 @@ import {
   Stepper,
 } from '@mui/material';
 
-import { REGEX_VATIDATE } from '../../../../configs/constants';
+import useDebounce from '../../../../hooks/useDebounce';
 
+import { REGEX_VATIDATE } from '../../../../configs/constants';
 import errorHandling from '../../../../utils/errorHandling';
 
 import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
 import PasswordTextFieldCustom from '../../../../components/controls/PasswordTextFieldCustom';
 import SingleSelectCustom from '../../../../components/controls/SingleSelectCustom';
 import DatePickerCustom from '../../../../components/controls/DatePickerCustom';
+import TextFieldAutoCompleteCustom from '../../../../components/controls/TextFieldAutoCompleteCustom';
+
 import commonService from '../../../../services/commonService';
+import goongService from '../../../../services/goongService';
 
 const steps = ['Thông tin đăng nhập', 'Thông tin công ty'];
 
@@ -29,6 +33,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const { allConfig } = useSelector((state) => state.config);
   const [districtOptions, setDistrictOptions] = React.useState([]);
+  const [locationOptions, setLocationOptions] = React.useState([]);
 
   // schema
   const schema = yup.object().shape({
@@ -97,34 +102,42 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
   });
 
   // use form
-  const { control, setError, setValue, getValues, handleSubmit } = useForm({
-    defaultValues: {
-      fullName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      company: {
-        companyName: '',
-        companyEmail: '',
-        companyPhone: '',
-        taxCode: '',
-        fieldOperation: '',
-        employeeSize: '',
-        websiteUrl: '',
-        location: {
-          city: '',
-          district: '',
-          address: '',
+  const { control, setError, clearErrors, setValue, getValues, handleSubmit } =
+    useForm({
+      defaultValues: {
+        fullName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        company: {
+          companyName: '',
+          companyEmail: '',
+          companyPhone: '',
+          taxCode: '',
+          fieldOperation: '',
+          employeeSize: '',
+          websiteUrl: '',
+          location: {
+            city: '',
+            district: '',
+            address: '',
+          },
         },
       },
-    },
-    resolver: yupResolver(schema),
-  });
+      resolver: yupResolver(schema),
+    });
 
   const cityId = useWatch({
     control,
     name: 'company.location.city',
   });
+
+  const address = useWatch({
+    control,
+    name: 'company.location.address',
+  });
+
+  const addressDebounce = useDebounce(address, 500);
 
   // show server errors
   React.useEffect(() => {
@@ -153,6 +166,35 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
       }
     }
   }, [serverErrors, setError]);
+
+  React.useEffect(() => {
+    const loadLocation = async (input) => {
+      try {
+        const resData = await goongService.getPlaces(input);
+
+        if (resData.predictions) setLocationOptions(resData.predictions);
+      } catch (error) {}
+    };
+
+    loadLocation(addressDebounce);
+  }, [addressDebounce]);
+
+  // select location lat, lng
+  const handleSelectLocation = async (e, value) => {
+    try {
+      const resData = await goongService.getPlaceDetailByPlaceId(
+        value.place_id
+      );
+      setValue(
+        'company.location.lat',
+        resData?.result?.geometry.location.lat || ''
+      );
+      setValue(
+        'company.location.lng',
+        resData?.result?.geometry.location.lng || ''
+      );
+    } catch (error) {}
+  };
 
   // fetch districts by city
   React.useEffect(() => {
@@ -193,6 +235,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
   const handleNext = async (email) => {
     const checkCredsResult = await checkCreds(email, null);
     if (checkCredsResult === true) {
+      clearErrors();
       setActiveStep(activeStep + 1);
     }
   };
@@ -318,11 +361,16 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <TextFieldCustom
+            <TextFieldAutoCompleteCustom
               name="company.location.address"
-              control={control}
               title="Địa chỉ"
-              placeholder="Nhập địa chỉ chi tiết của công ty"
+              showRequired={true}
+              placeholder="Nhập địa chỉ"
+              control={control}
+              options={locationOptions}
+              loading={true}
+              handleSelect={handleSelectLocation}
+              helperText="Chọn địa chỉ chúng tôi gợi ý để giúp chúng tôi xác định chính xác vị trí công ty của bạn"
             />
           </Grid>
         </Grid>

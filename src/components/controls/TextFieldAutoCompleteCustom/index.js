@@ -15,6 +15,7 @@ const TextFieldAutoCompleteCustom = ({
   options,
   loading,
   handleSelect,
+  helperText = '',
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -58,6 +59,7 @@ const TextFieldAutoCompleteCustom = ({
                   InputProps={{
                     ...params.InputProps,
                   }}
+                  helperText={!fieldState.invalid ? helperText : ''}
                 />
               )}
             />

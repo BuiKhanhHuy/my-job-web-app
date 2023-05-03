@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { PDFDownloadLink } from '@react-pdf/renderer';
@@ -12,6 +13,7 @@ import {
   Button,
   Divider,
   Tooltip,
+  Skeleton,
 } from '@mui/material';
 import dayjs from 'dayjs';
 
@@ -41,7 +43,64 @@ import { reloadResume } from '../../../../redux/profileSlice';
 import jobSeekerProfileService from '../../../../services/jobSeekerProfileService';
 import resumeService from '../../../../services/resumeService';
 
+const Loading = () => {
+  return (
+    <Grid container spacing={3}>
+      <Grid item>
+        <Stack direction="row" alignItems="center" spacing={3}>
+          <Skeleton width={130} height={130} variant="circular" />
+          <Box
+            sx={{
+              display: {
+                xs: 'none',
+                sm: 'none',
+                md: 'none',
+                lg: 'none',
+                xl: 'none',
+              },
+            }}
+          >
+            <Typography variant="h6">
+              <Skeleton />
+            </Typography>
+            <Typography variant="h6">
+              <Skeleton />
+            </Typography>
+          </Box>
+        </Stack>
+      </Grid>
+      <Grid item flex={1}>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Skeleton />
+          </Grid>
+          <Grid item xs={12}>
+            <Skeleton />
+          </Grid>
+          <Grid item xs={12}>
+            <Skeleton />
+          </Grid>
+          <Grid item xs={12}>
+            <Skeleton />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography>
+          <Skeleton />
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Stack direction="row" justifyContent="center" sx={{ mt: 2 }}>
+          <Skeleton width={120} height={60} />
+        </Stack>
+      </Grid>
+    </Grid>
+  );
+};
+
 const BoxProfile = ({ title }) => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const nav = useNavigate();
   const {
@@ -104,7 +163,7 @@ const BoxProfile = ({ title }) => {
           >
             <Typography variant="h6">{title}</Typography>
 
-            {resume && (
+            {resume != null && (
               <Stack direction="row" spacing={1} alignItems="center">
                 <Stack direction="row">
                   {resume.isActive ? (
@@ -118,11 +177,11 @@ const BoxProfile = ({ title }) => {
                     />
                   ) : (
                     <Chip
-                      variant="outlined"
+                      variant="filled"
                       sx={{ ml: 1 }}
                       size="small"
                       icon={<StarOutlineIcon color="warning" />}
-                      color="success"
+                      color="default"
                       label="Cho phép tìm kiếm"
                       onClick={() => handleActive(resume.slug)}
                     />
@@ -157,7 +216,7 @@ const BoxProfile = ({ title }) => {
         <Divider sx={{ mt: 2, mb: 3 }} />
         <Box sx={{ px: 1 }}>
           {isLoadingResume ? (
-            <h1>Loading...</h1>
+            <Loading />
           ) : resume === null ? (
             <h1>
               <NoDataCard />
@@ -235,8 +294,13 @@ const BoxProfile = ({ title }) => {
                       </Typography>
                       <Typography
                         variant="h6"
-                        color="#5d677a"
-                        sx={{ fontSize: 16 }}
+                        sx={{
+                          fontSize: 16,
+                          color:
+                            theme.palette.mode === 'light'
+                              ? '#121212'
+                              : 'white',
+                        }}
                       >
                         {resume.title || (
                           <span
@@ -255,7 +319,15 @@ const BoxProfile = ({ title }) => {
                         style={{ marginRight: 10 }}
                       />
                       Kinh nghiệm:{' '}
-                      <span style={{ color: 'black', fontWeight: 'bold' }}>
+                      <span
+                        style={{
+                          color:
+                            theme.palette.mode === 'light'
+                              ? '#121212'
+                              : 'white',
+                          fontWeight: 'bold',
+                        }}
+                      >
                         {allConfig.experienceDict[resume.experience] || (
                           <span
                             style={{ color: '#9e9e9e', fontStyle: 'italic' }}
@@ -273,7 +345,15 @@ const BoxProfile = ({ title }) => {
                         style={{ marginRight: 10 }}
                       />
                       Cấp bậc:{' '}
-                      <span style={{ color: 'black', fontWeight: 'bold' }}>
+                      <span
+                        style={{
+                          color:
+                            theme.palette.mode === 'light'
+                              ? '#121212'
+                              : 'white',
+                          fontWeight: 'bold',
+                        }}
+                      >
                         {allConfig.positionDict[resume.position] || (
                           <span
                             style={{ color: '#9e9e9e', fontStyle: 'italic' }}
@@ -291,7 +371,15 @@ const BoxProfile = ({ title }) => {
                         style={{ marginRight: 10 }}
                       />
                       Mức lương mong muốn:{' '}
-                      <span style={{ color: 'black', fontWeight: 'bold' }}>
+                      <span
+                        style={{
+                          color:
+                            theme.palette.mode === 'light'
+                              ? '#121212'
+                              : 'white',
+                          fontWeight: 'bold',
+                        }}
+                      >
                         {salaryString(resume.salaryMin, resume.salaryMax)}
                       </span>
                     </Typography>
@@ -303,7 +391,15 @@ const BoxProfile = ({ title }) => {
                         style={{ marginRight: 10 }}
                       />
                       Ngày cập nhật:{' '}
-                      <span style={{ color: 'black', fontWeight: 'bold' }}>
+                      <span
+                        style={{
+                          color:
+                            theme.palette.mode === 'light'
+                              ? '#121212'
+                              : 'white',
+                          fontWeight: 'bold',
+                        }}
+                      >
                         {dayjs(resume.updateAt).format('DD/MM/YYYY HH:mm:ss')}
                       </span>
                     </Typography>
@@ -311,12 +407,6 @@ const BoxProfile = ({ title }) => {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <Typography gutterBottom sx={{ mt: 2 }}>
-                  Mức độ hoàn thành:{' '}
-                  <span style={{ fontWeight: 'bold', color: 'orange' }}>
-                    Trung bình
-                  </span>
-                </Typography>
                 <Typography>
                   <FontAwesomeIcon
                     icon={faWarning}

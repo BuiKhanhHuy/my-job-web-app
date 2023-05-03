@@ -7,7 +7,7 @@ import NoDataCard from '../../../../components/NoDataCard';
 
 const pageSize = 12;
 
-const FilterJobPostCard = ({ params = {} }) => {
+const FilterJobPostCard = ({ params = {}, fullWidth = false }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [jobPosts, setJobPosts] = React.useState([]);
   const [page, setPage] = React.useState(1);
@@ -45,7 +45,15 @@ const FilterJobPostCard = ({ params = {} }) => {
       {isLoading ? (
         <Grid container spacing={2}>
           {Array.from(Array(pageSize).keys()).map((item) => (
-            <Grid key={item} item xs={12} sm={12} md={4} lg={4} xl={4}>
+            <Grid
+              key={item}
+              item
+              xs={12}
+              sm={fullWidth ? null : 12}
+              md={fullWidth ? null : 4}
+              lg={fullWidth ? null : 4}
+              xl={fullWidth ? null : 4}
+            >
               <JobPost.Loading></JobPost.Loading>
             </Grid>
           ))}
@@ -54,9 +62,17 @@ const FilterJobPostCard = ({ params = {} }) => {
         <NoDataCard />
       ) : (
         <>
-          <Grid container spacing={2}  >
+          <Grid container spacing={2}>
             {jobPosts.map((value) => (
-              <Grid item xs={12} sm={12} md={4} lg={4} xl={4} key={value.id}>
+              <Grid
+                item
+                xs={12}
+                sm={fullWidth ? null : 12}
+                md={fullWidth ? null : 4}
+                lg={fullWidth ? null : 4}
+                xl={fullWidth ? null : 4}
+                key={value.id}
+              >
                 {/* Start: Job post */}
                 <JobPost
                   id={value.id}
@@ -80,7 +96,7 @@ const FilterJobPostCard = ({ params = {} }) => {
               <Pagination
                 color="primary"
                 size="medium"
-                variant="outlined"
+                variant="text"
                 sx={{ margin: '0 auto' }}
                 count={Math.ceil(count / pageSize)}
                 page={page}

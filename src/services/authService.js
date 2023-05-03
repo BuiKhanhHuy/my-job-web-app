@@ -79,6 +79,11 @@ const authService = {
       },
     });
   },
+  deleteAvatar: () => {
+    const url = 'api/auth/avatar/';
+
+    return httpRequest.delete(url);
+  },
   changePassword: (data) => {
     const url = 'api/auth/change-password/';
 

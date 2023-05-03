@@ -29,11 +29,21 @@ const JobPostNotificationForm = ({ handleAddOrUpdate, editData }) => {
     experience: yup.number().notRequired().nullable(),
     salary: yup
       .number()
+      .nullable()
       .typeError('Mức lương mong muốn không hợp lệ.')
-      .min(0, 'Mức lương mong muốn không hợp lệ.'),
+      .transform((value, originalValue) => {
+        if (originalValue === '') {
+          return null;
+        }
+        return value;
+      }),
   });
 
-  const { control, reset, handleSubmit } = useForm({
+  const {
+    control,
+    reset,
+    handleSubmit,
+  } = useForm({
     defaultValues: {
       frequency:
         (allConfig?.frequencyNotificationOptions || []).length > 0
@@ -110,6 +120,7 @@ const JobPostNotificationForm = ({ handleAddOrUpdate, editData }) => {
             title="Mức lương mong muốn"
             placeholder="Nhập mức lương mong muốn của bạn"
             control={control}
+            type="number"
           />
         </Grid>
         <Grid item xs={6}>

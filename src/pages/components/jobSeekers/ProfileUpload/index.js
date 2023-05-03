@@ -1,14 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
 import PublishIcon from '@mui/icons-material/Publish';
 
 import { CV_TYPES, IMAGE_SVG } from '../../../../configs/constants';
@@ -150,8 +143,8 @@ const ProfileUpload = ({ title }) => {
                   img={IMAGE_SVG.img2}
                 />
               ) : (
-                resumes.map((value) => (
-                  <Grid container spacing={2}>
+                <Grid container spacing={2}>
+                  {resumes.map((value) => (
                     <Grid
                       item
                       xs={12}
@@ -173,8 +166,8 @@ const ProfileUpload = ({ title }) => {
                         handleActive={handleActive}
                       />
                     </Grid>
-                  </Grid>
-                ))
+                  ))}
+                </Grid>
               )}
             </Box>
             <Stack sx={{ pt: 5 }} direction="row" justifyContent="center">

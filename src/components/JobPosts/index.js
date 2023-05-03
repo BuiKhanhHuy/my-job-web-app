@@ -19,7 +19,7 @@ const JobPosts = () => {
             count={10}
             color="primary"
             size="medium"
-            variant="outlined"
+            variant="text"
             sx={{ margin: '0 auto' }}
             page={1}
           />

@@ -4,7 +4,7 @@ import { HashLoader } from 'react-spinners';
 
 const BackdropLoading = ({ bgColor = 'rgba(0, 0, 0, 0.4)' }) => {
   return (
-    <div>
+    <div style={{ position: 'fixed', zIndex: 9999 }}>
       <Backdrop
         sx={{
           color: '#fff',

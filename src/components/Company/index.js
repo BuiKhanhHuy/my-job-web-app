@@ -42,125 +42,143 @@ const Company = ({
           borderColor: '#441da0',
         },
       }}
-      style={{ height: 450 }}
       variant="outlined"
     >
-      <Stack>
+      <Stack
+        style={{ height: 450  }}
+        justifyContent={'space-between'}
+      >
         <Box>
-          <MuiImageCustom
-            width="100%"
-            src={companyCoverImageUrl || IMAGES.coverImageDefault}
-            sx={{ borderRadius: 1.5, maxHeight: 200 }}
-            duration={1500}
-          />
-        </Box>
-        <Box sx={{ px: 2 }}>
-          <Stack direction="row" justifyContent="space-between">
-            <Box
-              sx={{ width: 85, height: 85, marginTop: -5 }}
-              component={Link}
-              to={`/cong-ty/${slug}`}
-            >
-              <MuiImageCustom
-                width={80}
-                height={80}
-                src={companyImageUrl}
+          <Box>
+            <MuiImageCustom
+              width="100%"
+              height={180}
+              fit="cover"
+              src={companyCoverImageUrl || IMAGES.coverImageDefault}
+              sx={{ borderRadius: 1.5 }}
+              duration={1500}
+            />
+          </Box>
+          <Box sx={{ px: 2 }}>
+            <Stack direction="row" justifyContent="space-between">
+              <Box
+                sx={{ width: 85, height: 85, marginTop: -5 }}
+                component={Link}
+                to={`/cong-ty/${slug}`}
+              >
+                <MuiImageCustom
+                  width={80}
+                  height={80}
+                  src={companyImageUrl}
+                  sx={{
+                    bgcolor: 'white',
+                    boxShadow: 4,
+                    p: 0.75,
+                    borderRadius: 2,
+                  }}
+                />
+              </Box>
+              <Box sx={{ py: 1 }}>
+                <Typography variant="caption" display="block">
+                  <FontAwesomeIcon
+                    icon={faUsers}
+                    style={{ marginRight: 2 }}
+                    color="#bdbdbd"
+                  />{' '}
+                  {followNumber} lượt theo dõi
+                </Typography>
+              </Box>
+            </Stack>
+          </Box>
+          <Box sx={{ p: 2, width: '100%' }}>
+            <Box mb={1}>
+              <Typography
+                variant="h6"
+                gutterBottom
+                component={Link}
+                to={`/cong-ty/${slug}`}
                 sx={{
-                  bgcolor: 'white',
-                  boxShadow: 4,
-                  p: 0.75,
-                  borderRadius: 2,
+                  textDecoration: 'none',
+                  color: 'inherit',
                 }}
-              />
-            </Box>
-            <Box sx={{ py: 1 }}>
-              <Typography variant="caption" display="block">
-                <FontAwesomeIcon
-                  icon={faUsers}
-                  style={{ marginRight: 2 }}
-                  color="#bdbdbd"
-                />{' '}
-                {followNumber} lượt theo dõi
+              >
+                {companyName.substr(0, 60)}
+                {companyName.length > 60 && '...'}
               </Typography>
             </Box>
-          </Stack>
-        </Box>
-        <Box sx={{ p: 2, width: '100%' }}>
-          <Box>
-            <Typography
-              variant="h6"
-              gutterBottom
-              component={Link}
-              to={`/cong-ty/${slug}`}
-              sx={{
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
-            >
-              {companyName.substr(0, 60)}
-              {companyName.length > 60 && '...'}
+            <Typography variant="body2" gutterBottom>
+              <FontAwesomeIcon
+                icon={faFontAwesome}
+                style={{ marginRight: 2 }}
+                color="#bdbdbd"
+              />{' '}
+              {fieldOperation || (
+                <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                  Chưa cập nhật
+                </span>
+              )}
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              <FontAwesomeIcon
+                icon={faMapLocation}
+                style={{ marginRight: 2 }}
+                color="#bdbdbd"
+              />{' '}
+              {allConfig?.cityDict[city] || (
+                <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                  Chưa cập nhật
+                </span>
+              )}
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              <FontAwesomeIcon
+                icon={faUser}
+                style={{ marginRight: 2 }}
+                color="#bdbdbd"
+              />{' '}
+              {allConfig?.employeeSizeDict[employeeSize] || (
+                <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                  Chưa cập nhật
+                </span>
+              )}
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              <FontAwesomeIcon
+                icon={faBriefcase}
+                style={{ marginRight: 2 }}
+                color="#bdbdbd"
+              />{' '}
+              {jobPostNumber} việc làm
             </Typography>
           </Box>
-          <Typography variant="body2" gutterBottom>
-            <FontAwesomeIcon
-              icon={faFontAwesome}
-              style={{ marginRight: 2 }}
-              color="#bdbdbd"
-            />{' '}
-            {fieldOperation || (
-              <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                Chưa cập nhật
-              </span>
-            )}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-            <FontAwesomeIcon
-              icon={faMapLocation}
-              style={{ marginRight: 2 }}
-              color="#bdbdbd"
-            />{' '}
-            {allConfig?.cityDict[city] || (
-              <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                Chưa cập nhật
-              </span>
-            )}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-            <FontAwesomeIcon
-              icon={faUser}
-              style={{ marginRight: 2 }}
-              color="#bdbdbd"
-            />{' '}
-            {allConfig?.employeeSizeDict[employeeSize] || (
-              <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                Chưa cập nhật
-              </span>
-            )}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-            <FontAwesomeIcon
-              icon={faBriefcase}
-              style={{ marginRight: 2 }}
-              color="#bdbdbd"
-            />{' '}
-            {jobPostNumber} việc làm
-          </Typography>
         </Box>
         {isAuthenticated && currentUser?.roleName === ROLES_NAME.JOB_SEEKER && (
-          <Box sx={{ py: 1, px: 2 }}>
+          <Stack sx={{ py: 1, px: 2, height: '100%' }}>
             <LoadingButton
               fullWidth
               onClick={() => handleFollow(slug)}
-              startIcon={isFollowed ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+              startIcon={
+                isFollowed ? (
+                  <BookmarkIcon style={{ color: 'white' }} />
+                ) : (
+                  <BookmarkBorderIcon />
+                )
+              }
               loading={isLoadingFollow}
               loadingPosition="start"
               variant={isFollowed ? 'contained' : 'outlined'}
               color="warning"
               sx={{ textTransform: 'inherit' }}
             >
-              <span>{isFollowed ? 'Đang theo dõi' : 'Theo dõi'}</span>
+              <span>
+                {isFollowed ? (
+                  <span style={{ color: 'white' }}>Đang theo dõi</span>
+                ) : (
+                  'Theo dõi'
+                )}
+              </span>
             </LoadingButton>
-          </Box>
+          </Stack>
         )}
       </Stack>
     </Card>

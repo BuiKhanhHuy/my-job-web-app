@@ -70,23 +70,27 @@ const SubHeader = () => {
         <AppBar
           position="static"
           sx={{
-            bgcolor: 'white',
+            bgcolor: (theme) =>
+              theme.palette.mode === 'light' ? 'white' : 'black',
             boxShadow: 0,
             borderBottom: 0.8,
-            borderColor: '#e0e0e0',
+            borderColor: (theme) =>
+              theme.palette.mode === 'light' ? '#e0e0e0' : '#441da0',
           }}
         >
           <Container maxWidth="xl">
-            <Toolbar variant="dense" sx={{ color: 'black' }}>
+            <Toolbar
+              variant="dense"
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'light' ? 'black' : 'white',
+              }}
+            >
               <Box
                 sx={{ marginRight: 2, cursor: 'pointer' }}
                 onClick={() => setOpen(true)}
               >
-                <FontAwesomeIcon
-                  icon={faListUl}
-                  fontSize={24}
-                  color="#441da0"
-                />
+                <FontAwesomeIcon icon={faListUl} fontSize={24} color='#441da0' />
               </Box>
               {listItems(topCareers, handleFilter)}
             </Toolbar>

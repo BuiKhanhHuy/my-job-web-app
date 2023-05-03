@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '@mui/material/styles';
 import { Outlet } from 'react-router-dom';
 
 import { Box, Container } from '@mui/material';
@@ -8,10 +9,12 @@ import TabBar from '../components/jobSeekers/TabBar';
 import Footer from '../components/commons/Footer';
 
 const JobSeekerLayout = () => {
+  const theme = useTheme();
+
   return (
     <Box>
       <Header />
-      <Box sx={{ backgroundColor: 'white' }}>
+      <Box sx={{ backgroundColor: theme.palette.mode === 'light' ? 'white' : '#121212' }}>
         <Container maxWidth="xl">
           <TabBar />
         </Container>

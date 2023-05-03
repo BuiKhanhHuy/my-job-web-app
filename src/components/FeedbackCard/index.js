@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Skeleton, Stack, Typography } from '@mui/material';
+import { Box, Card, Skeleton, Stack, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
 import MuiImageCustom from '../MuiImageCustom';
@@ -37,21 +37,24 @@ const FeedbackCard = ({ id, avatarUrl, fullName, content }) => {
       <Typography textAlign="center">
         <FontAwesomeIcon icon={faQuoteLeft} fontSize={25} color="#fca34d" />
       </Typography>
-      <Typography
-        variant="caption"
-        display="block"
-        gutterBottom
-        sx={{ textAlign: 'center', color: '#757575' }}
-        style={{
-          WebkitBoxOrient: 'horizontal',
-          overflow: 'hidden',
-          // whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          height: '100px',
-        }}
-      >
-        {content}
-      </Typography>
+      <Box>
+        <Typography
+          variant="caption"
+          display="block"
+          gutterBottom
+          sx={{ textAlign: 'justify', color: '#757575', px: 1 }}
+          style={{
+            height: '135px',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: '1',
+            WebkitBoxOrient: 'horizontal',
+          }}
+        >
+          {content}
+        </Typography>
+      </Box>
     </Card>
   );
 };

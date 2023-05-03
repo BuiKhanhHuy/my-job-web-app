@@ -5,6 +5,8 @@ import {
   Button,
   Divider,
   IconButton,
+  Pagination,
+  Skeleton,
   Stack,
   Switch,
   Typography,
@@ -30,6 +32,57 @@ import FormPopup from '../../../../components/controls/FormPopup';
 import JobPostNotificationForm from '../JobPostNotificationForm';
 import errorHandling from '../../../../utils/errorHandling';
 import jobPostNotificationService from '../../../../services/jobPostNotificationService';
+
+const ItemLoading = () => {
+  return (
+    <Box>
+      <Stack direction="row" spacing={3} alignItem="center">
+        <Box flex={1}>
+          <Stack spacing={1}>
+            <Box>
+              <Typography fontSize={18} fontWeight={'bold'}>
+                <Skeleton />
+              </Typography>
+            </Box>
+            <Stack direction="row" spacing={3}>
+              <Box>
+                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                  <Skeleton width={100} />
+                </Typography>
+              </Box>
+              <Box>
+                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                  <Skeleton width={100} />
+                </Typography>
+              </Box>
+              <Box>
+                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                  <Skeleton width={100} />
+                </Typography>
+              </Box>
+              <Box>
+                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                  <Skeleton width={100} />
+                </Typography>
+              </Box>
+            </Stack>
+          </Stack>
+        </Box>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Box>
+            <Skeleton width={50} height={40}/>
+          </Box>
+          <Box>
+            <Skeleton width={50} height={40}/>
+          </Box>
+          <Box>
+            <Skeleton width={50} height={40}/>
+          </Box>
+        </Stack>
+      </Stack>
+    </Box>
+  );
+};
 
 const ActiveButtonComponent = ({ id, isActive }) => {
   const [checked, setChecked] = React.useState(isActive);
@@ -177,9 +230,11 @@ const ItemComponent = ({
   );
 };
 
+const pageSize = 12;
+
 const JobPostNotificationCard = () => {
   const { currentUser } = useSelector((state) => state.user);
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
   const [count, setCount] = React.useState(0);
   const [openPopup, setOpenPopup] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
@@ -207,9 +262,14 @@ const JobPostNotificationCard = () => {
     };
 
     loadJobPostNotification({
-      page: page + 1,
+      page: page,
+      pageSize: pageSize,
     });
   }, [isSuccess, page]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
   const handleShowUpdate = (id) => {
     const loadJobPostNotificationDetailById = async (id) => {
@@ -328,30 +388,52 @@ const JobPostNotificationCard = () => {
         <Divider sx={{ mt: 2, mb: 2 }} />
         <Box>
           {isLoadingJobPostNotifications ? (
-            <div>Loading</div>
+            <Stack spacing={4}>
+              {Array.from(Array(5).keys()).map((value) => (
+                <ItemLoading key={value} />
+              ))}
+            </Stack>
           ) : jobPostNotifications.length === 0 ? (
-            <NoDataCard title="Bạn chưa có Thông Báo Việc Làm nào">
+            <NoDataCard title="Bạn chưa có thông báo việc làm nào">
               <Button variant="contained" color="primary">
                 Tạo thông báo bây giờ
               </Button>
             </NoDataCard>
           ) : (
-            <Stack spacing={4}>
-              {jobPostNotifications.map((value) => (
-                <ItemComponent
-                  key={value.id}
-                  id={value.id}
-                  jobName={value.jobName}
-                  salary={value.salary}
-                  frequency={value.frequency}
-                  isActive={value.isActive}
-                  career={value.career}
-                  city={value.city}
-                  handleShowUpdate={handleShowUpdate}
-                  handleDelete={handleDeleteJobPostNotification}
-                />
-              ))}
-            </Stack>
+            <Box>
+              <Stack spacing={4}>
+                {jobPostNotifications.map((value) => (
+                  <ItemComponent
+                    key={value.id}
+                    id={value.id}
+                    jobName={value.jobName}
+                    salary={value.salary}
+                    frequency={value.frequency}
+                    isActive={value.isActive}
+                    career={value.career}
+                    city={value.city}
+                    handleShowUpdate={handleShowUpdate}
+                    handleDelete={handleDeleteJobPostNotification}
+                  />
+                ))}
+              </Stack>
+              <Box>
+                <Stack>
+                  {Math.ceil(count / pageSize) > 1 && (
+                    <Pagination
+                      siblingCount={0}
+                      color="primary"
+                      size="medium"
+                      variant="text"
+                      sx={{ margin: '0 auto', mt: 5 }}
+                      count={Math.ceil(count / pageSize)}
+                      page={page}
+                      onChange={handleChangePage}
+                    />
+                  )}
+                </Stack>
+              </Box>
+            </Box>
           )}
         </Box>
       </Box>
@@ -364,6 +446,7 @@ const JobPostNotificationCard = () => {
                 width={100}
                 height={100}
                 src={'https://vieclam24h.vn/img/mail-bro%202.png'}
+                shiftDuration={0}
               />
             </Box>
             <Stack>
@@ -376,7 +459,7 @@ const JobPostNotificationCard = () => {
             </Stack>
           </Stack>
         }
-        buttonText="Tạo thông báo"
+        buttonText={editData ? 'Lưu' : 'Tạo thông báo'}
         buttonIcon={null}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}

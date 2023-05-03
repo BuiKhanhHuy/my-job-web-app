@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
@@ -10,8 +11,10 @@ const InputBaseSearchHomeCustom = ({
   control,
   onHandleSubmit = null,
   placeholder,
-  showSubmitButton=false
+  showSubmitButton = false,
 }) => {
+  const theme = useTheme();
+
   return (
     <Paper
       component="form"
@@ -21,7 +24,7 @@ const InputBaseSearchHomeCustom = ({
         display: 'flex',
         alignItems: 'center',
         width: '100%',
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.mode === 'light' ? 'white' : '#121212',
       }}
     >
       <SearchIcon color="disabled" />

@@ -16,6 +16,10 @@ const TextFieldCustom = ({
   icon = null,
   type = 'text',
 }) => {
+  const formatSalary = (value) => {
+    return Number(value).toLocaleString();
+  };
+
   return (
     <div>
       {title && (
@@ -43,7 +47,7 @@ const TextFieldCustom = ({
               helperText={!fieldState.invalid ? helperText : ''}
               InputProps={{
                 inputProps: {
-                  min: 0,
+                  // min: 0,  
                   type: type,
                 },
                 startAdornment: icon && (

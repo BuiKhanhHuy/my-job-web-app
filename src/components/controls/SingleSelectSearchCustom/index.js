@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '@mui/material/styles';
 import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -9,6 +10,8 @@ const SingleSelectSearchCustom = ({
   control,
   options = [],
 }) => {
+  const theme = useTheme();
+
   return (
     <Controller
       name={name}
@@ -27,7 +30,7 @@ const SingleSelectSearchCustom = ({
               {...params}
               size="small"
               placeholder={placeholder}
-              sx={{ backgroundColor: 'white', borderRadius: 1 }}
+              sx={{ backgroundColor: theme.palette.mode === 'light' ? 'white' : '#121212', borderRadius: 1 }}
             />
           )}
         />

@@ -17,6 +17,8 @@ import { Container } from '@mui/system';
 import { useSelector } from 'react-redux';
 
 const DesktopContent = (setOpen, careers, handleFilter) => {
+  const theme = useTheme();
+
   return (
     <Box>
       <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
@@ -40,9 +42,14 @@ const DesktopContent = (setOpen, careers, handleFilter) => {
               icon={false}
               variant="outlined"
               severity="info"
-              style={{
-                color: 'black',
-                backgroundColor: 'rgba(247,251,255,1)',
+              sx={{
+                color:  theme.palette.mode === 'light'
+                ? 'black'
+                : 'white',
+                bgcolor:
+                  theme.palette.mode === 'light'
+                    ? 'rgba(247,251,255,1)'
+                    : 'rgba(0,0,0,0.2)',
               }}
             >
               <Stack>

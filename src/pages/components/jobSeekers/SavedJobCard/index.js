@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Stack, Button, Pagination } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import SendIcon from '@mui/icons-material/Send';
 
 import { IMAGE_SVG } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
@@ -69,7 +68,7 @@ const SavedJobCard = () => {
       <Box>
         {isLoading ? (
           <Stack spacing={2}>
-            {Array.from(Array(3).keys()).map((value) => (
+            {Array.from(Array(5).keys()).map((value) => (
               <JobPostAction.Loading key={value} />
             ))}
           </Stack>
@@ -104,16 +103,6 @@ const SavedJobCard = () => {
               >
                 <Button
                   size="small"
-                  variant="contained"
-                  color="warning"
-                  sx={{ textTransform: 'inherit', color: 'white' }}
-                  startIcon={<SendIcon />}
-                  disabled={value?.isApplied}
-                >
-                  {value?.isApplied ? 'Đã ứng tuyển' : 'Ứng tuyển'}
-                </Button>
-                <Button
-                  size="small"
                   variant="outlined"
                   color="error"
                   sx={{ textTransform: 'inherit' }}
@@ -129,7 +118,7 @@ const SavedJobCard = () => {
                 <Pagination
                   color="primary"
                   size="medium"
-                  variant="outlined"
+                  variant="text"
                   sx={{ margin: '0 auto' }}
                   count={Math.ceil(count / pageSize)}
                   page={page}

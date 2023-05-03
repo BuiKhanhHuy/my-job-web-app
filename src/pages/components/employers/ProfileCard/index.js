@@ -159,7 +159,7 @@ const ProfileCard = () => {
                           <Pagination
                             color="primary"
                             size="medium"
-                            variant="outlined"
+                            variant="text"
                             sx={{ margin: '0 auto' }}
                             count={Math.ceil(count / pageSize)}
                             page={page}

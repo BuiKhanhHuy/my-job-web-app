@@ -48,7 +48,7 @@ const ProfileSearch = () => {
     <>
       <Grid item xs={12}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
+          <Grid item xs={12} sm={12} md={5} lg={6} xl={6}>
             <TextFieldCustom
               name="kw"
               showRequired={true}
@@ -57,7 +57,7 @@ const ProfileSearch = () => {
               icon={<SearchIcon />}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <SingleSelectCustom
               name="cityId"
               control={control}
@@ -66,7 +66,7 @@ const ProfileSearch = () => {
               placeholder="Chọn Tỉnh/Thành phố"
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
+          <Grid item xs={12} sm={12} md={3} lg={2} xl={2}>
             <Stack>
               <Button
                 variant="contained"

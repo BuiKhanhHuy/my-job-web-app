@@ -19,7 +19,7 @@ const ProfilePage = () => {
   return (
     <Box>
       <Grid container spacing={2}>
-        <Grid xs={12} sm={12} md={12} lg={9} xl={9} item>
+        <Grid xs={12} sm={12} md={12} lg={8} xl={8} item>
           <Stack spacing={2}>
             <Card sx={{ p: 3 }}>
               {/* Start: Box profile */}
@@ -28,12 +28,12 @@ const ProfilePage = () => {
             </Card>
             <Card sx={{ p: 3 }}>
               {/* Start: Profile upload */}
-              <ProfileUpload title="Hồ sơ trực tuyến" />
+              <ProfileUpload title="Hồ sơ đính kèm" />
               {/* End: Profile upload */}
             </Card>
           </Stack>
         </Grid>
-        <Grid xs={12} sm={12} md={12} lg={3} xl={3} item>
+        <Grid xs={12} sm={12} md={12} lg={4} xl={4} item>
           <Stack spacing={2}>
             <Card sx={{ p: 2 }}>
               <Stack>

@@ -65,7 +65,7 @@ const CompanyFollowedCard = () => {
       <Box>
         {isLoading ? (
           <Stack spacing={2}>
-            {Array.from(Array(3).keys()).map((value) => (
+            {Array.from(Array(5).keys()).map((value) => (
               <CompanyAction.Loading key={value} />
             ))}
           </Stack>
@@ -105,9 +105,9 @@ const CompanyFollowedCard = () => {
             <Stack sx={{ pt: 2 }} alignItems="center">
               {Math.ceil(count / pageSize) > 1 && (
                 <Pagination
-                  color="primary"
+                  color="text"
                   size="medium"
-                  variant="outlined"
+                  variant="text"
                   sx={{ margin: '0 auto' }}
                   count={Math.ceil(count / pageSize)}
                   page={page}

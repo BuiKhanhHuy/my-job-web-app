@@ -60,7 +60,7 @@ const AppliedJobCard = () => {
       <Box>
         {isLoading ? (
           <Stack spacing={2}>
-            {Array.from(Array(3).keys()).map((value) => (
+            {Array.from(Array(5).keys()).map((value) => (
               <JobPostAction.Loading key={value} />
             ))}
           </Stack>
@@ -138,7 +138,7 @@ const AppliedJobCard = () => {
                 <Pagination
                   color="primary"
                   size="medium"
-                  variant="outlined"
+                  variant="text"
                   sx={{ margin: '0 auto' }}
                   count={Math.ceil(count / pageSize)}
                   page={page}

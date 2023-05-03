@@ -6,7 +6,7 @@ import NoDataCard from '../../../../components/NoDataCard';
 import jobService from '../../../../services/jobService';
 import JobPost from '../../../../components/JobPost';
 
-const SuggestedJobPostCard = ({ pageSize = 12 }) => {
+const SuggestedJobPostCard = ({ pageSize = 12, fullWidth = false }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [jobPosts, setJobPosts] = React.useState([]);
   const [page, setPage] = React.useState(1);
@@ -30,7 +30,7 @@ const SuggestedJobPostCard = ({ pageSize = 12 }) => {
       }
     };
 
-    getJobPosts()
+    getJobPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
@@ -43,7 +43,15 @@ const SuggestedJobPostCard = ({ pageSize = 12 }) => {
       {isLoading ? (
         <Grid container spacing={2}>
           {Array.from(Array(pageSize).keys()).map((item) => (
-            <Grid key={item} item xs={12} sm={12} md={4} lg={4} xl={4}>
+            <Grid
+              key={item}
+              item
+              xs={12}
+              sm={fullWidth ? null : 12}
+              md={fullWidth ? null : 4}
+              lg={fullWidth ? null : 4}
+              xl={fullWidth ? null : 4}
+            >
               <JobPost.Loading></JobPost.Loading>
             </Grid>
           ))}
@@ -54,7 +62,15 @@ const SuggestedJobPostCard = ({ pageSize = 12 }) => {
         <>
           <Grid container spacing={2}>
             {jobPosts.map((value) => (
-              <Grid item xs={12} sm={12} md={4} lg={4} xl={4} key={value.id}>
+              <Grid
+                item
+                xs={12}
+                sm={fullWidth ? null : 12}
+                md={fullWidth ? null : 4}
+                lg={fullWidth ? null : 4}
+                xl={fullWidth ? null : 4}
+                key={value.id}
+              >
                 {/* Start: Job post */}
                 <JobPost
                   id={value.id}
@@ -78,7 +94,7 @@ const SuggestedJobPostCard = ({ pageSize = 12 }) => {
               <Pagination
                 color="primary"
                 size="medium"
-                variant="outlined"
+                variant="text"
                 sx={{ margin: '0 auto' }}
                 count={Math.ceil(count / pageSize)}
                 page={page}

@@ -254,7 +254,7 @@ const ProfileDetailCard = () => {
               <Stack direction="row" spacing={2} alignItems="center">
                 <Box>
                   <Avatar
-                    src="https://res.cloudinary.com/dtnpj540t/image/upload/v1680550408/my-job/images_default/avatar_default.jpg"
+                    src= {profileDetail?.user?.avatarUrl}
                     sx={{ width: 110, height: 110 }}
                   />
                 </Box>

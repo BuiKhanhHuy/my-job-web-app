@@ -15,12 +15,14 @@ import {
 } from '@mui/material';
 import AvatarEditor from 'react-avatar-editor';
 import EditIcon from '@mui/icons-material/Edit';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import CloseIcon from '@mui/icons-material/Close';
 
+import { confirmModal } from '../../../../utils/sweetalert2Modal';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
-import { updateAvatar } from '../../../../redux/userSlice';
 import toastMessages from '../../../../utils/toastMessages';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
+import { deleteAvatar, updateAvatar } from '../../../../redux/userSlice';
 
 const modalStyle = {
   display: 'flex',
@@ -118,7 +120,7 @@ const AvatarCard = () => {
 
     setIsFullScreenLoading(true);
     setModalOpen(false);
-    
+
     dispatch(updateAvatar(formData))
       .unwrap()
       .then(() => {
@@ -128,6 +130,29 @@ const AvatarCard = () => {
         toastMessages.error('Đã xảy ra lỗi, vui lòng thử lại.');
       })
       .finally(() => setIsFullScreenLoading(false));
+  };
+
+  const handleDelete = () => {
+    const del = async () => {
+      setIsFullScreenLoading(true);
+
+      dispatch(deleteAvatar())
+        .unwrap()
+        .then(() => {
+          toastMessages.success('Xóa ảnh đại diện thành công.');
+        })
+        .catch((err) => {
+          toastMessages.error();
+        })
+        .finally(() => setIsFullScreenLoading(false));
+    };
+
+    confirmModal(
+      () => del(),
+      'Xóa ảnh đại diện',
+      'Ảnh đại diện này sẽ được xóa và không thể khôi phục. Bạn có chắc chắn?',
+      'warning'
+    );
   };
 
   return (
@@ -162,6 +187,14 @@ const AvatarCard = () => {
             onClick={handleInputClick}
           >
             <EditIcon />
+          </IconButton>
+          <IconButton
+            color="error"
+            aria-label="upload"
+            component="label"
+            onClick={handleDelete}
+          >
+            <HighlightOffIcon />
           </IconButton>
         </Box>
         <Typography variant="subtitle2" gutterBottom sx={{ mt: 1 }}>

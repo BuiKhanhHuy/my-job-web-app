@@ -81,7 +81,7 @@ const Feedback = () => {
           borderBottomLeftRadius: 0,
           textTransform: 'inherit',
           color: 'white',
-          zIndex: 10,
+          zIndex: 1,
         }}
         startIcon={<SentimentVerySatisfiedIcon />}
       >

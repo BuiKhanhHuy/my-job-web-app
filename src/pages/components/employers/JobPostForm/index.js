@@ -302,6 +302,7 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
             showRequired={true}
             placeholder="Nhập số lượng nhân sự cần tuyển"
             control={control}
+            type='number'
           />
         </Grid>
         <Grid item xs={6}>
@@ -321,6 +322,7 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
             showRequired={true}
             placeholder="Nhập mức lương tối thiểu"
             control={control}
+            type='number'
           />
         </Grid>
         <Grid item xs={6}>
@@ -330,6 +332,7 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
             showRequired={true}
             placeholder="Nhập mức lương tối đa"
             control={control}
+            type='number'
           />
         </Grid>
         <Grid item xs={6}>
@@ -415,6 +418,7 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
             placeholder="Nhập vĩ độ tọa độ trên bản đồ của công ty."
             helperText="Tự động điền nếu bạn chọn địa chỉ được gợi ý."
             control={control}
+            type='number'
           />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -425,6 +429,7 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
             placeholder="Nhập kinh độ tọa độ trên bản đồ của công ty."
             helperText="Tự động điền nếu bạn chọn địa chỉ được gợi ý."
             control={control}
+            type='number'
           />
         </Grid>
         <Grid item xs={12}>

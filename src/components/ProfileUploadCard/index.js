@@ -77,11 +77,11 @@ const ProfileUploadCard = ({
             />
           ) : (
             <Chip
-              variant="outlined"
+              variant="filled"
               sx={{ ml: 1 }}
               size="small"
               icon={<StarOutlineIcon color="warning" />}
-              color="success"
+              color="default"
               label="Cho phép tìm kiếm"
               onClick={() => handleActive(slug)}
             />

@@ -60,6 +60,19 @@ const updateAvatar = createAsyncThunk(
   }
 );
 
+const deleteAvatar = createAsyncThunk(
+  'user/deleteAvatar',
+  async (_, thunkAPI) => {
+    try {
+      const resData = await authService.deleteAvatar();
+
+      return resData.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -92,10 +105,23 @@ export const userSlice = createSlice({
         },
       };
     });
+
+    builder.addCase(deleteAvatar.fulfilled, (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        avatarUrl: action.payload?.avatarUrl || null,
+      };
+    });
   },
 });
 
 const { reducer } = userSlice;
 
 export default reducer;
-export { getUserInfo, updateUserInfo, removeUserInfo, updateAvatar };
+export {
+  getUserInfo,
+  updateUserInfo,
+  removeUserInfo,
+  updateAvatar,
+  deleteAvatar,
+};

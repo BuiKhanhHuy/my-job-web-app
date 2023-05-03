@@ -42,7 +42,7 @@ const JobPost = ({
       }}
       onClick={() => nav(`/viec-lam/${slug}`)}
     >
-      <Stack direction="row" spacing={1}>
+      <Stack direction="row" spacing={1} width={'100%'}>
         <Stack direction="row" justifyContent="center">
           <MuiImageCustom
             width={60}
@@ -56,23 +56,57 @@ const JobPost = ({
             }}
           />
         </Stack>
-        <Box flex={1}>
-          <Box>
-            <Typography
-              variant="subtitle2"
-              sx={{ fontSize: 15 }}
-              gutterBottom
-              noWrap
-              style={{
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
+        <Stack spacing={0}>
+          <Stack direction="row" alignItems="center">
+            <Box>
+              <Typography
+                variant="subtitle2"
+                sx={{ fontSize: 15 }}
+                gutterBottom
+                noWrap
+                style={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+                flex={1}
+              >
+                {jobName}
+              </Typography>
+            </Box>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="flex-end"
             >
-              {jobName}
-            </Typography>
-          </Box>
-
+              {isHot && (
+                <span
+                  style={{
+                    padding: 0,
+                    fontSize: 12,
+                    fontWeight: 'bold',
+                    color: 'red',
+                  }}
+                >
+                  HOT
+                </span>
+              )}
+              {isHot && isUrgent && (
+                <span style={{ color: '#bdbdbd' }}> | </span>
+              )}
+              {isUrgent && (
+                <span
+                  style={{
+                    padding: 0,
+                    fontSize: 12,
+                    fontWeight: 'bold',
+                    color: 'orange',
+                  }}
+                >
+                  Tuyển gấp
+                </span>
+              )}
+            </Stack>
+          </Stack>
           <Typography
             variant="subtitle2"
             color="gray"
@@ -84,34 +118,7 @@ const JobPost = ({
           >
             {companyName}
           </Typography>
-        </Box>
-        <Box>
-          {isHot && (
-            <span
-              style={{
-                padding: 0,
-                fontSize: 12,
-                fontWeight: 'bold',
-                color: 'red',
-              }}
-            >
-              HOT
-            </span>
-          )}
-          {isHot && isUrgent && <span style={{ color: '#bdbdbd' }}> | </span>}
-          {isUrgent && (
-            <span
-              style={{
-                padding: 0,
-                fontSize: 12,
-                fontWeight: 'bold',
-                color: 'orange',
-              }}
-            >
-              Tuyển gấp
-            </span>
-          )}
-        </Box>
+        </Stack>
       </Stack>
       <Stack
         direction="row"

@@ -33,7 +33,7 @@ const SingleSelectCustom = ({
               autoHighlight={false}
               getOptionLabel={(option) => option.name}
               value={options.find((o) => o.id === field.value) || null}
-              onChange={(e, value) => field.onChange(value?.id || "" )}
+              onChange={(e, value) => field.onChange(value?.id || null )}
               renderInput={(params) => (
                 <TextField
                   {...params}

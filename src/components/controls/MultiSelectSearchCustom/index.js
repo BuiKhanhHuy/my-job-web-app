@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTheme } from '@mui/material/styles';
 import { Controller } from 'react-hook-form';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
@@ -10,7 +11,13 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const MultiSelectSearchCustom = ({ name, control, placeholder = '', options=[] }) => {
+const MultiSelectSearchCustom = ({
+  name,
+  control,
+  placeholder = '',
+  options = [],
+}) => {
+  const theme = useTheme();
   return (
     <Controller
       name={name}
@@ -23,8 +30,7 @@ const MultiSelectSearchCustom = ({ name, control, placeholder = '', options=[] }
           options={options}
           disableCloseOnSelect
           onChange={(e, value) =>
-            field.onChange(value.map((value) => value?.id
-            ))
+            field.onChange(value.map((value) => value?.id))
           }
           getOptionLabel={(option) => option.name}
           renderOption={(props, option, { selected }) => (
@@ -43,7 +49,11 @@ const MultiSelectSearchCustom = ({ name, control, placeholder = '', options=[] }
               {...params}
               placeholder={placeholder}
               size="small"
-              sx={{ backgroundColor: 'white', borderRadius: 1 }}
+              sx={{
+                backgroundColor:
+                  theme.palette.mode === 'light' ? 'white' : '#121212',
+                borderRadius: 1,
+              }}
             />
           )}
         />

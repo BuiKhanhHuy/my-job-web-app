@@ -10,7 +10,7 @@ import ImageSvg6 from '../assets/images/svg-images/working_remotely.svg';
 import ImageSvg7 from '../assets/images/svg-images/country_side.svg';
 import ImageSvg8 from '../assets/images/svg-images/thoughts.svg';
 
-const PLATFORM = "WEB"
+const PLATFORM = 'WEB';
 
 const AUTH_PROVIDER = {
   FACEBOOK: 'facebook',
@@ -43,6 +43,9 @@ const AUTH_CONFIG = {
   // BING MAP
   BING_MAPS_KEY:
     'Av0DmLVNRE8m7HZGSTySLkyPaLX3Gg3b3cdt7I0ArXWxSmtKwqCpsUW6OE21t2z2',
+
+  // RNKommunicateChat
+  CHAT_APP_ID: '35d278df447ef1a978999f93358dd91e9',
 };
 
 const ROLES_NAME = {
@@ -93,7 +96,7 @@ const IMAGES = {
   coverImageDefault: require('../assets/images/cover-image-default.webp'),
   chPlayDownload: require('../assets/images/app-android-download.png'),
   appStoreDownload: require('../assets/images/app-ios-download.png'),
-  notificationImageDefault: require('../assets/images/noti-img-default.png')
+  notificationImageDefault: require('../assets/images/noti-img-default.png'),
 };
 
 const ICONS = {

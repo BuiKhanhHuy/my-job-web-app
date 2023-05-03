@@ -44,8 +44,8 @@ const CompanyAction = ({
                   variant="subtitle2"
                   sx={{ fontSize: 15, cursor: 'pointer' }}
                   gutterBottom
+                  noWrap
                   style={{
-                    whiteSpace: 'nowrap',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                   }}

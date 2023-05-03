@@ -30,7 +30,7 @@ const JobPostFilterForm = ({ handleFilter }) => {
             control={control}
           />
         </Grid>
-        <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
           <SingleSelectCustom
             name="isUrgent"
             control={control}
@@ -42,7 +42,7 @@ const JobPostFilterForm = ({ handleFilter }) => {
             placeholder="Trạng thái tuyển dụng"
           />
         </Grid>
-        <Grid item xs={12} sm={12} md={5} lg={2} xl={2}>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
           <Stack direction="row" spacing={2}>
             <Tooltip title="Đặt lại" arrow>
               <IconButton

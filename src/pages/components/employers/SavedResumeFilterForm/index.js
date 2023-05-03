@@ -28,7 +28,7 @@ const SavedResumeFilterForm = ({ handleFilter }) => {
   return (
     <form onSubmit={handleSubmit(handleFilter)}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+        <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
           <TextFieldCustom
             name="kw"
             placeholder="Nhập tên tin đăng hoặc tên ứng viên"
@@ -59,7 +59,7 @@ const SavedResumeFilterForm = ({ handleFilter }) => {
             placeholder="Chọn địa điểm"
           />
         </Grid>
-        <Grid item xs={12} sm={12} md={5} lg={2} xl={2}>
+        <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
           <Stack direction="row" spacing={2}>
             <Tooltip title="Đặt lại" arrow>
               <IconButton

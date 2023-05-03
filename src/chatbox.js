@@ -1,10 +1,11 @@
 import React from 'react';
+import { AUTH_CONFIG } from './configs/constants';
 
 export const MyJobChatBot = () => {
   React.useEffect(() => {
     (function (d, m) {
       var kommunicateSettings = {
-        appId: '35d278df447ef1a978999f93358dd91e9',
+        appId: AUTH_CONFIG.CHAT_APP_ID,
         popupWidget: true,
         automaticChatOpenOnNavigation: true,
       };

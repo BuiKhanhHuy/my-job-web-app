@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -26,6 +27,7 @@ const JobPostLarge = ({
   salaryMin,
   salaryMax,
 }) => {
+  const theme = useTheme();
   const nav = useNavigate();
   const { allConfig } = useSelector((state) => state.config);
 
@@ -33,7 +35,7 @@ const JobPostLarge = ({
     <Card
       variant="outlined"
       sx={{
-        backgroundColor: '#fff5e7',
+        backgroundColor: theme.palette.mode === 'light' ? '#fff5e7' : '#121212',
         cursor: 'pointer',
         p: 1,
         '&:hover': {
@@ -50,7 +52,7 @@ const JobPostLarge = ({
             src={companyImageUrl}
             sx={{
               border: 0.5,
-              borderColor: '#e0e0e0',
+              borderColor: theme.palette.mode === 'light' ? '#e0e0e0' : '#121212',
               borderRadius: 1.5,
               p: 0.5,
               backgroundColor: 'white',

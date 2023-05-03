@@ -80,6 +80,7 @@ import { default as EmployerAccountPage } from './pages/employerPages/AccountPag
 // chatbot
 import { MyJobChatBot } from './chatbox';
 import Feedback from './components/Feedback';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   const dispatch = useDispatch();
@@ -432,6 +433,10 @@ function App() {
       {/* Start: Chatbot */}
       <MyJobChatBot />
       {/* End: Chatbot */}
+
+      {/* Start: ScrollToTop */}
+      <ScrollToTop />
+      {/* End: ScrollToTop */}
     </>
   );
 }

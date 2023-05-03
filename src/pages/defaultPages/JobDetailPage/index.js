@@ -211,7 +211,7 @@ const Loading = (
 const item = (title, value) => {
   return (
     <Box>
-      <Typography variant="body2" color="#bdbdbd" sx={{ fontWeight: 'bold' }}>
+      <Typography variant="body2" color="#757575" sx={{ fontWeight: 'bold' }}>
         {title}
       </Typography>
       <Typography
@@ -342,7 +342,7 @@ const JobDetailPage = () => {
       ) : (
         <Box sx={{ mt: 2 }}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
+            <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
               {/* Start: thong tin chung */}
               <Card sx={{ py: 2, px: 4 }}>
                 <Stack>
@@ -464,7 +464,7 @@ const JobDetailPage = () => {
                         <Typography
                           variant="body2"
                           gutterBottom
-                          color="#bdbdbd"
+                          color="#757575"
                           sx={{ fontWeight: 'bold' }}
                         >
                           Yêu cầu kinh nghiệm
@@ -489,7 +489,7 @@ const JobDetailPage = () => {
                         <Typography
                           variant="body2"
                           gutterBottom
-                          color="#bdbdbd"
+                          color="#757575"
                           sx={{ fontWeight: 'bold' }}
                         >
                           Mức lương
@@ -509,7 +509,7 @@ const JobDetailPage = () => {
                         <Typography
                           variant="body2"
                           gutterBottom
-                          color="#bdbdbd"
+                          color="#757575"
                           sx={{ fontWeight: 'bold' }}
                         >
                           Cấp bậc
@@ -532,7 +532,7 @@ const JobDetailPage = () => {
                         <Typography
                           variant="body2"
                           gutterBottom
-                          color="#bdbdbd"
+                          color="#757575"
                           sx={{ fontWeight: 'bold' }}
                         >
                           Hình thức làm việc
@@ -716,7 +716,7 @@ const JobDetailPage = () => {
               {/* End: thong tin lien he */}
             </Grid>
 
-            <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
               <Card sx={{ p: 2 }}>
                 <Stack spacing={2}>
                   <Typography variant="h5">Việc làm tương tự</Typography>
@@ -729,6 +729,7 @@ const JobDetailPage = () => {
                       params={{
                         excludeSlug: jobPostDetail?.slug,
                       }}
+                      fullWidth={true}
                     />
                     {/* End: FilterJobPostCard */}
                   </Box>

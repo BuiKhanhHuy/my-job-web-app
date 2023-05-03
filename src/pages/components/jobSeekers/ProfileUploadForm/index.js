@@ -170,6 +170,7 @@ const ProfileUploadForm = ({ handleAdd }) => {
             placeholder="Nhập mức lương mong muốn tối thiểu"
             control={control}
             icon={'VND'}
+            type='number'
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -180,6 +181,7 @@ const ProfileUploadForm = ({ handleAdd }) => {
             placeholder="Nhập mức lương mong muốn tối đa"
             control={control}
             icon={'VND'}
+            type='number'
           />
         </Grid>
         <Grid item xs={12} sm={6}>
