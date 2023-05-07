@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import React from 'react';
 import {
   LineChart,
@@ -8,7 +7,6 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
 } from 'recharts';
 
 const data = [

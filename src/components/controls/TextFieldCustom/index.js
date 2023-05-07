@@ -16,9 +16,9 @@ const TextFieldCustom = ({
   icon = null,
   type = 'text',
 }) => {
-  const formatSalary = (value) => {
-    return Number(value).toLocaleString();
-  };
+  // const formatSalary = (value) => {
+  //   return Number(value).toLocaleString();
+  // };
 
   return (
     <div>

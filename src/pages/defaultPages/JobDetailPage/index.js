@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -13,7 +12,6 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import QRCode from 'react-qr-code';
 import { LoadingButton } from '@mui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -25,8 +23,11 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 
+import { QRCode, Space } from 'antd';
+
 import toastMessages from '../../../utils/toastMessages';
 import errorHandling from '../../../utils/errorHandling';
+import MuiImageCustom from '../../../components/MuiImageCustom';
 import { salaryString } from '../../../utils/customData';
 import NoDataCard from '../../../components/NoDataCard';
 import Map from '../../../components/Map';
@@ -349,16 +350,16 @@ const JobDetailPage = () => {
                   <Box>
                     <Stack direction="row" alignItems="center" spacing={2}>
                       <Box>
-                        <Avatar
+                        <MuiImageCustom
+                          width={65}
+                          height={65}
+                          src={jobPostDetail?.companyDict?.companyImageUrl}
                           sx={{
                             bgcolor: 'white',
-                            boxShadow: 2,
+                            borderRadius: 2,
+                            boxShadow: 6,
                             p: 0.5,
-                            width: 65,
-                            height: 65,
                           }}
-                          variant="rounded"
-                          src={jobPostDetail?.companyDict?.companyImageUrl}
                         />
                       </Box>
                       <Box sx={{ flex: 1 }}>
@@ -387,16 +388,12 @@ const JobDetailPage = () => {
                         </Typography>
                       </Box>
                       <Box>
-                        <QRCode
-                          size={75}
-                          style={{
-                            height: 'auto',
-                            maxWidth: '100%',
-                            width: '100%',
-                          }}
-                          value={window.location.href}
-                          viewBox={`0 0 256 256`}
-                        />
+                        <Space direction="vertical" align="center">
+                          <QRCode
+                            value={window.location.href || '-'}
+                            size={75}
+                          />
+                        </Space>
                       </Box>
                     </Stack>
                   </Box>

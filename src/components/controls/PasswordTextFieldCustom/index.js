@@ -2,7 +2,6 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import {
   Box,
-  IconButton,
   InputAdornment,
   OutlinedInput,
   Typography,

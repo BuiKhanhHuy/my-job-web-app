@@ -214,6 +214,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
     if (cityId) {
       loadDistricts(cityId);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityId, setValue]);
 
   const handleSubmtNextSuccess = (data) => {
@@ -255,24 +256,28 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
           control={control}
           title="Họ và tên"
           placeholder="Nhập họ và tên"
+          showRequired={true}
         />
         <TextFieldCustom
           name="email"
           control={control}
           title="Email"
           placeholder="Nhập email"
+          showRequired={true}
         />
         <PasswordTextFieldCustom
           name="password"
           control={control}
           title="Mật khẩu"
           placeholder="Nhập mật khẩu"
+          showRequired={true}
         />
         <PasswordTextFieldCustom
           name="confirmPassword"
           control={control}
           title="Mật khẩu xác nhận"
           placeholder="Nhập mật khẩu xác nhận"
+          showRequired={true}
         />
       </Stack>
 
@@ -284,6 +289,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               control={control}
               title="Tên công ty"
               placeholder="Nhập tên công ty"
+              showRequired={true}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -292,6 +298,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               control={control}
               title="Email công ty"
               placeholder="Nhập email công ty"
+              showRequired={true}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -300,6 +307,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               control={control}
               title="Số điện thoại"
               placeholder="Nhập số điện thoại công ty"
+              showRequired={true}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -308,6 +316,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               control={control}
               title="Mã số thuế"
               placeholder="Nhập mã số thuế công ty"
+              showRequired={true}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
@@ -332,6 +341,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               control={control}
               title="Quy mô công ty"
               placeholder="Nhập quy mô công ty"
+              showRequired={true}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
@@ -349,6 +359,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               control={control}
               title="Tỉnh/Thành phố"
               placeholder="Chọn tỉnh thành phố"
+              showRequired={true}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
@@ -358,6 +369,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               control={control}
               title="Quận/Huyện"
               placeholder="Chọn Quận/Huyện"
+              showRequired={true}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>

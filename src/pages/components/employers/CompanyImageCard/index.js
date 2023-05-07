@@ -1,53 +1,58 @@
-import * as React from 'react';
-import { Box, Grid, IconButton, Button, Skeleton } from '@mui/material';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import React, { useState } from 'react';
+import { Upload, Modal } from 'antd';
 
-import NoDataCard from '../../../../components/NoDataCard';
+import toastMessages from '../../../../utils/toastMessages';
 import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
-import MuiImageCustom from '../../../../components/MuiImageCustom';
-import DropzoneDialogCustom from '../../../../components/DropzoneDialogCustom';
 import companyImageService from '../../../../services/companyImageService';
-import toastMessages from '../../../../utils/toastMessages';
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
-import FsLightboxCustom from '../../../../components/FsLightboxCustom';
 
 const CompanyImageCard = () => {
-  const [open, setOpen] = React.useState(false);
-  const [srcImagePreview, setSrcImagePreview] = React.useState('');
-  const [isSuccess, setIsSuccess] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(true);
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
-  const [companyImages, setCompanyImages] = React.useState([]);
+  const [fileList, setFileList] = useState([]);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
 
   React.useEffect(() => {
     const getImages = async () => {
-      setIsLoading(true);
-
       try {
         const resData = await companyImageService.getCompanyImages();
         const data = resData.data;
+        const results = data.results;
 
-        setCompanyImages(data.results);
+        let newResults = [];
+        for (let i = 0; i < results.length; i++) {
+          newResults.push({
+            uid: results[i].id,
+            url: results[i].imageUrl,
+          });
+        }
+        setFileList(newResults);
       } catch (error) {
-        errorHandling(error);
-      } finally {
-        setIsLoading(false);
-      }
+        console.log(error)
+      }  
     };
 
     getImages();
-  }, [isSuccess]);
+  }, []);
 
-  const handleUpload = (files) => {
+  const handleCustomRequest = (options) => {
+    const { file } = options;
     const upload = async (data) => {
       setIsFullScreenLoading(true);
-
       try {
-        await companyImageService.addCompanyImage(data);
+        const resData = await companyImageService.addCompanyImage(data);
+        const results = resData.data;
 
-        setIsSuccess(!isSuccess);
+        let newResults = [];
+        for (let i = 0; i < results.length; i++) {
+          newResults.push({
+            uid: results[i].id,
+            url: results[i].imageUrl,
+          });
+        }
+        setFileList([...fileList, ...newResults]);
+        toastMessages.success('Tải ảnh lên thành công.');
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -55,22 +60,26 @@ const CompanyImageCard = () => {
       }
     };
 
-    var formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i], files[i].name);
-    }
-
+    const formData = new FormData();
+    formData.append('files', file);
     upload(formData);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (file) => {
+    console.log(file)
     const deleteCompanyImage = async (id) => {
       setIsFullScreenLoading(true);
 
       try {
         await companyImageService.deleteCompanyImage(id);
 
-        setIsSuccess(!isSuccess);
+        const newFileList = [...fileList];
+        const index = newFileList.indexOf(file);
+        if (index > -1) {
+          newFileList.splice(index, 1);
+          setFileList(newFileList);
+        }
+
         toastMessages.success('Xóa hình ảnh thành công.');
       } catch (error) {
         errorHandling(error);
@@ -80,80 +89,56 @@ const CompanyImageCard = () => {
     };
 
     confirmModal(
-      () => deleteCompanyImage(id),
+      () => deleteCompanyImage(file.uid),
       'Xóa hình ảnh',
       'Hình ảnh này sẽ được xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn?',
       'warning'
     );
   };
 
-  const handleOpenImagePreview = (src) => {
-    setSrcImagePreview(src);
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await toBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewVisible(true);
   };
 
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
   return (
-    <Box>
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={<CloudUploadIcon />}
-        onClick={() => setOpen(true)}
-        disabled={isLoading}
+    <>
+      <Upload
+        multiple={true}
+        listType="picture-card"
+        fileList={fileList}
+        onPreview={handlePreview}
+        onRemove={handleDelete}
+        customRequest={handleCustomRequest}
       >
-        Tải ảnh lên
-      </Button>
-
-      {isLoading ? (
-        <Grid container spacing={2}>
-          {Array.from(Array(12).keys()).map((value) => (
-            <Grid key={value.id} item xs={3}>
-              <Skeleton height={222} width="100%" />
-            </Grid>
-          ))}
-        </Grid>
-      ) : companyImages.length === 0 ? (
-        <NoDataCard title="Chưa có hình ảnh nào được tải lên." />
-      ) : (
-        <Grid container spacing={2}>
-          {companyImages.map((value) => (
-            <Grid key={value.id} item xs={3}>
-              <Box>
-                <IconButton
-                  aria-label="delte"
-                  onClick={() => handleDelete(value.id)}
-                  sx={{ color: 'white', bottom: -40, zIndex: 1 }}
-                >
-                  <DeleteOutlineIcon />
-                </IconButton>
-                <MuiImageCustom
-                  src={value?.imageUrl}
-                  height={222}
-                  sx={{ borderRadius: 2 }}
-                  onClick={() => handleOpenImagePreview(value?.imageUrl)}
-                />
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
-      )}
-
-      {/* Start: DropzoneDialog */}
-      <DropzoneDialogCustom
-        open={open}
-        setOpen={setOpen}
-        handleUpload={handleUpload}
-        title={'Tải ảnh'}
-      />
-      {/* End: DropzoneDialog */}
+        {fileList.length < 15 && '+ Tải lên'}
+      </Upload>
+      <Modal
+        style={{ zIndex: 2000 }}
+        open={previewVisible}
+        title="Xem hình ảnh"
+        footer={null}
+        onCancel={() => setPreviewVisible(false)}
+      >
+        <img alt="Preview" style={{ width: '100%' }} src={previewImage} />
+      </Modal>
 
       {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}
       {/* End: full screen loading */}
-
-      {/* Start: FsLightboxCustom */}
-      <FsLightboxCustom src={srcImagePreview} />
-      {/* End: FsLightboxCustom */}
-    </Box>
+    </>
   );
 };
+
 export default CompanyImageCard;

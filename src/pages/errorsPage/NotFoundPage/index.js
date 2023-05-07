@@ -1,9 +1,17 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Stack } from '@mui/material';
 
 const NotFoundPage = () => {
-  return (
-    <div>NotFoundPage</div>
-  )
-}
+  const nav = useNavigate();
 
-export default NotFoundPage
+  return (
+    <Stack direction="column" alignItems="center">
+      <Button variant="contained" color="primary" onClick={() => nav('/')}>
+        Quay Về Trang Chủ
+      </Button>
+    </Stack>
+  );
+};
+
+export default NotFoundPage;

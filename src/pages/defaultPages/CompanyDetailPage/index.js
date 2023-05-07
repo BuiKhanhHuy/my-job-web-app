@@ -12,7 +12,6 @@ import {
   Typography,
   Button,
 } from '@mui/material';
-import QRCode from 'react-qr-code';
 import { LoadingButton } from '@mui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -25,6 +24,8 @@ import {
   faHashtag,
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
+
+import { QRCode } from 'antd';
 
 import { ICONS, IMAGES, ROLES_NAME } from '../../../configs/constants';
 import errorHandling from '../../../utils/errorHandling';
@@ -186,12 +187,7 @@ const CompanyDetailPage = () => {
                   </Stack>
                 </Box>
                 <Box sx={{ pt: 1 }}>
-                  <QRCode
-                    size={75}
-                    style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
-                    value={window.location.href}
-                    viewBox={`0 0 256 256`}
-                  />
+                  <QRCode value={window.location.href || '-'} size={75} />
                 </Box>
                 <Stack spacing={1} justifyContent="center">
                   {isAuthenticated &&

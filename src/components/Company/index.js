@@ -45,7 +45,12 @@ const Company = ({
       variant="outlined"
     >
       <Stack
-        style={{ height: 450  }}
+        style={{
+          height:
+            isAuthenticated && currentUser?.roleName === ROLES_NAME.JOB_SEEKER
+              ? 480
+              : 420,
+        }}
         justifyContent={'space-between'}
       >
         <Box>

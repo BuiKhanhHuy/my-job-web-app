@@ -22,8 +22,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // theme
-import ColorModeContext from './contexts/ColorModeContext';
 import BackdropLoading from './components/loading/BackdropLoading';
+import { ConfigProvider } from 'antd';
 
 // layouts
 import HomeLayout from './layouts/HomeLayout';
@@ -82,21 +82,12 @@ import { MyJobChatBot } from './chatbox';
 import Feedback from './components/Feedback';
 import ScrollToTop from './components/ScrollToTop';
 
+const mode = 'light';
 function App() {
   const dispatch = useDispatch();
-  const [mode, setMode] = React.useState('light');
   const [loading, setLoading] = React.useState(true);
   const { isAllowVerifyEmail, roleName } = useSelector((state) => state.auth);
   const { isAuthenticated, currentUser } = useSelector((state) => state.user);
-
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    []
-  );
 
   const theme = React.useMemo(
     () =>
@@ -233,7 +224,7 @@ function App() {
         },
         viVN
       ),
-    [mode]
+    []
   );
 
   React.useEffect(() => {
@@ -250,8 +241,14 @@ function App() {
 
   return (
     <>
-      <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: '#441da0',
+            },
+          }}
+        >
           <CssBaseline enableColorScheme />
           {loading ? (
             <BackdropLoading bgColor="white" />
@@ -428,8 +425,8 @@ function App() {
           {/* Start: Feedback */}
           {isAuthenticated && <Feedback />}
           {/* End: Feedback */}
-        </ThemeProvider>
-      </ColorModeContext.Provider>
+        </ConfigProvider>
+      </ThemeProvider>
       {/* Start: Chatbot */}
       <MyJobChatBot />
       {/* End: Chatbot */}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Stack, Typography, Button, Menu, Box } from '@mui/material';
+import { Stack, Typography, Button, Menu } from '@mui/material';
 
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
 import { ROLES_NAME } from '../../../../configs/constants';

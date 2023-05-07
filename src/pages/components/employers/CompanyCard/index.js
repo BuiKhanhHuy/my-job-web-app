@@ -8,7 +8,9 @@ import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import CompanyForm from '../CompanyForm';
 import companyService from '../../../../services/companyService';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
-import DropzoneDialogCustom from '../../../../components/DropzoneDialogCustom';
+
+import { Upload } from 'antd';
+import ImgCrop from 'antd-img-crop';
 
 const CompanyCard = () => {
   const [isSuccess, setIsSuccess] = React.useState(false);
@@ -18,11 +20,6 @@ const CompanyCard = () => {
   const [companyImageUrl, setCompanyImageUrl] = React.useState(null);
   const [companyCoverImageUrl, setCompanyCoverImageUrl] = React.useState(null);
   const [serverErrors, setServerErrors] = React.useState(null);
-
-  const [openUpdateCompanyImageUrl, setOpenUpdateCompanyImageUrl] =
-    React.useState(false);
-  const [openUpdateCompanyCoverImageUrl, setOpenUpdateCompanyCoverImageUrl] =
-    React.useState(false);
 
   React.useEffect(() => {
     const loadCompany = async () => {
@@ -47,6 +44,7 @@ const CompanyCard = () => {
     };
 
     loadCompany();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   const handleUpdate = (data) => {
@@ -69,7 +67,8 @@ const CompanyCard = () => {
     update(data.id, data);
   };
 
-  const handleUpdateCompanyImageUrl = (files) => {
+  const handleUpdateCompanyImageUrl = (options) => {
+    const { file } = options;
     const update = async (formData) => {
       setIsFullScreenLoading(true);
       try {
@@ -86,11 +85,13 @@ const CompanyCard = () => {
     };
 
     var formData = new FormData();
-    formData.append('file', files[0]);
+    formData.append('file', file);
     update(formData);
   };
 
-  const handleUpdateCompanyCoverImageUrl = (files) => {
+  const handleUpdateCompanyCoverImageUrl = (options) => {
+    const { file } = options;
+
     const update = async (formData) => {
       setIsFullScreenLoading(true);
       try {
@@ -109,7 +110,7 @@ const CompanyCard = () => {
     };
 
     var formData = new FormData();
-    formData.append('file', files[0]);
+    formData.append('file', file);
     update(formData);
   };
 
@@ -124,18 +125,34 @@ const CompanyCard = () => {
             src={companyImageUrl}
             width={110}
             height={110}
-            sx={{ borderRadius: 2 }}
+            sx={{ borderRadius: 2, border: 1, borderColor: '#e0e0e0' }}
           />
           <Box sx={{ mt: 1 }}>
-            <Button
-              size="small"
-              variant="contained"
-              color="primary"
-              sx={{ textTransform: 'inherit' }}
-              onClick={() => setOpenUpdateCompanyImageUrl(true)}
+            <ImgCrop
+              rotationSlider
+              modalProps={{ zIndex: 2000 }}
+              modalTitle="Chỉnh sửa ảnh"
+              modalOk="Tải lên"
+              modalCancel="Hủy"
+              showReset={true}
+              resetText='Đặt lại'
             >
-              Thay logo
-            </Button>
+              <Upload
+                listType="picture"
+                maxCount={1}
+                customRequest={handleUpdateCompanyImageUrl}
+                showUploadList={false}
+              >
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  sx={{ textTransform: 'inherit' }}
+                >
+                  Thay logo
+                </Button>
+              </Upload>
+            </ImgCrop>
           </Box>
         </Box>
         <Box>
@@ -146,18 +163,25 @@ const CompanyCard = () => {
             src={companyCoverImageUrl}
             height={125}
             width={'50%'}
-            sx={{ borderRadius: 2 }}
+            sx={{ borderRadius: 2, border: 1, borderColor: '#e0e0e0' }}
+            fit="cover"
           />
           <Box sx={{ mt: 1 }}>
-            <Button
-              size="small"
-              variant="contained"
-              color="primary"
-              sx={{ textTransform: 'inherit' }}
-              onClick={() => setOpenUpdateCompanyCoverImageUrl(true)}
+            <Upload
+              listType="picture"
+              maxCount={1}
+              customRequest={handleUpdateCompanyCoverImageUrl}
+              showUploadList={false}
             >
-              Thay ảnh bìa
-            </Button>
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                sx={{ textTransform: 'inherit' }}
+              >
+                Thay ảnh bìa
+              </Button>
+            </Upload>
           </Box>
         </Box>
         <Box>
@@ -187,26 +211,6 @@ const CompanyCard = () => {
           )}
         </Box>
       </Stack>
-
-      {/* Start: DropzoneDialog */}
-      <DropzoneDialogCustom
-        open={openUpdateCompanyImageUrl}
-        setOpen={setOpenUpdateCompanyImageUrl}
-        handleUpload={handleUpdateCompanyImageUrl}
-        title={'Cập nhật logo công ty'}
-        filesLimit={1}
-      />
-      {/* End: DropzoneDialog */}
-
-      {/* Start: DropzoneDialog */}
-      <DropzoneDialogCustom
-        open={openUpdateCompanyCoverImageUrl}
-        setOpen={setOpenUpdateCompanyCoverImageUrl}
-        handleUpload={handleUpdateCompanyCoverImageUrl}
-        title={'Cập nhật ảnh bìa công ty'}
-        filesLimit={1}
-      />
-      {/* End: DropzoneDialog */}
 
       {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}

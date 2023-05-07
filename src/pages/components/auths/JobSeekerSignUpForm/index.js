@@ -61,24 +61,28 @@ const JobSeekerSignUpForm = ({
           control={control}
           title="Họ và tên"
           placeholder="Nhập họ và tên"
+          showRequired={true}
         />
         <TextFieldCustom
           name="email"
           control={control}
           title="Email"
           placeholder="Nhập email"
+          showRequired={true}
         />
         <PasswordTextFieldCustom
           name="password"
           control={control}
           title="Mật khẩu"
           placeholder="Nhập mật khẩu"
+          showRequired={true}
         />
         <PasswordTextFieldCustom
           name="confirmPassword"
           control={control}
           title="Mật khẩu xác nhận"
           placeholder="Nhập mật khẩu xác nhận"
+          showRequired={true}
         />
       </Stack>
       <Button

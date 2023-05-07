@@ -13,7 +13,6 @@ import {
 
 import MenuIcon from '@mui/icons-material/Menu';
 
-import SwitchModeButton from '../../../../components/SwitchModeButton';
 import UserMenu from '../../commons/UserMenu';
 import AccountSwitchMenu from '../../commons/AccountSwitchMenu';
 import NotificationCard from '../../../../components/NotificationCard';
@@ -103,10 +102,6 @@ const Header = ({ drawerWidth, handleDrawerToggle }) => {
           {/* start: NotificationCard */}
           {isAuthenticated && <NotificationCard />}
             {/* End: NotificationCard */}
-
-          {/* Start: SwitchModeButton */}
-          <SwitchModeButton />
-          {/* End: SwitchModeButton */}
 
           {/* Start: authArea */}
           {authArea}

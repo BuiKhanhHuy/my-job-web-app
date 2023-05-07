@@ -32,12 +32,14 @@ const EmployerLoginForm = ({ onLogin }) => {
           control={control}
           title="Email"
           placeholder="Nhập email"
+          showRequired={true}
         />
         <PasswordTextFieldCustom
           name="password"
           control={control}
           title="Mật khẩu"
           placeholder="Nhập mật khẩu"
+          showRequired={true}
         />
       </Stack>
       <Button

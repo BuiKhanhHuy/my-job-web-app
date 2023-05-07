@@ -22,7 +22,6 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 
 import { IMAGES } from '../../../../configs/constants';
-import SwitchModeButton from '../../../../components/SwitchModeButton';
 import UserMenu from '../UserMenu';
 import LeftDrawer from '../LeftDrawer';
 import AccountSwitchMenu from '../AccountSwitchMenu';
@@ -229,7 +228,7 @@ const Header = (props) => {
             {/* End: NotificationCard */}
 
             {/* Start: SwitchModeButton */}
-            <SwitchModeButton />
+            {/* <SwitchModeButton /> */}
             {/* End: SwitchModeButton */}
 
             {/* Start: authArea */}

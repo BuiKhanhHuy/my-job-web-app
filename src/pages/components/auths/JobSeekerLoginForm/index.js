@@ -36,12 +36,14 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
           control={control}
           title="Email"
           placeholder="Nhập email"
+          showRequired={true}
         />
         <PasswordTextFieldCustom
           name="password"
           control={control}
           title="Mật khẩu"
           placeholder="Nhập mật khẩu"
+          showRequired={true}
         />
       </Stack>
       <Button
@@ -57,7 +59,7 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
       <LoginSocialFacebook
         appId={AUTH_CONFIG.FACEBOOK_CLIENT_ID}
         fieldsProfile={'id'}
-        // onLoginStart={onLoginStart}
+        onLoginStart={() => console.log('START FACEBOOK')}
         // onLogoutSuccess={onLogoutSuccess}
         // redirect_uri={REDIRECT_URI}
         onResolve={onFacebookLogin}
@@ -77,7 +79,7 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
 
       <LoginSocialGoogle
         client_id={AUTH_CONFIG.GOOGLE_CLIENT_ID}
-        // onLoginStart={onLoginStart}
+        onLoginStart={() => console.log('START GOOGLE')}
         // redirect_uri={REDIRECT_URI}
         access_type="offline"
         scope="openid profile email"

@@ -33,11 +33,11 @@ const DashboardPage = () => {
         </Grid>
         <Grid xs={12} sm={12} md={7} lg={9} xl={9} item>
           <Stack spacing={2}>
-            <Card sx={{ p: 2 }}>
+            <Box>
               {/* Start: Quantity statistics */}
               <QuantityStatistics />
               {/* End: Quantity statistics */}
-            </Card>
+            </Box>
             <Card sx={{ p: 2 }}>
               <Stack>
                 <Box sx={{ mb: 2 }}>
