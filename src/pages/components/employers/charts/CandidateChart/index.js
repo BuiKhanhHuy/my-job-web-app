@@ -6,6 +6,7 @@ import {
   Stack,
   Tooltip as MuiTooltip,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 
@@ -24,6 +25,8 @@ import { Line } from 'react-chartjs-2';
 import dayjs from 'dayjs';
 
 import RangePickerCustom from '../../../../../components/controls/RangePickerCustom';
+import statisticService from '../../../../../services/statisticService';
+import { Empty } from 'antd';
 
 ChartJS.register(
   CategoryScale,
@@ -43,26 +46,6 @@ export const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [1, 1000],
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: [500, 1000],
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
-
 const CandidateChart = ({ title }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [allowSubmit, setAllowSubmit] = React.useState(false);
@@ -70,6 +53,54 @@ const CandidateChart = ({ title }) => {
     dayjs(new Date()).subtract(1, 'month'),
     dayjs(new Date()),
   ]);
+  const [data, setData] = React.useState([]);
+
+  React.useEffect(() => {
+    const statistics = async (data) => {
+      setIsLoading(true);
+      try {
+        const resData = await statisticService.candidateStatistics(data);
+
+        setData(resData.data);
+        console.log(resData.data);
+      } catch (error) {
+        console.error('Error: ', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    statistics({
+      startDate: dayjs(selectedDateRange[0]).format('YYYY-MM-DD').toString(),
+      endDate: dayjs(selectedDateRange[1]).format('YYYY-MM-DD').toString(),
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allowSubmit]);
+
+  const dataOptions = React.useMemo(() => {
+    const d = {
+      labels: data?.labels || [],
+      datasets: [
+        {
+          label: data?.title1,
+          data: data?.data1 || [],
+          borderColor: 'rgb(53, 162, 235)',
+          backgroundColor: 'rgba(53, 162, 235, 0.5)',
+          tension: 0.5,
+        },
+        {
+          label: data?.title2,
+          data: data?.data2 || [],
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          tension: 0.5,
+        },
+      ],
+    };
+
+    return d;
+  }, [data]);
 
   return (
     <>
@@ -106,7 +137,16 @@ const CandidateChart = ({ title }) => {
               />
             </Stack>
             <Stack justifyContent="center" alignItems="center" height={300}>
-              <Line options={options} data={data} />
+              {isLoading ? (
+                <CircularProgress color="secondary" />
+              ) : data.length === 0 ? (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="Không có dữ liệu để thống kê"
+                />
+              ) : (
+                <Line options={options} data={dataOptions} />
+              )}
             </Stack>
           </Box>
         </Stack>

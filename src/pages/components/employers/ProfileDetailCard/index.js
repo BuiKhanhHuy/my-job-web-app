@@ -806,7 +806,7 @@ const ProfileDetailCard = () => {
                               >
                                 Mức độ thành thạo
                               </Typography>
-                              <Rating value={value?.level || 0} size="medium" />
+                              <Rating value={value?.level || 0} size="medium" readOnly/>
                             </Grid>
                             {index <
                               profileDetail.languageSkills.length - 1 && (

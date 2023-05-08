@@ -37,7 +37,16 @@ const JobPostsTable = (props) => {
                 {dayjs(row.createAt).format('DD/MM/YYYY')}
               </TableCell>
               <TableCell align="left">
-                {dayjs(row.deadline).format('DD/MM/YYYY')}
+                {new Date(dayjs(row.deadline).format('YYYY-MM-DD')).getDate() <
+                new Date().getDate() ? (
+                  <span style={{ color: 'red' }}>
+                    {dayjs(row.deadline).format('DD/MM/YYYY')}
+                  </span>
+                ) : (
+                  <span style={{ color: '#2a3eb1' }}>
+                    {dayjs(row.deadline).format('DD/MM/YYYY')}
+                  </span>
+                )}
               </TableCell>
               <TableCell align="left">{row.appliedNumber}</TableCell>
               <TableCell align="left">{row.views}</TableCell>

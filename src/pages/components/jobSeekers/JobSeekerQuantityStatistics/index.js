@@ -3,7 +3,7 @@ import React from 'react';
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { Card, Col, Row, Statistic } from 'antd';
 
-const QuantityStatistics = () => {
+const JobSeekerQuantityStatistics = () => {
   return (
     <Row gutter={16}>
       <Col span={6}>
@@ -86,4 +86,4 @@ const QuantityStatistics = () => {
   );
 };
 
-export default QuantityStatistics;
+export default JobSeekerQuantityStatistics;

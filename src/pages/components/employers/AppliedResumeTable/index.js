@@ -44,7 +44,7 @@ const AppliedResumeTable = (props) => {
                 <Typography sx={{ fontWeight: 'bold' }}>
                   {row?.fullName}
                 </Typography>
-                {row?.resume?.type === CV_TYPES.cvWebsite ? (
+                {row?.type === CV_TYPES.cvWebsite ? (
                   <Tooltip title="Hồ sơ Online" arrow>
                     <FontAwesomeIcon
                       icon={faFile}
@@ -74,10 +74,10 @@ const AppliedResumeTable = (props) => {
               </TableCell>
               <TableCell align="left">{row?.jobName}</TableCell>
               <TableCell align="left">
-                {dayjs(row?.createAt).format('DD/MM/YYYY')}
+                {dayjs(row?.createAt).format('DD/MM/YYYY')} 
               </TableCell>
               <TableCell align="left">
-                {row?.resume?.type === CV_TYPES.cvWebsite
+                {row?.type === CV_TYPES.cvWebsite
                   ? 'Hồ sơ Online'
                   : 'Hồ sơ đính kèm'}
               </TableCell>

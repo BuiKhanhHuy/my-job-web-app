@@ -7,6 +7,7 @@ import {
   Tooltip as MuiTooltip,
   Typography,
   Button,
+  CircularProgress,
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 
@@ -24,6 +25,17 @@ import { Bar } from 'react-chartjs-2';
 import dayjs from 'dayjs';
 
 import RangePickerCustom from '../../../../../components/controls/RangePickerCustom';
+import statisticService from '../../../../../services/statisticService';
+import { Empty } from 'antd';
+
+const colors = [
+  'rgba(255, 159, 64, 0.9)',
+  'rgba(255, 206, 86, 0.9)',
+  'rgba(153, 102, 255, 0.9)',
+  'rgba(54, 162, 235, 0.9)',
+  'rgba(75, 192, 192, 0.9)',
+  'rgba(255, 99, 132, 0.9)',
+];
 
 ChartJS.register(
   CategoryScale,
@@ -55,38 +67,56 @@ export const options = {
   },
 };
 
-const labels = ['January'];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Chưa duyệt',
-      data: [10],
-      backgroundColor: 'rgb(255, 99, 132)',
-      stack: 'Stack 0',
-    },
-    {
-      label: 'Đã duyệt',
-      data: [100],
-      backgroundColor: 'rgb(75, 192, 192)',
-      stack: 'Stack 0',
-    },
-    {
-      label: 'Không trúng tuyển',
-      data: [200],
-      backgroundColor: 'rgb(53, 162, 235)',
-      stack: 'Stack 0',
-    },
-  ],
-};
-
 const RecruitmentChart = ({ title }) => {
+  const [isLoading, setIsLoading] = React.useState(true);
   const [allowSubmit, setAllowSubmit] = React.useState(false);
   const [selectedDateRange, setSelectedDateRange] = React.useState([
     dayjs(new Date()).subtract(1, 'month'),
     dayjs(new Date()),
   ]);
+  const [data, setData] = React.useState([]);
+
+  React.useEffect(() => {
+    const statistics = async (data) => {
+      setIsLoading(true);
+      try {
+        const resData = await statisticService.recruitmentStatistics(data);
+
+        setData(resData.data);
+        console.log(resData.data);
+      } catch (error) {
+        console.error('Error: ', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    statistics({
+      startDate: dayjs(selectedDateRange[0]).format('YYYY-MM-DD').toString(),
+      endDate: dayjs(selectedDateRange[1]).format('YYYY-MM-DD').toString(),
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allowSubmit]);
+
+  const dataOptions = React.useMemo(() => {
+    var datasets = [];
+    for (let i = data.length - 1; i >= 0; i--) {
+      datasets.push({
+        label: data[i]?.label,
+        data: data[i]?.data || [],
+        backgroundColor: colors[i],
+        stack: 'Stack 0',
+      });
+    }
+
+    const d = {
+      labels: [''],
+      datasets: datasets,
+    };
+
+    return d;
+  }, [data]);
 
   return (
     <>
@@ -123,7 +153,16 @@ const RecruitmentChart = ({ title }) => {
               />
             </Stack>
             <Stack justifyContent="center" alignItems="center" height={300}>
-              <Bar options={options} data={data} />
+              {isLoading ? (
+                <CircularProgress color="secondary" />
+              ) : data.length === 0 ? (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="Không có dữ liệu để thống kê"
+                />
+              ) : (
+                <Bar options={options} data={dataOptions} />
+              )}
             </Stack>
           </Box>
         </Stack>

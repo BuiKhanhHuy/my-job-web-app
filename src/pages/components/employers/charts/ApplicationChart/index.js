@@ -6,8 +6,11 @@ import {
   Stack,
   Tooltip as MuiTooltip,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
+
+import { Empty } from 'antd';
 
 import { Bar } from 'react-chartjs-2';
 import {
@@ -23,6 +26,7 @@ import {
 import dayjs from 'dayjs';
 
 import RangePickerCustom from '../../../../../components/controls/RangePickerCustom';
+import statisticService from '../../../../../services/statisticService';
 
 ChartJS.register(
   CategoryScale,
@@ -32,30 +36,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  datasets: [
-    {
-      type: 'bar',
-      label: 'Dataset 1',
-      backgroundColor: 'red',
-      data: [10, 20, 30, 40, 50, 60, 70],
-    },
-    {
-      type: 'bar',
-      label: 'Dataset 2',
-      backgroundColor: 'blue',
-      data: [20, 30, 40, 50, 60, 70, 80],
-    },
-    {
-      type: 'line',
-      label: 'Dataset 3',
-      backgroundColor: 'green',
-      data: [30, 40, 50, 60, 70, 80, 90],
-    },
-  ],
-};
 
 const options = {
   scales: {
@@ -85,6 +65,52 @@ const ApplicationChart = ({ title }) => {
     dayjs(new Date()).subtract(1, 'month'),
     dayjs(new Date()),
   ]);
+  const [data, setData] = React.useState([]);
+
+  React.useEffect(() => {
+    const statistics = async (data) => {
+      setIsLoading(true);
+      try {
+        const resData = await statisticService.applicationStatistics(data);
+
+        setData(resData.data);
+      } catch (error) {
+        console.error('Error: ', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    statistics({
+      startDate: dayjs(selectedDateRange[0]).format('YYYY-MM-DD').toString(),
+      endDate: dayjs(selectedDateRange[1]).format('YYYY-MM-DD').toString(),
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allowSubmit]);
+
+  const dataOptions = React.useMemo(() => {
+    const d = {
+      labels: data?.labels || [],
+      datasets: [
+        {
+          type: 'line',
+          label: data?.title2,
+          backgroundColor: 'red',
+          data: data?.data2 || [],
+          tension: 0.5,
+        },
+        {
+          type: 'bar',
+          label: data?.title1,
+          backgroundColor: 'rgb(75, 192, 192)',
+          data: data?.data1 || [],
+        },  
+      ],
+    };
+
+    return d;
+  }, [data]);
 
   return (
     <>
@@ -121,7 +147,16 @@ const ApplicationChart = ({ title }) => {
               />
             </Stack>
             <Stack justifyContent="center" alignItems="center" height={300}>
-              <Bar data={data} options={options} />
+              {isLoading ? (
+                <CircularProgress color="secondary" />
+              ) : data.length === 0 ? (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="Không có dữ liệu để thống kê"
+                />
+              ) : (
+                <Bar data={dataOptions} options={options} />
+              )}
             </Stack>
           </Box>
         </Stack>

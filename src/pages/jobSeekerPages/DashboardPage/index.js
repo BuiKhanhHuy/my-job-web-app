@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box, Card, Grid, Stack, Typography } from '@mui/material';
 
-import QuantityStatistics from '../../components/jobSeekers/QuantityStatistics';
+import JobSeekerQuantityStatistics from '../../components/jobSeekers/JobSeekerQuantityStatistics';
 import SidebarProfile from '../../components/jobSeekers/SidebarProfile';
 import SidebarViewTotal from '../../components/jobSeekers/SidebarViewTotal';
 import DemoChart from '../../../components/charts/DemoChart';
@@ -34,9 +34,9 @@ const DashboardPage = () => {
         <Grid xs={12} sm={12} md={7} lg={9} xl={9} item>
           <Stack spacing={2}>
             <Box>
-              {/* Start: Quantity statistics */}
-              <QuantityStatistics />
-              {/* End: Quantity statistics */}
+              {/* Start: JobSeekerQuantityStatistics */}
+              <JobSeekerQuantityStatistics />
+              {/* End: JobSeekerQuantityStatistics */}
             </Box>
             <Card sx={{ p: 2 }}>
               <Stack>
