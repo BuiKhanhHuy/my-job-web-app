@@ -40,10 +40,12 @@ const TopSlide = () => {
               <SwiperSlide>
                 <MuiImageCustom
                   width="100%"
+                  height={320}
                   src={value}
                   sx={{
                     borderRadius: 1.5,
                   }}
+                  fit="cover"
                 />
               </SwiperSlide>
             </Box>
@@ -53,8 +55,27 @@ const TopSlide = () => {
       <Box
         sx={{
           position: 'absolute',
-          top: '20%',
-          left: '5%',
+          top: {
+            xs: 0,
+            sm: '20%',
+            md: '20%',
+            lg: '20%',
+            xl: '20%',
+          },
+          paddingLeft: {
+            xs: 0,
+            sm: '5%',
+            md: '5%',
+            lg: '5%',
+            xl: '5%',
+          },
+          paddingRight: {
+            xs: 0,
+            sm: '5%',
+            md: '5%',
+            lg: '5%',
+            xl: '5%',
+          },
           zIndex: 10,
         }}
       >

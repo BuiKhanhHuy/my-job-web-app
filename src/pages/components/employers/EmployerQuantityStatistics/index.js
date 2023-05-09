@@ -6,7 +6,8 @@ import {
   CloseCircleFilled,
   ContactsFilled,
 } from '@ant-design/icons';
-import { Card, Col, Row, Statistic } from 'antd';
+import { Grid } from '@mui/material';
+import { Card, Statistic } from 'antd';
 
 import statisticService from '../../../../services/statisticService';
 
@@ -18,7 +19,7 @@ const EmployerQuantityStatistics = () => {
     const statistics = async () => {
       setIsLoading(true);
       try {
-        const resData = await statisticService.generalStatistics();
+        const resData = await statisticService.employerGeneralStatistics();
 
         setData(resData.data);
       } catch (error) {
@@ -29,18 +30,17 @@ const EmployerQuantityStatistics = () => {
     };
 
     statistics();
-
   }, []);
 
   return (
-    <Row gutter={16}>
-      <Col span={6}>
+    <Grid container spacing={2}>
+      <Grid item xs={12} sm={12} md={6} lg={3}>
         <Card bordered={false}>
           <Statistic
             title={
               <span style={{ fontWeight: 'bold' }}>Tất cả tin tuyển dụng</span>
             }
-            value={data?.totalJobPost || "---"}
+            value={data?.totalJobPost}
             precision={0}
             valueStyle={{ color: '#3f8600', borderRadius: 1 }}
             prefix={<CopyFilled />}
@@ -48,8 +48,8 @@ const EmployerQuantityStatistics = () => {
             loading={isLoading}
           />
         </Card>
-      </Col>
-      <Col span={6}>
+      </Grid>
+      <Grid item xs={12} sm={12} md={6} lg={3}>
         <Card bordered={false}>
           <Statistic
             title={
@@ -57,7 +57,7 @@ const EmployerQuantityStatistics = () => {
                 Tin tuyển dụng chờ duyệt
               </span>
             }
-            value={data?.totalJobPostingPendingApproval || "---"}
+            value={data?.totalJobPostingPendingApproval}
             precision={0}
             valueStyle={{ color: '#ff9800' }}
             prefix={<ClockCircleFilled />}
@@ -65,14 +65,14 @@ const EmployerQuantityStatistics = () => {
             loading={isLoading}
           />
         </Card>
-      </Col>
-      <Col span={6}>
+      </Grid>
+      <Grid item xs={12} sm={12} md={6} lg={3}>
         <Card bordered={false}>
           <Statistic
             title={
               <span style={{ fontWeight: 'bold' }}>Tin tuyển dụng hết hạn</span>
             }
-            value={data?.totalJobPostExpired || "---"}
+            value={data?.totalJobPostExpired}
             precision={0}
             valueStyle={{ color: '#cf1322' }}
             prefix={<CloseCircleFilled />}
@@ -80,14 +80,14 @@ const EmployerQuantityStatistics = () => {
             loading={isLoading}
           />
         </Card>
-      </Col>
-      <Col span={6}>
+      </Grid>
+      <Grid item xs={12} sm={12} md={6} lg={3}>
         <Card bordered={false}>
           <Statistic
             title={
               <span style={{ fontWeight: 'bold' }}>Ứng viên ứng tuyển</span>
             }
-            value={data?.totalApply || "---"}
+            value={data?.totalApply}
             precision={0}
             valueStyle={{ color: '#00b0ff' }}
             prefix={<ContactsFilled />}
@@ -95,8 +95,8 @@ const EmployerQuantityStatistics = () => {
             loading={isLoading}
           />
         </Card>
-      </Col>
-    </Row>
+      </Grid>
+    </Grid>
   );
 };
 

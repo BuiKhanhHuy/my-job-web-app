@@ -55,7 +55,12 @@ const MultiSelectCustom = ({
                 </li>
               )}
               renderInput={(params) => (
-                <TextField {...params} placeholder={placeholder} size="small" />
+                <TextField
+                  error={fieldState.invalid}
+                  {...params}
+                  placeholder={placeholder}
+                  size="small"
+                />
               )}
             />
             {fieldState.invalid && (

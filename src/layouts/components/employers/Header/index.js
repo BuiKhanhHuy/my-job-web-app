@@ -77,7 +77,7 @@ const Header = ({ drawerWidth, handleDrawerToggle }) => {
     <AppBar
       position="fixed"
       sx={{
-        width: { sm: `calc(100% - ${drawerWidth}px)` },
+        width: { xl: `calc(100% - ${drawerWidth}px)` },
         ml: { sm: `${drawerWidth}px` },
       }}
     >
@@ -88,7 +88,7 @@ const Header = ({ drawerWidth, handleDrawerToggle }) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { xl: 'none' } }}
           >
             <MenuIcon />
           </IconButton>

@@ -59,7 +59,7 @@ const CandidateChart = ({ title }) => {
     const statistics = async (data) => {
       setIsLoading(true);
       try {
-        const resData = await statisticService.candidateStatistics(data);
+        const resData = await statisticService.employerCandidateStatistics(data);
 
         setData(resData.data);
         console.log(resData.data);

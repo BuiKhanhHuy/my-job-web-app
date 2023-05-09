@@ -34,53 +34,81 @@ import errorHandling from '../../../../utils/errorHandling';
 import jobPostNotificationService from '../../../../services/jobPostNotificationService';
 
 const ItemLoading = () => {
+  const [parentWidth, setParentWidth] = React.useState(0);
+  const [stackDirection, setStackDirection] = React.useState('column');
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      const newWidth = document.getElementById(
+        'job-post-notification-loading'
+      ).offsetWidth;
+      setParentWidth(newWidth);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  React.useEffect(() => {
+    console.log(parentWidth);
+    if (parentWidth < 600) {
+      setStackDirection('column');
+    } else {
+      setStackDirection('row');
+    }
+  }, [parentWidth]);
+
   return (
-    <Box>
-      <Stack direction="row" spacing={3} alignItem="center">
-        <Box flex={1}>
-          <Stack spacing={1}>
-            <Box>
-              <Typography fontSize={18} fontWeight={'bold'}>
-                <Skeleton />
-              </Typography>
-            </Box>
-            <Stack direction="row" spacing={3}>
+    <div id="job-post-notification-loading">
+      <Box>
+        <Stack direction="row" spacing={3} alignItem="center">
+          <Box flex={1}>
+            <Stack spacing={1}>
               <Box>
-                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
-                  <Skeleton width={100} />
+                <Typography fontSize={18} fontWeight={'bold'}>
+                  <Skeleton />
                 </Typography>
               </Box>
-              <Box>
-                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
-                  <Skeleton width={100} />
-                </Typography>
-              </Box>
-              <Box>
-                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
-                  <Skeleton width={100} />
-                </Typography>
-              </Box>
-              <Box>
-                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
-                  <Skeleton width={100} />
-                </Typography>
-              </Box>
+              <Stack direction={stackDirection} spacing={3}>
+                <Box>
+                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                    <Skeleton width={100} />
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                    <Skeleton width={100} />
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                    <Skeleton width={100} />
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                    <Skeleton width={100} />
+                  </Typography>
+                </Box>
+              </Stack>
             </Stack>
+          </Box>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Box>
+              <Skeleton width={50} height={40} />
+            </Box>
+            <Box>
+              <Skeleton width={50} height={40} />
+            </Box>
+            <Box>
+              <Skeleton width={50} height={40} />
+            </Box>
           </Stack>
-        </Box>
-        <Stack direction="row" spacing={1} alignItems="center">
-          <Box>
-            <Skeleton width={50} height={40}/>
-          </Box>
-          <Box>
-            <Skeleton width={50} height={40}/>
-          </Box>
-          <Box>
-            <Skeleton width={50} height={40}/>
-          </Box>
         </Stack>
-      </Stack>
-    </Box>
+      </Box>
+    </div>
   );
 };
 
@@ -128,105 +156,132 @@ const ItemComponent = ({
   handleDelete,
 }) => {
   const { allConfig } = useSelector((state) => state.config);
+  const [parentWidth, setParentWidth] = React.useState(0);
+  const [stackDirection, setStackDirection] = React.useState('column');
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      const newWidth = document.getElementById(
+        'job-post-notification'
+      ).offsetWidth;
+      setParentWidth(newWidth);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  React.useEffect(() => {
+    console.log(parentWidth);
+    if (parentWidth < 600) {
+      setStackDirection('column');
+    } else {
+      setStackDirection('row');
+    }
+  }, [parentWidth]);
 
   return (
-    <Box>
-      <Stack direction="row" spacing={3} alignItem="center">
-        <Box flex={1}>
-          <Stack spacing={1}>
-            <Box>
-              <Typography fontSize={18} fontWeight={'bold'}>
-                {jobName}
-              </Typography>
-            </Box>
-            <Stack direction="row" spacing={3}>
+    <div id="job-post-notification">
+      <Box>
+        <Stack direction="row" spacing={3} alignItem="center">
+          <Box flex={1}>
+            <Stack spacing={1}>
               <Box>
-                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
-                  <FontAwesomeIcon
-                    icon={faCircleDollarToSlot}
-                    style={{ marginRight: 5 }}
-                  />
+                <Typography fontSize={18} fontWeight={'bold'}>
+                  {jobName}
+                </Typography>
+              </Box>
+              <Stack direction={stackDirection} spacing={3}>
+                <Box>
+                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                    <FontAwesomeIcon
+                      icon={faCircleDollarToSlot}
+                      style={{ marginRight: 5 }}
+                    />
 
-                  {salary ? (
-                    <span style={{ color: 'orange' }}>
-                      {convertMoney(salary)}
-                    </span>
-                  ) : (
-                    <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                      Chưa cập nhật
-                    </span>
-                  )}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
-                  <FontAwesomeIcon
-                    icon={faLocationDot}
-                    style={{ marginRight: 5 }}
-                  />
-                  {allConfig?.cityDict[city] || (
-                    <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                      Chưa cập nhật
-                    </span>
-                  )}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
-                  <FontAwesomeIcon
-                    icon={faBriefcase}
-                    style={{ marginRight: 5 }}
-                  />
-                  {allConfig?.careerDict[career] || (
-                    <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                      Chưa cập nhật
-                    </span>
-                  )}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography fontWeight="bold" color="GrayText" fontSize={14}>
-                  <FontAwesomeIcon
-                    icon={faCalendarAlt}
-                    style={{ marginRight: 5 }}
-                  />
-                  {allConfig?.frequencyNotificationDict[frequency] || (
-                    <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                      Chưa cập nhật
-                    </span>
-                  )}
-                </Typography>
-              </Box>
+                    {salary ? (
+                      <span style={{ color: 'orange' }}>
+                        {convertMoney(salary)}
+                      </span>
+                    ) : (
+                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                        Chưa cập nhật
+                      </span>
+                    )}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                    <FontAwesomeIcon
+                      icon={faLocationDot}
+                      style={{ marginRight: 5 }}
+                    />
+                    {allConfig?.cityDict[city] || (
+                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                        Chưa cập nhật
+                      </span>
+                    )}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                    <FontAwesomeIcon
+                      icon={faBriefcase}
+                      style={{ marginRight: 5 }}
+                    />
+                    {allConfig?.careerDict[career] || (
+                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                        Chưa cập nhật
+                      </span>
+                    )}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                    <FontAwesomeIcon
+                      icon={faCalendarAlt}
+                      style={{ marginRight: 5 }}
+                    />
+                    {allConfig?.frequencyNotificationDict[frequency] || (
+                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                        Chưa cập nhật
+                      </span>
+                    )}
+                  </Typography>
+                </Box>
+              </Stack>
             </Stack>
+          </Box>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Box>
+              {/* Start: ActiveButtonComponent */}
+              <ActiveButtonComponent id={id} isActive={isActive} />
+              {/* End: ActiveButtonComponent */}
+            </Box>
+            <Box>
+              <IconButton
+                aria-label="edit"
+                color="warning"
+                onClick={() => handleShowUpdate(id)}
+              >
+                <EditIcon />
+              </IconButton>
+            </Box>
+            <Box>
+              <IconButton
+                aria-label="delete"
+                color="error"
+                onClick={() => handleDelete(id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
           </Stack>
-        </Box>
-        <Stack direction="row" spacing={1} alignItems="center">
-          <Box>
-            {/* Start: ActiveButtonComponent */}
-            <ActiveButtonComponent id={id} isActive={isActive} />
-            {/* End: ActiveButtonComponent */}
-          </Box>
-          <Box>
-            <IconButton
-              aria-label="edit"
-              color="warning"
-              onClick={() => handleShowUpdate(id)}
-            >
-              <EditIcon />
-            </IconButton>
-          </Box>
-          <Box>
-            <IconButton
-              aria-label="delete"
-              color="error"
-              onClick={() => handleDelete(id)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Box>
         </Stack>
-      </Stack>
-    </Box>
+      </Box>
+    </div>
   );
 };
 

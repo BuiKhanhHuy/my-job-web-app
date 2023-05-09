@@ -98,7 +98,7 @@ const AppliedJobCard = () => {
                 salaryMin={value?.jobPostDict.salaryMin}
                 salaryMax={value?.jobPostDict.salaryMax}
               >
-                <Stack spacing={1}>
+                <Stack spacing={1}  >
                   <Chip
                     label={`Ứng tuyển ngày: ${dayjs(value?.createAt).format(
                       'DD/MM/YYYY'

@@ -48,7 +48,7 @@ const MyJobPage = () => {
                   {/* Start: SavedJobCard */}
                   <SavedJobCard />
                   {/* End: SavedJobCard */}
-                  <Box>
+                  <Box mt={1}>
                     <Typography color="gray" variant="caption">
                       Lưu ý: Bạn không xem được việc làm đã hết thời hạn đăng
                       tuyển hoặc tạm ngưng nhận hồ sơ.

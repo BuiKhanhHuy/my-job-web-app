@@ -1,5 +1,12 @@
 import React from 'react';
-import { Box, Button, Divider, LinearProgress, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  LinearProgress,
+  Stack,
+  Typography,
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
@@ -283,13 +290,6 @@ const JobPostCard = () => {
           lg: 'row',
           xl: 'row',
         }}
-        alignItems={{
-          xs: 'flex-start',
-          sm: 'flex-start',
-          md: 'center',
-          lg: 'center',
-          xl: 'center',
-        }}
         sx={{ mb: 3 }}
         spacing={2}
       >
@@ -301,24 +301,24 @@ const JobPostCard = () => {
           <JobPostFilterForm handleFilter={handleFilter} />
           {/* End: JobPostFilterForm */}
         </Box>
-        <Stack direction="row" justifyContent="flex-end" spacing={1}>
-          <Button
-            variant="outlined"
-            color="secondary"
-            startIcon={<FileDownloadOutlinedIcon />}
-            onClick={handleExport}
-          >
-            Tải danh sách
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<AddIcon />}
-            onClick={handleShowAdd}
-          >
-            Tạo tin mới
-          </Button>
-        </Stack>
+      </Stack>
+      <Stack direction="row" justifyContent="flex-end" spacing={1} mb={2}>
+        <Button
+          variant="outlined"
+          color="secondary"
+          startIcon={<FileDownloadOutlinedIcon />}
+          onClick={handleExport}
+        >
+          Tải danh sách
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={handleShowAdd}
+        >
+          Tạo tin mới
+        </Button>
       </Stack>
       {isLoadingJobPost ? <LinearProgress color="primary" /> : <Divider />}
       <JobPostsTable

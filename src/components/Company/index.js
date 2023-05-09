@@ -13,8 +13,73 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+
 import { IMAGES, ROLES_NAME } from '../../configs/constants';
 import MuiImageCustom from '../MuiImageCustom';
+
+import companyService from '../../services/companyService';
+import toastMessages from '../../utils/toastMessages';
+import errorHandling from '../../utils/errorHandling';
+
+const FollowComponent = ({ slug, isFollowed }) => {
+  const { isAuthenticated, currentUser } = useSelector((state) => state.user);
+  const [isLoadingFollow, setIsLoadingFollow] = React.useState(false);
+  const [followed, setFollowed] = React.useState(isFollowed);
+
+  const handleFollow = (slug) => {
+    const follow = async (slugCompany) => {
+      setIsLoadingFollow(true);
+      try {
+        const resData = await companyService.followCompany(slugCompany);
+        const isFollowed = resData.data.isFollowed;
+
+        setFollowed(isFollowed);
+        toastMessages.success(
+          isFollowed ? 'Theo dõi thành công.' : 'Hủy theo dõi thành công.'
+        );
+      } catch (error) {
+        errorHandling(error);
+      } finally {
+        setIsLoadingFollow(false);
+      }
+    };
+
+    follow(slug);
+  };
+
+  return (
+    <>
+      {isAuthenticated && currentUser?.roleName === ROLES_NAME.JOB_SEEKER && (
+        <Stack justifyContent="flex-end" sx={{ py: 1, px: 2, height: '100%' }}>
+          <LoadingButton
+            fullWidth
+            onClick={() => handleFollow(slug)}
+            startIcon={
+              followed ? (
+                <BookmarkIcon style={{ color: 'white' }} />
+              ) : (
+                <BookmarkBorderIcon />
+              )
+            }
+            loading={isLoadingFollow}
+            loadingPosition="start"
+            variant={followed ? 'contained' : 'outlined'}
+            color="warning"
+            sx={{ textTransform: 'inherit' }}
+          >
+            <span>
+              {followed ? (
+                <span style={{ color: 'white' }}>Đang theo dõi</span>
+              ) : (
+                'Theo dõi'
+              )}
+            </span>
+          </LoadingButton>
+        </Stack>
+      )}
+    </>
+  );
+};
 
 const Company = ({
   id,
@@ -28,8 +93,6 @@ const Company = ({
   followNumber,
   jobPostNumber,
   isFollowed,
-  isLoadingFollow,
-  handleFollow,
 }) => {
   const { allConfig } = useSelector((state) => state.config);
   const { isAuthenticated, currentUser } = useSelector((state) => state.user);
@@ -51,6 +114,7 @@ const Company = ({
               ? 480
               : 420,
         }}
+        direction="column"
         justifyContent={'space-between'}
       >
         <Box>
@@ -157,34 +221,9 @@ const Company = ({
             </Typography>
           </Box>
         </Box>
-        {isAuthenticated && currentUser?.roleName === ROLES_NAME.JOB_SEEKER && (
-          <Stack sx={{ py: 1, px: 2, height: '100%' }}>
-            <LoadingButton
-              fullWidth
-              onClick={() => handleFollow(slug)}
-              startIcon={
-                isFollowed ? (
-                  <BookmarkIcon style={{ color: 'white' }} />
-                ) : (
-                  <BookmarkBorderIcon />
-                )
-              }
-              loading={isLoadingFollow}
-              loadingPosition="start"
-              variant={isFollowed ? 'contained' : 'outlined'}
-              color="warning"
-              sx={{ textTransform: 'inherit' }}
-            >
-              <span>
-                {isFollowed ? (
-                  <span style={{ color: 'white' }}>Đang theo dõi</span>
-                ) : (
-                  'Theo dõi'
-                )}
-              </span>
-            </LoadingButton>
-          </Stack>
-        )}
+        {/* Start: FollowComponent */}
+        <FollowComponent slug={slug} isFollowed={isFollowed} />
+        {/* End: FollowComponent */}
       </Stack>
     </Card>
   );

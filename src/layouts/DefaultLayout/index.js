@@ -9,7 +9,13 @@ const DefaultLayout = () => {
   return (
     <Box>
       <Header />
-      <Container maxWidth="lg" >
+      <Container
+        maxWidth="lg"
+        sx={{
+          paddingLeft: { xs: 1, sm: 4, md: 6, lg: 8, xl: 0 },
+          paddingRight: { xs: 1, sm: 4, md: 6, lg: 8, xl: 0 },
+        }}
+      >
         <section>
           <Outlet />
         </section>
@@ -17,8 +23,20 @@ const DefaultLayout = () => {
       <Box
         sx={{
           mt: 10,
-          px: 14,
-          py: 5,
+          px: {
+            xs: 1,
+            sm: 5,
+            md: 8,
+            lg: 10,
+            xl: 14,
+          },
+          py: {
+            xs: 2,
+            sm: 2,
+            md: 2,
+            lg: 5,
+            xl: 5,
+          },
           color: 'white',
           bgcolor: '#441da0',
         }}

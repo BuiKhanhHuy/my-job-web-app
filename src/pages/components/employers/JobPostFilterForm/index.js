@@ -23,14 +23,14 @@ const JobPostFilterForm = ({ handleFilter }) => {
   return (
     <form onSubmit={handleSubmit(handleFilter)}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+        <Grid item xs={12} sm={12} md={5} lg={6} xl={6}>
           <TextFieldCustom
             name="kw"
             placeholder="Nhập tên tin đăng"
             control={control}
           />
         </Grid>
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+        <Grid item flex={1}>
           <SingleSelectCustom
             name="isUrgent"
             control={control}
@@ -42,8 +42,8 @@ const JobPostFilterForm = ({ handleFilter }) => {
             placeholder="Trạng thái tuyển dụng"
           />
         </Grid>
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-          <Stack direction="row" spacing={2}>
+        <Grid item>
+          <Stack direction="row" spacing={2} justifyContent={{xs: 'flex-end', sm: 'center', md: 'center', lg: 'center', xl: 'center'}}>
             <Tooltip title="Đặt lại" arrow>
               <IconButton
                 aria-label="refresh"

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Box  } from '@mui/material';
+import { Box } from '@mui/material';
 
 import Header from '../components/employers/Header';
 import Sidebar from '../components/employers/Sidebar';
@@ -29,7 +29,7 @@ function EmployerLayout(props) {
       {/* End: Header */}
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{ width: { xl: drawerWidth }, flexShrink: { sm: 0 } }}
       >
         {/* Start: Sidebar */}
         <Sidebar drawerWidth={drawerWidth} />
@@ -45,11 +45,28 @@ function EmployerLayout(props) {
         component="main"
         sx={{
           flexGrow: 1,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          width: {
+            xs: '100%',
+            sm: '100%',
+            md: '100%',
+            lg: '100%',
+            xl: `calc(100% - ${drawerWidth}px)`,
+          },
         }}
       >
         {/* <Toolbar /> */}
-        <Box sx={{ p: 3, mt: 7 }}>
+        <Box
+          sx={{
+            p: {
+              xs: 1,
+              sm: 3,
+              md: 3,
+              lg: 3,
+              xl: 3,
+            },
+            mt: 7,
+          }}
+        >
           <Outlet />
         </Box>
       </Box>

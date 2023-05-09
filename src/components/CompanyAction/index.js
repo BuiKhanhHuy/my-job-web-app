@@ -1,36 +1,56 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { Box, Card, Skeleton, Stack, Typography } from '@mui/material';
+import { Box, Card, Skeleton, Stack, Tooltip, Typography } from '@mui/material';
 
 import MuiImageCustom from '../MuiImageCustom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBriefcase, faFontAwesome, faUsers } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBriefcase,
+  faFontAwesome,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 
-const CompanyAction = ({
-  id,
-  views,
-  createAt,
-  resume,
-  company,
-  children,
-}) => {
+const CompanyAction = ({ id, views, createAt, resume, company, children }) => {
   const nav = useNavigate();
+  const [parentWidth, setParentWidth] = React.useState(0);
+  const [stackDirection, setStackDirection] = React.useState('column');
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      const newWidth = document.getElementById('parent-element').offsetWidth;
+      setParentWidth(newWidth);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  React.useEffect(() => {
+    console.log(parentWidth);
+    if (parentWidth < 800) {
+      setStackDirection('column');
+    } else {
+      setStackDirection('row');
+    }
+  }, [parentWidth]);
 
   return (
-    <Card
-      variant="outlined"
-      sx={{
-        p: 1,
-        '&:hover': {
-          borderColor: '#441da0',
-        },
-      }}
-    >
-      <Stack direction="row" spacing={2}>
-        <Box>
+    <div id="parent-element">
+      <Card
+        variant="outlined"
+        sx={{
+          p: 1,
+          '&:hover': {
+            borderColor: '#441da0',
+          },
+        }}
+      >
+        <Stack direction={stackDirection} spacing={2} width="100%">
           <Stack direction="row" spacing={1}>
-            <Stack direction="row" justifyContent="center">
+            <Stack justifyContent="center">
               <MuiImageCustom
                 width={75}
                 height={75}
@@ -38,22 +58,26 @@ const CompanyAction = ({
                 sx={{ border: 0.5, borderRadius: 1.5, borderColor: '#e0e0e0' }}
               />
             </Stack>
-            <Stack flex={1} justifyContent="center">
-              <Box>
+            <Stack
+              flex={1}
+              justifyContent="center"
+              style={{ overflow: 'hidden' }}
+            >
+              <Tooltip followCursor title={company?.companyName}>
                 <Typography
                   variant="subtitle2"
                   sx={{ fontSize: 15, cursor: 'pointer' }}
                   gutterBottom
                   noWrap
                   style={{
-                    overflow: 'hidden',
                     textOverflow: 'ellipsis',
+                    overflow: 'hidden',
                   }}
                   onClick={() => nav(`/cong-ty/${company?.slug}`)}
                 >
                   {company?.companyName}
                 </Typography>
-              </Box>
+              </Tooltip>
 
               <Box>
                 <Typography
@@ -83,110 +107,139 @@ const CompanyAction = ({
               </Box>
             </Stack>
           </Stack>
-        </Box>
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          flex={1}
-          spacing={1}
-        >
-          {children}
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            flex={1}
+            spacing={1}
+          >
+            {children}
+          </Stack>
         </Stack>
-      </Stack>
-    </Card>
+      </Card>
+    </div>
   );
 };
 
-const CompanyActionFollow = ({
-  id,
-  company,
-  children,
-}) => {
+const CompanyActionFollow = ({ id, company, children }) => {
   const nav = useNavigate();
+  const [parentWidth, setParentWidth] = React.useState(0);
+  const [stackDirection, setStackDirection] = React.useState('column');
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      const newWidth = document.getElementById(
+        'company-action-follow'
+      ).offsetWidth;
+      setParentWidth(newWidth);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  React.useEffect(() => {
+    console.log(parentWidth);
+    if (parentWidth < 800) {
+      setStackDirection('column');
+    } else {
+      setStackDirection('row');
+    }
+  }, [parentWidth]);
 
   return (
-    <Card
-      variant="outlined"
-      sx={{
-        p: 1,
-        '&:hover': {
-          borderColor: '#441da0',
-        },
-      }}
-    >
-      <Stack direction="row" spacing={2}>
-        <Box>
-          <Stack direction="row" spacing={1}>
-            <Stack direction="row" justifyContent="center">
-              <MuiImageCustom
-                width={75}
-                height={75}
-                src={company?.companyImageUrl}
-                sx={{ border: 0.5, borderRadius: 1.5, borderColor: '#e0e0e0' }}
-              />
-            </Stack>
-            <Stack flex={1} justifyContent="center">
-              <Box>
-                <Typography
-                  variant="subtitle2"
-                  sx={{ fontSize: 15, cursor: 'pointer' }}
-                  gutterBottom
-                  style={{
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
+    <div id="company-action-follow">
+      <Card
+        variant="outlined"
+        sx={{
+          p: 1,
+          '&:hover': {
+            borderColor: '#441da0',
+          },
+        }}
+      >
+        <Stack direction={stackDirection} spacing={2}>
+          <Box>
+            <Stack direction="row" spacing={1}>
+              <Stack direction="row" justifyContent="center">
+                <MuiImageCustom
+                  width={75}
+                  height={75}
+                  src={company?.companyImageUrl}
+                  sx={{
+                    border: 0.5,
+                    borderRadius: 1.5,
+                    borderColor: '#e0e0e0',
                   }}
-                  onClick={() => nav(`/cong-ty/${company?.slug}`)}
-                >
-                  {company?.companyName}
-                </Typography>
-              </Box>
+                />
+              </Stack>
+              <Stack flex={1} justifyContent="center">
+                <Box>
+                  <Tooltip followCursor title={company?.companyName}>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ fontSize: 15, cursor: 'pointer' }}
+                      gutterBottom
+                      style={{
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                      onClick={() => nav(`/cong-ty/${company?.slug}`)}
+                    >
+                      {company?.companyName}
+                    </Typography>
+                  </Tooltip>
+                </Box>
 
-              <Typography variant="body2" gutterBottom>
-                <FontAwesomeIcon
-                  icon={faFontAwesome}
-                  style={{ marginRight: 2 }}
-                  color="#bdbdbd"
-                />{' '}
-                {company?.fieldOperation || (
-                  <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                    Chưa cập nhật
-                  </span>
-                )}
-              </Typography>
-              <Stack direction="row" spacing={2}>
                 <Typography variant="body2" gutterBottom>
                   <FontAwesomeIcon
-                    icon={faUsers}
+                    icon={faFontAwesome}
                     style={{ marginRight: 2 }}
                     color="#bdbdbd"
                   />{' '}
-                  {company?.followNumber} theo dõi
+                  {company?.fieldOperation || (
+                    <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                      Chưa cập nhật
+                    </span>
+                  )}
                 </Typography>
-                <Typography variant="body2" gutterBottom>
-                  <FontAwesomeIcon
-                    icon={faBriefcase}
-                    style={{ marginRight: 2 }}
-                    color="#bdbdbd"
-                  />{' '}
-                  {company?.jobPostNumber} việc làm
-                </Typography>
+                <Stack direction="row" spacing={2}>
+                  <Typography variant="body2" gutterBottom>
+                    <FontAwesomeIcon
+                      icon={faUsers}
+                      style={{ marginRight: 2 }}
+                      color="#bdbdbd"
+                    />{' '}
+                    {company?.followNumber} theo dõi
+                  </Typography>
+                  <Typography variant="body2" gutterBottom>
+                    <FontAwesomeIcon
+                      icon={faBriefcase}
+                      style={{ marginRight: 2 }}
+                      color="#bdbdbd"
+                    />{' '}
+                    {company?.jobPostNumber} việc làm
+                  </Typography>
+                </Stack>
               </Stack>
             </Stack>
+          </Box>
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            flex={1}
+            spacing={1}
+          >
+            {children}
           </Stack>
-        </Box>
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          flex={1}
-          spacing={1}
-        >
-          {children}
         </Stack>
-      </Stack>
-    </Card>
+      </Card>
+    </div>
   );
 };
 
@@ -200,6 +253,9 @@ const Loading = () => (
         <Box flex={1}>
           <Typography variant="subtitle2" sx={{ fontSize: 15 }} gutterBottom>
             <Skeleton height={30} />
+          </Typography>
+          <Typography variant="subtitle2" color="gray">
+            <Skeleton />
           </Typography>
           <Typography variant="subtitle2" color="gray">
             <Skeleton />

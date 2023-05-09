@@ -33,8 +33,6 @@ const HomeSearch = () => {
   return (
     <Card
       sx={{
-        width: 600,
-        height: 180,
         backgroundColor: 'rgba(0,0,0,.35)',
         borderRadius: 3.5,
         p: 4,

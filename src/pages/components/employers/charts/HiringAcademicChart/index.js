@@ -46,7 +46,7 @@ const HiringAcademicChart = ({ title }) => {
     const statistics = async (data) => {
       setIsLoading(true);
       try {
-        const resData = await statisticService.recruitmentStatisticsByRank(
+        const resData = await statisticService.employerRecruitmentStatisticsByRank(
           data
         );
 

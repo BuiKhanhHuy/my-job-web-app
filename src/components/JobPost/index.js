@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { Box, Card, Skeleton, Stack, Typography } from '@mui/material';
+import { Box, Card, Skeleton, Stack, Tooltip, Typography } from '@mui/material';
 
 import { salaryString } from '../../utils/customData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -42,8 +42,8 @@ const JobPost = ({
       }}
       onClick={() => nav(`/viec-lam/${slug}`)}
     >
-      <Stack direction="row" spacing={1} width={'100%'}>
-        <Stack direction="row" justifyContent="center">
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Stack width="15%">
           <MuiImageCustom
             width={60}
             height={60}
@@ -56,23 +56,27 @@ const JobPost = ({
             }}
           />
         </Stack>
-        <Stack spacing={0}>
-          <Stack direction="row" alignItems="center">
-            <Box>
+        <Stack spacing={0} width="83%">
+          <Stack
+            direction="row"
+            alignItems="center"
+            style={{ overflow: 'hidden' }}
+            spacing={1}
+            mb={0.5}
+          >
+            <Tooltip followCursor title={jobName}>
               <Typography
                 variant="subtitle2"
                 sx={{ fontSize: 15 }}
-                gutterBottom
                 noWrap
                 style={{
-                  overflow: 'hidden',
                   textOverflow: 'ellipsis',
                 }}
                 flex={1}
               >
                 {jobName}
               </Typography>
-            </Box>
+            </Tooltip>
             <Stack
               direction="row"
               alignItems="center"
@@ -107,17 +111,19 @@ const JobPost = ({
               )}
             </Stack>
           </Stack>
-          <Typography
-            variant="subtitle2"
-            color="gray"
-            style={{
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            {companyName}
-          </Typography>
+          <Tooltip followCursor title={companyName}>
+            <Typography
+              variant="subtitle2"
+              color="gray"
+              style={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {companyName}
+            </Typography>
+          </Tooltip>
         </Stack>
       </Stack>
       <Stack

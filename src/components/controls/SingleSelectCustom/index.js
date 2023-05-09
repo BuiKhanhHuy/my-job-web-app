@@ -3,7 +3,6 @@ import { Controller } from 'react-hook-form';
 import { Autocomplete, TextField, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
- 
 
 const SingleSelectCustom = ({
   name,
@@ -33,13 +32,9 @@ const SingleSelectCustom = ({
               autoHighlight={false}
               getOptionLabel={(option) => option.name}
               value={options.find((o) => o.id === field.value) || null}
-              onChange={(e, value) => field.onChange(value?.id || null )}
+              onChange={(e, value) => field.onChange(value?.id || null)}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  size="small"
-                  placeholder={placeholder}
-                />
+                <TextField  error={fieldState.invalid} {...params} size="small" placeholder={placeholder} />
               )}
             />
             {fieldState.invalid && (

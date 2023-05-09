@@ -53,6 +53,7 @@ const TextFieldAutoCompleteCustom = ({
               onInputChange={(e, newValue) => field.onChange(newValue || '')}
               renderInput={(params) => (
                 <TextField
+                error={fieldState.invalid}
                   {...params}
                   size="small"
                   placeholder={placeholder}

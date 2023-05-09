@@ -237,8 +237,8 @@ const AppliedResumeCard = ({ title }) => {
   const handleSendMail = (email, fullName) => {
     setSendMailData({
       fullName: fullName,
-      email: email
-    })
+      email: email,
+    });
     setOpenSendMailPopup(true);
   };
 
@@ -265,12 +265,12 @@ const AppliedResumeCard = ({ title }) => {
       <Divider sx={{ mt: 2, mb: 3 }} />
 
       <Grid container sx={{ mb: 3 }} spacing={2}>
-        <Grid item xs={1}>
+        <Grid item xs={12}>
           <Stack justifyContent="center">
             <Typography variant="subtitle2">Bộ lọc: </Typography>
           </Stack>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={12} sm={6} md={4} xl={5}>
           <Autocomplete
             getOptionLabel={(option) => option.jobName}
             value={jobPostOptions.find((o) => o.id === jobPostIdSelect) || null}
@@ -284,7 +284,7 @@ const AppliedResumeCard = ({ title }) => {
             )}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={12} sm={6} md={4} xl={2}>
           <Autocomplete
             getOptionLabel={(option) => option.name}
             value={
@@ -305,21 +305,32 @@ const AppliedResumeCard = ({ title }) => {
             )}
           />
         </Grid>
-        <Grid item xs={4}>
-          <Tooltip title="Đặt lại" arrow sx={{ mr: 1 }}>
-            <IconButton aria-label="refresh" onClick={handleResetFilterData}>
-              <RefreshIcon />
-            </IconButton>
-          </Tooltip>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<FilterListIcon />}
-            endIcon={<ExpandMoreIcon />}
-            onClick={() => setOpenPopup(true)}
+        <Grid item xs={12} sm={12} md={4}>
+          <Stack
+            direction="row"
+            justifyContent={{
+              xs: 'flex-end',
+              sm: 'flex-end',
+              md: 'flex-start',
+              lg: 'flex-start',
+              xl: 'flex-start',
+            }}
           >
-            Lọc nâng cao ({numbersFilter})
-          </Button>
+            <Tooltip title="Đặt lại" arrow sx={{ mr: 1 }}>
+              <IconButton aria-label="refresh" onClick={handleResetFilterData}>
+                <RefreshIcon />
+              </IconButton>
+            </Tooltip>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<FilterListIcon />}
+              endIcon={<ExpandMoreIcon />}
+              onClick={() => setOpenPopup(true)}
+            >
+              Lọc nâng cao ({numbersFilter})
+            </Button>
+          </Stack>
         </Grid>
       </Grid>
       {isLoading ? <LinearProgress color="primary" /> : <Divider />}

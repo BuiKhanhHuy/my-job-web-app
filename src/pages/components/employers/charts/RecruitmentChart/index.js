@@ -6,7 +6,6 @@ import {
   Stack,
   Tooltip as MuiTooltip,
   Typography,
-  Button,
   CircularProgress,
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
@@ -80,7 +79,7 @@ const RecruitmentChart = ({ title }) => {
     const statistics = async (data) => {
       setIsLoading(true);
       try {
-        const resData = await statisticService.recruitmentStatistics(data);
+        const resData = await statisticService.employerRecruitmentStatistics(data);
 
         setData(resData.data);
         console.log(resData.data);

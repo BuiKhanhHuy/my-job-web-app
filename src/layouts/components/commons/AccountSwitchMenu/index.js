@@ -154,22 +154,22 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
       {isShowButton ? (
         <Stack spacing={1} sx={{ px: 2 }}>
           <Button
-            variant="contained"
+            variant="outlined"
             fullWidth
             onClick={handleLogin}
             size="small"
-            sx={{ color: 'white', textTransform: 'inherit' }}
+            sx={{  textTransform: 'inherit' }}
           >
             {currentUser?.roleName === ROLES_NAME.EMPLOYER
               ? 'Đăng nhập ứng viên'
               : 'Đăng nhập NTD'}
           </Button>
           <Button
-            variant="contained"
+            variant="outlined"
             fullWidth
             size="small"
             color="warning"
-            sx={{ color: 'white', textTransform: 'inherit' }}
+            sx={{  textTransform: 'inherit' }}
             onClick={handleSignUp}
           >
             {currentUser?.roleName === ROLES_NAME.EMPLOYER

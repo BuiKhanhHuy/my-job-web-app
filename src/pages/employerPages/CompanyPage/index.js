@@ -21,12 +21,12 @@ const CompanyPage = () => {
             <Tab label="Đa phương tiện" />
           </TabList>
         </Box>
-        <TabPanel value={0}>
+        <TabPanel value={0} sx={{ px: 1 }}>
           {/* Start: Company card */}
           <CompanyCard />
           {/* End: Company card */}
         </TabPanel>
-        <TabPanel value={1}>
+        <TabPanel value={1} sx={{ px: 1 }}>
           {/* Start: Company image card */}
           <CompanyImageCard />
           {/* End: Company image card */}

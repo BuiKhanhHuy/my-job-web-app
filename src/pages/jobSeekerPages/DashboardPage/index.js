@@ -5,8 +5,9 @@ import { Box, Card, Grid, Stack, Typography } from '@mui/material';
 import JobSeekerQuantityStatistics from '../../components/jobSeekers/JobSeekerQuantityStatistics';
 import SidebarProfile from '../../components/jobSeekers/SidebarProfile';
 import SidebarViewTotal from '../../components/jobSeekers/SidebarViewTotal';
-import DemoChart from '../../../components/charts/DemoChart';
 import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
+import ActivityChart from '../../components/jobSeekers/charts';
+import JobApplicationCard from '../../components/jobSeekers/JobApplicationCard';
 
 const DashboardPage = () => {
   return (
@@ -25,9 +26,9 @@ const DashboardPage = () => {
               {/* End: Sidebar view total */}
             </Card>
             <Card sx={{ p: 2 }}>
-              {/* Start: Chart */}
-              <DemoChart />
-              {/* End: Chart */}
+              {/* Start: JobApplicationCard */}
+              <JobApplicationCard />
+              {/* End: JobApplicationCard */}
             </Card>
           </Stack>
         </Grid>
@@ -44,9 +45,9 @@ const DashboardPage = () => {
                   <Typography variant="h6">Hoạt động của bạn</Typography>
                 </Box>
                 <Box>
-                  {/* Start:  */}
-                  <DemoChart />
-                  {/* End: */}
+                  {/* Start: ActivityChart */}
+                  <ActivityChart />
+                  {/* End: ActivityChart */}
                 </Box>
               </Stack>
             </Card>
@@ -57,7 +58,7 @@ const DashboardPage = () => {
                 </Box>
                 <Box>
                   {/* Start: SuggestedJobPostCard */}
-                  <SuggestedJobPostCard pageSize={10}/>
+                  <SuggestedJobPostCard pageSize={10} />
                   {/* End: SuggestedJobPostCard */}
                 </Box>
               </Stack>

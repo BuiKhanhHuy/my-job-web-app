@@ -117,7 +117,7 @@ const JobPostSearch = () => {
           p: 2,
           boxShadow: 3,
           mt: -1,
-          visibility: showAdvanceFilter ? 'visible' : 'hidden',
+          display: showAdvanceFilter ? 'block' : 'none',
         }}
       >
         <Grid container spacing={2}>

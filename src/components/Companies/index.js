@@ -6,14 +6,11 @@ import { IMAGE_SVG } from '../../configs/constants';
 import NoDataCard from '../NoDataCard';
 import Company from '../Company';
 import companyService from '../../services/companyService';
-import toastMessages from '../../utils/toastMessages';
-import errorHandling from '../../utils/errorHandling';
 
 const Companies = () => {
   const { companyFilter } = useSelector((state) => state.filter);
   const { pageSize } = companyFilter;
   const [isLoading, setIsLoading] = React.useState(true);
-  const [isLoadingFollow, setIsLoadingFollow] = React.useState(false);
   const [companies, setCompanies] = React.useState([]);
   const [page, setPage] = React.useState(1);
   const [count, setCount] = React.useState(0);
@@ -43,46 +40,6 @@ const Companies = () => {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-  };
-
-  const handleFollow = (slug) => {
-    const follow = async (slugCompany) => {
-      setIsLoadingFollow(true);
-      try {
-        const resData = await companyService.followCompany(slugCompany);
-        const isFollowed = resData.data.isFollowed;
-
-        let companiesNew = [];
-        const currentCompany = companies.find(
-          (value) => value.slug === slugCompany
-        );
-
-        for (let i = 0; i < companies.length && currentCompany; i++) {
-          if (companies[i].slug === slugCompany) {
-            companiesNew.push({
-              ...currentCompany,
-              isFollowed: isFollowed,
-              followNumber: isFollowed
-              ? currentCompany.followNumber + 1
-              : currentCompany.followNumber - 1,
-            });
-          } else {
-            companiesNew.push(companies[i]);
-          }
-        }
-
-        setCompanies(companiesNew);
-        toastMessages.success(
-          isFollowed ? 'Theo dõi thành công.' : 'Hủy theo dõi thành công.'
-        );
-      } catch (error) {
-        errorHandling(error);
-      } finally {
-        setIsLoadingFollow(false);
-      }
-    };
-
-    follow(slug);
   };
 
   return (
@@ -137,8 +94,6 @@ const Companies = () => {
                     followNumber={value.followNumber}
                     jobPostNumber={value.jobPostNumber}
                     isFollowed={value.isFollowed}
-                    isLoadingFollow={isLoadingFollow}
-                    handleFollow={handleFollow}
                   />
                 </Grid>
               ))}

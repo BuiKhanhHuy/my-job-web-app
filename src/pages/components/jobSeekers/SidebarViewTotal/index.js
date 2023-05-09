@@ -1,7 +1,38 @@
-import { Avatar, Box, Button, Stack, Typography } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  Typography,
+} from '@mui/material';
+
+import statisticService from '../../../../services/statisticService';
 
 const SidebarViewTotal = () => {
+  const nav = useNavigate();
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [data, setData] = React.useState(null);
+
+  React.useEffect(() => {
+    const statistics = async () => {
+      setIsLoading(true);
+      try {
+        const resData = await statisticService.jobSeekerTotalView();
+
+        setData(resData.data);
+      } catch (error) {
+        console.error('Error: ', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    statistics();
+  }, []);
+
   return (
     <Box>
       <Box>
@@ -16,7 +47,13 @@ const SidebarViewTotal = () => {
         <Stack direction="row" spacing={2}>
           <Box>
             <Avatar sx={{ width: 80, height: 80, bgcolor: '#441da0' }}>
-              24
+              {isLoading ? (
+                <CircularProgress color="secondary" />
+              ) : data === null ? (
+                '---'
+              ) : (
+                data?.totalView
+              )}
             </Avatar>
           </Box>
           <Box>
@@ -28,7 +65,11 @@ const SidebarViewTotal = () => {
         </Stack>
       </Box>
       <Stack sx={{ pt: 3 }} direction="row" justifyContent="flex-end">
-        <Button variant="contained" size="small">
+        <Button
+          variant="contained"
+          size="small"
+          onClick={() => nav('/viec-lam')}
+        >
           Khám phá ngay
         </Button>
       </Stack>

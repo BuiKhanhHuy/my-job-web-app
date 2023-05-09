@@ -16,22 +16,22 @@ const DashboardPage = () => {
           <EmployerQuantityStatistics />
           {/* End: EmployerQuantityStatistics */}
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={12} md={12} lg={6}>
           {/* Start: RecruitmentChart */}
           <RecruitmentChart title="BIỂU ĐỒ TUYỂN DỤNG" />
           {/* End: RecruitmentChart */}
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={12} md={12} lg={6}>
           {/* Start: CandidateChart */}
           <CandidateChart title="BIỂU ĐỒ ỨNG VIÊN" />
           {/* End: CandidateChart */}
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={12} md={12} lg={6}>
           {/* Start: ApplicationChart */}
           <ApplicationChart title="BIỂU ĐỒ TUYỂN DỤNG & ỨNG TUYỂN" />
           {/* End: ApplicationChart */}
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={12} md={12} lg={6}>
           {/* Start: HiringAcademicChart */}
           <HiringAcademicChart title="BIỂU ĐỒ TUYỂN DỤNG THEO CẤP BẬC" />
           {/* End: HiringAcademicChart */}

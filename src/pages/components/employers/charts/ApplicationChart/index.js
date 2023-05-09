@@ -71,7 +71,7 @@ const ApplicationChart = ({ title }) => {
     const statistics = async (data) => {
       setIsLoading(true);
       try {
-        const resData = await statisticService.applicationStatistics(data);
+        const resData = await statisticService.employerApplicationStatistics(data);
 
         setData(resData.data);
       } catch (error) {
