@@ -16,46 +16,63 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ClearIcon from '@mui/icons-material/Clear';
 
 import {
-  ref,
+  collection,
+  getDocs,
+  limit,
+  onSnapshot,
   query,
-  orderByChild,
-  limitToFirst,
-  startAt,
-  get,
-  onValue,
-  remove,
-} from 'firebase/database';
-import database from '../../configs/firebase-config';
+  where,
+  startAfter,
+  orderBy,
+  updateDoc,
+  doc,
+  writeBatch,
+} from 'firebase/firestore';
+import db from '../../configs/firebase-config';
 
 import { IMAGES } from '../../configs/constants';
 import MuiImageCustom from '../MuiImageCustom';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
 
 const NotificationCard = () => {
-  const nav = useNavigate()
+  const nav = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [count, setCount] = React.useState(0);
   const [notifications, setNotifications] = React.useState([]);
   const [lastKey, setLastKey] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  console.log('RENDER NOTI; ');
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   React.useEffect(() => {
-    const notificationsRef = ref(database, `notifications/${currentUser.id}`);
-    let notificationsQuery = query(notificationsRef, orderByChild('time'));
+    const notificationsRef = collection(
+      db,
+      'users',
+      `${currentUser.id}`,
+      'notifications'
+    );
+    const allQuery = query(
+      notificationsRef,
+      where('is_deleted', '==', false),
+      where('is_read', '==', false)
+    );
 
-    // Lắng nghe sự thay đổi số lượng thông báo
-    const unsubscribe = onValue(notificationsQuery, (snapshot) => {
-      const data = snapshot.val();
-      const countNoti = data ? Object.keys(data).length : 0;
-      setCount(countNoti);
+    const unsubscribe = onSnapshot(allQuery, (querySnapshot) => {
+      let total = 0;
+      querySnapshot.forEach((doc) => {
+        total = total + 1;
+      });
+      setCount(total);
     });
 
     return () => {
@@ -64,112 +81,132 @@ const NotificationCard = () => {
   }, [currentUser.id]);
 
   React.useEffect(() => {
-    const notificationsRef = ref(database, `notifications/${currentUser.id}`);
-    let notificationsQuery = query(
-      notificationsRef,
-      orderByChild('time'),
-      limitToFirst(PAGE_SIZE)
+    const notificationsRef = collection(
+      db,
+      'users',
+      `${currentUser.id}`,
+      'notifications'
     );
-    const unsubscribe = onValue(notificationsQuery, (snapshot) => {
-      const data = snapshot.val();
+    const first = query(
+      notificationsRef,
+      where('is_deleted', '==', false),
+      where('is_read', '==', false),
+      orderBy('time', 'desc'),
+      limit(PAGE_SIZE)
+    );
 
-      console.log(data);
-      if (data) {
-        const newNotifications = Object.values(data).map((notification) => ({
-          ...notification,
-          key: Object.keys(data).find((key) => data[key] === notification),
-        }));
+    const unsubscribe = onSnapshot(first, (querySnapshot) => {
+      const notificationList = [];
+      querySnapshot.forEach((doc) => {
+        notificationList.push({
+          ...doc.data(),
+          key: doc.id,
+        });
+      });
+      setNotifications(notificationList);
+      setLastKey(querySnapshot.docs[querySnapshot.docs.length - 1]);
+      console.log('SET NOTI LẠI');
 
-        setNotifications(newNotifications || []);
-      } else {
-        setNotifications([]);
-      }
+      return () => {
+        unsubscribe();
+      };
     });
-
-    return () => {
-      unsubscribe();
-    };
   }, [currentUser.id]);
 
-  React.useEffect(() => {
-    const notificationsRef = ref(database, `notifications/${currentUser.id}`);
-    let notificationsQuery = query(
+  const loadMore = async () => {
+    const notificationsRef = collection(
+      db,
+      'users',
+      `${currentUser.id}`,
+      'notifications'
+    );
+    const nextQuery = query(
       notificationsRef,
-      orderByChild('time'),
-      limitToFirst(PAGE_SIZE)
+      where('is_deleted', '==', false),
+      where('is_read', '==', false),
+      orderBy('time', 'desc'),
+      startAfter(lastKey),
+      limit(PAGE_SIZE)
     );
 
-    if (lastKey) {
-      notificationsQuery = query(
-        notificationsRef,
-        orderByChild('time'),
-        startAt(lastKey),
-        limitToFirst(PAGE_SIZE)
-      );
-    }
+    const nextNotificationList = [];
+    const nextQuerySnapshot = await getDocs(nextQuery);
+    const lastVisible =
+      nextQuerySnapshot.docs[nextQuerySnapshot.docs.length - 1];
 
-    const getNotifications = async () => {
-      const snapshot = await get(notificationsQuery);
-      const data = snapshot.val();
-      if (data) {
-        const newNotifications = Object.values(data).map((notification) => ({
-          ...notification,
-          key: Object.keys(data).find((key) => data[key] === notification),
-        }));
-        setNotifications([...notifications, ...newNotifications]);
-      }
-    };
+    nextQuerySnapshot.forEach((doc) => {
+      nextNotificationList.push({
+        ...doc.data(),
+        key: doc.id,
+      });
+    });
 
-    getNotifications();
-
-    return () => {};
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lastKey, currentUser.id]);
-
-  const loadMore = () => {
-    const lastKeyInList = notifications[notifications.length - 1].time;
-    if (lastKeyInList !== lastKey) setLastKey(lastKeyInList + 1);
+    setNotifications([...notifications, ...nextNotificationList]);
+    setLastKey(lastVisible);
+    console.log(nextNotificationList);
   };
 
   const handleRemove = (key) => {
-    const notiRef = ref(database, `notifications/${currentUser.id}/${key}`);
-    remove(notiRef)
+    updateDoc(doc(db, 'users', `${currentUser.id}`, 'notifications', key), {
+      is_deleted: true,
+    })
       .then(() => {
-        console.log('Node deleted successfully.');
+        const index = notifications.findIndex((value) => value.key === key);
+        if (index > -1) {
+          let newNotifications = [...notifications];
+          newNotifications.splice(index, 1);
+          setNotifications(newNotifications);
+        }
+        console.log('deleted noti success.');
       })
       .catch((error) => {
-        console.error('Error deleting node:', error);
+        console.log('deleted noti failed: ', error);
       });
   };
 
-  const handleRemoveAll = () => {
-    const notiRef = ref(database, `notifications/${currentUser.id}`);
-    remove(notiRef)
-      .then(() => {
-        console.log('Node deleted successfully.');
-      })
-      .catch((error) => {
-        console.error('Error deleting node:', error);
-      });
+  const handleRemoveAll = async () => {
+    // Get a reference to the notifications collection
+    const notificationsRef = collection(
+      db,
+      'users',
+      `${currentUser.id}`,
+      'notifications'
+    );
+    const deleteQuery = query(
+      notificationsRef,
+      where('is_deleted', '==', false)
+    );
+    const querySnapshot = await getDocs(deleteQuery);
+
+    // Create a batch write operation
+    const batch = writeBatch(db);
+
+    // Iterate over all documents and add them to the batch
+    querySnapshot.forEach((doc) => {
+      const docRef = doc.ref;
+      batch.update(docRef, { is_deleted: true });
+    });
+
+    // Commit the batch write operation
+    await batch.commit();
   };
 
   const handleClickItem = (item) => {
     switch (item.type) {
       case 'SYSTEM':
-        nav("/")
+        nav('/');
         break;
       case 'EMPLOYER_VIEWED_RESUME':
-        nav("/ung-vien/cong-ty-cua-toi")
+        nav('/ung-vien/cong-ty-cua-toi');
         break;
       case 'EMPLOYER_SAVED_RESUME':
-        nav("/ung-vien/cong-ty-cua-toi")
+        nav('/ung-vien/cong-ty-cua-toi');
         break;
       case 'APPLY_STATUS':
-        nav("/ung-vien/viec-lam-cua-toi")
+        nav('/ung-vien/viec-lam-cua-toi');
         break;
       case 'COMPANY_FOLLOWED':
-        nav("/nha-tuyen-dung/danh-sach-ung-vien")
+        nav('/nha-tuyen-dung/danh-sach-ung-vien');
         break;
       default:
         break;
@@ -287,7 +324,7 @@ const NotificationCard = () => {
                             color="#bdbdbd"
                           >
                             <Moment fromNow>
-                              {value.time * 1000}
+                              {value?.time?.seconds * 1000}
                             </Moment>
                           </Typography>
                         </Box>
