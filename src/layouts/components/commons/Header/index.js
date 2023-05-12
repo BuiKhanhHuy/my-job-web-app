@@ -114,7 +114,7 @@ const Header = (props) => {
       sx={{
         ml: 3,
         display: {
-          xs: 'none',
+          xs: 'block',
           sm: 'block',
           md: 'block',
           lg: 'block',
@@ -123,18 +123,45 @@ const Header = (props) => {
       }}
     >
       <Stack direction="row" spacing={1}>
+        <Avatar
+          src={IMAGES.getLogo('medium', 'light')}
+          sx={{
+            display: {
+              xs: 'flex',
+              sm: 'flex',
+              md: 'none',
+              lg: 'none',
+              xl: 'none',
+            },
+            mr: 1,
+            width: 40,
+            height: 40,
+          }}
+          variant="square"
+          alt="LOGO"
+        />
+
         <Button
-          variant="contained"
-          color="info"
+          variant="outlined"
+          color="inherit"
           sx={{ color: 'white' }}
           onClick={handleLogin}
         >
           Đăng nhập
         </Button>
         <Button
-          variant="contained"
-          color="warning"
-          sx={{ color: 'white' }}
+          variant="outlined"
+          color="inherit"
+          sx={{
+            color: 'white',
+            display: {
+              xs: 'none',
+              sm: 'block',
+              md: 'block',
+              lg: 'block',
+              xl: 'block',
+            },
+          }}
           onClick={handleSignUp}
         >
           Đăng ký
@@ -148,20 +175,36 @@ const Header = (props) => {
       <AppBar position="sticky" sx={{ boxShadow: 0 }} id="common-header">
         <Container maxWidth="lg">
           <Toolbar disableGutters>
-            <Stack direction="row" alignItems="center" component={Link} to="/">
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              component={Link}
+              to="/"
+            >
               <Avatar
                 src={IMAGES.getTextLogo('light')}
                 sx={{
                   display: { xs: 'none', md: 'flex' },
                   mr: 1,
                   width: '100%',
-                  height: 45,
+                  height: 42,
+                  pb: 0.5,
                 }}
                 variant="square"
                 alt="LOGO"
               />
             </Stack>
-
+            <Divider
+              orientation="vertical"
+              flexItem
+              variant="middle"
+              sx={{
+                mx: 2,
+                borderColor: 'lightgray',
+                display: { xs: 'none', md: 'flex' },
+              }}
+            />
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 color="inherit"
@@ -215,7 +258,6 @@ const Header = (props) => {
                     mr: 1,
                     color: 'white',
                     display: 'block',
-                    // backgroundColor: '#fca34d',
                   }}
                 >
                   {page.label}

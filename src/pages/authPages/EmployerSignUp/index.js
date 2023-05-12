@@ -76,12 +76,13 @@ const EmployerSignUp = () => {
       <Container
         maxWidth="md"
         sx={{
-          marginTop: 8,
+          marginTop: { xs: 2, sm: 4, md: 8, lg: 8, xl: 8 },
+          p: 0,
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        <Card sx={{ p: 6, pt: 2 }}>
+        <Card sx={{ p: { xs: 2, sm: 6, md: 6, lg: 6, xl: 6 }, pt: 2 }}>
           <Box
             sx={{
               display: 'flex',
@@ -97,7 +98,7 @@ const EmployerSignUp = () => {
               Đăng ký tài khoản nhà tuyển dụng
             </Typography>
           </Box>
-          <Box sx={{ mt: 4 }}>
+          <Box sx={{ mt: { xs: 3, sm: 4, md: 4, lg: 4, xl: 4 } }}>
             {/* Start: Employer sign up form */}
             <EmployerSignUpForm
               onSignUp={handleRegister}

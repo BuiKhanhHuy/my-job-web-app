@@ -156,6 +156,7 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
           <Button
             variant="outlined"
             fullWidth
+            color="inherit"
             onClick={handleLogin}
             size="small"
             sx={{  textTransform: 'inherit' }}
@@ -168,7 +169,7 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
             variant="outlined"
             fullWidth
             size="small"
-            color="warning"
+            color="inherit"
             sx={{  textTransform: 'inherit' }}
             onClick={handleSignUp}
           >

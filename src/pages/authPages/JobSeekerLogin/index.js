@@ -187,11 +187,11 @@ const JobSeekerLogin = () => {
         AUTH_CONFIG.FACEBOOK_CLIENT_SECRET,
         AUTH_PROVIDER.FACEBOOK,
         accessToken
-      );
-    }
-  };
-
-  const handleGoogleLogin = (result) => {
+        );
+      }
+    };
+    
+    const handleGoogleLogin = (result) => {
     const accessToken = result?.data?.access_token;
     if (accessToken) {
       handleSocialLogin(
@@ -208,18 +208,18 @@ const JobSeekerLogin = () => {
       <Container
         maxWidth="sm"
         sx={{
-          marginTop: 8,
+          marginTop:  {xs: 2, sm: 4, md: 8, lg: 8, xl: 8},
+          p: 0,
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        <Card sx={{ p: 6, pt: 2 }}>
+        <Card sx={{ p: {xs: 2, sm: 6, md: 6, lg: 6, xl: 6}, pt: 2 }}>
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              mb: 2,
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -248,7 +248,7 @@ const JobSeekerLogin = () => {
             ''
           )}
 
-          <Box sx={{ mt: 4 }}>
+          <Box sx={{ mt: {xs: 3, sm: 4, md: 4, lg: 4, xl: 4} }}>
             {/* Start: login form */}
             <JobSeekerLoginForm
               onLogin={handleLogin}

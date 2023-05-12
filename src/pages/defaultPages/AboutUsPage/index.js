@@ -22,7 +22,7 @@ const AboutUsPage = () => {
         </Box>
         <Box>
           <Grid container spacing={3}>
-            <Grid xs={3} item>
+            <Grid xs={12} sm={12} md={6} lg={3} xl={3} item>
               <Stack spacing={1}>
                 <Typography variant="h6" sx={{ color: '#fca34d' }}>
                   Website
@@ -33,7 +33,7 @@ const AboutUsPage = () => {
                 </Typography>
               </Stack>
             </Grid>
-            <Grid xs={3} item>
+            <Grid xs={12} sm={12} md={6} lg={3} xl={3} item>
               <Stack spacing={1}>
                 <Typography variant="h6" sx={{ color: '#fca34d' }}>
                   Mobile
@@ -44,7 +44,7 @@ const AboutUsPage = () => {
                 </Typography>
               </Stack>
             </Grid>
-            <Grid xs={3} item>
+            <Grid xs={12} sm={12} md={6} lg={3} xl={3} item>
               <Stack spacing={1}>
                 <Typography variant="h6" sx={{ color: '#fca34d' }}>
                   Ngành tập trung
@@ -57,7 +57,7 @@ const AboutUsPage = () => {
                 </Typography>
               </Stack>
             </Grid>
-            <Grid xs={3} item>
+            <Grid xs={12} sm={12} md={6} lg={3} xl={3} item>
               <Stack spacing={1}>
                 <Typography variant="h6" sx={{ color: '#fca34d' }}>
                   Tiết kiệm chi phí

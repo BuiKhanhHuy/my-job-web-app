@@ -104,9 +104,26 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
       <AccountSwitchMenu isShowButton={true} />
       {/* Start: Account switch menu */}
 
-      <Divider variant="middle" sx={{ mt: 2 }} />
+      <Divider
+        variant="middle"
+        sx={{
+          mt: 2,
+          display: {
+            xs: 'block',
+            sm: 'none',
+            md: 'none',
+            lg: 'none',
+            xl: 'none',
+          },
+        }}
+      />
 
-      <Stack spacing={1} sx={{ p: 2 }}>
+      <Stack
+        spacing={1}
+        sx={{
+          p: 2,
+        }}
+      >
         {isAuthenticated ? (
           <Button
             variant="contained"
@@ -127,16 +144,17 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
           <>
             <Button
               variant="contained"
-              color="info"
-              sx={{ color: 'white' }}
-              onClick={() => nav('/dang-nhap-ung-vien')}
-            >
-              Đăng nhập
-            </Button>
-            <Button
-              variant="contained"
-              color="warning"
-              sx={{ color: 'white' }}
+              color="primary"
+              sx={{
+                color: 'white',
+                display: {
+                  xs: 'block',
+                  sm: 'none',
+                  md: 'none',
+                  lg: 'none',
+                  xl: 'none',
+                },
+              }}
               onClick={() => nav('/dang-ky-tai-khoan-ung-vien')}
             >
               Đăng ký
@@ -157,7 +175,7 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
         keepMounted: true, // Better open performance on mobile.
       }}
       sx={{
-        display: { xs: 'block', sm: 'none' },
+        display: { xs: 'block', sm: 'block', md: 'none' },
         '& .MuiDrawer-paper': {
           boxSizing: 'border-box',
           width: drawerWidth,

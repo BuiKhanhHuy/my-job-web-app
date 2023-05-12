@@ -100,6 +100,8 @@ const JobSeekerSignUpForm = ({
         // onLoginStart={onLoginStart}
         // onLogoutSuccess={onLogoutSuccess}
         // redirect_uri={REDIRECT_URI}
+        isOnlyGetToken={true}
+        ux_mode='popup'
         onResolve={onFacebookRegister}
         onReject={(err) => {
           console.log(err);
@@ -119,6 +121,8 @@ const JobSeekerSignUpForm = ({
         client_id={AUTH_CONFIG.GOOGLE_CLIENT_ID}
         // onLoginStart={onLoginStart}
         // redirect_uri={REDIRECT_URI}
+        isOnlyGetToken={true}
+        ux_mode='popup'
         access_type="offline"
         scope="openid profile email"
         discoveryDocs="claims_supported"

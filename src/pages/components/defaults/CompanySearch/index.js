@@ -34,7 +34,7 @@ const CompanySearch = () => {
   };
 
   return (
-    <Card sx={{ p: 2, boxShadow: 0, backgroundColor: '#441da0', width: '80%' }}>
+    <Card sx={{ p: 2, boxShadow: 0, backgroundColor: '#441da0', width: {xs: "100%", sm: "100%", md: '100%', lg: '80%', xl: '80%'} }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
           <InputBaseSearchHomeCustom

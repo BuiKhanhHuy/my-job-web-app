@@ -62,6 +62,8 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
         onLoginStart={() => console.log('START FACEBOOK')}
         // onLogoutSuccess={onLogoutSuccess}
         // redirect_uri={REDIRECT_URI}
+        isOnlyGetToken={true}
+        ux_mode='popup'
         onResolve={onFacebookLogin}
         onReject={(err) => {
           console.log(err);
@@ -81,6 +83,7 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
         client_id={AUTH_CONFIG.GOOGLE_CLIENT_ID}
         onLoginStart={() => console.log('START GOOGLE')}
         // redirect_uri={REDIRECT_URI}
+        isOnlyGetToken={true}
         access_type="offline"
         scope="openid profile email"
         discoveryDocs="claims_supported"
@@ -88,6 +91,7 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
         onReject={(err) => {
           console.log(err);
         }}
+        ux_mode='popup'
       >
         <Button
           fullWidth

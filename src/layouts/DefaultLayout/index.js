@@ -22,7 +22,13 @@ const DefaultLayout = () => {
       </Container>
       <Box
         sx={{
-          mt: 10,
+          mt: {
+            xs: 2,
+            sm: 10,
+            md: 10,
+            lg: 10,
+            xl: 10,
+          },
           px: {
             xs: 1,
             sm: 5,

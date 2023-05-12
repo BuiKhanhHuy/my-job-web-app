@@ -39,6 +39,7 @@ const NotificationCard = () => {
   const nav = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [count, setCount] = React.useState(0);
+  const [badgeCount, setBadgeCount] = React.useState(0);
   const [notifications, setNotifications] = React.useState([]);
   const [lastKey, setLastKey] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -72,6 +73,28 @@ const NotificationCard = () => {
       querySnapshot.forEach((doc) => {
         total = total + 1;
       });
+      setBadgeCount(total);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [currentUser.id]);
+
+  React.useEffect(() => {
+    const notificationsRef = collection(
+      db,
+      'users',
+      `${currentUser.id}`,
+      'notifications'
+    );
+    const allQuery = query(notificationsRef, where('is_deleted', '==', false));
+
+    const unsubscribe = onSnapshot(allQuery, (querySnapshot) => {
+      let total = 0;
+      querySnapshot.forEach((doc) => {
+        total = total + 1;
+      });
       setCount(total);
     });
 
@@ -90,7 +113,6 @@ const NotificationCard = () => {
     const first = query(
       notificationsRef,
       where('is_deleted', '==', false),
-      where('is_read', '==', false),
       orderBy('time', 'desc'),
       limit(PAGE_SIZE)
     );
@@ -123,7 +145,6 @@ const NotificationCard = () => {
     const nextQuery = query(
       notificationsRef,
       where('is_deleted', '==', false),
-      where('is_read', '==', false),
       orderBy('time', 'desc'),
       startAfter(lastKey),
       limit(PAGE_SIZE)
@@ -164,6 +185,18 @@ const NotificationCard = () => {
       });
   };
 
+  const handleRead = (key) => {
+    updateDoc(doc(db, 'users', `${currentUser.id}`, 'notifications', key), {
+      is_read: true,
+    })
+      .then(() => {
+        console.log('read noti success.');
+      })
+      .catch((error) => {
+        console.log('read noti failed: ', error);
+      });
+  };
+
   const handleRemoveAll = async () => {
     // Get a reference to the notifications collection
     const notificationsRef = collection(
@@ -194,19 +227,30 @@ const NotificationCard = () => {
   const handleClickItem = (item) => {
     switch (item.type) {
       case 'SYSTEM':
+        handleRead(item.key);
         nav('/');
         break;
       case 'EMPLOYER_VIEWED_RESUME':
+        handleRead(item.key);
         nav('/ung-vien/cong-ty-cua-toi');
         break;
       case 'EMPLOYER_SAVED_RESUME':
+        handleRead(item.key);
         nav('/ung-vien/cong-ty-cua-toi');
         break;
       case 'APPLY_STATUS':
+        handleRead(item.key);
         nav('/ung-vien/viec-lam-cua-toi');
         break;
       case 'COMPANY_FOLLOWED':
+        handleRead(item.key);
         nav('/nha-tuyen-dung/danh-sach-ung-vien');
+        break;
+      case 'APPLY_JOB':
+        handleRead(item.key);
+        nav(
+          `/nha-tuyen-dung/chi-tiet-ung-vien/${item['APPLY_JOB']?.resume_slug}`
+        );
         break;
       default:
         break;
@@ -224,7 +268,7 @@ const NotificationCard = () => {
           color="inherit"
           onClick={handleClick}
         >
-          <Badge badgeContent={count} color="error">
+          <Badge badgeContent={badgeCount} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -317,7 +361,7 @@ const NotificationCard = () => {
                             {value.content}
                           </Typography>
                         </Box>
-                        <Box>
+                        <Stack direction="row" justifyContent="space-between">
                           <Typography
                             variant="caption"
                             fontSize={12}
@@ -327,7 +371,14 @@ const NotificationCard = () => {
                               {value?.time?.seconds * 1000}
                             </Moment>
                           </Typography>
-                        </Box>
+                          <Typography variant="caption" fontSize={12}>
+                            {value?.is_read === true ? (
+                              <span style={{ color: '#bdbdbd' }}>Đã đọc</span>
+                            ) : (
+                              <span style={{ color: 'red' }}>Mới</span>
+                            )}
+                          </Typography>
+                        </Stack>
                       </Stack>
                     </Box>
                     <Box>
