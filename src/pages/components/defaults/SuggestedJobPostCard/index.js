@@ -1,12 +1,14 @@
 import React from 'react';
 import { Grid, Pagination, Stack } from '@mui/material';
 
-import { IMAGE_SVG } from '../../../../configs/constants';
+import { IMAGE_SVG, ROLES_NAME } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import jobService from '../../../../services/jobService';
 import JobPost from '../../../../components/JobPost';
+import { useSelector } from 'react-redux';
 
 const SuggestedJobPostCard = ({ pageSize = 12, fullWidth = false }) => {
+  const { currentUser, isAuthenticated } = useSelector((state) => state.user);
   const [isLoading, setIsLoading] = React.useState(true);
   const [jobPosts, setJobPosts] = React.useState([]);
   const [page, setPage] = React.useState(1);
@@ -58,7 +60,11 @@ const SuggestedJobPostCard = ({ pageSize = 12, fullWidth = false }) => {
       }
     };
 
-    getJobPosts();
+    if (isAuthenticated && currentUser?.roleName === ROLES_NAME.JOB_SEEKER) {
+      getJobPosts();
+    } else {
+      setIsLoading(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 

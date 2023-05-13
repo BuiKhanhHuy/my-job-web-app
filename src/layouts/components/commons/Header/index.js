@@ -123,24 +123,6 @@ const Header = (props) => {
       }}
     >
       <Stack direction="row" spacing={1}>
-        <Avatar
-          src={IMAGES.getLogo('medium', 'light')}
-          sx={{
-            display: {
-              xs: 'flex',
-              sm: 'flex',
-              md: 'none',
-              lg: 'none',
-              xl: 'none',
-            },
-            mr: 1,
-            width: 40,
-            height: 40,
-          }}
-          variant="square"
-          alt="LOGO"
-        />
-
         <Button
           variant="outlined"
           color="inherit"
@@ -205,16 +187,34 @@ const Header = (props) => {
                 display: { xs: 'none', md: 'flex' },
               }}
             />
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { md: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { md: 'none' } }}
-              >
-                <MenuIcon />
-              </IconButton>
+              <Avatar
+                src={IMAGES.getLogo('medium', 'light')}
+                sx={{
+                  display: {
+                    xs: 'flex',
+                    sm: 'flex',
+                    md: 'none',
+                    lg: 'none',
+                    xl: 'none',
+                  },
+                  mr: 1,
+                  width: 40,
+                  height: 40,
+                }}
+                variant="square"
+                alt="LOGO"
+              />
+
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorElNav}

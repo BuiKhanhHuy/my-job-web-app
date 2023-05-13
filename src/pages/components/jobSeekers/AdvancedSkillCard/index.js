@@ -56,7 +56,7 @@ const Loading = (
       {Array(4)
         .fill(0)
         .map((item, index) => (
-          <Box sx={{ py: 0.5 }}>
+          <Box sx={{ py: 0.5 }} key={index}>
             <Skeleton height={30} />
           </Box>
         ))}
