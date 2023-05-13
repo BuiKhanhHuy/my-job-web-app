@@ -3,8 +3,6 @@ import queryString from 'query-string';
 import tokenService from '../services/tokenService';
 
 const httpRequest = axios.create({
-  // baseURL: 'https://bkhuy-myjob.onrender.com/',
-  // baseURL: 'https://bkhuy.pythonanywhere.com/',
   baseURL: 'https://bkhuy-myjob-api.up.railway.app/',
   // baseURL: 'http://127.0.0.1:8000/',
   headers: {
