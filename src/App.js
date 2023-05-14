@@ -3,6 +3,9 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+// import "@fontsource/open-sans";
+// import "@fontsource/open-sans/500.css";
+
 import './App.css';
 
 import * as React from 'react';
@@ -206,6 +209,7 @@ function App() {
             },
           },
           typography: {
+            fontFamily: ['Open Sans', 'sans-serif'].join(','),
             h4: {
               fontWeight: 800,
             },

@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@fontsource/open-sans": "^4.5.14",
     "@fontsource/public-sans": "^4.5.12",
     "@fontsource/roboto": "^4.5.8",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",

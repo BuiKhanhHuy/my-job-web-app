@@ -67,7 +67,7 @@ const JobPost = ({
             <Tooltip followCursor title={jobName}>
               <Typography
                 variant="subtitle2"
-                sx={{ fontSize: 15 }}
+                sx={{ fontSize: 15, fontWeight: 'bold' }}
                 noWrap
                 style={{
                   textOverflow: 'ellipsis',
