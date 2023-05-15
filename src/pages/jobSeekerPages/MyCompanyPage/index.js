@@ -28,7 +28,7 @@ const MyCompanyPage = () => {
                   >
                     <Tab
                       label="Nhà tuyển dụng xem hồ sơ"
-                      sx={{ textTransform: 'capitalize' }}
+                      sx={{ textTransform: 'capitalize'}}
                       value="1"
                     />
                     <Tab
@@ -38,12 +38,12 @@ const MyCompanyPage = () => {
                     />
                   </TabList>
                 </Box>
-                <TabPanel value="1">
+                <TabPanel value="1" sx={{px: {xs: 0, sm: 1, md: 2, lg: 2, xl: 2} }}>
                   {/* Start: CompanyViewedCard */}
                   <CompanyViewedCard />
                   {/* End: CompanyViewedCard */}
                 </TabPanel>
-                <TabPanel value="2">
+                <TabPanel value="2" sx={{px: {xs: 0, sm: 1, md: 2, lg: 2, xl: 2} }}>
                   {/* Start: CompanyFollowedCard */}
                   <CompanyFollowedCard />
                   {/* End: CompanyFollowedCard */}
@@ -55,7 +55,7 @@ const MyCompanyPage = () => {
       </Grid>
       <Grid xs={12} sm={12} md={5} lg={4} xl={4} item>
         <Stack spacing={2}>
-          <Card sx={{ p: 2 }}>
+          <Card  sx={{p: {xs: 1, sm: 1, md: 2, lg: 2, xl: 2} }}> 
             <Stack>
               <Box sx={{ mb: 2 }}>
                 <Typography variant="h6">Việc làm phù hợp</Typography>

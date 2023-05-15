@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Grid, Pagination, Stack } from '@mui/material';
+import { Grid, Pagination, Stack } from '@mui/material';
 
 import jobService from '../../../../services/jobService';
 import JobPost from '../../../../components/JobPost';
@@ -7,7 +7,7 @@ import NoDataCard from '../../../../components/NoDataCard';
 
 const pageSize = 12;
 
-const FilterJobPostCard = ({ params = {}, fullWidth = false }) => {
+const FilterJobPostCard = ({ params = {}}) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [jobPosts, setJobPosts] = React.useState([]);
   const [page, setPage] = React.useState(1);
@@ -17,7 +17,9 @@ const FilterJobPostCard = ({ params = {}, fullWidth = false }) => {
 
   React.useEffect(() => {
     const handleResize = () => {
-      const newWidth = document.getElementById('filter-job-post-card').offsetWidth;
+      const newWidth = document.getElementById(
+        'filter-job-post-card'
+      ).offsetWidth;
       setParentWidth(newWidth);
     };
 
@@ -60,7 +62,7 @@ const FilterJobPostCard = ({ params = {}, fullWidth = false }) => {
 
     getJobPosts(params);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params, page]);
+  }, [page]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -72,11 +74,7 @@ const FilterJobPostCard = ({ params = {}, fullWidth = false }) => {
         {isLoading ? (
           <Grid container spacing={2}>
             {Array.from(Array(pageSize).keys()).map((item) => (
-              <Grid
-                key={item}
-                item
-                xs={col}
-              >
+              <Grid key={item} item xs={col}>
                 <JobPost.Loading></JobPost.Loading>
               </Grid>
             ))}
@@ -87,11 +85,7 @@ const FilterJobPostCard = ({ params = {}, fullWidth = false }) => {
           <>
             <Grid container spacing={2}>
               {jobPosts.map((value) => (
-                <Grid
-                  item
-                  xs={col}
-                  key={value.id}
-                >
+                <Grid item xs={col} key={value.id}>
                   {/* Start: Job post */}
                   <JobPost
                     id={value.id}

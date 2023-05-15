@@ -68,7 +68,7 @@ const Header = (props) => {
   };
 
   const authArea = isAuthenticated ? (
-    <Box sx={{ flexGrow: 0, ml: 3 }}>
+    <Box sx={{ flexGrow: 0, ml: 1 }}>
       <Card
         variant="outlined"
         onClick={handleOpenUserMenu}

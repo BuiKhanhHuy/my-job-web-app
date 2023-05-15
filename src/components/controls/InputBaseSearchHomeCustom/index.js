@@ -4,12 +4,13 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
 import { Controller } from 'react-hook-form';
+import { IconButton, InputAdornment } from '@mui/material';
 
 const InputBaseSearchHomeCustom = ({
   name,
   control,
-  onHandleSubmit = null,
   placeholder,
   showSubmitButton = false,
 }) => {
@@ -17,7 +18,6 @@ const InputBaseSearchHomeCustom = ({
 
   return (
     <Paper
-      component="form"
       sx={{
         boxShadow: 0,
         p: '3.5px 4px',
@@ -41,11 +41,21 @@ const InputBaseSearchHomeCustom = ({
             value={field.value}
             onChange={field.onChange}
             onBlur={field.onBlur}
+            endAdornment={
+              field.value !== '' &&
+              field.value !== null && (
+                <InputAdornment position="end">
+                  <IconButton size="small" onClick={() => field.onChange('')}>
+                    <ClearIcon fontSize="inherit" />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }
           />
         )}
       />
       {showSubmitButton && (
-        <Button variant="contained" color="primary" onClick={onHandleSubmit}>
+        <Button variant="contained" type="submit" color="primary">
           Tìm kiếm
         </Button>
       )}

@@ -126,7 +126,17 @@ const CompanyDetailPage = () => {
               />
             </Box>
             <Box sx={{ p: 3, pt: 1 }}>
-              <Stack direction="row" spacing={2} alignItems="center">
+              <Stack
+                direction={{
+                  xs: 'column',
+                  sm: 'column',
+                  md: 'row',
+                  lg: 'row',
+                  xl: 'row',
+                }}
+                spacing={2}
+                alignItems="center"
+              >
                 <Box>
                   <MuiImageCustom
                     src={companyDetail.companyImageUrl}
@@ -144,11 +154,32 @@ const CompanyDetailPage = () => {
                 </Box>
                 <Box flex={1}>
                   <Box>
-                    <Typography variant="h5" gutterBottom>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      sx={{
+                        textAlign: {
+                          xs: 'center',
+                          sm: 'center',
+                          md: 'left',
+                          lg: 'left',
+                          xl: 'left',
+                        },
+                      }}
+                    >
                       {companyDetail.companyName}
                     </Typography>
                   </Box>
-                  <Stack direction="row" spacing={3}>
+                  <Stack
+                    direction={{
+                      xs: 'column',
+                      sm: 'row',
+                      md: 'row',
+                      lg: 'row',
+                      xl: 'row',
+                    }}
+                    spacing={{ xs: 0.5, sm: 2, md: 3, lg: 3, xl: 3 }}
+                  >
                     <Box>
                       <Typography variant="subtitle1" gutterBottom>
                         <FontAwesomeIcon
@@ -168,7 +199,11 @@ const CompanyDetailPage = () => {
                           companyDetail.employeeSize
                         ] || (
                           <span
-                            style={{ color: '#9e9e9e', fontStyle: 'italic' }}
+                            style={{
+                              color: '#e0e0e0',
+                              fontStyle: 'italic',
+                              fontSize: 13,
+                            }}
                           >
                             Chưa cập nhật
                           </span>
@@ -230,7 +265,7 @@ const CompanyDetailPage = () => {
           </Card>
           <Grid container spacing={2} sx={{ mt: 1 }}>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-              <Card sx={{ p: 3 }}>
+              <Card sx={{ p: { xs: 2, sm: 2, md: 3, lg: 3, xl: 3 } }}>
                 <Stack spacing={4}>
                   {/* Start: mo ta cong ty */}
                   <Box>
@@ -242,12 +277,24 @@ const CompanyDetailPage = () => {
                       Về công ty
                     </Typography>
                     <Box sx={{ mt: 2 }}>
-                      <Typography>
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: companyDetail?.description,
-                          }}
-                        ></div>
+                      <Typography style={{ textAlign: 'justify' }}>
+                        {companyDetail?.description ? (
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: companyDetail?.description,
+                            }}
+                          ></div>
+                        ) : (
+                          <span
+                            style={{
+                              color: '#e0e0e0',
+                              fontStyle: 'italic',
+                              fontSize: 13,
+                            }}
+                          >
+                            Chưa cập nhật
+                          </span>
+                        )}
                       </Typography>
                     </Box>
                   </Box>
@@ -275,7 +322,7 @@ const CompanyDetailPage = () => {
               </Card>
             </Grid>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-              <Card sx={{ p: 3 }}>
+              <Card sx={{ p: { xs: 2, sm: 2, md: 3, lg: 3, xl: 3 } }}>
                 <Stack spacing={2}>
                   <Box>
                     <Typography variant="h6" sx={{ color: '#441da0' }}>
@@ -334,7 +381,13 @@ const CompanyDetailPage = () => {
                           )}
                         </>
                       ) : (
-                        <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                        <span
+                          style={{
+                            color: '#e0e0e0',
+                            fontStyle: 'italic',
+                            fontSize: 13,
+                          }}
+                        >
                           Chưa cập nhật
                         </span>
                       )}
@@ -373,7 +426,11 @@ const CompanyDetailPage = () => {
                         />{' '}
                         {companyDetail.location?.address || (
                           <span
-                            style={{ color: '#9e9e9e', fontStyle: 'italic' }}
+                            style={{
+                              color: '#e0e0e0',
+                              fontStyle: 'italic',
+                              fontSize: 13,
+                            }}
                           >
                             Chưa cập nhật
                           </span>
@@ -399,7 +456,7 @@ const CompanyDetailPage = () => {
                       <Typography variant="h6" sx={{ color: '#441da0' }}>
                         Hình ảnh
                       </Typography>
-                      <Box sx={{ mt: 1 }}>
+                      <Box sx={{ mt: 1, borderRadius: 2, overflow: 'hidden' }}>
                         <ImageGalleryCustom images={imageList} />
                       </Box>
                     </Box>

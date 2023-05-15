@@ -21,12 +21,12 @@ const ProfilePage = () => {
       <Grid container spacing={2}>
         <Grid xs={12} sm={12} md={12} lg={8} xl={8} item>
           <Stack spacing={2}>
-            <Card sx={{ p: 3 }}>
+            <Card sx={{ p: { xs: 2, sm: 2, md: 2, lg: 3, xl: 3 } }}>
               {/* Start: Box profile */}
               <BoxProfile title="MyJob Profile" />
               {/* End: Box profile  */}
             </Card>
-            <Card sx={{ p: 3 }}>
+            <Card sx={{ p: { xs: 2, sm: 2, md: 2, lg: 3, xl: 3 } }}>
               {/* Start: Profile upload */}
               <ProfileUpload title="Hồ sơ đính kèm" />
               {/* End: Profile upload */}
@@ -35,7 +35,7 @@ const ProfilePage = () => {
         </Grid>
         <Grid xs={12} sm={12} md={12} lg={4} xl={4} item>
           <Stack spacing={2}>
-            <Card sx={{ p: 2 }}>
+            <Card sx={{ p: { xs: 1, sm: 1, md: 2, lg: 2, xl: 2 } }}>
               <Stack>
                 <Box>
                   <Typography variant="h6">Ai đã xem hồ sơ của bạn</Typography>

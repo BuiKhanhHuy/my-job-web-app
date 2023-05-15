@@ -86,7 +86,7 @@ const ActivityChart = () => {
 
   return (
     <>
-      <Box sx={{ px: 1 }}>
+      <Box sx={{ px: { xs: 0, sm: 1, md: 1, lg: 1, xl: 1 }  }}>
         <Stack justifyContent="center" alignItems="center" height={300}>
           {isLoading ? (
             <CircularProgress color="secondary" />

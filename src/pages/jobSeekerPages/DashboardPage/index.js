@@ -51,7 +51,7 @@ const DashboardPage = () => {
                 </Box>
               </Stack>
             </Card>
-            <Card sx={{ p: 2 }}>
+            <Card sx={{p: { xs: 1, sm: 1, md: 2, lg: 2, xl: 2 }  }}>
               <Stack>
                 <Box sx={{ mb: 2 }}>
                   <Typography variant="h6">Việc làm gợi ý</Typography>

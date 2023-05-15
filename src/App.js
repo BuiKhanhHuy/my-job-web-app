@@ -1,10 +1,4 @@
 import 'sweetalert2/src/sweetalert2.scss';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-// import "@fontsource/open-sans";
-// import "@fontsource/open-sans/500.css";
 
 import './App.css';
 
@@ -215,7 +209,7 @@ function App() {
             },
             h5: {
               fontWeight: 700,
-              fontSize: 22,
+              fontSize: 21,
             },
             h6: {
               fontSize: '20px',

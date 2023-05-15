@@ -56,14 +56,9 @@ const SavedResumeTable = (props) => {
                   </Tooltip>
                 )}{' '}
                 {row?.resume?.title || (
-                  <span
-                    style={{
-                      color: '#9e9e9e',
-                      fontStyle: 'italic',
-                    }}
-                  >
-                    Chưa cập nhật
-                  </span>
+                  <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                  Chưa cập nhật
+                </span>
                 )}{' '}
               </TableCell>
               <TableCell align="left">
@@ -74,38 +69,23 @@ const SavedResumeTable = (props) => {
                   row?.resume?.salaryMin,
                   row?.resume?.salaryMax
                 ) || (
-                  <span
-                    style={{
-                      color: '#9e9e9e',
-                      fontStyle: 'italic',
-                    }}
-                  >
-                    Chưa cập nhật
-                  </span>
+                  <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                  Chưa cập nhật
+                </span>
                 )}
               </TableCell>
               <TableCell align="left">
                 {allConfig?.experienceDict[row?.resume?.experience] || (
-                  <span
-                    style={{
-                      color: '#9e9e9e',
-                      fontStyle: 'italic',
-                    }}
-                  >
+                    <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
                     Chưa cập nhật
                   </span>
                 )}
               </TableCell>
               <TableCell align="left">
                 {allConfig?.cityDict[row?.resume?.city] || (
-                  <span
-                    style={{
-                      color: '#9e9e9e',
-                      fontStyle: 'italic',
-                    }}
-                  >
-                    Chưa cập nhật
-                  </span>
+                   <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                   Chưa cập nhật
+                 </span>
                 )}
               </TableCell>
               <TableCell align="left">

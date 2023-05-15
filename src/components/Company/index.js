@@ -182,7 +182,7 @@ const Company = ({
                 color="#bdbdbd"
               />{' '}
               {fieldOperation || (
-                <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                  <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
                   Chưa cập nhật
                 </span>
               )}
@@ -194,9 +194,9 @@ const Company = ({
                 color="#bdbdbd"
               />{' '}
               {allConfig?.cityDict[city] || (
-                <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                  Chưa cập nhật
-                </span>
+                <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                Chưa cập nhật
+              </span>
               )}
             </Typography>
             <Typography variant="body2" gutterBottom>
@@ -206,9 +206,9 @@ const Company = ({
                 color="#bdbdbd"
               />{' '}
               {allConfig?.employeeSizeDict[employeeSize] || (
-                <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                  Chưa cập nhật
-                </span>
+                 <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                 Chưa cập nhật
+               </span>
               )}
             </Typography>
             <Typography variant="body2" gutterBottom>

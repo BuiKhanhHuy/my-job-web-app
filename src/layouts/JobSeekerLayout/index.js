@@ -26,7 +26,13 @@ const JobSeekerLayout = () => {
       <Container
         maxWidth="xl"
         sx={{
-          my: 4,
+          my: {
+            xs: 1.5,
+            sm: 2,
+            md: 4,
+            lg: 4,
+            xl: 4,
+          },
           paddingLeft: { xs: 1, sm: 4, md: 6, lg: 8, xl: 8 },
           paddingRight: { xs: 1, sm: 4, md: 6, lg: 8, xl: 8 },
         }}
@@ -35,7 +41,13 @@ const JobSeekerLayout = () => {
       </Container>
       <Box
         sx={{
-          mt: 10,
+          mt: {
+            xs: 0,
+            sm: 2,
+            md: 6,
+            lg: 8,
+            xl: 10,
+          },
           px: {
             xs: 1,
             sm: 5,

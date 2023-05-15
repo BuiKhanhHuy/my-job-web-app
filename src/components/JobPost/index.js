@@ -61,13 +61,16 @@ const JobPost = ({
             direction="row"
             alignItems="center"
             style={{ overflow: 'hidden' }}
-            spacing={1}
-            mb={0.5}
+            spacing={1.25}
           >
             <Tooltip followCursor title={jobName}>
               <Typography
                 variant="subtitle2"
-                sx={{ fontSize: 15, fontWeight: 'bold' }}
+                sx={{
+                  fontSize: 13.5,
+                  fontWeight: 'bold',
+                  fontFamily: 'Open Sans',
+                }}
                 noWrap
                 style={{
                   textOverflow: 'ellipsis',
@@ -86,7 +89,7 @@ const JobPost = ({
                 <span
                   style={{
                     padding: 0,
-                    fontSize: 12,
+                    fontSize: 11,
                     fontWeight: 'bold',
                     color: 'red',
                   }}
@@ -95,13 +98,13 @@ const JobPost = ({
                 </span>
               )}
               {isHot && isUrgent && (
-                <span style={{ color: '#bdbdbd' }}> | </span>
+                <span style={{ color: '#e0e0e0' }}> | </span>
               )}
               {isUrgent && (
                 <span
                   style={{
                     padding: 0,
-                    fontSize: 12,
+                    fontSize: 11,
                     fontWeight: 'bold',
                     color: 'orange',
                   }}
@@ -119,6 +122,7 @@ const JobPost = ({
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                fontSize: 13.5,
               }}
             >
               {companyName}
@@ -133,16 +137,22 @@ const JobPost = ({
         justifyContent="space-between"
       >
         <Stack direction="row" spacing={1.5}>
-          <Typography sx={{ fontWeight: 'bold' }} variant="body2">
-            <FontAwesomeIcon icon={faCircleDollarToSlot} color="#bdbdbd" />{' '}
+          <Typography sx={{ fontWeight: 'bold', fontSize: 13 }} variant="body2">
+            <FontAwesomeIcon icon={faCircleDollarToSlot} color="#e0e0e0" />{' '}
             {salaryString(salaryMin, salaryMax)}
           </Typography>
-          <Typography sx={{ fontWeight: 'bold' }} variant="body2">
-            <FontAwesomeIcon icon={faLocationDot} color="#bdbdbd" />{' '}
-            {allConfig?.cityDict[cityId] || 'Chưa cập nhật'}
+          <Typography sx={{ fontWeight: 'bold', fontSize: 13 }} variant="body2">
+            <FontAwesomeIcon icon={faLocationDot} color="#e0e0e0" />{' '}
+            {allConfig?.cityDict[cityId] || (
+              <span
+                style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}
+              >
+                Chưa cập nhật
+              </span>
+            )}
           </Typography>
-          <Typography sx={{ fontWeight: 'bold' }} variant="body2">
-            <FontAwesomeIcon icon={faCalendarDays} color="#bdbdbd" />{' '}
+          <Typography sx={{ fontWeight: 'bold', fontSize: 13 }} variant="body2">
+            <FontAwesomeIcon icon={faCalendarDays} color="#e0e0e0" />{' '}
             {dayjs(deadline).format('DD/MM/YYYY')}
           </Typography>
         </Stack>

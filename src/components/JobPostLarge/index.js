@@ -62,7 +62,7 @@ const JobPostLarge = ({
         <Stack flex={1} justifyContent="center" spacing={0.8}>
           <Box>
             <Typography
-              sx={{ fontSize: 19, fontWeight: 'bold' }}
+              sx={{ fontSize: 18, fontWeight: 'bold' }}
               style={{
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
@@ -86,15 +86,15 @@ const JobPostLarge = ({
           </Typography>
 
           <Stack direction="row" spacing={1.5}>
-            <Typography sx={{ fontWeight: 'bold' }} variant="body1">
+            <Typography sx={{ fontWeight: 'bold', fontSize: 15 }} variant="body1">
               <FontAwesomeIcon icon={faCircleDollarToSlot} color="#bdbdbd" />{' '}
               {salaryString(salaryMin, salaryMax)}
             </Typography>
-            <Typography sx={{ fontWeight: 'bold' }} variant="body1">
+            <Typography sx={{ fontWeight: 'bold', fontSize: 15 }} variant="body1">
               <FontAwesomeIcon icon={faLocationDot} color="#bdbdbd" />{' '}
               {allConfig?.cityDict[cityId] || 'Chưa cập nhật'}
             </Typography>
-            <Typography sx={{ fontWeight: 'bold' }} variant="body1">
+            <Typography sx={{ fontWeight: 'bold', fontSize: 15 }} variant="body1">
               <FontAwesomeIcon icon={faCalendarDays} color="#bdbdbd" />{' '}
               {dayjs(deadline).format('DD/MM/YYYY')}
             </Typography>

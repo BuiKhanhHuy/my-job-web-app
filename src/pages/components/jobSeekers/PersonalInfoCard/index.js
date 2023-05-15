@@ -72,9 +72,9 @@ const item = (title, value) => {
       <Typography sx={{ fontWeight: 'bold' }}>{title}</Typography>
       <Typography>
         {value || (
-          <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-            Chưa cập nhật
-          </span>
+           <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+           Chưa cập nhật
+         </span>
         )}
       </Typography>
     </Box>

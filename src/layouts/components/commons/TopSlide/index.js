@@ -32,6 +32,7 @@ const TopSlide = () => {
           style={{ height: '100%' }}
         >
           {[
+            'https://vieclam24h.vn/_next/image?url=https%3A%2F%2Fcdn1.vieclam24h.vn%2Fimages%2Fseeker-banner%2F2023%2F04%2F27%2Fbanner-web-VGCC-PC%2520(1)_168250352275_168259050714.jpg&w=1920&q=75',
             'https://vieclam24h.vn/_next/image?url=%2Fimg%2Fads-banners%2Fnew-version%2FBanner-Web-JS-PC-2881x641.png&w=1920&q=75',
             'https://vieclam24h.vn/_next/image?url=%2Fimg%2Fads-banners%2Fnew-version%2FBanner-maketers-page-home-pc.png&w=1920&q=75',
             'https://vieclam24h.vn/_next/image?url=%2Fimg%2Fads-banners%2Fnew-version%2Fbanner-go-to-report-pc.jpg&w=1920&q=75',

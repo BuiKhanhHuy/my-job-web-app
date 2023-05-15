@@ -72,26 +72,16 @@ const JobSeekerProfile = ({
               onClick={() => nav(`/nha-tuyen-dung/chi-tiet-ung-vien/${slug}`)}
             >
               {user?.fullName || (
-                <span
-                  style={{
-                    color: '#9e9e9e',
-                    fontStyle: 'italic',
-                  }}
-                >
-                  Chưa cập nhật
-                </span>
+                 <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                 Chưa cập nhật
+               </span>
               )}
               <span style={{ color: 'gray' }}>
                 (
                 {jobSeekerProfile?.old || (
-                  <span
-                    style={{
-                      color: '#9e9e9e',
-                      fontStyle: 'italic',
-                    }}
-                  >
-                    Chưa cập nhật
-                  </span>
+                   <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                   Chưa cập nhật
+                 </span>
                 )}{' '}
                 tuổi)
               </span>
@@ -110,14 +100,9 @@ const JobSeekerProfile = ({
                 />
               )}
               {title || (
-                <span
-                  style={{
-                    color: '#9e9e9e',
-                    fontStyle: 'italic',
-                  }}
-                >
-                  Chưa cập nhật
-                </span>
+                 <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                 Chưa cập nhật
+               </span>
               )}
             </span>
           </Typography>
@@ -129,14 +114,9 @@ const JobSeekerProfile = ({
                 icon={<MonetizationOnIcon />}
                 label={
                   salaryString(salaryMin, salaryMax) || (
-                    <span
-                      style={{
-                        color: '#9e9e9e',
-                        fontStyle: 'italic',
-                      }}
-                    >
-                      Chưa cập nhật
-                    </span>
+                    <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+            Chưa cập nhật
+          </span>
                   )
                 }
               />
@@ -146,14 +126,9 @@ const JobSeekerProfile = ({
                 icon={<WorkOutlineOutlinedIcon />}
                 label={
                   allConfig.experienceDict[experience] || (
-                    <span
-                      style={{
-                        color: '#9e9e9e',
-                        fontStyle: 'italic',
-                      }}
-                    >
-                      Chưa cập nhật
-                    </span>
+                    <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                    Chưa cập nhật
+                  </span>
                   )
                 }
               />
@@ -162,14 +137,9 @@ const JobSeekerProfile = ({
                 icon={<RoomIcon />}
                 label={
                   allConfig.cityDict[city] || (
-                    <span
-                      style={{
-                        color: '#9e9e9e',
-                        fontStyle: 'italic',
-                      }}
-                    >
-                      Chưa cập nhật
-                    </span>
+                    <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                    Chưa cập nhật
+                  </span>
                   )
                 }
               />

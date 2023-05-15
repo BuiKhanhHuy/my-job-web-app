@@ -8,7 +8,6 @@ const BackdropLoading = ({ bgColor = 'rgba(0, 0, 0, 0.4)' }) => {
       <Backdrop
         sx={{
           color: '#fff',
-          zIndex: (theme) => 9999,
           backgroundColor: bgColor,
         }}
         open={true}

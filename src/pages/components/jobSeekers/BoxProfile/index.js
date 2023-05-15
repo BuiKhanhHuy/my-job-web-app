@@ -157,18 +157,17 @@ const BoxProfile = ({ title }) => {
       <Stack>
         <Box>
           <Stack
-            direction="row"
+            direction={{xs: 'column', sm:'row', md: 'row', lg: 'row', xl: 'row'}}
             justifyContent="space-between"
-            alignItems="center"
+            alignItems={{xs: 'flex-start', sm:'center', md: 'center', lg: 'center', xl: 'center'}}
           >
-            <Typography variant="h6">{title}</Typography>
+            <Typography variant="h6" textAlign="left">{title}</Typography>
 
             {resume != null && (
               <Stack direction="row" spacing={1} alignItems="center">
                 <Stack direction="row">
                   {resume.isActive ? (
                     <Chip
-                      sx={{ ml: 1 }}
                       size="small"
                       icon={<StarIcon color="warning" />}
                       color="success"
@@ -178,7 +177,6 @@ const BoxProfile = ({ title }) => {
                   ) : (
                     <Chip
                       variant="filled"
-                      sx={{ ml: 1 }}
                       size="small"
                       icon={<StarOutlineIcon color="warning" />}
                       color="default"
@@ -258,9 +256,9 @@ const BoxProfile = ({ title }) => {
                       sx={{ fontSize: 16 }}
                     >
                       {resume.title || (
-                        <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                          Chưa cập nhật
-                        </span>
+                        <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                        Chưa cập nhật
+                      </span>
                       )}
                     </Typography>
                   </Box>
@@ -303,11 +301,9 @@ const BoxProfile = ({ title }) => {
                         }}
                       >
                         {resume.title || (
-                          <span
-                            style={{ color: '#9e9e9e', fontStyle: 'italic' }}
-                          >
-                            Chưa cập nhật
-                          </span>
+                          <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                          Chưa cập nhật
+                        </span>
                         )}
                       </Typography>
                     </Box>
@@ -329,11 +325,9 @@ const BoxProfile = ({ title }) => {
                         }}
                       >
                         {allConfig.experienceDict[resume.experience] || (
-                          <span
-                            style={{ color: '#9e9e9e', fontStyle: 'italic' }}
-                          >
-                            Chưa cập nhật
-                          </span>
+                           <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                           Chưa cập nhật
+                         </span>
                         )}
                       </span>
                     </Typography>
@@ -355,11 +349,9 @@ const BoxProfile = ({ title }) => {
                         }}
                       >
                         {allConfig.positionDict[resume.position] || (
-                          <span
-                            style={{ color: '#9e9e9e', fontStyle: 'italic' }}
-                          >
-                            Chưa cập nhật
-                          </span>
+                           <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                           Chưa cập nhật
+                         </span>
                         )}
                       </span>
                     </Typography>

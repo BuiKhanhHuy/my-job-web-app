@@ -145,7 +145,7 @@ const EmployerLogin = () => {
             <Avatar sx={{ m: 1, bgcolor: 'error.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" align='center'>
               Đăng nhập tài khoản nhà tuyển dụng
             </Typography>
           </Box>

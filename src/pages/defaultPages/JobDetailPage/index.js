@@ -212,16 +212,14 @@ const Loading = (
 const item = (title, value) => {
   return (
     <Box>
-      <Typography variant="body2" color="#757575" sx={{ fontWeight: 'bold' }}>
+      <Typography variant="body2" color="#bdbdbd" sx={{ fontWeight: 'normal' }}>
         {title}
       </Typography>
-      <Typography
-        variant="body1"
-        gutterBottom
-        sx={{ fontWeight: 'bold', textAlign: 'justify' }}
-      >
-        {value || (
-          <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+      <Typography variant="body1" gutterBottom sx={{ textAlign: 'justify' }}>
+        {value ? (
+          <span style={{ fontWeight: 'bold' }}>{value}</span>
+        ) : (
+          <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
             Chưa cập nhật
           </span>
         )}
@@ -345,14 +343,16 @@ const JobDetailPage = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
               {/* Start: thong tin chung */}
-              <Card sx={{ py: 2, px: 4 }}>
+              <Card
+                sx={{ py: 2, px: { xs: 1.5, sm: 1.5, md: 2, lg: 4, xl: 4 } }}
+              >
                 <Stack>
                   <Box>
                     <Stack direction="row" alignItems="center" spacing={2}>
                       <Box>
                         <MuiImageCustom
-                          width={65}
-                          height={65}
+                          width={75}
+                          height={75}
                           src={jobPostDetail?.companyDict?.companyImageUrl}
                           sx={{
                             bgcolor: 'white',
@@ -380,7 +380,11 @@ const JobDetailPage = () => {
                             jobPostDetail?.companyDict?.employeeSize
                           ] || (
                             <span
-                              style={{ color: '#9e9e9e', fontStyle: 'italic' }}
+                              style={{
+                                color: '#e0e0e0',
+                                fontStyle: 'italic',
+                                fontSize: 13,
+                              }}
                             >
                               Chưa cập nhật
                             </span>
@@ -404,7 +408,16 @@ const JobDetailPage = () => {
                         {jobPostDetail?.jobName}
                       </Typography>
                     </Box>
-                    <Stack direction="row" spacing={3}>
+                    <Stack
+                      direction={{
+                        sx: 'column',
+                        sm: 'row',
+                        md: 'row',
+                        lg: 'row',
+                        xl: 'row',
+                      }}
+                      spacing={3}
+                    >
                       <Typography variant="subtitle2">
                         <FontAwesomeIcon
                           icon={faCalendarDay}
@@ -461,8 +474,7 @@ const JobDetailPage = () => {
                         <Typography
                           variant="body2"
                           gutterBottom
-                          color="#757575"
-                          sx={{ fontWeight: 'bold' }}
+                          color="#bdbdbd"
                         >
                           Yêu cầu kinh nghiệm
                         </Typography>
@@ -475,7 +487,11 @@ const JobDetailPage = () => {
                             jobPostDetail?.experience
                           ] || (
                             <span
-                              style={{ color: '#9e9e9e', fontStyle: 'italic' }}
+                              style={{
+                                color: '#e0e0e0',
+                                fontStyle: 'italic',
+                                fontSize: 13,
+                              }}
                             >
                               Chưa cập nhật
                             </span>
@@ -486,8 +502,7 @@ const JobDetailPage = () => {
                         <Typography
                           variant="body2"
                           gutterBottom
-                          color="#757575"
-                          sx={{ fontWeight: 'bold' }}
+                          color="#bdbdbd"
                         >
                           Mức lương
                         </Typography>
@@ -506,8 +521,7 @@ const JobDetailPage = () => {
                         <Typography
                           variant="body2"
                           gutterBottom
-                          color="#757575"
-                          sx={{ fontWeight: 'bold' }}
+                          color="#bdbdbd"
                         >
                           Cấp bậc
                         </Typography>
@@ -518,7 +532,11 @@ const JobDetailPage = () => {
                         >
                           {allConfig?.positionDict[jobPostDetail?.position] || (
                             <span
-                              style={{ color: '#9e9e9e', fontStyle: 'italic' }}
+                              style={{
+                                color: '#e0e0e0',
+                                fontStyle: 'italic',
+                                fontSize: 13,
+                              }}
                             >
                               Chưa cập nhật
                             </span>
@@ -529,8 +547,7 @@ const JobDetailPage = () => {
                         <Typography
                           variant="body2"
                           gutterBottom
-                          color="#757575"
-                          sx={{ fontWeight: 'bold' }}
+                          color="#bdbdbd"
                         >
                           Hình thức làm việc
                         </Typography>
@@ -541,7 +558,11 @@ const JobDetailPage = () => {
                         >
                           {allConfig?.jobTypeDict[jobPostDetail?.jobType] || (
                             <span
-                              style={{ color: '#9e9e9e', fontStyle: 'italic' }}
+                              style={{
+                                color: '#e0e0e0',
+                                fontStyle: 'italic',
+                                fontSize: 13,
+                              }}
                             >
                               Chưa cập nhật
                             </span>
@@ -607,7 +628,13 @@ const JobDetailPage = () => {
               {/* End: thong tin chung */}
 
               {/* Start: mo ta chi tiet */}
-              <Card sx={{ p: 4, mt: 3 }}>
+              <Card
+                sx={{
+                  py: 4,
+                  mt: 3,
+                  px: { xs: 1.5, sm: 1.5, md: 2, lg: 4, xl: 4 },
+                }}
+              >
                 <Stack spacing={4}>
                   <Box>
                     <Typography variant="h5">Mô tả công việc</Typography>
@@ -657,9 +684,15 @@ const JobDetailPage = () => {
               {/* End: mo ta chi tiet */}
 
               {/* Start: thong tin lien he */}
-              <Card sx={{ p: 4, mt: 3 }}>
+              <Card
+                sx={{
+                  py: 4,
+                  mt: 3,
+                  px: { xs: 1.5, sm: 1.5, md: 2, lg: 4, xl: 4 },
+                }}
+              >
                 <Grid container spacing={2}>
-                  <Grid item xs={8}>
+                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                     <Box>
                       <Typography variant="h5">Thông tin liên hệ</Typography>
                       <Stack sx={{ pt: 1 }} spacing={2}>
@@ -687,13 +720,9 @@ const JobDetailPage = () => {
                       </Stack>
                     </Box>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                     <Box>
-                      <Typography
-                        variant="body2"
-                        color="#bdbdbd"
-                        sx={{ fontWeight: 'bold' }}
-                      >
+                      <Typography variant="body2" color="#bdbdbd">
                         Bản đồ
                       </Typography>
                       <Stack sx={{ pt: 1 }} spacing={2}>
@@ -714,7 +743,7 @@ const JobDetailPage = () => {
             </Grid>
 
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-              <Card sx={{ p: 2 }}>
+              <Card sx={{ p: { xs: 1.5, sm: 1.5, md: 2, lg: 2, xl: 2 } }}>
                 <Stack spacing={2}>
                   <Typography variant="h5">Việc làm tương tự</Typography>
                   <Box
@@ -725,6 +754,8 @@ const JobDetailPage = () => {
                     <FilterJobPostCard
                       params={{
                         excludeSlug: jobPostDetail?.slug,
+                        // cityId: jobPostDetail?.location?.city,
+                        // careerId: jobPostDetail?.career
                       }}
                       fullWidth={true}
                     />

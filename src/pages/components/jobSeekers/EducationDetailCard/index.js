@@ -295,9 +295,9 @@ const EducationDetailCard = ({ title }) => {
                           <AccordionDetails sx={{ p: 0, m: 0 }}>
                             <Typography>
                               {value?.description || (
-                                <span style={{ color: '#9e9e9e' }}>
-                                  Chưa cập nhật
-                                </span>
+                                 <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                                 Chưa cập nhật
+                               </span>
                               )}
                             </Typography>
                           </AccordionDetails>

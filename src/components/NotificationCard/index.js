@@ -352,7 +352,14 @@ const NotificationCard = () => {
                     >
                       <Stack>
                         <Box>
-                          <Typography variant="subtitle2">
+                          <Typography
+                            variant="subtitle2"
+                            fontSize={14}
+                            style={{
+                              fontWeight:
+                                value?.is_read === true ? 'normal' : 'bold',
+                            }}
+                          >
                             {value.title}
                           </Typography>
                         </Box>

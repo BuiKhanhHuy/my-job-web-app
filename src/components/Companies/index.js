@@ -52,7 +52,7 @@ const Companies = () => {
           lg: 'row',
           xl: 'row',
         }}
-        sx={{ py: 4 }}
+        sx={{ py: 3 }}
         justifyContent="space-between"
       >
         <Box>

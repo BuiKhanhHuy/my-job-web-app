@@ -66,7 +66,7 @@ const CompanyAction = ({ id, views, createAt, resume, company, children }) => {
               <Tooltip followCursor title={company?.companyName}>
                 <Typography
                   variant="subtitle2"
-                  sx={{ fontSize: 15, cursor: 'pointer' }}
+                  sx={{ fontSize: 14, cursor: 'pointer', fontWeight: 'bold' }}
                   gutterBottom
                   noWrap
                   style={{
@@ -181,7 +181,7 @@ const CompanyActionFollow = ({ id, company, children }) => {
                   <Tooltip followCursor title={company?.companyName}>
                     <Typography
                       variant="subtitle2"
-                      sx={{ fontSize: 15, cursor: 'pointer' }}
+                      sx={{ fontSize: 14, fontWeight: 'bold', cursor: 'pointer' }}
                       gutterBottom
                       style={{
                         whiteSpace: 'nowrap',
@@ -202,9 +202,9 @@ const CompanyActionFollow = ({ id, company, children }) => {
                     color="#bdbdbd"
                   />{' '}
                   {company?.fieldOperation || (
-                    <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                      Chưa cập nhật
-                    </span>
+                     <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                     Chưa cập nhật
+                   </span>
                   )}
                 </Typography>
                 <Stack direction="row" spacing={2}>

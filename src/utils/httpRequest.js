@@ -4,7 +4,7 @@ import tokenService from '../services/tokenService';
 
 const httpRequest = axios.create({
   baseURL: 'https://bkhuy-myjob-api.up.railway.app/',
-  // baseURL: 'http://192.168.1.16:8000/',
+  // baseURL: 'http://127.0.0.1:8000/',
   headers: {
     'Content-Type': 'application/json',
   },

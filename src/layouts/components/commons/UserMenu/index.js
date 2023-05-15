@@ -1,11 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Button,
-  Menu,
-  Stack,
-} from '@mui/material';
+import { Button, Menu, Stack, Typography } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
@@ -104,18 +100,18 @@ const UserMenu = ({ anchorElUser, open, handleCloseUserMenu }) => {
         {menuItems.map((item) => (
           <Button
             key={item.path}
-            variant="outlined"
+            variant="text"
             sx={{ textTransform: 'inherit' }}
             fullWidth
             component={Link}
             to={item.path}
           >
-            {item.label}
+            <Typography marginRight="auto"> {item.label}</Typography>
           </Button>
         ))}
         <Button
-          startIcon={<LogoutIcon />}
-          variant="outlined"
+          startIcon={<LogoutIcon style={{ marginLeft: 4 }} />}
+          variant="text"
           color="error"
           sx={{ textTransform: 'inherit' }}
           fullWidth
@@ -129,7 +125,7 @@ const UserMenu = ({ anchorElUser, open, handleCloseUserMenu }) => {
             );
           }}
         >
-          Đăng xuất
+          <Typography marginRight="auto">Đăng xuất</Typography>
         </Button>
       </Stack>
     </Menu>

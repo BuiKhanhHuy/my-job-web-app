@@ -43,9 +43,9 @@ const item = (title, value) => {
       <Typography sx={{ fontWeight: 'bold', fontSize: 15 }}>{title}</Typography>
       <Typography sx={{ textAlign: 'justify' }}>
         {value || (
-          <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-            Chưa cập nhật
-          </span>
+           <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+           Chưa cập nhật
+         </span>
         )}
       </Typography>
     </Box>
@@ -266,9 +266,9 @@ const ProfileDetailCard = () => {
                     sx={{ fontWeight: 'bold', fontSize: 16, color: 'Gray' }}
                   >
                     {profileDetail?.title || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                       <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                       Chưa cập nhật
+                     </span>
                     )}
                   </Typography>
                   <Typography>
@@ -389,9 +389,9 @@ const ProfileDetailCard = () => {
                   {item(
                     'Email',
                     profileDetail?.user?.email || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -399,9 +399,9 @@ const ProfileDetailCard = () => {
                   {item(
                     'Số điện thoại',
                     profileDetail?.jobSeekerProfile?.phone || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+            Chưa cập nhật
+          </span>
                     )
                   )}
                 </Grid>
@@ -411,9 +411,9 @@ const ProfileDetailCard = () => {
                     allConfig?.genderDict[
                       profileDetail?.jobSeekerProfile?.gender
                     ] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -423,9 +423,9 @@ const ProfileDetailCard = () => {
                     dayjs(profileDetail?.jobSeekerProfile?.birthday).format(
                       'DD/MM/YYYY'
                     ) || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -435,9 +435,9 @@ const ProfileDetailCard = () => {
                     allConfig?.maritalStatusDict[
                       profileDetail?.jobSeekerProfile?.maritalStatus
                     ] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+            Chưa cập nhật
+          </span>
                     )
                   )}
                 </Grid>
@@ -447,9 +447,9 @@ const ProfileDetailCard = () => {
                     allConfig?.cityDict[
                       profileDetail?.jobSeekerProfile?.location?.city
                     ] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -458,7 +458,7 @@ const ProfileDetailCard = () => {
                     'Quận/Huyện',
                     profileDetail?.jobSeekerProfile?.location?.districtDict
                       ?.name || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                        <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
                         Chưa cập nhật
                       </span>
                     )
@@ -468,9 +468,9 @@ const ProfileDetailCard = () => {
                   {item(
                     'Địa chỉ',
                     profileDetail?.jobSeekerProfile?.location?.address || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -489,9 +489,9 @@ const ProfileDetailCard = () => {
                   {item(
                     'Vị trí mong muốn',
                     profileDetail?.title || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -499,9 +499,9 @@ const ProfileDetailCard = () => {
                   {item(
                     'Cấp bậc mong muốn',
                     allConfig?.positionDict[profileDetail?.position] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -511,9 +511,9 @@ const ProfileDetailCard = () => {
                     allConfig?.academicLevelDict[
                       profileDetail?.academicLevel
                     ] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -521,9 +521,9 @@ const ProfileDetailCard = () => {
                   {item(
                     'Kinh nghiệm',
                     allConfig?.experienceDict[profileDetail?.experience] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -531,9 +531,9 @@ const ProfileDetailCard = () => {
                   {item(
                     'Nghề nghiệp',
                     allConfig?.careerDict[profileDetail?.career] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -541,9 +541,9 @@ const ProfileDetailCard = () => {
                   {item(
                     'Địa điểm làm việc',
                     allConfig?.cityDict[profileDetail?.city] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -562,9 +562,9 @@ const ProfileDetailCard = () => {
                     allConfig?.typeOfWorkplaceDict[
                       profileDetail?.typeOfWorkplace
                     ] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -572,9 +572,9 @@ const ProfileDetailCard = () => {
                   {item(
                     'Hình thức làm việc',
                     allConfig?.jobTypeDict[profileDetail?.jobType] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      Chưa cập nhật
+                    </span>
                     )
                   )}
                 </Grid>
@@ -592,9 +592,9 @@ const ProfileDetailCard = () => {
                 <Card variant="outlined" sx={{ p: 2, borderWidth: 2 }}>
                   <Typography>
                     {profileDetail?.description || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
-                        Chưa cập nhật
-                      </span>
+                       <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                       Chưa cập nhật
+                     </span>
                     )}
                   </Typography>
                 </Card>
@@ -640,14 +640,9 @@ const ProfileDetailCard = () => {
                               <Grid item xs={7}>
                                 <Typography>
                                   {value?.description || (
-                                    <span
-                                      style={{
-                                        color: '#9e9e9e',
-                                        fontStyle: 'italic',
-                                      }}
-                                    >
-                                      Chưa cập nhật
-                                    </span>
+                                     <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                                     Chưa cập nhật
+                                   </span>
                                   )}
                                 </Typography>
                               </Grid>

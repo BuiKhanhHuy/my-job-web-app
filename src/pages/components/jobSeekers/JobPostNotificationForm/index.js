@@ -76,7 +76,7 @@ const JobPostNotificationForm = ({ handleAddOrUpdate, editData }) => {
             control={control}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
           <SingleSelectCustom
             name="career"
             control={control}
@@ -96,7 +96,7 @@ const JobPostNotificationForm = ({ handleAddOrUpdate, editData }) => {
             placeholder="Chọn tỉnh thành phố"
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
           <SingleSelectCustom
             name="position"
             control={control}
@@ -105,7 +105,7 @@ const JobPostNotificationForm = ({ handleAddOrUpdate, editData }) => {
             placeholder="Chọn vị trí/chức vụ"
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
           <SingleSelectCustom
             name="experience"
             control={control}
@@ -114,7 +114,7 @@ const JobPostNotificationForm = ({ handleAddOrUpdate, editData }) => {
             placeholder="Chọn kinh nghiệm yêu cầu"
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
           <TextFieldCustom
             name="salary"
             title="Mức lương mong muốn"
@@ -123,7 +123,7 @@ const JobPostNotificationForm = ({ handleAddOrUpdate, editData }) => {
             type="number"
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
           <RadioCustom
             name="frequency"
             control={control}

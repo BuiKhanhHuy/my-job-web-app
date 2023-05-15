@@ -29,9 +29,10 @@ const listItems = (items, handleFilter) => (
           cursor: 'pointer',
           whiteSpace: 'nowrap',
         }}
+       
         onClick={() => handleFilter(item.id)}
       >
-        {item?.name}
+      <span  style={{ color: '#451da0' }}>{item?.name}</span>  
       </Typography>
     ))}
   </Stack>
@@ -90,7 +91,11 @@ const SubHeader = () => {
                 sx={{ marginRight: 2, cursor: 'pointer' }}
                 onClick={() => setOpen(true)}
               >
-                <FontAwesomeIcon icon={faListUl} fontSize={24} color='#441da0' />
+                <FontAwesomeIcon
+                  icon={faListUl}
+                  fontSize={24}
+                  color="#441da0"
+                />
               </Box>
               {listItems(topCareers, handleFilter)}
             </Toolbar>

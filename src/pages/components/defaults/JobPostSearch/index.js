@@ -51,7 +51,7 @@ const JobPostSearch = () => {
   };
 
   return (
-    <Box>
+    <Box component="form" onSubmit={handleSubmit(handleFilter)}>
       <Card sx={{ p: 3, boxShadow: 0, backgroundColor: '#441da0' }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
@@ -92,8 +92,8 @@ const JobPostSearch = () => {
               <Button
                 variant="contained"
                 color="info"
-                onClick={handleSubmit(handleFilter)}
                 sx={{ py: 1 }}
+                type="submit"
               >
                 Tìm kiếm
               </Button>

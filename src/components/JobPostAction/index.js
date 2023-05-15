@@ -87,7 +87,7 @@ const JobPostAction = ({
                 <Tooltip followCursor title={jobName}>
                   <Typography
                     variant="subtitle2"
-                    sx={{ fontSize: 15, cursor: 'pointer' }}
+                    sx={{ fontSize: 14, fontWeight: 'bold', cursor: 'pointer' }}
                     gutterBottom
                     style={{
                       whiteSpace: 'nowrap',
@@ -122,18 +122,37 @@ const JobPostAction = ({
               justifyContent="space-between"
             >
               <Stack direction="row" spacing={1.5}>
-                <Typography sx={{ fontWeight: 'bold' }} variant="body2">
+                <Typography
+                  sx={{ fontWeight: 'bold', fontSize: 13 }}
+                  variant="body2"
+                >
                   <FontAwesomeIcon
                     icon={faCircleDollarToSlot}
                     color="#bdbdbd"
                   />{' '}
                   {salaryString(salaryMin, salaryMax)}
                 </Typography>
-                <Typography sx={{ fontWeight: 'bold' }} variant="body2">
+                <Typography
+                  sx={{ fontWeight: 'bold', fontSize: 13 }}
+                  variant="body2"
+                >
                   <FontAwesomeIcon icon={faLocationDot} color="#bdbdbd" />{' '}
-                  {allConfig?.cityDict[cityId] || 'Chưa cập nhật'}
+                  {allConfig?.cityDict[cityId] || (
+                    <span
+                      style={{
+                        color: '#e0e0e0',
+                        fontStyle: 'italic',
+                        fontSize: 13,
+                      }}
+                    >
+                      Chưa cập nhật
+                    </span>
+                  )}
                 </Typography>
-                <Typography sx={{ fontWeight: 'bold' }} variant="body2">
+                <Typography
+                  sx={{ fontWeight: 'bold', fontSize: 13 }}
+                  variant="body2"
+                >
                   <FontAwesomeIcon icon={faCalendarDays} color="#bdbdbd" />{' '}
                   {dayjs(deadline).format('DD/MM/YYYY')}
                 </Typography>

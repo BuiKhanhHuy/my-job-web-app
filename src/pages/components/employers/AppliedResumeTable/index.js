@@ -62,14 +62,9 @@ const AppliedResumeTable = (props) => {
                   </Tooltip>
                 )}{' '}
                 {row?.title || (
-                  <span
-                    style={{
-                      color: '#9e9e9e',
-                      fontStyle: 'italic',
-                    }}
-                  >
-                    Chưa cập nhật
-                  </span>
+                   <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                   Chưa cập nhật
+                 </span>
                 )}{' '}
               </TableCell>
               <TableCell align="left">{row?.jobName}</TableCell>

@@ -19,7 +19,9 @@ const AppIntroductionCard = () => {
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
   const [value, setValue] = React.useState('');
 
-  const handleSendSMS = () => {
+  const handleSendSMS = (event) => {
+    event.preventDefault();
+    
     const sendSMS = async (data) => {
       setIsFullScreenLoading(true);
 
@@ -49,7 +51,6 @@ const AppIntroductionCard = () => {
 
   return (
     <>
-      {' '}
       <Card sx={{ p: 3 }}>
         <Stack spacing={3} alignItems="center">
           <Box>
@@ -61,7 +62,7 @@ const AppIntroductionCard = () => {
               sàng nhận việc làm ngay hôm nay!
             </Typography>
           </Box>
-          <Box>
+          <Box component="form" onSubmit={handleSendSMS}>
             <Paper
               sx={{
                 boxShadow: 0,
@@ -79,13 +80,13 @@ const AppIntroductionCard = () => {
                 inputProps={{ 'aria-label': 'search' }}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                placeholder='Nhập số điện thoại'
+                placeholder="Nhập số điện thoại"
               />
               <Button
                 variant="contained"
                 color="warning"
                 style={{ borderRadius: 20, color: 'white' }}
-                onClick={handleSendSMS}
+                type="submit"
               >
                 gửi đi
               </Button>

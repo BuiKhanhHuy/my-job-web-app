@@ -20,8 +20,7 @@ const CompanyPage = () => {
         <CompanySearch />
       </Box>
       <Box sx={{ mt: 4 }}>
-        <Card sx={{ px: 4 }} variant="outlined">
-
+        <Card sx={{ px: { xs: 1, sm: 1, md: 2, lg: 4, xl: 4 }  }} variant="outlined">
           {/* Start: companies */}
           <Companies />
           {/* End: companies */}

@@ -189,13 +189,16 @@ const ItemComponent = ({
           <Box flex={1}>
             <Stack spacing={1}>
               <Box>
-                <Typography fontSize={18} fontWeight={'bold'}>
+                <Typography fontSize={16} fontWeight={'bold'}>
                   {jobName}
                 </Typography>
               </Box>
-              <Stack direction={stackDirection} spacing={3}>
+              <Stack
+                direction={stackDirection}
+                spacing={stackDirection === 'column' ? 1 : 2}
+              >
                 <Box>
-                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                  <Typography fontWeight="bold" color="#e0e0e0" fontSize={14}>
                     <FontAwesomeIcon
                       icon={faCircleDollarToSlot}
                       style={{ marginRight: 5 }}
@@ -206,46 +209,82 @@ const ItemComponent = ({
                         {convertMoney(salary)}
                       </span>
                     ) : (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
                         Chưa cập nhật
                       </span>
                     )}
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                  <Typography fontWeight="bold" color="#e0e0e0" fontSize={14}>
                     <FontAwesomeIcon
                       icon={faLocationDot}
                       style={{ marginRight: 5 }}
                     />
-                    {allConfig?.cityDict[city] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                    {allConfig?.cityDict[city] ? (
+                      <span style={{ color: 'black', fontWeight: 'normal' }}>
+                        {allConfig?.cityDict[city]}
+                      </span>
+                    ) : (
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
                         Chưa cập nhật
                       </span>
                     )}
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                  <Typography fontWeight="bold" color="#e0e0e0" fontSize={14}>
                     <FontAwesomeIcon
                       icon={faBriefcase}
                       style={{ marginRight: 5 }}
                     />
-                    {allConfig?.careerDict[career] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                    {allConfig?.careerDict[career] ? (
+                      <span style={{ color: 'black', fontWeight: 'normal' }}>
+                        {allConfig?.careerDict[career]}
+                      </span>
+                    ) : (
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
                         Chưa cập nhật
                       </span>
                     )}
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography fontWeight="bold" color="GrayText" fontSize={14}>
+                  <Typography fontWeight="bold" color="#e0e0e0" fontSize={14}>
                     <FontAwesomeIcon
                       icon={faCalendarAlt}
                       style={{ marginRight: 5 }}
                     />
-                    {allConfig?.frequencyNotificationDict[frequency] || (
-                      <span style={{ color: '#9e9e9e', fontStyle: 'italic' }}>
+                    {allConfig?.frequencyNotificationDict[frequency] ? (
+                      <span style={{ color: 'black', fontWeight: 'normal' }}>
+                        {allConfig?.frequencyNotificationDict[frequency]}
+                      </span>
+                    ) : (
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
                         Chưa cập nhật
                       </span>
                     )}
