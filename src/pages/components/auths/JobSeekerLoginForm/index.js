@@ -29,7 +29,7 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
   });
 
   return (
-    <Box>
+    <Box component="form" onSubmit={handleSubmit(onLogin)}>
       <Stack spacing={1.5} sx={{ mb: 2 }}>
         <TextFieldCustom
           name="email"
@@ -46,12 +46,7 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
           showRequired={true}
         />
       </Stack>
-      <Button
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        onClick={handleSubmit(onLogin)}
-      >
+      <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} type="submit">
         Đăng nhập
       </Button>
       <Divider>HOẶC</Divider>
@@ -63,7 +58,7 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
         // onLogoutSuccess={onLogoutSuccess}
         // redirect_uri={REDIRECT_URI}
         isOnlyGetToken={true}
-        ux_mode='popup'
+        ux_mode="popup"
         onResolve={onFacebookLogin}
         onReject={(err) => {
           console.log(err);
@@ -91,7 +86,7 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
         onReject={(err) => {
           console.log(err);
         }}
-        ux_mode='popup'
+        ux_mode="popup"
       >
         <Button
           fullWidth

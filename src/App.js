@@ -90,6 +90,9 @@ function App() {
     () =>
       createTheme(
         {
+          zIndex: {
+            card: 0,
+          },
           breakpoints: {
             values: {
               xs: 0,
@@ -103,7 +106,7 @@ function App() {
             MuiPaper: {
               styleOverrides: {
                 root: {
-                  zIndex: 1,
+                  // zIndex: 1,
                 },
               },
             },

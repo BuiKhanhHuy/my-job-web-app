@@ -25,7 +25,7 @@ const EmployerLoginForm = ({ onLogin }) => {
   });
 
   return (
-    <Box>
+    <Box component="form" onSubmit={handleSubmit(onLogin)}>
       <Stack spacing={1.5} sx={{ mb: 2 }}>
         <TextFieldCustom
           name="email"
@@ -42,12 +42,7 @@ const EmployerLoginForm = ({ onLogin }) => {
           showRequired={true}
         />
       </Stack>
-      <Button
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        onClick={handleSubmit(onLogin)}
-      >
+      <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} type="submit">
         Đăng nhập
       </Button>
     </Box>

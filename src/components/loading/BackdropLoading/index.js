@@ -4,17 +4,19 @@ import { HashLoader } from 'react-spinners';
 
 const BackdropLoading = ({ bgColor = 'rgba(0, 0, 0, 0.4)' }) => {
   return (
-    <div style={{ position: 'fixed', zIndex: 9999 }}>
-      <Backdrop
-        sx={{
-          color: '#fff',
-          backgroundColor: bgColor,
-        }}
-        open={true}
-      >
-        <HashLoader color="#fca34d" size={100} speedMultiplier={2} />
-      </Backdrop>
-    </div>
+    <Backdrop
+      sx={{
+        color: '#fff',
+        backgroundColor: bgColor,
+        position: 'fixed',
+      }}
+      style={{
+        zIndex: 9999,
+      }}
+      open={true}
+    >
+      <HashLoader color="#fca34d" size={100} speedMultiplier={2} />
+    </Backdrop>
   );
 };
 

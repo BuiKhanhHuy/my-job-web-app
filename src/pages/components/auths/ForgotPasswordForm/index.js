@@ -7,7 +7,6 @@ import { Box, Button, Stack } from '@mui/material';
 import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
 
 const ForgotPasswordForm = ({ handleRequestResetPassword }) => {
-
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -23,7 +22,7 @@ const ForgotPasswordForm = ({ handleRequestResetPassword }) => {
   });
 
   return (
-    <Box>
+    <Box component="form" onSubmit={handleSubmit(handleRequestResetPassword)}>
       <Stack spacing={1.5} sx={{ mb: 2 }}>
         <TextFieldCustom
           name="email"
@@ -34,12 +33,7 @@ const ForgotPasswordForm = ({ handleRequestResetPassword }) => {
         />
       </Stack>
 
-      <Button
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        onClick={handleSubmit(handleRequestResetPassword)}
-      >
+      <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} type="submit">
         Đặt lại mật khẩu
       </Button>
     </Box>

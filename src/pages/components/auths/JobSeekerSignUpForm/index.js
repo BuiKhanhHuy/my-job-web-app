@@ -51,10 +51,8 @@ const JobSeekerSignUpForm = ({
     }
   }, [serverErrors, setError]);
 
-  
-
   return (
-    <Box>
+    <Box component="form" onSubmit={handleSubmit(onRegister)}>
       <Stack spacing={1.5} sx={{ mb: 2 }}>
         <TextFieldCustom
           name="fullName"
@@ -85,12 +83,7 @@ const JobSeekerSignUpForm = ({
           showRequired={true}
         />
       </Stack>
-      <Button
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        onClick={handleSubmit(onRegister)}
-      >
+      <Button fullWidth variant="contained" type='submit' sx={{ mt: 3, mb: 2 }}>
         Đăng ký
       </Button>
       <Divider>HOẶC</Divider>
@@ -101,7 +94,7 @@ const JobSeekerSignUpForm = ({
         // onLogoutSuccess={onLogoutSuccess}
         // redirect_uri={REDIRECT_URI}
         isOnlyGetToken={true}
-        ux_mode='popup'
+        ux_mode="popup"
         onResolve={onFacebookRegister}
         onReject={(err) => {
           console.log(err);
@@ -122,7 +115,7 @@ const JobSeekerSignUpForm = ({
         // onLoginStart={onLoginStart}
         // redirect_uri={REDIRECT_URI}
         isOnlyGetToken={true}
-        ux_mode='popup'
+        ux_mode="popup"
         access_type="offline"
         scope="openid profile email"
         discoveryDocs="claims_supported"

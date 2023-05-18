@@ -214,7 +214,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
     if (cityId) {
       loadDistricts(cityId);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityId, setValue]);
 
   const handleSubmtNextSuccess = (data) => {
@@ -246,7 +246,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
   };
 
   const formContent = (actStep) => (
-    <>
+    <Box>
       <Stack
         spacing={1.5}
         sx={{ mb: 2, display: actStep === 0 ? 'block' : 'none' }}
@@ -387,11 +387,18 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
           </Grid>
         </Grid>
       </Box>
-    </>
+    </Box>
   );
 
   return (
-    <Box>
+    <Box
+      component="form"
+      onSubmit={
+        activeStep === steps.length - 1
+          ? handleSubmit(onSignUp)
+          : handleSubmit(handleSubmtNextSuccess, handleSubmitNextError)
+      }
+    >
       <Stepper activeStep={activeStep} sx={{ pb: 3 }}>
         {steps.map((label) => (
           <Step key={label}>
@@ -413,17 +420,11 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
             </Button>
           )}
           {activeStep === steps.length - 1 ? (
-            <Button variant="contained" onClick={handleSubmit(onSignUp)}>
+            <Button variant="contained" type="submit">
               Đăng ký
             </Button>
           ) : (
-            <Button
-              variant="contained"
-              onClick={handleSubmit(
-                handleSubmtNextSuccess,
-                handleSubmitNextError
-              )}
-            >
+            <Button variant="contained" type="submit">
               Tiếp tục
             </Button>
           )}

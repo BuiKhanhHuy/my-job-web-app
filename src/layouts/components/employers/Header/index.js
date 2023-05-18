@@ -30,7 +30,7 @@ const Header = ({ drawerWidth, handleDrawerToggle }) => {
   };
 
   const authArea = (
-    <Box sx={{ flexGrow: 0, ml: 3 }}>
+    <Box sx={{ flexGrow: 0,  ml: 1  }}>
       <Card
         variant="outlined"
         onClick={handleOpenUserMenu}
