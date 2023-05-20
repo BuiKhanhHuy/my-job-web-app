@@ -16,6 +16,11 @@ const myjobService = {
 
     return httpRequest.post(url, data);
   },
+    getBanners: () => {
+    const url = '/api/myjob/web/banner/';
+
+    return httpRequest.get(url);
+  },
 };
 
 export default myjobService;

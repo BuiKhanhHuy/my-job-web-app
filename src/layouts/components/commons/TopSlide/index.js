@@ -5,12 +5,96 @@ import 'swiper/css/pagination';
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper';
-import { Box } from '@mui/material';
+import { Box, Link } from '@mui/material';
 
 import HomeSearch from '../../../../pages/components/defaults/HomeSearch';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
+import myjobService from '../../../../services/myjobService';
+
+const RenderItem = ({ item }) => {
+  const [location, setLocation] = React.useState({
+    position: 'absolute',
+    left: 10,
+    bottom: 20,
+    right: null,
+    top: null,
+  });
+
+  React.useMemo(() => {
+    switch (item.descriptionLocation) {
+      case 1:
+        setLocation({
+          position: 'absolute',
+          left: 10,
+          bottom: null,
+          right: null,
+          top: 20,
+        });
+        break;
+      case 2:
+        setLocation({
+          position: 'absolute',
+          left: null,
+          bottom: null,
+          right: 10,
+          top: 20,
+        });
+        break;
+      case 3:
+        setLocation({
+          position: 'absolute',
+          left: 10,
+          bottom: 20,
+          right: null,
+          top: null,
+        });
+        break;
+      case 4:
+        setLocation({
+          position: 'absolute',
+          left: null,
+          bottom: 20,
+          right: 10,
+          top: null,
+        });
+        break;
+      default:
+        break;
+    }
+  }, [item]);
+
+  return (
+    <MuiImageCustom
+      width="100%"
+      height={320}
+      src={item.imageUrl}
+      sx={{
+        borderRadius: 1.5,
+      }}
+      fit="cover"
+    />
+  );
+};
 
 const TopSlide = () => {
+  const [banners, setBanners] = React.useState([]);
+
+  React.useEffect(() => {
+    const getBanners = async () => {
+      try {
+        const resData = await myjobService.getBanners();
+
+        const data = resData?.data || [];
+
+        setBanners(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getBanners();
+  }, []);
+
   return (
     <Box
       className="justify-content-center"
@@ -31,23 +115,12 @@ const TopSlide = () => {
           className="mySwiper"
           style={{ height: '100%' }}
         >
-          {[
-            'https://vieclam24h.vn/_next/image?url=https%3A%2F%2Fcdn1.vieclam24h.vn%2Fimages%2Fseeker-banner%2F2023%2F04%2F27%2Fbanner-web-VGCC-PC%2520(1)_168250352275_168259050714.jpg&w=1920&q=75',
-            'https://vieclam24h.vn/_next/image?url=%2Fimg%2Fads-banners%2Fnew-version%2FBanner-Web-JS-PC-2881x641.png&w=1920&q=75',
-            'https://vieclam24h.vn/_next/image?url=%2Fimg%2Fads-banners%2Fnew-version%2FBanner-maketers-page-home-pc.png&w=1920&q=75',
-            'https://vieclam24h.vn/_next/image?url=%2Fimg%2Fads-banners%2Fnew-version%2Fbanner-go-to-report-pc.jpg&w=1920&q=75',
-          ].map((value) => (
-            <Box key={value}>
-              <SwiperSlide>
-                <MuiImageCustom
-                  width="100%"
-                  height={320}
-                  src={value}
-                  sx={{
-                    borderRadius: 1.5,
-                  }}
-                  fit="cover"
-                />
+          {banners.map((value) => (
+            <Box key={value.id}>
+              <SwiperSlide style={{ cursor: 'pointer' }}>
+                <Link href={value?.buttonLink} target="_blank">
+                  <RenderItem item={value} />{' '}
+                </Link>
               </SwiperSlide>
             </Box>
           ))}

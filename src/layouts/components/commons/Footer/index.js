@@ -2,9 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import {
-  Avatar,
   Box,
-  CardMedia,
   Grid,
   List,
   ListItem,
@@ -13,6 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import { ICONS, IMAGES, LINKS } from '../../../../configs/constants';
+import MuiImageCustom from '../../../../components/MuiImageCustom';
 
 const Footer = () => {
   const nav = useNavigate();
@@ -23,17 +22,10 @@ const Footer = () => {
         <Grid xs={12} sm={12} md={6} lg={3} xl={3} item>
           <List dense={true}>
             <ListItem>
-              <Avatar
-                onClick={() => nav('/')}
+              <MuiImageCustom
+                width={150}
                 src={IMAGES.getTextLogo('light')}
-                sx={{
-                  display: { xs: 'none', md: 'flex' },
-                  mr: 1,
-                  width: 150,
-                  height: 50,
-                }}
-                variant="square"
-                alt="LOGO"
+                sx={{ mr: 1, mb: 1, display: { xs: 'none', md: 'flex' } }}
               />
             </ListItem>
             <ListItem>
@@ -186,20 +178,10 @@ const Footer = () => {
             <ListItem>
               <Stack direction="row" spacing={2}>
                 <Link href={LINKS.CHPLAY_LINK} target="_blank">
-                  <CardMedia
-                    width="120"
-                    component="img"
-                    image={IMAGES.chPlayDownload}
-                    alt="Paella dish"
-                  />
+                  <MuiImageCustom width={160} src={IMAGES.chPlayDownload} />
                 </Link>
                 <Link href={LINKS.APPSTORE_LINK} target="_blank">
-                  <CardMedia
-                    width="120"
-                    component="img"
-                    image={IMAGES.appStoreDownload}
-                    alt="Paella dish"
-                  />
+                  <MuiImageCustom width={160} src={IMAGES.appStoreDownload} />
                 </Link>
               </Stack>
             </ListItem>
@@ -216,12 +198,9 @@ const Footer = () => {
             <ListItem>
               <Stack direction="row" spacing={2}>
                 <Link href={LINKS.CERTIFICATE_LINK} target="_blank">
-                  <CardMedia
-                    height="50"
-                    width="100"
-                    component="img"
-                    image={require('../../../../assets/images/certification-logo.png')}
-                    alt="Paella dish"
+                  <MuiImageCustom
+                    width={140}
+                    src={require('../../../../assets/images/certification-logo.png')}
                   />
                 </Link>
               </Stack>
