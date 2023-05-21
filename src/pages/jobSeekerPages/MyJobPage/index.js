@@ -9,7 +9,7 @@ import { useSearchParams } from 'react-router-dom';
 
 const MyJobPage = () => {
   const [searchParams] = useSearchParams();
-  const [value, setValue] = React.useState(searchParams.get("tab") || 1);
+  const [value, setValue] = React.useState(searchParams.get("tab") || "1");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

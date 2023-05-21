@@ -161,7 +161,7 @@ const CompanyActionFollow = ({ id, company, children }) => {
           },
         }}
       >
-        <Stack direction={stackDirection} spacing={2}>
+        <Stack direction={stackDirection} spacing={2} >
           <Box>
             <Stack direction="row" spacing={1}>
               <Stack direction="row" justifyContent="center">

@@ -26,8 +26,16 @@ const JobPost = ({
   salaryMin,
   salaryMax,
 }) => {
+  const myRef = React.useRef(null);
+  const [width, setWidth] = React.useState("95%")
   const nav = useNavigate();
   const { allConfig } = useSelector((state) => state.config);
+
+  React.useEffect(() => {
+    const elementWidth = myRef.current?.offsetWidth - 70;
+    setWidth(elementWidth);
+  }, []);
+
 
   return (
     <Card
@@ -42,8 +50,8 @@ const JobPost = ({
       }}
       onClick={() => nav(`/viec-lam/${slug}`)}
     >
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Stack width="15%">
+      <Stack direction="row" spacing={1} alignItems="center" ref={myRef}>
+        <Stack>
           <MuiImageCustom
             width={60}
             height={60}
@@ -56,7 +64,10 @@ const JobPost = ({
             }}
           />
         </Stack>
-        <Stack spacing={0} width="83%">
+        <Stack
+          spacing={0}
+          width={width}
+        >
           <Stack
             direction="row"
             alignItems="center"
@@ -130,6 +141,7 @@ const JobPost = ({
           </Tooltip>
         </Stack>
       </Stack>
+
       <Stack
         direction="row"
         spacing={1}

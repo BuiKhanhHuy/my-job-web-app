@@ -65,7 +65,7 @@ const JobPostAction = ({
         }}
       >
         <Stack direction={stackDirection} spacing={2}>
-          <Box>
+          <Box width={stackDirection === "row" ? "70%" : "100%"}>
             <Stack direction="row" spacing={1}>
               <Stack direction="row" justifyContent="center">
                 <MuiImageCustom

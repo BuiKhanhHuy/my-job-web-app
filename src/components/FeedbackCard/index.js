@@ -52,7 +52,7 @@ const FeedbackCard = ({ id, avatarUrl, fullName, content }) => {
             WebkitBoxOrient: 'horizontal',
           }}
         >
-          {content}
+          {content }
         </Typography>
       </Box>
     </Card>
