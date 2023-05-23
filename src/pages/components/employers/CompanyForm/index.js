@@ -8,7 +8,6 @@ import { Grid, Skeleton } from '@mui/material';
 import errorHandling from '../../../../utils/errorHandling';
 import { REGEX_VATIDATE } from '../../../../configs/constants';
 import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
-import MultilineTextFieldCustom from '../../../../components/controls/MultilineTextFieldCustom';
 import SingleSelectCustom from '../../../../components/controls/SingleSelectCustom';
 import DatePickerCustom from '../../../../components/controls/DatePickerCustom';
 
@@ -16,6 +15,7 @@ import commonService from '../../../../services/commonService';
 import useDebounce from '../../../../hooks/useDebounce';
 import TextFieldAutoCompleteCustom from '../../../../components/controls/TextFieldAutoCompleteCustom';
 import goongService from '../../../../services/goongService';
+import RichTextEditorCustom from '../../../../components/controls/RichTextEditorCustom';
 
 const CompanyForm = ({ handleUpdate, editData, serverErrors = null }) => {
   const { allConfig } = useSelector((state) => state.config);
@@ -310,12 +310,17 @@ const CompanyForm = ({ handleUpdate, editData, serverErrors = null }) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <MultilineTextFieldCustom
+              <RichTextEditorCustom
+                name="description"
+                control={control}
+                title="Mô tả thêm"
+              />
+              {/* <MultilineTextFieldCustom
                 name="description"
                 title="Mô tả thêm (thêm <br/> để xuống dòng)"
                 placeholder="Nhập nội dung mô tả tại đây"
                 control={control}
-              />
+              /> */}
             </Grid>
           </Grid>
         </Grid>

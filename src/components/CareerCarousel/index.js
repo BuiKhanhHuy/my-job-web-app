@@ -151,7 +151,8 @@ const CareerCarousel = () => {
                       <MuiImageCustom
                         width={64}
                         height={64}
-                        src={value.iconUrl}
+                        // src={value.iconUrl}
+                        src={"https://res.cloudinary.com/dtnpj540t/image/upload/v1684785165/my-job/career-images/uv7s6x7k7jvgieung393.png"}
                       />
                     </Stack>
                     <Typography

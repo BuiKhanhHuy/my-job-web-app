@@ -2,6 +2,10 @@ import React from 'react';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
+import {
+  convertEditorStateToHTMLString,
+  createEditorStateFromHTMLString,
+} from '../../../../utils/customData';
 import toastMessages from '../../../../utils/toastMessages';
 import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
@@ -26,8 +30,12 @@ const CompanyCard = () => {
       setIsLoadingCompany(true);
       try {
         const resData = await companyService.getCompany();
-        const data = resData.data;
+        var data = resData.data;
 
+        data = {
+          ...data,
+          description: createEditorStateFromHTMLString(data?.description || ''),
+        };
         setEditData(data);
 
         if (companyImageUrl === null) {
@@ -64,7 +72,12 @@ const CompanyCard = () => {
       }
     };
 
-    update(data.id, data);
+    const dataCustom = {
+      ...data,
+      description: convertEditorStateToHTMLString(data.description),
+    };
+
+    update(dataCustom?.id, dataCustom);
   };
 
   const handleUpdateCompanyImageUrl = (options) => {
@@ -135,7 +148,7 @@ const CompanyCard = () => {
               modalOk="Tải lên"
               modalCancel="Hủy"
               showReset={true}
-              resetText='Đặt lại'
+              resetText="Đặt lại"
             >
               <Upload
                 listType="picture"
