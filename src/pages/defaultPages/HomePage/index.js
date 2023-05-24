@@ -6,11 +6,14 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Stack,
   Typography,
+  Button,
 } from '@mui/material';
 
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
+import SearchIcon from '@mui/icons-material/Search';
 
 import { HOME_FILTER_CAREER, ROLES_NAME } from '../../../configs/constants';
 import TopCompanyCarousel from '../../../components/TopCompanyCarousel';
@@ -86,16 +89,18 @@ export default function HomePage() {
                 </Avatar>
               }
               title={
-                <Typography variant="h5" sx={{ color: 'white' }}>
+                <Typography variant="h5" sx={{ color: '#441da0' }}>
                   Việc làm gợi ý
                 </Typography>
               }
               sx={{
-                backgroundColor: '#441da0',
+                backgroundImage: `url('${require('../../../assets/images/banner-explore.png')}')`,
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
                 p: { xs: 0.75, sm: 1, md: 1.5, lg: 1.5, xl: 1.5 },
               }}
             />
-            <CardContent>
+            <CardContent sx={{ backgroundColor: '#e0f0ff' }}>
               <Box sx={{ p: { xs: 0, sm: 0, md: 0, lg: 2, xl: 2 } }}>
                 {/* Start: SuggestedJobPostCard */}
                 <SuggestedJobPostCard />
@@ -107,7 +112,46 @@ export default function HomePage() {
         </Box>
       )}
 
-      <Box sx={{ mt: 10 }}>
+      <Box
+        sx={{
+          borderRadius: 1,
+          p: 4,
+          mt: 6,
+          backgroundImage: `url('${require('../../../assets/images/banner-explore-pc.png')}')`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <Stack
+          direction={{
+            xs: 'column',
+            sm: 'row',
+            md: 'row',
+            lg: 'row',
+            xl: 'row',
+          }}
+          justifyContent="space-between"
+          spacing={2}
+        >
+          <Box>
+            <Typography fontSize={32} fontWeight="bold" color="white">
+              Cần tìm việc làm phù hợp cho bạn?
+            </Typography>
+          </Box>
+          <Box>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              startIcon={<SearchIcon />}
+            >
+              Bắt đầu khám phá
+            </Button>
+          </Box>
+        </Stack>
+      </Box>
+
+      <Box sx={{ mt: 6 }}>
         {/* Start: Viec lam nganh */}
         <Card variant="outlined">
           <CardHeader

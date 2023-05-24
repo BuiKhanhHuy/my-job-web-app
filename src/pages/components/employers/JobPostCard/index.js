@@ -246,7 +246,6 @@ const JobPostCard = () => {
   };
 
   const handleFilter = (data) => {
-    console.log(data);
     setFilterData({
       ...data,
       isUrgent: data.isUrgent === 1 ? true : data.isUrgent === 2 ? false : '',

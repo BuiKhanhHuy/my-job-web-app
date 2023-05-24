@@ -37,7 +37,6 @@ const AppliedJobCard = () => {
         });
         const data = resData.data;
 
-        console.log(data);
         setCount(data.count);
         setJobPostsApplied(data.results);
       } catch (error) {

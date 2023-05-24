@@ -179,7 +179,6 @@ const SubHeaderDialog = ({ open, setOpen, topCareers, handleFilter }) => {
         careerResult.push({ ...allConfig?.careerOptions[i], isHot: false });
       }
     }
-    console.log(careerResult);
     return careerResult;
   };
 

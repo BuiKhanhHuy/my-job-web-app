@@ -62,7 +62,6 @@ const CandidateChart = ({ title }) => {
         const resData = await statisticService.employerCandidateStatistics(data);
 
         setData(resData.data);
-        console.log(resData.data);
       } catch (error) {
         console.error('Error: ', error);
       } finally {

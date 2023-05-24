@@ -1,6 +1,11 @@
 import httpRequest from '../utils/httpRequest';
 
 const jobService = {
+  searchJobSuggestTitle: (kw) => {
+    const url = 'api/job/web/seach/job-suggest-title/';
+
+    return httpRequest.get(url, { params: { q: kw } });
+  },
   getEmployerJobPost: (params = {}) => {
     const url = 'api/job/web/private-job-posts/';
 
@@ -36,7 +41,6 @@ const jobService = {
 
     return httpRequest.get(url);
   },
-
 
   getJobPosts: (params = {}) => {
     const url = 'api/job/web/job-posts/';

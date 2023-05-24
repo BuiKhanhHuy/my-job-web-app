@@ -45,8 +45,6 @@ const NotificationCard = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  console.log('RENDER NOTI; ');
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -127,7 +125,6 @@ const NotificationCard = () => {
       });
       setNotifications(notificationList);
       setLastKey(querySnapshot.docs[querySnapshot.docs.length - 1]);
-      console.log('SET NOTI LẠI');
 
       return () => {
         unsubscribe();
@@ -164,7 +161,6 @@ const NotificationCard = () => {
 
     setNotifications([...notifications, ...nextNotificationList]);
     setLastKey(lastVisible);
-    console.log(nextNotificationList);
   };
 
   const handleRemove = (key) => {
@@ -178,7 +174,6 @@ const NotificationCard = () => {
           newNotifications.splice(index, 1);
           setNotifications(newNotifications);
         }
-        console.log('deleted noti success.');
       })
       .catch((error) => {
         console.log('deleted noti failed: ', error);
@@ -189,9 +184,7 @@ const NotificationCard = () => {
     updateDoc(doc(db, 'users', `${currentUser.id}`, 'notifications', key), {
       is_read: true,
     })
-      .then(() => {
-        console.log('read noti success.');
-      })
+      .then(() => {})
       .catch((error) => {
         console.log('read noti failed: ', error);
       });

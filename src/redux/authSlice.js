@@ -9,7 +9,6 @@ export const authSlice = createSlice({
   },
   reducers: {
     updateVerifyEmail: (state, action) => {
-      console.log(action.payload);
       state.isAllowVerifyEmail = action.payload?.isAllowVerifyEmail;
       state.email = action.payload?.email;
       state.roleName = action.payload?.roleName;

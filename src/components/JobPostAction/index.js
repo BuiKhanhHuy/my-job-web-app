@@ -45,7 +45,6 @@ const JobPostAction = ({
   }, []);
 
   React.useEffect(() => {
-    console.log(parentWidth);
     if (parentWidth < 600) {
       setStackDirection('column');
     } else {
@@ -193,7 +192,6 @@ const Loading = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log(parentWidth);
     if (parentWidth < 600) {
       setStackDirection('column');
     } else {

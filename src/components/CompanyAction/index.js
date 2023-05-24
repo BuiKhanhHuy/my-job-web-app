@@ -29,7 +29,6 @@ const CompanyAction = ({ id, views, createAt, resume, company, children }) => {
   }, []);
 
   React.useEffect(() => {
-    console.log(parentWidth);
     if (parentWidth < 800) {
       setStackDirection('column');
     } else {
@@ -142,7 +141,6 @@ const CompanyActionFollow = ({ id, company, children }) => {
   }, []);
 
   React.useEffect(() => {
-    console.log(parentWidth);
     if (parentWidth < 800) {
       setStackDirection('column');
     } else {

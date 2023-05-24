@@ -42,7 +42,46 @@ const JobPostSearch = () => {
     setShowAdvanceFilter(!showAdvanceFilter);
   };
 
+  const handleSaveKeyworLocalStorage = (kw) => {
+    try {
+      if (kw) {
+        const keywordListStr = localStorage.getItem('myjob_search_history');
+
+        if (
+          keywordListStr !== null &&
+          keywordListStr !== undefined &&
+          keywordListStr !== ''
+        ) {
+          const keywordList = JSON.parse(keywordListStr);
+
+          if (!keywordList.includes(kw)) {
+            if (keywordList.length >= 5) {
+              localStorage.setItem(
+                'myjob_search_history',
+                JSON.stringify([
+                  kw,
+                  ...keywordList.slice(0, keywordList.length - 1),
+                ])
+              );
+            } else {
+              localStorage.setItem(
+                'myjob_search_history',
+                JSON.stringify([kw, ...keywordList])
+              );
+            }
+          }
+        } else {
+          localStorage.setItem('myjob_search_history', JSON.stringify([kw]));
+        }
+      }
+    } catch (error) {
+      console.error('Loi khi set kw vao local storage: ', error);
+    }
+  };
+
   const handleFilter = (data) => {
+    handleSaveKeyworLocalStorage(data?.kw);
+
     dispatch(searchJobPost(data));
   };
 

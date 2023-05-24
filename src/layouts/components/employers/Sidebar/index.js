@@ -20,6 +20,7 @@ import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 import BookmarkAddedOutlinedIcon from '@mui/icons-material/BookmarkAddedOutlined';
 import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSearchOutlined';
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
@@ -143,7 +144,7 @@ const drawer = (location, theme) => (
             }}
           >
             <StyledTreeItem
-              nodeId="8"
+              nodeId="7"
               labelText="Danh sách tin đăng"
               labelIcon={ListAltOutlinedIcon}
             />
@@ -162,7 +163,7 @@ const drawer = (location, theme) => (
             }}
           >
             <StyledTreeItem
-              nodeId="9"
+              nodeId="8"
               labelText="Hồ sơ ứng tuyển"
               labelIcon={FactCheckOutlinedIcon}
             />
@@ -179,7 +180,7 @@ const drawer = (location, theme) => (
             }}
           >
             <StyledTreeItem
-              nodeId="10"
+              nodeId="9"
               labelText="Hồ sơ đã lưu"
               labelIcon={BookmarkAddedOutlinedIcon}
             />
@@ -196,13 +197,32 @@ const drawer = (location, theme) => (
             }}
           >
             <StyledTreeItem
-              nodeId="11"
+              nodeId="10"
               labelText="Tìm ứng viên mới"
               labelIcon={ContentPasteSearchOutlinedIcon}
             />
           </NavLink>
         </StyledTreeItem>
-        <StyledTreeItem nodeId="4" labelText="Quản lý tài khoản">
+        <StyledTreeItem nodeId="4" labelText="Quản lý thông báo">
+          <NavLink
+            to="/nha-tuyen-dung/thong-bao"
+            style={{
+              textDecoration: 'none',
+              display: 'block',
+              backgroundColor:
+                location.pathname === '/nha-tuyen-dung/thong-bao'
+                  ? 'rgba(68, 29, 160, 0.08)'
+                  : 'inherit',
+            }}
+          >
+            <StyledTreeItem
+              nodeId="11"
+              labelText="MyJob thông báo"
+              labelIcon={NotificationsNoneOutlinedIcon}
+            />
+          </NavLink>
+        </StyledTreeItem>
+        <StyledTreeItem nodeId="5" labelText="Quản lý tài khoản">
           <NavLink
             to="/nha-tuyen-dung/cong-ty"
             style={{

@@ -47,8 +47,6 @@ const RangePickerCustom = ({
       if (months > 1 || (months === 1 && days > 1)) {
         var mDate = new Date(startDate);
         mDate.setMonth(mDate.getMonth() + 1);
-        console.log(dates[0]);
-        console.log(dayjs(mDate));
         setSelectedDateRange([dates[0], dayjs(mDate)]);
 
         return;

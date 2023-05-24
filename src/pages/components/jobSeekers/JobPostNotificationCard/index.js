@@ -52,7 +52,6 @@ const ItemLoading = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log(parentWidth);
     if (parentWidth < 600) {
       setStackDirection('column');
     } else {
@@ -174,7 +173,6 @@ const ItemComponent = ({
   }, []);
 
   React.useEffect(() => {
-    console.log(parentWidth);
     if (parentWidth < 600) {
       setStackDirection('column');
     } else {

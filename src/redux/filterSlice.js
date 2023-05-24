@@ -40,6 +40,20 @@ export const userSlice = createSlice({
     searchJobPost: (state, action) => {
       state.jobPostFilter = action.payload;
     },
+    searchJobPostWithKeyword: (state, action) => {
+      state.jobPostFilter = {
+        kw: action?.payload?.kw,
+        careerId: '',
+        cityId: '',
+        positionId: '',
+        experienceId: '',
+        typeOfWorkplaceId: '',
+        jobTypeId: '',
+        genderId: '',
+        page: 1,
+        pageSize: 30,
+      };
+    },
     resetSearchJobPostFilter: (state) => {
       state.jobPostFilter = {
         kw: '',
@@ -90,19 +104,21 @@ export const userSlice = createSlice({
 const { reducer } = userSlice;
 const {
   searchJobPost,
+  searchJobPostWithKeyword,
   resetSearchJobPostFilter,
   searchCompany,
   resetSearchCompany,
   searchResume,
-  resetSearchResume
+  resetSearchResume,
 } = userSlice.actions;
 
 export default reducer;
 export {
   searchJobPost,
+  searchJobPostWithKeyword,
   resetSearchJobPostFilter,
   searchCompany,
   resetSearchCompany,
   searchResume,
-  resetSearchResume
+  resetSearchResume,
 };

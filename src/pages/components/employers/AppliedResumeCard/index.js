@@ -18,6 +18,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
+import { confirmModal } from '../../../../utils/sweetalert2Modal';
 import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import xlsxUtils from '../../../../utils/xlsxUtils';
@@ -215,7 +216,6 @@ const AppliedResumeCard = ({ title }) => {
         setIsFullScreenLoading(false);
       }
     };
-
     changeStatus(id, { status: value });
   };
 

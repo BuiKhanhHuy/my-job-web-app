@@ -9,6 +9,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import WorkIcon from '@mui/icons-material/Work';
 import ApartmentIcon from '@mui/icons-material/Apartment';
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const tabItems = [
@@ -33,6 +34,12 @@ const tabItems = [
   },
   {
     id: 5,
+    label: 'MyJob thông báo',
+    icon: <CircleNotificationsIcon />,
+    path: '/ung-vien/thong-bao',
+  },
+  {
+    id: 6,
     label: 'Tài khoản',
     icon: <AccountCircleIcon />,
     path: '/ung-vien/tai-khoan',

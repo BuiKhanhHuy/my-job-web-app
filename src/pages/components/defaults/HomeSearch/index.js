@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { Card, Grid } from '@mui/material';
 
 import InputBaseSearchHomeCustom from '../../../../components/controls/InputBaseSearchHomeCustom';
@@ -10,7 +11,6 @@ import {
   resetSearchJobPostFilter,
   searchJobPost,
 } from '../../../../redux/filterSlice';
-import { useNavigate } from 'react-router-dom';
 
 const HomeSearch = () => {
   const dispatch = useDispatch();
@@ -30,8 +30,46 @@ const HomeSearch = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleSaveKeyworLocalStorage = (kw) => {
+    try {
+      if (kw) {
+        const keywordListStr = localStorage.getItem('myjob_search_history');
+
+        if (
+          keywordListStr !== null &&
+          keywordListStr !== undefined &&
+          keywordListStr !== ''
+        ) {
+          const keywordList = JSON.parse(keywordListStr);
+
+          if (!keywordList.includes(kw)) {
+            if (keywordList.length >= 5) {
+              localStorage.setItem(
+                'myjob_search_history',
+                JSON.stringify([
+                  kw,
+                  ...keywordList.slice(0, keywordList.length - 1),
+                ])
+              );
+            } else {
+              localStorage.setItem(
+                'myjob_search_history',
+                JSON.stringify([kw, ...keywordList])
+              );
+            }
+          }
+        } else {
+          localStorage.setItem('myjob_search_history', JSON.stringify([kw]));
+        }
+      }
+    } catch (error) {
+      console.error('Loi khi set kw vao local storage: ', error);
+    }
+  };
+
   const handleFilter = (data) => {
-    console.log(data);
+    handleSaveKeyworLocalStorage(data?.kw);
+
     dispatch(searchJobPost(data));
     nav('/viec-lam');
   };
@@ -53,6 +91,7 @@ const HomeSearch = () => {
               control={control}
               placeholder="Tìm kiếm cơ hội việc làm"
               showSubmitButton={true}
+              location='HOME'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>

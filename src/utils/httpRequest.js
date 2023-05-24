@@ -36,7 +36,7 @@ httpRequest.interceptors.response.use(
     return response.data;
   },
   async (error) => {
-    const originalConfig = error.config;
+    // const originalConfig = error.config;
 
     // Access Token was expired
     if (error.response.status === 401) {

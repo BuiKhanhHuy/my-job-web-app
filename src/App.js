@@ -42,6 +42,7 @@ import JobsByCareerPage from './pages/defaultPages/JobsByCareerPage';
 import JobsByCityPage from './pages/defaultPages/JobsByCityPage';
 import JobsByJobTypePage from './pages/defaultPages/JobsByJobTypePage';
 import AboutUsPage from './pages/defaultPages/AboutUsPage';
+import NotificationPage from './pages/defaultPages/NotificationPage';
 
 // auth pages
 import EmailVerificationRequiredPage from './pages/authPages/EmailVerificationRequiredPage';
@@ -315,6 +316,7 @@ function App() {
                     path="cong-ty-cua-toi"
                     element={<JobSeekerMyCompanyPage />}
                   />
+                  <Route path="thong-bao" element={<NotificationPage />} />
                   <Route path="tai-khoan" element={<JobSeekerAccountPage />} />
                 </Route>
                 {/* End: Job seeker */}
@@ -356,6 +358,7 @@ function App() {
                     element={<ProfileDetailPage />}
                   />
                   <Route path="cong-ty" element={<EmployerCompanyPage />} />
+                  <Route path="thong-bao" element={<NotificationPage />} />
                   <Route path="tai-khoan" element={<EmployerAccountPage />} />
                 </Route>
                 {/* End: Employer */}

@@ -66,7 +66,6 @@ const CompanyImageCard = () => {
   };
 
   const handleDelete = (file) => {
-    console.log(file)
     const deleteCompanyImage = async (id) => {
       setIsFullScreenLoading(true);
 

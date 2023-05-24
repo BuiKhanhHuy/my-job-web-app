@@ -54,7 +54,7 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
       <LoginSocialFacebook
         appId={AUTH_CONFIG.FACEBOOK_CLIENT_ID}
         fieldsProfile={'id'}
-        onLoginStart={() => console.log('START FACEBOOK')}
+        // onLoginStart={ }
         // onLogoutSuccess={onLogoutSuccess}
         // redirect_uri={REDIRECT_URI}
         isOnlyGetToken={true}
@@ -76,7 +76,7 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
 
       <LoginSocialGoogle
         client_id={AUTH_CONFIG.GOOGLE_CLIENT_ID}
-        onLoginStart={() => console.log('START GOOGLE')}
+        // onLoginStart={ }
         // redirect_uri={REDIRECT_URI}
         isOnlyGetToken={true}
         access_type="offline"

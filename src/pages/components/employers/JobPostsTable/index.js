@@ -37,8 +37,7 @@ const JobPostsTable = (props) => {
                 {dayjs(row.createAt).format('DD/MM/YYYY')}
               </TableCell>
               <TableCell align="left">
-                {new Date(dayjs(row.deadline).format('YYYY-MM-DD')).getDate() <
-                new Date().getDate() ? (
+                {row?.isExpired ? (
                   <span style={{ color: 'red' }}>
                     {dayjs(row.deadline).format('DD/MM/YYYY')}
                   </span>

@@ -62,14 +62,20 @@ const AppliedResumeTable = (props) => {
                   </Tooltip>
                 )}{' '}
                 {row?.title || (
-                   <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                   Chưa cập nhật
-                 </span>
+                  <span
+                    style={{
+                      color: '#e0e0e0',
+                      fontStyle: 'italic',
+                      fontSize: 13,
+                    }}
+                  >
+                    Chưa cập nhật
+                  </span>
                 )}{' '}
               </TableCell>
               <TableCell align="left">{row?.jobName}</TableCell>
               <TableCell align="left">
-                {dayjs(row?.createAt).format('DD/MM/YYYY')} 
+                {dayjs(row?.createAt).format('DD/MM/YYYY')}
               </TableCell>
               <TableCell align="left">
                 {row?.type === CV_TYPES.cvWebsite

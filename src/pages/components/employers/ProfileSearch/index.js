@@ -37,7 +37,6 @@ const ProfileSearch = () => {
 
   const handleFilter = (data) => {
     dispatch(searchResume(data));
-    console.log(data);
   };
 
   const handleReset = () => {
