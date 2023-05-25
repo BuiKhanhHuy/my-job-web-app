@@ -157,11 +157,25 @@ const BoxProfile = ({ title }) => {
       <Stack>
         <Box>
           <Stack
-            direction={{xs: 'column', sm:'row', md: 'row', lg: 'row', xl: 'row'}}
+            direction={{
+              xs: 'column',
+              sm: 'row',
+              md: 'row',
+              lg: 'row',
+              xl: 'row',
+            }}
             justifyContent="space-between"
-            alignItems={{xs: 'flex-start', sm:'center', md: 'center', lg: 'center', xl: 'center'}}
+            alignItems={{
+              xs: 'flex-start',
+              sm: 'center',
+              md: 'center',
+              lg: 'center',
+              xl: 'center',
+            }}
           >
-            <Typography variant="h6" textAlign="left">{title}</Typography>
+            <Typography variant="h6" textAlign="left">
+              {title}
+            </Typography>
 
             {resume != null && (
               <Stack direction="row" spacing={1} alignItems="center">
@@ -256,9 +270,15 @@ const BoxProfile = ({ title }) => {
                       sx={{ fontSize: 16 }}
                     >
                       {resume.title || (
-                        <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                        Chưa cập nhật
-                      </span>
+                        <span
+                          style={{
+                            color: '#e0e0e0',
+                            fontStyle: 'italic',
+                            fontSize: 13,
+                          }}
+                        >
+                          Chưa cập nhật
+                        </span>
                       )}
                     </Typography>
                   </Box>
@@ -301,9 +321,15 @@ const BoxProfile = ({ title }) => {
                         }}
                       >
                         {resume.title || (
-                          <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                          Chưa cập nhật
-                        </span>
+                          <span
+                            style={{
+                              color: '#e0e0e0',
+                              fontStyle: 'italic',
+                              fontSize: 13,
+                            }}
+                          >
+                            Chưa cập nhật
+                          </span>
                         )}
                       </Typography>
                     </Box>
@@ -325,9 +351,15 @@ const BoxProfile = ({ title }) => {
                         }}
                       >
                         {allConfig.experienceDict[resume.experience] || (
-                           <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                           Chưa cập nhật
-                         </span>
+                          <span
+                            style={{
+                              color: '#e0e0e0',
+                              fontStyle: 'italic',
+                              fontSize: 13,
+                            }}
+                          >
+                            Chưa cập nhật
+                          </span>
                         )}
                       </span>
                     </Typography>
@@ -349,9 +381,15 @@ const BoxProfile = ({ title }) => {
                         }}
                       >
                         {allConfig.positionDict[resume.position] || (
-                           <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                           Chưa cập nhật
-                         </span>
+                          <span
+                            style={{
+                              color: '#e0e0e0',
+                              fontStyle: 'italic',
+                              fontSize: 13,
+                            }}
+                          >
+                            Chưa cập nhật
+                          </span>
                         )}
                       </span>
                     </Typography>

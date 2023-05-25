@@ -11,6 +11,7 @@ import {
   Stack,
   Typography,
   Button,
+  Skeleton,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -41,6 +42,104 @@ import ImageGalleryCustom from '../../../components/ImageGalleryCustom';
 import companyService from '../../../services/companyService';
 
 import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
+
+const LoadingComponent = () => {
+  return (
+    <Stack>
+      <Card>
+        <Box height={250}>
+          <Skeleton variant="rounded" width={'100%'} height={'100%'} />
+        </Box>
+        <Box sx={{ p: 3, pt: 1 }}>
+          <Stack
+            direction={{
+              xs: 'column',
+              sm: 'column',
+              md: 'row',
+              lg: 'row',
+              xl: 'row',
+            }}
+            spacing={2}
+            alignItems="center"
+          >
+            <Box>
+              <Skeleton variant="rounded" width={120} height={120} />
+            </Box>
+            <Stack flex={1} spacing={2}>
+              <Skeleton variant="rounded" />
+              <Stack
+                direction={{
+                  xs: 'column',
+                  sm: 'row',
+                  md: 'row',
+                  lg: 'row',
+                  xl: 'row',
+                }}
+                spacing={{ xs: 0.5, sm: 2, md: 3, lg: 3, xl: 3 }}
+              >
+                <Skeleton variant="rounded" width={'100%'} />
+                <Skeleton variant="rounded" width={'100%'} />
+                <Skeleton variant="rounded" width={'100%'} />
+              </Stack>
+            </Stack>
+            <Skeleton height={80} width={80} variant="rounded" />
+          </Stack>
+        </Box>
+      </Card>
+      <Grid container spacing={2} sx={{ mt: 1 }}>
+        <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+          <Card sx={{ p: { xs: 2, sm: 2, md: 3, lg: 3, xl: 3 } }}>
+            <Stack spacing={2}>
+              <Skeleton variant="rounded" />
+              <Skeleton height={150} variant="rounded" />
+              <Skeleton variant="rounded" />
+              <Skeleton height={300} variant="rounded" />
+            </Stack>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Card sx={{ p: { xs: 2, sm: 2, md: 3, lg: 3, xl: 3 } }}>
+            <Stack spacing={3}>
+              <Box>
+                <Skeleton variant="rounded" />
+                <Box sx={{ mt: 1 }}>
+                  <Skeleton variant="rounded" />
+                </Box>
+              </Box>
+              <Box>
+                <Skeleton variant="rounded" />
+                <Box sx={{ mt: 1 }}>
+                  <Skeleton variant="rounded" />
+                </Box>
+              </Box>
+              <Box>
+                <Skeleton variant="rounded" />
+                <Box sx={{ mt: 1 }}>
+                  <Skeleton variant="rounded" />
+                </Box>
+                <Box sx={{ mt: 1 }}>
+                  <Skeleton variant="rounded" />
+                </Box>
+                <Box sx={{ mt: 1 }}>
+                  <Skeleton variant="rounded" />
+                </Box>
+                <Box sx={{ mt: 1 }}>
+                  <Skeleton variant="rounded" />
+                </Box>
+              </Box>
+              <Box>
+                <Skeleton variant="rounded" />
+                <Box sx={{ mt: 1, height: 200 }}>
+                  <Skeleton variant="rounded" height="100%" />
+                </Box>
+              </Box>
+            </Stack>
+          </Card>
+        </Grid>
+      </Grid>
+    </Stack>
+  );
+};
 
 const CompanyDetailPage = () => {
   const { slug } = useParams();
@@ -97,7 +196,7 @@ const CompanyDetailPage = () => {
       } catch (error) {
         errorHandling(error);
       } finally {
-        setIsLoadingFollow(false);
+        // setIsLoadingFollow(false);
       }
     };
 
@@ -105,7 +204,7 @@ const CompanyDetailPage = () => {
   };
 
   return isLoading ? (
-    <h1>Loading</h1>
+    <LoadingComponent />
   ) : companyDetail === null ? (
     <NoDataCard />
   ) : (
