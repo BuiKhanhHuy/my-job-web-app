@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
+  CircularProgress,
   Divider,
   IconButton,
   List,
@@ -32,9 +33,8 @@ import {
 } from 'firebase/firestore';
 import db from '../../../../configs/firebase-config';
 
-import { IMAGES } from '../../../../configs/constants';
+import { IMAGES, ImageSvg9 } from '../../../../configs/constants';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
-import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import NoDataCard from '../../../../components/NoDataCard';
 
 const PAGE_SIZE = 10;
@@ -42,7 +42,6 @@ const NotificationCard = ({ title }) => {
   const nav = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [count, setCount] = React.useState(0);
-  const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [notifications, setNotifications] = React.useState([]);
   const [lastKey, setLastKey] = React.useState(null);
@@ -70,6 +69,7 @@ const NotificationCard = ({ title }) => {
   }, [currentUser.id]);
 
   React.useEffect(() => {
+    setIsLoading(true);
     const notificationsRef = collection(
       db,
       'users',
@@ -94,6 +94,7 @@ const NotificationCard = ({ title }) => {
       });
       setNotifications(notificationList);
       setLastKey(querySnapshot.docs[querySnapshot.docs.length - 1]);
+      setIsLoading(false);
 
       return () => {
         unsubscribe();
@@ -296,95 +297,106 @@ const NotificationCard = ({ title }) => {
           <>
             <Stack>
               <Box>
-                <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                  {notifications.map((value, index) => (
-                    <>
-                      <ListItem
-                        key={value?.key}
-                        alignItems="center"
-                        secondaryAction={
-                          <Tooltip title="Xóa thông báo" arrow>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={() => handleRemove(value.key)}
-                            >
-                              <ClearIcon />
-                            </IconButton>
-                          </Tooltip>
-                        }
-                      >
-                        <ListItemButton onClick={() => handleClickItem(value)}>
-                          <ListItemAvatar style={{ marginRight: 10 }}>
-                            <MuiImageCustom
-                              width={65}
-                              height={65}
-                              src={
-                                value?.image || IMAGES.notificationImageDefault
-                              }
-                              sx={{
-                                p: 0.5,
-                                borderRadius: 1.5,
-                                maxHeight: 150,
-                                border: 0.5,
-                                borderColor: '#d1c4e9',
-                              }}
-                              duration={500}
-                            />
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={
-                              value?.is_read ? (
-                                <span>{value?.title}</span>
-                              ) : (
-                                <span style={{ fontWeight: 'bold' }}>
-                                  {value?.title}
-                                </span>
-                              )
-                            }
-                            secondary={
-                              <React.Fragment>
-                                <Typography
-                                  sx={{ display: 'inline' }}
-                                  component="span"
-                                  variant="body2"
-                                  color="text.primary"
-                                >
-                                  {value?.content}
-                                </Typography>
-                                {' - '}một giờ trước
-                              </React.Fragment>
-                            }
-                          />
-                        </ListItemButton>
-                      </ListItem>
-                      {notifications.length - 1 !== index && (
-                        <Divider component="li" />
-                      )}
-                    </>
-                  ))}
-                </List>
-                {Math.ceil(count / PAGE_SIZE) > 1 && (
-                  <Stack justifyContent="center" direction="row">
-                    <Button
-                      size="small"
-                      variant="contained"
-                      href="#outlined-buttons"
-                      onClick={loadMore}
-                    >
-                      Xem thêm
-                    </Button>
+                {isLoading ? (
+                  <Stack justifyContent="center" direction="row" py={5}>
+                    <CircularProgress color="secondary" />
                   </Stack>
+                ) : notifications.length === 0 ? (
+                  <NoDataCard
+                    title="Chưa có thông báo nào."
+                    imgComponentSgv={<ImageSvg9 />}
+                  />
+                ) : (
+                  <>
+                    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                      {notifications.map((value, index) => (
+                        <>
+                          <ListItem
+                            key={value?.key}
+                            alignItems="center"
+                            secondaryAction={
+                              <Tooltip title="Xóa thông báo" arrow>
+                                <IconButton
+                                  aria-label="delete"
+                                  color="error"
+                                  onClick={() => handleRemove(value.key)}
+                                >
+                                  <ClearIcon />
+                                </IconButton>
+                              </Tooltip>
+                            }
+                          >
+                            <ListItemButton
+                              onClick={() => handleClickItem(value)}
+                            >
+                              <ListItemAvatar style={{ marginRight: 10 }}>
+                                <MuiImageCustom
+                                  width={65}
+                                  height={65}
+                                  src={
+                                    value?.image ||
+                                    IMAGES.notificationImageDefault
+                                  }
+                                  sx={{
+                                    p: 0.5,
+                                    borderRadius: 1.5,
+                                    maxHeight: 150,
+                                    border: 0.5,
+                                    borderColor: '#d1c4e9',
+                                  }}
+                                  duration={500}
+                                />
+                              </ListItemAvatar>
+                              <ListItemText
+                                primary={
+                                  value?.is_read ? (
+                                    <span>{value?.title}</span>
+                                  ) : (
+                                    <span style={{ fontWeight: 'bold' }}>
+                                      {value?.title}
+                                    </span>
+                                  )
+                                }
+                                secondary={
+                                  <React.Fragment>
+                                    <Typography
+                                      sx={{ display: 'inline' }}
+                                      component="span"
+                                      variant="body2"
+                                      color="text.primary"
+                                    >
+                                      {value?.content}
+                                    </Typography>
+                                    {' - '}một giờ trước
+                                  </React.Fragment>
+                                }
+                              />
+                            </ListItemButton>
+                          </ListItem>
+                          {notifications.length - 1 !== index && (
+                            <Divider component="li" />
+                          )}
+                        </>
+                      ))}
+                    </List>
+                    {Math.ceil(count / PAGE_SIZE) > 1 && (
+                      <Stack justifyContent="center" direction="row">
+                        <Button
+                          size="medium"
+                          onClick={loadMore}
+                          variant="contained"
+                        >
+                          Xem thêm
+                        </Button>
+                      </Stack>
+                    )}
+                  </>
                 )}
               </Box>
             </Stack>
           </>
         </Box>
       </Stack>
-
-      {/* Start: full screen loading */}
-      {isFullScreenLoading && <BackdropLoading />}
-      {/* End: full screen loading */}
     </>
   );
 };

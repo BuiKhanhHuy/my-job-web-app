@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Grid, Pagination, Stack, Typography } from '@mui/material';
 
-import { IMAGE_SVG } from '../../configs/constants';
+import { ImageSvg4 } from '../../configs/constants';
 import NoDataCard from '../NoDataCard';
 import Company from '../Company';
 import companyService from '../../services/companyService';
@@ -75,7 +75,7 @@ const Companies = () => {
         ) : companies.length === 0 ? (
           <NoDataCard
             title="Hiện chưa tìm công ty phù hợp với tiêu chí của bạn"
-            img={IMAGE_SVG.img4}
+            imgComponentSgv={<ImageSvg4 />}
           />
         ) : (
           <>

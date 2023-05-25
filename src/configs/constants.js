@@ -1,14 +1,15 @@
 import dayjs from 'dayjs';
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 import DevicesIcon from '@mui/icons-material/Devices';
-import ImageSvg1 from '../assets/images/svg-images/empty-data.svg';
-import ImageSvg2 from '../assets/images/svg-images/online-gallery.svg';
-import ImageSvg3 from '../assets/images/svg-images/empty-street.svg';
-import ImageSvg4 from '../assets/images/svg-images/dreamer.svg';
-import ImageSvg5 from '../assets/images/svg-images/small_town.svg';
-import ImageSvg6 from '../assets/images/svg-images/working_remotely.svg';
-import ImageSvg7 from '../assets/images/svg-images/country_side.svg';
-import ImageSvg8 from '../assets/images/svg-images/thoughts.svg';
+import { ReactComponent as ImageSvg1 } from '../assets/images/svg-images/empty-data.svg';
+import { ReactComponent as ImageSvg2 } from '../assets/images/svg-images/online-gallery.svg';
+import { ReactComponent as ImageSvg3 } from '../assets/images/svg-images/empty-street.svg';
+import { ReactComponent as ImageSvg4 } from '../assets/images/svg-images/dreamer.svg';
+import { ReactComponent as ImageSvg5 } from '../assets/images/svg-images/small_town.svg';
+import { ReactComponent as ImageSvg6 } from '../assets/images/svg-images/working_remotely.svg';
+import { ReactComponent as ImageSvg7 } from '../assets/images/svg-images/country_side.svg';
+import { ReactComponent as ImageSvg8 } from '../assets/images/svg-images/thoughts.svg';
+import { ReactComponent as ImageSvg9 } from '../assets/images/svg-images/browsing_online.svg';
 
 const PLATFORM = 'WEB';
 
@@ -121,17 +122,6 @@ const LINKS = {
   YOUTUBE_LINK: 'https://www.youtube.com/channel/UCn49BvcP1w1mamaOSGTKVZw',
 };
 
-const IMAGE_SVG = {
-  img1: ImageSvg1,
-  img2: ImageSvg2,
-  img3: ImageSvg3,
-  img4: ImageSvg4,
-  img5: ImageSvg5,
-  img6: ImageSvg6,
-  img7: ImageSvg7,
-  img8: ImageSvg8,
-};
-
 export {
   PLATFORM,
   AUTH_PROVIDER,
@@ -144,5 +134,13 @@ export {
   IMAGES,
   LINKS,
   ICONS,
-  IMAGE_SVG,
+  ImageSvg1,
+  ImageSvg2,
+  ImageSvg3,
+  ImageSvg4,
+  ImageSvg5,
+  ImageSvg6,
+  ImageSvg7,
+  ImageSvg8,
+  ImageSvg9,
 };

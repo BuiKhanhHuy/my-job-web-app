@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Stack, Typography } from '@mui/material';
-
-import { IMAGE_SVG } from '../../configs/constants';
+import { ImageSvg1 } from '../../configs/constants';
 
 const NoDataCard = ({
   children,
   title = 'Không có dữ liệu',
-  img = IMAGE_SVG.img1,
+  imgComponentSgv = <ImageSvg1 />,
+  childrend,
 }) => {
   return (
     <Stack
@@ -15,8 +15,11 @@ const NoDataCard = ({
       spacing={3}
       sx={{ py: 4 }}
     >
-      <img src={img} alt="mySvgImage" style={{ width: '30vh' }} />
-      <Typography variant="body1" sx={{ color: '#9e9e9e', textAlign: 'center'}}>
+      <div>{imgComponentSgv}</div>
+      <Typography
+        variant="caption"
+        sx={{ color: '#9e9e9e', textAlign: 'center' }}
+      >
         {title}
       </Typography>
       <Box>{children}</Box>

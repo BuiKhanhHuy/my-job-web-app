@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 
-import { CV_TYPES, IMAGE_SVG } from '../../../../configs/constants';
+import { CV_TYPES, ImageSvg5 } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import JobPostAction from '../../../../components/JobPostAction';
 import errorHandling from '../../../../utils/errorHandling';
@@ -66,7 +66,7 @@ const AppliedJobCard = () => {
         ) : jobPostsApplied.length === 0 ? (
           <NoDataCard
             title="Bạn chưa ứng tuyển công việc nào"
-            img={IMAGE_SVG.img5}
+            imgComponentSgv={<ImageSvg5 />}
           >
             <Button
               component={Link}
@@ -97,7 +97,7 @@ const AppliedJobCard = () => {
                 salaryMin={value?.jobPostDict.salaryMin}
                 salaryMax={value?.jobPostDict.salaryMax}
               >
-                <Stack spacing={1}  >
+                <Stack spacing={1}>
                   <Chip
                     label={`Ứng tuyển ngày: ${dayjs(value?.createAt).format(
                       'DD/MM/YYYY'

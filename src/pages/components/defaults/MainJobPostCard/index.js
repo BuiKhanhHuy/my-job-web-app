@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Pagination, Stack, Typography } from '@mui/material';
 
-import { IMAGE_SVG } from '../../../../configs/constants';
+import { ImageSvg3 } from '../../../../configs/constants';
 import JobPostLarge from '../../../../components/JobPostLarge';
 import NoDataCard from '../../../../components/NoDataCard';
 import jobService from '../../../../services/jobService';
@@ -60,7 +60,7 @@ const MainJobPostCard = () => {
         ) : jobPosts.length === 0 ? (
           <NoDataCard
             title="Hiện chưa tìm thấy việc làm phù hợp với tiêu chí của bạn"
-            img={IMAGE_SVG.img3}
+            imgComponentSgv={<ImageSvg3 />}
           />
         ) : (
           <>

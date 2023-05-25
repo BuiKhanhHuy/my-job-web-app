@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Stack, Pagination, Chip } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 
-import { IMAGE_SVG } from '../../../../configs/constants';
+import { ImageSvg6 } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import CompanyAction from '../../../../components/CompanyAction';
 import resumeViewedService from '../../../../services/resumeViewedService';
@@ -53,7 +53,7 @@ const CompanyViewedCard = () => {
         ) : resumesViewed.length === 0 ? (
           <NoDataCard
             title="Chưa có nhà tuyển dụng nào xem hồ sơ của bạn"
-            img={IMAGE_SVG.img6}
+            imgComponentSgv={<ImageSvg6 />}
           ></NoDataCard>
         ) : (
           <Stack spacing={2}>

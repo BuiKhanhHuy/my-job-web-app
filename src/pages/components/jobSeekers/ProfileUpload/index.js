@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
 import PublishIcon from '@mui/icons-material/Publish';
 
-import { CV_TYPES, IMAGE_SVG } from '../../../../configs/constants';
+import { CV_TYPES, ImageSvg2 } from '../../../../configs/constants';
 import toastMessages from '../../../../utils/toastMessages';
 import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
@@ -140,7 +140,7 @@ const ProfileUpload = ({ title }) => {
               ) : resumes.length === 0 ? (
                 <NoDataCard
                   title="Bạn chưa tải lên CV nào"
-                  img={IMAGE_SVG.img2}
+                  imgComponentSgv={<ImageSvg2 />}
                 />
               ) : (
                 <Grid container spacing={2}>

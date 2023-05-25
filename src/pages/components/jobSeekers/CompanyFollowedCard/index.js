@@ -4,7 +4,7 @@ import { Box, Stack, Pagination, Button } from '@mui/material';
 
 import errorHandling from '../../../../utils/errorHandling';
 import toastMessages from '../../../../utils/toastMessages';
-import { IMAGE_SVG } from '../../../../configs/constants';
+import { ImageSvg7 } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import CompanyAction from '../../../../components/CompanyAction';
 import companyFollowed from '../../../../services/companyFollowed';
@@ -72,7 +72,7 @@ const CompanyFollowedCard = () => {
         ) : resumesViewed.length === 0 ? (
           <NoDataCard
             title="Bạn chưa theo dõi bất kỳ nhà tuyển dụng nào"
-            img={IMAGE_SVG.img7}
+            imgComponentSgv={<ImageSvg7 />}
           >
             <Button
               variant="contained"

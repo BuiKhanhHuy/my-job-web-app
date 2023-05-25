@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Box, Stack, Button, Pagination } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { IMAGE_SVG } from '../../../../configs/constants';
+import { ImageSvg5 } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import JobPostAction from '../../../../components/JobPostAction';
 import jobService from '../../../../services/jobService';
@@ -73,7 +73,7 @@ const SavedJobCard = () => {
             ))}
           </Stack>
         ) : jobPosts.length === 0 ? (
-          <NoDataCard title="Bạn chưa lưu công việc nào" img={IMAGE_SVG.img5}>
+          <NoDataCard title="Bạn chưa lưu công việc nào" imgComponentSgv={<ImageSvg5 />}>
             <Button
               component={Link}
               to="/viec-lam"

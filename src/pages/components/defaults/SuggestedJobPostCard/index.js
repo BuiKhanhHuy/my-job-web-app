@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Pagination, Stack } from '@mui/material';
 
-import { IMAGE_SVG, ROLES_NAME } from '../../../../configs/constants';
+import { ImageSvg8, ROLES_NAME } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import jobService from '../../../../services/jobService';
 import JobPost from '../../../../components/JobPost';
@@ -84,7 +84,7 @@ const SuggestedJobPostCard = ({ pageSize = 12, fullWidth = false }) => {
             ))}
           </Grid>
         ) : jobPosts.length === 0 ? (
-          <NoDataCard img={IMAGE_SVG.img8} />
+          <NoDataCard imgComponentSgv={<ImageSvg8 />} />
         ) : (
           <>
             <Grid container spacing={2}>
