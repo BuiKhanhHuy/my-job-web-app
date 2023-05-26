@@ -1,9 +1,12 @@
 import React from 'react';
 import { Card, Grid, Stack } from '@mui/material';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import AccountCard from '../../components/auths/AccountCard';
 
 const AccountPage = () => {
+  TabTitle('Quản lý tài khoản Nhà tuyển dụng');
+
   return (
     <Stack spacing={3}>
       <Card sx={{ p: 2 }}>

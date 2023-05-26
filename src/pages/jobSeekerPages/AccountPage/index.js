@@ -1,10 +1,13 @@
 import React from 'react';
 import { Card, Grid } from '@mui/material';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import AccountCard from '../../components/auths/AccountCard';
 import PersonalInfoCard from '../../components/jobSeekers/PersonalInfoCard';
 
 const AccountPage = () => {
+  TabTitle("Quản lý tài khoản Người tìm việc")
+
   return (
     <Grid spacing={3} container>
       <Grid item xs={12} sm={12} md={5} lg={6} xl={6}>

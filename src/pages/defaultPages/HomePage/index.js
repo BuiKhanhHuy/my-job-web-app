@@ -15,6 +15,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import SearchIcon from '@mui/icons-material/Search';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import { HOME_FILTER_CAREER, ROLES_NAME } from '../../../configs/constants';
 import TopCompanyCarousel from '../../../components/TopCompanyCarousel';
 import CareerCarousel from '../../../components/CareerCarousel';
@@ -24,6 +25,7 @@ import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
 import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
 
 export default function HomePage() {
+  TabTitle("Tìm việc nhanh, tuyển dụng hiệu quả tại MyJob")
   const { isAuthenticated, currentUser } = useSelector((state) => state.user);
 
   return (

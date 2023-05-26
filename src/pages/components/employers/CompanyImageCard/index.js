@@ -124,7 +124,7 @@ const CompanyImageCard = () => {
         {fileList.length < 15 && '+ Tải lên'}
       </Upload>
       <Modal
-        style={{ zIndex: 2000 }}
+        zIndex={8000}
         open={previewVisible}
         title="Xem hình ảnh"
         footer={null}

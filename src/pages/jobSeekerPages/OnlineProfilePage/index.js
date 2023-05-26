@@ -20,6 +20,7 @@ import ThumbsUpDownOutlinedIcon from '@mui/icons-material/ThumbsUpDownOutlined';
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
 import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import PersonalInfoCard from '../../components/jobSeekers/PersonalInfoCard';
 import GeneralInfoCard from '../../components/jobSeekers/GeneralInfoCard';
 import ExperienceDetailCard from '../../components/jobSeekers/ExperienceDetailCard';
@@ -39,6 +40,7 @@ const items = [
 ];
 
 const OnlineProfilePage = () => {
+  TabTitle("Cập nhật hồ sơ Online")
   const refs = React.useRef([]);
 
   const handleClickScroll = (index) => {

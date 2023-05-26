@@ -4,7 +4,10 @@ import { Box, Card, Container, Stack, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopeCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
+import { TabTitle } from '../../../utils/generalFunction';
+
 const EmailVerificationRequiredPage = () => {
+  TabTitle("Xác thực email")
   const { email } = useSelector((state) => state.auth);
 
   return (

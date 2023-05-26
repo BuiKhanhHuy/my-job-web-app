@@ -1,9 +1,13 @@
 import React from 'react';
 import { Box, Card, Grid, Stack, Typography } from '@mui/material';
+
+import { TabTitle } from '../../../utils/generalFunction';
 import AppIntroductionCard from '../../../components/AppIntroductionCard';
 import MuiImageCustom from '../../../components/MuiImageCustom';
 
 const AboutUsPage = () => {
+  TabTitle('Về chúng tôi - Hệ thống giới thiệu việc làm MyJob');
+
   return (
     <>
       <Box sx={{ my: 3 }}>
@@ -100,11 +104,13 @@ const AboutUsPage = () => {
                   xl: '120vh',
                 }}
               >
-                <MuiImageCustom
-                  src={
-                    'https://www.topcv.vn/v4/image/welcome/mobile-app/select_truejob.png'
-                  }
-                />
+                <Box sx={{ height: 520 }}>
+                  <MuiImageCustom
+                    src={
+                      'https://res.cloudinary.com/dtnpj540t/image/upload/v1685123439/Hotel_Images/hca5ibtkgtzpuoksyreu.png'
+                    }
+                  />
+                </Box>
               </Box>
               <Box>
                 <Stack spacing={2}>
@@ -161,11 +167,13 @@ const AboutUsPage = () => {
                   xl: '90vh',
                 }}
               >
-                <MuiImageCustom
-                  src={
-                    'https://www.topcv.vn/v4/image/welcome/mobile-app/cv_profile.png'
-                  }
-                />
+                <Box sx={{ height: 520 }}>
+                  <MuiImageCustom
+                    src={
+                      'https://res.cloudinary.com/dtnpj540t/image/upload/v1685123439/Hotel_Images/hca5ibtkgtzpuoksyreu.png'
+                    }
+                  />
+                </Box>
               </Box>
             </Stack>
           </Card>
@@ -191,11 +199,13 @@ const AboutUsPage = () => {
                   xl: '120vh',
                 }}
               >
-                <MuiImageCustom
-                  src={
-                    'https://www.topcv.vn/v4/image/welcome/mobile-app/cv_profile.png'
-                  }
-                />
+                <Box sx={{ height: 520 }}>
+                  <MuiImageCustom
+                    src={
+                      'https://res.cloudinary.com/dtnpj540t/image/upload/v1685123439/Hotel_Images/hca5ibtkgtzpuoksyreu.png'
+                    }
+                  />
+                </Box>
               </Box>
               <Box>
                 <Stack spacing={2}>
@@ -253,11 +263,13 @@ const AboutUsPage = () => {
                   xl: '90vh',
                 }}
               >
-                <MuiImageCustom
-                  src={
-                    'https://www.topcv.vn/v4/image/welcome/mobile-app/cv_profile.png'
-                  }
-                />
+                <Box sx={{ height: 520 }}>
+                  <MuiImageCustom
+                    src={
+                      'https://res.cloudinary.com/dtnpj540t/image/upload/v1685123439/Hotel_Images/hca5ibtkgtzpuoksyreu.png'
+                    }
+                  />
+                </Box>
               </Box>
             </Stack>
           </Card>

@@ -59,7 +59,7 @@ const JobPostLarge = ({
             }}
           />
         </Box>
-        <Stack flex={1} justifyContent="center" spacing={0.8}>
+        <Stack flex={1} justifyContent="center" spacing={0.8} >
           <Box>
             <Typography
               sx={{ fontSize: 18, fontWeight: 'bold' }}
@@ -72,7 +72,6 @@ const JobPostLarge = ({
               {jobName}
             </Typography>
           </Box>
-
           <Typography
             variant="body1"
             color="gray"

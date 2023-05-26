@@ -126,6 +126,11 @@ const LINKS = {
   YOUTUBE_LINK: 'https://www.youtube.com/channel/UCn49BvcP1w1mamaOSGTKVZw',
 };
 
+const BANNER_TYPE = {
+  HOME: 'HOME',
+  MAIN_JOB_RIGHT: 'MAIN_JOB_RIGHT',
+};
+
 export {
   PLATFORM,
   AUTH_PROVIDER,
@@ -138,6 +143,7 @@ export {
   IMAGES,
   LINKS,
   ICONS,
+  BANNER_TYPE,
   ImageSvg1,
   ImageSvg2,
   ImageSvg3,
@@ -150,5 +156,5 @@ export {
   ImageSvg10,
   ImageSvg11,
   ImageSvg12,
-  ImageSvg13
+  ImageSvg13,
 };

@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import { ROLES_NAME } from '../../../configs/constants';
 import toastMessages from '../../../utils/toastMessages';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
@@ -26,6 +27,8 @@ import tokenService from '../../../services/tokenService';
 import EmployerLoginForm from '../../components/auths/EmployerLoginForm';
 
 const EmployerLogin = () => {
+  TabTitle("Đăng nhập tài khoản Nhà tuyển dụng")
+
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [searchParams] = useSearchParams();

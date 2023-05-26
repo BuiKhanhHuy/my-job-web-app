@@ -16,10 +16,10 @@ const myjobService = {
 
     return httpRequest.post(url, data);
   },
-    getBanners: () => {
+  getBanners: (params = {}) => {
     const url = '/api/myjob/web/banner/';
 
-    return httpRequest.get(url);
+    return httpRequest.get(url, { params: params });
   },
 };
 

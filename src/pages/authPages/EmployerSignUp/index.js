@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, Box, Card, Container, Grid, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import { PLATFORM, ROLES_NAME } from '../../../configs/constants';
 import errorHandling from '../../../utils/errorHandling';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
@@ -14,6 +15,8 @@ import authService from '../../../services/authService';
 import EmployerSignUpForm from '../../components/auths/EmployerSignUpForm';
 
 const EmployerSignUp = () => {
+  TabTitle("Đăng ký tài khoản Nhà tuyển dụng")
+
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);

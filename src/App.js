@@ -208,6 +208,9 @@ function App() {
           },
           typography: {
             fontFamily: ['Open Sans', 'sans-serif'].join(','),
+            h1: {},
+            h2: {},
+            h3: {},
             h4: {
               fontWeight: 800,
             },
@@ -218,6 +221,11 @@ function App() {
             h6: {
               fontSize: '20px',
               fontWeight: 'bold',
+            },
+            subtitle1: {},
+            subtitle2: {},
+            body1: {},
+            body2: {
             },
             caption: {
               fontSize: '0.85rem',

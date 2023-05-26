@@ -19,6 +19,7 @@ import {
   ROLES_NAME,
 } from '../../../configs/constants';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import toastMessages from '../../../utils/toastMessages';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
 import errorHandling from '../../../utils/errorHandling';
@@ -30,6 +31,8 @@ import { getUserInfo } from '../../../redux/userSlice';
 import { updateVerifyEmail } from '../../../redux/authSlice';
 
 const JobSeekerSignUp = () => {
+  TabTitle("Đăng ký tài khoản Người tìm việc")
+
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState(null);

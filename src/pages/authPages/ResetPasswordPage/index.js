@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import { PLATFORM } from '../../../configs/constants';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
 import authService from '../../../services/authService';
@@ -16,6 +17,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import toastMessages from '../../../utils/toastMessages';
 
 const ResetPasswordPage = () => {
+  TabTitle("Cập nhật mật khẩu")
+
   const { token } = useParams();
   const nav = useNavigate();
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);

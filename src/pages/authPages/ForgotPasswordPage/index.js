@@ -3,6 +3,7 @@ import { Alert, Box, Card, Container, Stack, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopeCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import { PLATFORM } from '../../../configs/constants';
 import errorHandling from '../../../utils/errorHandling';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
@@ -10,6 +11,8 @@ import ForgotPasswordForm from '../../components/auths/ForgotPasswordForm';
 import authService from '../../../services/authService';
 
 const ForgotPasswordPage = () => {
+  TabTitle("Quên mật khẩu")
+
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
   const [messageSuccess, setMessageSuccess] = React.useState(null);
 

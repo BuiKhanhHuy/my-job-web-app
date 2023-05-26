@@ -28,6 +28,7 @@ import {
 
 import { QRCode } from 'antd';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import { ICONS, IMAGES, ROLES_NAME } from '../../../configs/constants';
 import errorHandling from '../../../utils/errorHandling';
 import toastMessages from '../../../utils/toastMessages';
@@ -159,6 +160,7 @@ const CompanyDetailPage = () => {
         const companyImages = data?.companyImages || [];
 
         setCompanyDetail(data);
+        TabTitle(data?.companyName)
 
         var imagelistNew = [];
         for (let i = 0; i < companyImages.length; i++) {

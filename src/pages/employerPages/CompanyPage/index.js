@@ -1,11 +1,14 @@
 import React from 'react';
 import { Box, Card, Tab } from '@mui/material';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import CompanyCard from '../../components/employers/CompanyCard';
 import CompanyImageCard from '../../components/employers/CompanyImageCard';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 const CompanyPage = () => {
+  TabTitle("Quản lý thông tin công ty")
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {

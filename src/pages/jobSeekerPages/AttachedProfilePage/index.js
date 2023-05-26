@@ -16,6 +16,7 @@ import PersonPinOutlinedIcon from '@mui/icons-material/PersonPinOutlined';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import PersonalInfoCard from '../../components/jobSeekers/PersonalInfoCard';
 import GeneralInfoCard from '../../components/jobSeekers/GeneralInfoCard';
 import CVCard from '../../components/jobSeekers/CVCard';
@@ -27,6 +28,7 @@ const items = [
 ];
 
 const AttachedProfilePage = () => {
+  TabTitle("Cập nhật hồ sơ Đính kèm")
   const refs = React.useRef([]);
 
   const handleClickScroll = (index) => {

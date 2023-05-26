@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import {
   Box,
   Card,
@@ -10,12 +10,14 @@ import {
   Button,
 } from '@mui/material';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import BoxProfile from '../../components/jobSeekers/BoxProfile';
 import ProfileUpload from '../../components/jobSeekers/ProfileUpload';
 import CompanyViewedCard from '../../components/jobSeekers/CompanyViewedCard';
-import { Link } from 'react-router-dom';
 
 const ProfilePage = () => {
+  TabTitle("Quản lý hồ sơ tìm việc")
+
   return (
     <Box>
       <Grid container spacing={2}>

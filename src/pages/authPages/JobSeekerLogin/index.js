@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import {
   AUTH_CONFIG,
   AUTH_PROVIDER,
@@ -29,6 +30,8 @@ import authService from '../../../services/authService';
 import tokenService from '../../../services/tokenService';
 
 const JobSeekerLogin = () => {
+  TabTitle("Đăng nhập tài khoản Người tìm việc")
+
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [searchParams] = useSearchParams();

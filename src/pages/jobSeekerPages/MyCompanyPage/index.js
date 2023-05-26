@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Grid, Stack, Tab, Typography } from '@mui/material';
+
+import { TabTitle } from '../../../utils/generalFunction';
 import CompanyViewedCard from '../../components/jobSeekers/CompanyViewedCard';
 import CompanyFollowedCard from '../../components/jobSeekers/CompanyFollowedCard';
 import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
 
 const MyCompanyPage = () => {
+  TabTitle("Trang quản trị Công ty của tôi")
+
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event, newValue) => {

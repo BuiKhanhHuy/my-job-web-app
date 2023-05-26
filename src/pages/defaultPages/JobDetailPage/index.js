@@ -25,6 +25,7 @@ import ShareIcon from '@mui/icons-material/Share';
 
 import { QRCode, Space } from 'antd';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import toastMessages from '../../../utils/toastMessages';
 import errorHandling from '../../../utils/errorHandling';
 import MuiImageCustom from '../../../components/MuiImageCustom';
@@ -289,8 +290,10 @@ const JobDetailPage = () => {
     const getJobPostDetail = async (jobPostSlug) => {
       try {
         const resData = await jobService.getJobPostDetailById(jobPostSlug);
+        const data = resData.data
 
-        setJobPostDetail(resData.data);
+        setJobPostDetail(data);
+        TabTitle(data?.jobName)
       } catch (error) {
       } finally {
         setIsLoading(false);

@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Stack } from '@mui/material';
 import { Result } from 'antd';
 
+import { TabTitle } from '../../../utils/generalFunction';
+
 const NotFoundPage = () => {
+  TabTitle("Không tìm thấy trang")
   const nav = useNavigate();
 
   return (

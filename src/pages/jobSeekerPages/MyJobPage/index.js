@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Grid, Stack, Tab, Typography } from '@mui/material';
+
+import { TabTitle } from '../../../utils/generalFunction';
 import SavedJobCard from '../../components/jobSeekers/SavedJobCard';
 import AppliedJobCard from '../../components/jobSeekers/AppliedJobCard';
 import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
@@ -8,6 +10,8 @@ import JobPostNotificationCard from '../../components/jobSeekers/JobPostNotifica
 import { useSearchParams } from 'react-router-dom';
 
 const MyJobPage = () => {
+  TabTitle("Trang quản trị Việc làm của tôi")
+
   const [searchParams] = useSearchParams();
   const [value, setValue] = React.useState(searchParams.get("tab") || "1");
 

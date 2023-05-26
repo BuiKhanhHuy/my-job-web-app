@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Box, Card, Grid, Stack, Typography } from '@mui/material';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import JobSeekerQuantityStatistics from '../../components/jobSeekers/JobSeekerQuantityStatistics';
 import SidebarProfile from '../../components/jobSeekers/SidebarProfile';
 import SidebarViewTotal from '../../components/jobSeekers/SidebarViewTotal';
@@ -10,6 +11,8 @@ import ActivityChart from '../../components/jobSeekers/charts';
 import JobApplicationCard from '../../components/jobSeekers/JobApplicationCard';
 
 const DashboardPage = () => {
+  TabTitle("Trang quản trị Người tìm việc")
+
   return (
     <Box>
       <Grid container spacing={2}>

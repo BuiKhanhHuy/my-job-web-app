@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid } from '@mui/material';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import EmployerQuantityStatistics from '../../components/employers/EmployerQuantityStatistics';
 import RecruitmentChart from '../../components/employers/charts/RecruitmentChart';
 import CandidateChart from '../../components/employers/charts/CandidateChart';
@@ -8,6 +9,8 @@ import ApplicationChart from '../../components/employers/charts/ApplicationChart
 import HiringAcademicChart from '../../components/employers/charts/HiringAcademicChart';
 
 const DashboardPage = () => {
+  TabTitle("Trang quản trị Nhà tuyển dụng")
+
   return (
     <>
       <Grid container spacing={2}>

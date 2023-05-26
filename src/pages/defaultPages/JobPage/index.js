@@ -1,5 +1,7 @@
 import React from 'react';
-import { Box, Grid, Stack, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
+
+import { TabTitle } from '../../../utils/generalFunction';
 import JobPostSearch from '../../components/defaults/JobPostSearch';
 import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
 import MainJobPostCard from '../../components/defaults/MainJobPostCard';
@@ -7,6 +9,8 @@ import AppIntroductionCard from '../../../components/AppIntroductionCard';
 import MuiImageCustom from '../../../components/MuiImageCustom';
 
 const JobPage = () => {
+  TabTitle('Kết quả tìm kiếm tin tuyển dụng');
+  
   return (
     <>
       <Box sx={{ mt: 2 }}>

@@ -1,10 +1,12 @@
 import React from 'react';
 import { Box, Card, Typography } from '@mui/material';
 
+import { TabTitle } from '../../../utils/generalFunction';
 import CompanySearch from '../../components/defaults/CompanySearch';
 import Companies from '../../../components/Companies';
 
 const CompanyPage = () => {
+  TabTitle('Kết quả tìm kiếm nhà tuyển dụng')
 
   return (
     <Box sx={{ mt: 2 }}>
