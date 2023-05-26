@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import {
   Box,
@@ -20,6 +20,7 @@ import FormPopup from '../../../../components/controls/FormPopup';
 import PersonalProfileForm from '../PersonalProfileForm';
 
 import jobSeekerProfileService from '../../../../services/jobSeekerProfileService';
+import { getUserInfo } from '../../../../redux/userSlice';
 
 const Loading = (
   <>
@@ -82,6 +83,7 @@ const item = (title, value) => {
 };
 
 const PersonalInfoCard = ({ title }) => {
+  const dispatch = useDispatch()
   const { allConfig } = useSelector((state) => state.config);
   const [openPopup, setOpenPopup] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
@@ -113,6 +115,7 @@ const PersonalInfoCard = ({ title }) => {
       try {
         await jobSeekerProfileService.updateProfile(data);
 
+        dispatch(getUserInfo())
         setIsSuccess(!isSuccess);
         setOpenPopup(false);
         toastMessages.success('Cập nhật thông tin cá nhân thành công.');

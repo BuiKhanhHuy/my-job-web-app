@@ -51,6 +51,7 @@ const options = {
     ],
   },
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       position: 'bottom',
@@ -146,7 +147,7 @@ const ApplicationChart = ({ title }) => {
                 setSelectedDateRange={setSelectedDateRange}
               />
             </Stack>
-            <Stack justifyContent="center" alignItems="center" height={300}>
+            <Stack justifyContent="center" alignItems="center">
               {isLoading ? (
                 <CircularProgress color="secondary" />
               ) : data.length === 0 ? (
@@ -155,7 +156,7 @@ const ApplicationChart = ({ title }) => {
                   description="Không có dữ liệu để thống kê"
                 />
               ) : (
-                <Bar data={dataOptions} options={options} />
+                <Bar data={dataOptions} options={options}  height={320}/>
               )}
             </Stack>
           </Box>

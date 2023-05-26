@@ -133,6 +133,7 @@ const TopCompanyCarousel = () => {
                         boxShadow: 9,
                       },
                       minHeight: 165,
+                      
                     }}
                     variant="outlined"
                     onClick={() => nav(`/cong-ty/${value.slug}`)}
@@ -155,6 +156,9 @@ const TopCompanyCarousel = () => {
                         fontWeight: 'bold',
                         fontSize: 16,
                         mt: 1,
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
                       }}
                     >
                       {value?.companyName}

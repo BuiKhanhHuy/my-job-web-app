@@ -17,9 +17,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 
+import { CV_TYPES, ImageSvg13 } from '../../../../configs/constants';
 import DataTableCustom from '../../../../components/DataTableCustom';
 import { faFile, faFilePdf } from '@fortawesome/free-regular-svg-icons';
-import { CV_TYPES } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 
 const AppliedResumeTable = (props) => {
@@ -33,7 +33,10 @@ const AppliedResumeTable = (props) => {
       {!isLoading && rows.length === 0 ? (
         <TableBody>
           <TableCell colSpan={7}>
-            <NoDataCard title="Chưa có ứng viên ứng tuyển" />
+            <NoDataCard
+              title="Chưa có ứng viên ứng tuyển"
+              imgComponentSgv={<ImageSvg13 />}
+            />
           </TableCell>
         </TableBody>
       ) : (

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { Card, Grid, Button, Stack, IconButton, Box } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import InputBaseSearchHomeCustom from '../../../../components/controls/InputBaseSearchHomeCustom';
+import InputBaseSearchCompanyCustom from '../../../../components/controls/InputBaseSearchCompanyCustom';
 import SingleSelectSearchCustom from '../../../../components/controls/SingleSelectSearchCustom';
 import {
   resetSearchCompany,
@@ -45,7 +45,7 @@ const CompanySearch = () => {
       <Box component="form" onSubmit={handleSubmit(handleFilter)}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
-            <InputBaseSearchHomeCustom
+            <InputBaseSearchCompanyCustom
               name="kw"
               placeholder="Nhập tên công ty hoặc lĩnh vực cần tìm kiếm"
               control={control}

@@ -14,11 +14,11 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 
+import { CV_TYPES, ImageSvg12 } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import DataTableCustom from '../../../../components/DataTableCustom';
 import { salaryString } from '../../../../utils/customData';
 import { faFile, faFilePdf } from '@fortawesome/free-regular-svg-icons';
-import { CV_TYPES } from '../../../../configs/constants';
 
 const SavedResumeTable = (props) => {
   const nav = useNavigate();
@@ -30,7 +30,10 @@ const SavedResumeTable = (props) => {
       {!isLoading && rows.length === 0 ? (
         <TableBody>
           <TableCell colSpan={7}>
-            <NoDataCard title="Bạn chưa lưu ứng viên nào" />
+            <NoDataCard
+              title="Bạn chưa lưu ứng viên nào"
+              imgComponentSgv={<ImageSvg12 />}
+            />
           </TableCell>
         </TableBody>
       ) : (
@@ -56,9 +59,15 @@ const SavedResumeTable = (props) => {
                   </Tooltip>
                 )}{' '}
                 {row?.resume?.title || (
-                  <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                  Chưa cập nhật
-                </span>
+                  <span
+                    style={{
+                      color: '#e0e0e0',
+                      fontStyle: 'italic',
+                      fontSize: 13,
+                    }}
+                  >
+                    Chưa cập nhật
+                  </span>
                 )}{' '}
               </TableCell>
               <TableCell align="left">
@@ -69,23 +78,41 @@ const SavedResumeTable = (props) => {
                   row?.resume?.salaryMin,
                   row?.resume?.salaryMax
                 ) || (
-                  <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                  Chưa cập nhật
-                </span>
+                  <span
+                    style={{
+                      color: '#e0e0e0',
+                      fontStyle: 'italic',
+                      fontSize: 13,
+                    }}
+                  >
+                    Chưa cập nhật
+                  </span>
                 )}
               </TableCell>
               <TableCell align="left">
                 {allConfig?.experienceDict[row?.resume?.experience] || (
-                    <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                  <span
+                    style={{
+                      color: '#e0e0e0',
+                      fontStyle: 'italic',
+                      fontSize: 13,
+                    }}
+                  >
                     Chưa cập nhật
                   </span>
                 )}
               </TableCell>
               <TableCell align="left">
                 {allConfig?.cityDict[row?.resume?.city] || (
-                   <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                   Chưa cập nhật
-                 </span>
+                  <span
+                    style={{
+                      color: '#e0e0e0',
+                      fontStyle: 'italic',
+                      fontSize: 13,
+                    }}
+                  >
+                    Chưa cập nhật
+                  </span>
                 )}
               </TableCell>
               <TableCell align="left">

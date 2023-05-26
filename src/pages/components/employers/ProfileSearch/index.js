@@ -45,7 +45,7 @@ const ProfileSearch = () => {
 
   return (
     <>
-      <Grid item xs={12}>
+      <Grid item xs={12} component="form" onSubmit={handleSubmit(handleFilter)}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={5} lg={6} xl={6}>
             <TextFieldCustom
@@ -72,7 +72,7 @@ const ProfileSearch = () => {
                 color="secondary"
                 startIcon={<SearchIcon />}
                 sx={{ color: 'white', height: '100%' }}
-                onClick={handleSubmit(handleFilter)}
+                type="submit"
               >
                 Tìm kiếm
               </Button>
@@ -80,7 +80,16 @@ const ProfileSearch = () => {
           </Grid>
         </Grid>{' '}
       </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={12}
+        lg={3}
+        xl={3}
+        component="form"
+        onSubmit={handleSubmit(handleFilter)}
+      >
         <Stack spacing={2}>
           <Stack
             direction="row"
@@ -93,7 +102,7 @@ const ProfileSearch = () => {
               color="error"
               size="small"
               startIcon={<RefreshIcon />}
-              sx={{textTransform: 'inherit'}}
+              sx={{ textTransform: 'inherit' }}
               onClick={handleReset}
             >
               Xóa lọc

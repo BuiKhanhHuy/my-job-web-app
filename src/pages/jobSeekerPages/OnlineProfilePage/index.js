@@ -104,7 +104,13 @@ const OnlineProfilePage = () => {
           }}
           item
         >
-          <Stack spacing={2}>
+          <Stack
+            spacing={2}
+            style={{
+              position: 'sticky',
+              top: 80,
+            }}
+          >
             <Card sx={{ p: 2 }}>
               <Stack>
                 <Box>

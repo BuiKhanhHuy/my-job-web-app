@@ -22,6 +22,7 @@ import {
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { ImageSvg10 } from '../../../../configs/constants';
 import toastMessages from '../../../../utils/toastMessages';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
@@ -486,7 +487,10 @@ const JobPostNotificationCard = () => {
               ))}
             </Stack>
           ) : jobPostNotifications.length === 0 ? (
-            <NoDataCard title="Bạn chưa có thông báo việc làm nào">
+            <NoDataCard
+              title="Bạn chưa có thông báo việc làm nào"
+              imgComponentSgv={<ImageSvg10 />}
+            >
               <Button variant="contained" color="primary">
                 Tạo thông báo bây giờ
               </Button>

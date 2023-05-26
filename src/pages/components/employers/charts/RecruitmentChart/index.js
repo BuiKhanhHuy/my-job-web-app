@@ -52,6 +52,7 @@ export const options = {
     },
   },
   responsive: true,
+  maintainAspectRatio: false,
   interaction: {
     mode: 'index',
     intersect: false,
@@ -150,7 +151,7 @@ const RecruitmentChart = ({ title }) => {
                 setSelectedDateRange={setSelectedDateRange}
               />
             </Stack>
-            <Stack justifyContent="center" alignItems="center" height={300}>
+            <Stack justifyContent="center" alignItems="center">
               {isLoading ? (
                 <CircularProgress color="secondary" />
               ) : data.length === 0 ? (
@@ -159,7 +160,7 @@ const RecruitmentChart = ({ title }) => {
                   description="Không có dữ liệu để thống kê"
                 />
               ) : (
-                <Bar options={options} data={dataOptions} />
+                <Bar options={options} data={dataOptions}  height={320}/>
               )}
             </Stack>
           </Box>

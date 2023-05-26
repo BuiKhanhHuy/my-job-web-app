@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Card, Grid, Pagination, Stack, Typography } from '@mui/material';
 
+import { ImageSvg11 } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import errorHandling from '../../../../utils/errorHandling';
 import toastMessages from '../../../../utils/toastMessages';
@@ -118,7 +119,10 @@ const ProfileCard = () => {
                   </Grid>
                 </Box>
               ) : resumes.length === 0 ? (
-                <NoDataCard title="Không tìm thấy kết quả." />
+                <NoDataCard
+                  title="Không tìm thấy kết quả."
+                  imgComponentSgv={<ImageSvg11 />}
+                />
               ) : (
                 <>
                   {/* Start: Job seeker profiles */}

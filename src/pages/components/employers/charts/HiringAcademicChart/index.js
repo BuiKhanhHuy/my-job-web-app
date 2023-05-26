@@ -29,6 +29,7 @@ const options = {
       position: 'bottom',
     },
   },
+  maintainAspectRatio: false,
 };
 
 const HiringAcademicChart = ({ title }) => {
@@ -131,7 +132,7 @@ const HiringAcademicChart = ({ title }) => {
                 setSelectedDateRange={setSelectedDateRange}
               />
             </Stack>
-            <Stack justifyContent="center" alignItems="center" height={300}>
+            <Stack justifyContent="center" alignItems="center">
               {isLoading ? (
                 <CircularProgress color="secondary" />
               ) : data.length === 0 ? (
@@ -140,7 +141,7 @@ const HiringAcademicChart = ({ title }) => {
                   description="Không có dữ liệu để thống kê"
                 />
               ) : (
-                <Pie data={dataOptions} options={options} />
+                <Pie data={dataOptions} options={options}  height={320}/>
               )}
             </Stack>
           </Box>

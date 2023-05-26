@@ -27,6 +27,7 @@ ChartJS.register(
 );
 export const options = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       position: 'bottom',
@@ -86,8 +87,8 @@ const ActivityChart = () => {
 
   return (
     <>
-      <Box sx={{ px: { xs: 0, sm: 1, md: 1, lg: 1, xl: 1 }  }}>
-        <Stack justifyContent="center" alignItems="center" height={300}>
+      <Box sx={{ px: { xs: 0, sm: 1, md: 1, lg: 1, xl: 1 } }}>
+        <Stack justifyContent="center" alignItems="center">
           {isLoading ? (
             <CircularProgress color="secondary" />
           ) : data.length === 0 ? (
@@ -96,7 +97,7 @@ const ActivityChart = () => {
               description="Không có dữ liệu để thống kê"
             />
           ) : (
-            <Line options={options} data={dataOptions} width={500} />
+            <Line options={options} data={dataOptions} height={320} />
           )}
         </Stack>
       </Box>
