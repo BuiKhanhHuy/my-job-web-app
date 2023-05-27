@@ -105,6 +105,13 @@ const IMAGES = {
   notificationImageDefault: require('../assets/images/noti-img-default.png'),
 };
 
+const ABOUT_IMAGES = {
+  AROUND_JOB_POST: require('../assets/images/about-images/around-job-post.png'),
+  JOB_POST_NOTIFICATION: require('../assets/images/about-images/job-notification-img.png'),
+  JOB_POST: require('../assets/images/about-images/job-post-img.png'),
+  PROFILE: require('../assets/images/about-images/profile-img.png'),
+};
+
 const ICONS = {
   INSTAGRAM: require('../assets/icons/instagram-icon.png'),
   FACEBOOK: require('../assets/icons/facebook-icon.png'),
@@ -141,6 +148,7 @@ export {
   CV_TYPES,
   DATE_OPTIONS,
   IMAGES,
+  ABOUT_IMAGES,
   LINKS,
   ICONS,
   BANNER_TYPE,

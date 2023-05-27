@@ -4,6 +4,7 @@ import { Box, Card, Grid, Stack, Typography } from '@mui/material';
 import { TabTitle } from '../../../utils/generalFunction';
 import AppIntroductionCard from '../../../components/AppIntroductionCard';
 import MuiImageCustom from '../../../components/MuiImageCustom';
+import { ABOUT_IMAGES } from '../../../configs/constants';
 
 const AboutUsPage = () => {
   TabTitle('Về chúng tôi - Hệ thống giới thiệu việc làm MyJob');
@@ -95,21 +96,9 @@ const AboutUsPage = () => {
               }}
               spacing={2}
             >
-              <Box
-                width={{
-                  xs: '100%',
-                  sm: '100%',
-                  md: '120vh',
-                  lg: '120vh',
-                  xl: '120vh',
-                }}
-              >
-                <Box sx={{ height: 520 }}>
-                  <MuiImageCustom
-                    src={
-                      'https://res.cloudinary.com/dtnpj540t/image/upload/v1685123439/Hotel_Images/hca5ibtkgtzpuoksyreu.png'
-                    }
-                  />
+              <Box width="100%">
+                <Box sx={{ height: 600 }}>
+                  <MuiImageCustom src={ABOUT_IMAGES.JOB_POST} />
                 </Box>
               </Box>
               <Box>
@@ -120,7 +109,7 @@ const AboutUsPage = () => {
                   >
                     Chọn đúng việc - Đi đúng hướng
                   </Typography>
-                  <Typography textAlign="justify">
+                  <Typography textAlign="justify" color="#6D7681">
                     Cá nhân hoá trải nghiệm tìm việc theo nhu cầu ứng viên gồm
                     các tính năng Gợi ý việc làm phù hợp, Tìm kiếm việc làm, Tìm
                     kiếm công ty và Chatbot hỗ trợ tìm việc làm một cách nhanh
@@ -151,28 +140,16 @@ const AboutUsPage = () => {
                   >
                     Tạo CV & Profile
                   </Typography>
-                  <Typography textAlign="justify">
+                  <Typography textAlign="justify" color="#6D7681">
                     CV online và có thể tải lên cv đính kèm. Thuận tiện, nhanh
                     chóng, chuyên nghiệp và khác biệt. Tăng 80% tỉ lệ ứng tuyển
                     thành công.
                   </Typography>
                 </Stack>
               </Box>
-              <Box
-                width={{
-                  xs: '100%',
-                  sm: '100%',
-                  md: '90vh',
-                  lg: '90vh',
-                  xl: '90vh',
-                }}
-              >
-                <Box sx={{ height: 520 }}>
-                  <MuiImageCustom
-                    src={
-                      'https://res.cloudinary.com/dtnpj540t/image/upload/v1685123439/Hotel_Images/hca5ibtkgtzpuoksyreu.png'
-                    }
-                  />
+              <Box width="100%">
+                <Box sx={{ height: 600 }}>
+                  <MuiImageCustom src={ABOUT_IMAGES.PROFILE} />
                 </Box>
               </Box>
             </Stack>
@@ -190,21 +167,9 @@ const AboutUsPage = () => {
               }}
               spacing={2}
             >
-              <Box
-                width={{
-                  xs: '100%',
-                  sm: '100%',
-                  md: '120vh',
-                  lg: '120vh',
-                  xl: '120vh',
-                }}
-              >
-                <Box sx={{ height: 520 }}>
-                  <MuiImageCustom
-                    src={
-                      'https://res.cloudinary.com/dtnpj540t/image/upload/v1685123439/Hotel_Images/hca5ibtkgtzpuoksyreu.png'
-                    }
-                  />
+              <Box width="100%">
+                <Box sx={{ height: 600 }}>
+                  <MuiImageCustom src={ABOUT_IMAGES.AROUND_JOB_POST} />
                 </Box>
               </Box>
               <Box>
@@ -215,7 +180,7 @@ const AboutUsPage = () => {
                   >
                     Việc làm xung quanh bạn
                   </Typography>
-                  <Typography textAlign="justify">
+                  <Typography textAlign="justify" color="#6D7681">
                     Tính năng VIỆC LÀM GẦN BẠN trên app MyJob. Tính năng này
                     giúp ứng viên có thể dễ dàng lựa chọn được một công việc phù
                     hợp, đồng thời đảm bảo được tiêu chí gần nhà, thuận tiện đi
@@ -247,28 +212,16 @@ const AboutUsPage = () => {
                   >
                     Thông báo việc làm mọi lúc
                   </Typography>
-                  <Typography textAlign="justify">
+                  <Typography textAlign="justify" color="#6D7681">
                     Tạo thông báo việc làm để việc làm tìm đến bạn. Việc làm mới
                     nhất từ các nhà tuyển dụng hàng đầu sẽ được gửi đến email
                     của bạn hàng tuần.
                   </Typography>
                 </Stack>
               </Box>
-              <Box
-                width={{
-                  xs: '100%',
-                  sm: '100%',
-                  md: '90vh',
-                  lg: '90vh',
-                  xl: '90vh',
-                }}
-              >
-                <Box sx={{ height: 520 }}>
-                  <MuiImageCustom
-                    src={
-                      'https://res.cloudinary.com/dtnpj540t/image/upload/v1685123439/Hotel_Images/hca5ibtkgtzpuoksyreu.png'
-                    }
-                  />
+              <Box width="100%">
+                <Box sx={{ height: 600 }}>
+                  <MuiImageCustom src={ABOUT_IMAGES.JOB_POST_NOTIFICATION} />
                 </Box>
               </Box>
             </Stack>
