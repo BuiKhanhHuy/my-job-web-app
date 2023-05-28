@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Moment from 'react-moment';
+import 'moment/locale/vi';
 import {
   Box,
   Button,
@@ -358,7 +360,7 @@ const NotificationCard = ({ title }) => {
                                   )
                                 }
                                 secondary={
-                                  <React.Fragment>
+                                  <Stack>
                                     <Typography
                                       sx={{ display: 'inline' }}
                                       component="span"
@@ -367,8 +369,16 @@ const NotificationCard = ({ title }) => {
                                     >
                                       {value?.content}
                                     </Typography>
-                                    {' - '}một giờ trước
-                                  </React.Fragment>
+                                    <Typography
+                                      variant="caption"
+                                      fontSize={12}
+                                      color="#bdbdbd"
+                                    >
+                                      <Moment fromNow>
+                                        {value?.time?.seconds * 1000}
+                                      </Moment>
+                                    </Typography>
+                                  </Stack>
                                 }
                               />
                             </ListItemButton>
