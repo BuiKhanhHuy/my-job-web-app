@@ -97,14 +97,14 @@ const ApplicationChart = ({ title }) => {
         {
           type: 'line',
           label: data?.title2,
-          backgroundColor: 'red',
+          backgroundColor: data?.backgroundColor2,
           data: data?.data2 || [],
           tension: 0.5,
         },
         {
           type: 'bar',
           label: data?.title1,
-          backgroundColor: 'rgb(75, 192, 192)',
+          backgroundColor: data?.backgroundColor1,
           data: data?.data1 || [],
         },  
       ],

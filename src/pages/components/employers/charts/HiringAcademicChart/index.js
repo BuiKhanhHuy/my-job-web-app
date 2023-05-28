@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import {
   Box,
   Card,
@@ -33,7 +32,6 @@ const options = {
 };
 
 const HiringAcademicChart = ({ title }) => {
-  const { allConfig } = useSelector((state) => state.config);
   const [isLoading, setIsLoading] = React.useState(true);
   const [allowSubmit, setAllowSubmit] = React.useState(false);
   const [selectedDateRange, setSelectedDateRange] = React.useState([
@@ -47,9 +45,8 @@ const HiringAcademicChart = ({ title }) => {
     const statistics = async (data) => {
       setIsLoading(true);
       try {
-        const resData = await statisticService.employerRecruitmentStatisticsByRank(
-          data
-        );
+        const resData =
+          await statisticService.employerRecruitmentStatisticsByRank(data);
 
         setData(resData.data);
       } catch (error) {
@@ -68,35 +65,20 @@ const HiringAcademicChart = ({ title }) => {
   }, [allowSubmit]);
 
   const dataOptions = React.useMemo(() => {
-    var labels = [];
-    var d = [];
-
-    for (let i = 0; i < data.length; i++) {
-      labels.push(allConfig?.academicLevelDict[data[i]?.academicLevel]);
-      d.push(data[i].countJobPostActivity);
-    }
-
     const dataOptions = {
-      labels: labels,
+      labels: data?.labels || [],
       datasets: [
         {
           label: '# Số lượng ứng tuyển',
-          data: d,
-          backgroundColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-          ],
+          data: data?.data || [],
+          backgroundColor: data?.backgroundColor || [],
           borderWidth: 0,
         },
       ],
     };
 
     return dataOptions;
-  }, [allConfig?.academicLevelDict, data]);
+  }, [data]);
 
   return (
     <>
@@ -141,7 +123,7 @@ const HiringAcademicChart = ({ title }) => {
                   description="Không có dữ liệu để thống kê"
                 />
               ) : (
-                <Pie data={dataOptions} options={options}  height={320}/>
+                <Pie data={dataOptions} options={options} height={320} />
               )}
             </Stack>
           </Box>
