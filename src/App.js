@@ -27,6 +27,7 @@ import HomeLayout from './layouts/HomeLayout';
 import DefaultLayout from './layouts/DefaultLayout';
 import JobSeekerLayout from './layouts/JobSeekerLayout';
 import EmployerLayout from './layouts/EmployerLayout';
+import ChatLayout from './layouts/ChatLayout';
 
 // errors pages
 import NotFoundPage from './pages/errorsPage/NotFoundPage';
@@ -79,6 +80,9 @@ import { default as EmployerAccountPage } from './pages/employerPages/AccountPag
 import { MyJobChatBot } from './chatbox';
 import Feedback from './components/Feedback';
 import ScrollToTop from './components/ScrollToTop';
+
+// chat
+import ChatPage from './pages/authPages/ChatPage';
 
 const mode = 'light';
 function App() {
@@ -225,8 +229,7 @@ function App() {
             subtitle1: {},
             subtitle2: {},
             body1: {},
-            body2: {
-            },
+            body2: {},
             caption: {
               fontSize: '0.85rem',
             },
@@ -370,7 +373,7 @@ function App() {
                   <Route path="tai-khoan" element={<EmployerAccountPage />} />
                 </Route>
                 {/* End: Employer */}
-                {/* Start: Auth */}s
+                {/* Start: Auth */}
                 <Route
                   path=""
                   element={
@@ -423,6 +426,43 @@ function App() {
                   />
                 </Route>
                 {/* End: Auth */}
+
+                {/* Start: Chat */}
+
+                <Route
+                  path="ket-noi-voi-ung-vien"
+                  element={
+                    <PrivateRoutes
+                      isAuthenticated={
+                        isAuthenticated &&
+                        currentUser?.roleName === ROLES_NAME.EMPLOYER
+                      }
+                      redirectUrl="/dang-nhap-nha-tuyen-dung"
+                    >
+                      <ChatLayout />
+                    </PrivateRoutes>
+                  }
+                >
+                  <Route path="" element={<ChatPage />} />
+                </Route>
+                <Route
+                  path="ket-noi-voi-nha-tuyen-dung"
+                  element={
+                    <PrivateRoutes
+                      isAuthenticated={
+                        isAuthenticated &&
+                        currentUser?.roleName === ROLES_NAME.JOB_SEEKER
+                      }
+                      redirectUrl="/dang-nhap-ung-vien"
+                    >
+                      <ChatLayout />
+                    </PrivateRoutes>
+                  }
+                >
+                  <Route path="" element={<ChatPage />} />
+                </Route>
+
+                {/* End: Chat */}
               </Route>
               {/* Start: Errors */}
               <Route path="*" element={<NotFoundPage />} />

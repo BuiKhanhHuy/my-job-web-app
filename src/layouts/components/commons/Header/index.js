@@ -26,6 +26,7 @@ import UserMenu from '../UserMenu';
 import LeftDrawer from '../LeftDrawer';
 import AccountSwitchMenu from '../AccountSwitchMenu';
 import NotificationCard from '../../../../components/NotificationCard';
+import ChatCard from '../../../../components/ChatCard';
 
 const pages = [
   { id: 1, label: 'Việc làm', path: '/viec-lam' },
@@ -268,6 +269,10 @@ const Header = (props) => {
             {/* start: NotificationCard */}
             {isAuthenticated && <NotificationCard />}
             {/* End: NotificationCard */}
+
+            {/* start: ChatCard */}
+            {isAuthenticated && <ChatCard />}
+            {/* End: ChatCard */}
 
             {/* Start: SwitchModeButton */}
             {/* <SwitchModeButton /> */}

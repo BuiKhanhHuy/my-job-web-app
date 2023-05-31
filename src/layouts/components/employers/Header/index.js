@@ -16,6 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import UserMenu from '../../commons/UserMenu';
 import AccountSwitchMenu from '../../commons/AccountSwitchMenu';
 import NotificationCard from '../../../../components/NotificationCard';
+import ChatCard from '../../../../components/ChatCard';
 
 const Header = ({ drawerWidth, handleDrawerToggle }) => {
   const { currentUser, isAuthenticated } = useSelector((state) => state.user);
@@ -30,7 +31,7 @@ const Header = ({ drawerWidth, handleDrawerToggle }) => {
   };
 
   const authArea = (
-    <Box sx={{ flexGrow: 0,  ml: 1  }}>
+    <Box sx={{ flexGrow: 0, ml: 1 }}>
       <Card
         variant="outlined"
         onClick={handleOpenUserMenu}
@@ -101,7 +102,11 @@ const Header = ({ drawerWidth, handleDrawerToggle }) => {
         <Toolbar>
           {/* start: NotificationCard */}
           {isAuthenticated && <NotificationCard />}
-            {/* End: NotificationCard */}
+          {/* End: NotificationCard */}
+
+          {/* start: ChatCard */}
+          {isAuthenticated && <ChatCard />}
+          {/* End: ChatCard */}
 
           {/* Start: authArea */}
           {authArea}

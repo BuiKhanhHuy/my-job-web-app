@@ -50,7 +50,7 @@ const ApplyForm = ({ handleApplyJob }) => {
     defaultValues: {
       fullName: currentUser.fullName,
       email: currentUser.email,
-      phone: currentUser?.jobSeekerProfilePhone || '',
+      phone: currentUser?.jobSeekerProfile?.phone || '',
       resume: '',
     },
     resolver: yupResolver(schema),

@@ -24,6 +24,7 @@ import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import { useDebounce } from '../../../hooks';
 import { searchJobPostWithKeyword } from '../../../redux/filterSlice';
 import jobService from '../../../services/jobService';
+import { Spin } from 'antd';
 
 const InputBaseSearchHomeCustom = ({
   name,
@@ -41,7 +42,8 @@ const InputBaseSearchHomeCustom = ({
   const [searchValue, setSearchValue] = React.useState('');
   const [searchResult, setSearchResult] = React.useState([]);
   const [recentSearch, setRecentSearch] = React.useState([]);
-  const debounded = useDebounce(searchValue, 500);
+  const debounded = useDebounce(searchValue, 300);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     try {
@@ -65,6 +67,10 @@ const InputBaseSearchHomeCustom = ({
     }
 
     const getSuggestTitle = async (kw) => {
+      if (!isLoading) {
+        setIsLoading(true);
+      }
+
       try {
         const resData = await jobService.searchJobSuggestTitle(kw);
         const data = resData?.data;
@@ -72,10 +78,14 @@ const InputBaseSearchHomeCustom = ({
         setSearchResult(data.flat());
       } catch (error) {
         console.error('Search failed: ', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     getSuggestTitle(debounded);
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounded]);
 
   const handleHideResult = () => {
@@ -116,12 +126,25 @@ const InputBaseSearchHomeCustom = ({
             }}
           >
             <Stack>
-              {(searchResult || [])?.length > 0 && (
-                <Box>
-                  <Typography fontWeight="bold" fontSize={17} color="#2C95FF">
-                    Gợi ý tìm kiếm
-                  </Typography>
-                  <Stack>
+              <Box>
+                <Typography fontWeight="bold" fontSize={17} color="#2C95FF">
+                  Gợi ý tìm kiếm
+                </Typography>
+                <Stack>
+                  {isLoading ? (
+                    <Stack sx={{ py: 2 }} justifyContent="center">
+                      <Spin />
+                    </Stack>
+                  ) : searchResult.length === 0 ? (
+                    <Typography
+                      my={1}
+                      textAlign="center"
+                      color={'#bdbdbd'}
+                      variant="caption"
+                    >
+                      Không có dữ liệu
+                    </Typography>
+                  ) : (
                     <List>
                       {searchResult.map((value) => (
                         <ListItem
@@ -147,10 +170,9 @@ const InputBaseSearchHomeCustom = ({
                         </ListItem>
                       ))}
                     </List>
-                  </Stack>
-                </Box>
-              )}
-
+                  )}
+                </Stack>
+              </Box>
               {(recentSearch || [])?.length > 0 && (
                 <Box>
                   <Typography fontWeight="bold" fontSize={17} color="#2C95FF">
@@ -223,6 +245,9 @@ const InputBaseSearchHomeCustom = ({
                   field.onChange(textValue);
                   setSearchResult([]);
                   setSearchValue(textValue);
+                  if (!isLoading) {
+                    setIsLoading(true);
+                  }
                 }}
                 onBlur={field.onBlur}
                 endAdornment={
