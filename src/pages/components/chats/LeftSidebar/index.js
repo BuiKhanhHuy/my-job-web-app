@@ -1,5 +1,7 @@
 import React from 'react';
 import { Box, Skeleton, Stack, Typography } from '@mui/material';
+
+import { ChatContext } from '../../../../context/ChatProvider';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
 
 const LoadingComponentItem = () => {
@@ -17,7 +19,13 @@ const LoadingComponentItem = () => {
 };
 
 const LeftSidebar = () => {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const { chatRooms, setSelectedRoomId } = React.useContext(ChatContext);
+  // const [isLoading, setIsLoading] = React.useState(true);
+
+  const handleSelectRoom = (chatRoomId) => {
+    console.log('CHỌN ROOMID: ', chatRoomId);
+    setSelectedRoomId(chatRoomId);
+  };
 
   return (
     <Box>
@@ -28,12 +36,13 @@ const LeftSidebar = () => {
               <LoadingComponentItem key={value} />
             ))}
           </Stack>
-        ) : [1].length === 0 ? (
-          'Không có du lieu'
+        ) : chatRooms.length === 0 ? (
+          <Typography variant="caption">Chưa có cuộc trò chuyện nào</Typography>
         ) : (
           <Box>
-            {[1, 2, 3].map((value) => (
+            {chatRooms.map((value) => (
               <Stack
+                onClick={() => handleSelectRoom(value.id)}
                 direction="row"
                 spacing={1}
                 alignItems="center"
@@ -56,9 +65,7 @@ const LeftSidebar = () => {
                       borderColor: '#e0e0e0',
                       p: 0.25,
                     }}
-                    src={
-                      'https://cdn1.vieclam24h.vn/images/default/2022/08/02/images/165941441315.jpeg'
-                    }
+                    src={`${value?.user?.avatarUrl}`}
                   />
                 </Box>
                 <Stack flex={1} width={'50%'}>
@@ -72,7 +79,7 @@ const LeftSidebar = () => {
                       cursor: 'pointer',
                     }}
                   >
-                    {'TA Team'}
+                    {`${value?.user?.name}`}
                   </span>
 
                   <Typography
@@ -84,7 +91,7 @@ const LeftSidebar = () => {
                       cursor: 'pointer',
                     }}
                   >
-                    {'KMS Technology Vietnam'}
+                    {`${value?.user?.company?.companyName}` || '---'}
                   </Typography>
                 </Stack>
               </Stack>
@@ -97,7 +104,12 @@ const LeftSidebar = () => {
 };
 
 const EmployerSidebar = () => {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const { chatRooms, setSelectedRoomId } = React.useContext(ChatContext);
+
+  const handleSelectRoom = (chatRoomId) => {
+    console.log('CHỌN ROOMID: ', chatRoomId);
+    setSelectedRoomId(chatRoomId);
+  };
 
   return (
     <Box>
@@ -112,8 +124,9 @@ const EmployerSidebar = () => {
           'Không có du lieu'
         ) : (
           <Box>
-            {[1, 2, 3].map((value) => (
+            {chatRooms.map((value) => (
               <Stack
+                onClick={() => handleSelectRoom(value.id)}
                 direction="row"
                 spacing={1}
                 alignItems="center"
@@ -136,9 +149,7 @@ const EmployerSidebar = () => {
                       borderColor: '#e0e0e0',
                       p: 0.25,
                     }}
-                    src={
-                      'https://res.cloudinary.com/dtnpj540t/image/upload/v1685042727/my-job/avatar/2023/5/13427.jpg'
-                    }
+                    src={`${value?.user?.avatarUrl}`}
                   />
                 </Box>
                 <Stack flex={1} width={'50%'}>
@@ -152,7 +163,7 @@ const EmployerSidebar = () => {
                       cursor: 'pointer',
                     }}
                   >
-                    {'Bùi Khánh Huy'}
+                    {`${value?.user?.name}` || '---'}
                   </span>
 
                   <Typography
@@ -164,7 +175,7 @@ const EmployerSidebar = () => {
                       cursor: 'pointer',
                     }}
                   >
-                    {'khuy220@gmail.com'}
+                    {`${value?.user?.email}` || '---'}
                   </Typography>
                 </Stack>
               </Stack>

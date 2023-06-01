@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Box, Chip, Stack, Typography } from '@mui/material';
+import { Box, Chip, Divider, Stack, Typography } from '@mui/material';
 import GridViewIcon from '@mui/icons-material/GridView';
 import HomeIcon from '@mui/icons-material/Home';
 
-import { ROLES_NAME } from '../../../configs/constants';
+import { IMAGES, ROLES_NAME } from '../../../configs/constants';
+import MuiImageCustom from '../../MuiImageCustom';
 
 const SidebarHeader = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -24,18 +25,25 @@ const SidebarHeader = () => {
   };
 
   return (
-    <Stack direction="row" justifyContent="space-between" alignItems="center">
-      <Box>
-        <Typography>Logo</Typography>
-      </Box>
-      <Box>
-        <Chip
-          icon={!isEmployer ? <HomeIcon /> : <GridViewIcon />}
-          label={!isEmployer ? 'Về trang chủ' : 'Về trang quản trị'}
-          onClick={handleRedirect}
-        />
-      </Box>
-    </Stack>
+    <Box>
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Box>
+          <MuiImageCustom
+            width={120}
+            src={IMAGES.getTextLogo('dark')}
+            sx={{ mr: 1, mb: 1 }}
+          />
+        </Box>
+        <Box>
+          <Chip
+            icon={!isEmployer ? <HomeIcon /> : <GridViewIcon />}
+            label={!isEmployer ? 'Về trang chủ' : 'Về trang quản trị'}
+            onClick={handleRedirect}
+          />
+        </Box>
+      </Stack>
+      <Divider />
+    </Box>
   );
 };
 

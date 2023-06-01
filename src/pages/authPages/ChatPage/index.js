@@ -53,11 +53,6 @@ const ChatPage = () => {
                 </span>
               </Typography>
             </Box>
-            <Box>
-              {/* Start: ChatInfo */}
-              <ChatInfo />
-              {/* End: ChatInfo */}
-            </Box>
             <Box p={1}>
               {/* Start: ChatWindow */}
               <ChatWindow />

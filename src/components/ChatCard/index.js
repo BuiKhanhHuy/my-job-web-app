@@ -28,9 +28,9 @@ const ChatCard = () => {
       aria-label="show new notifications"
       color="inherit"
     >
-      <Badge badgeContent={10} color="error">
+      {/* <Badge badgeContent={10} color="error"> */}
         <ForumIcon />
-      </Badge>
+      {/* </Badge> */}
     </IconButton>
   );
 };

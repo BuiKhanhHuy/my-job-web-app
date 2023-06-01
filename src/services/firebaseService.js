@@ -1,12 +1,80 @@
+import {
+  getFirestore,
+  collection,
+  setDoc,
+  doc,
+  getDoc,
+  addDoc,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore';
 import db, { serverTimestamp } from '../configs/firebase-config';
 
-export const addDocument = (collection, data) => {
-  const query = db.collection(collection);
+export const addDocument = async (collectionName, data) => {
+  const query = collection(db, collectionName);
 
-  query.add({
+  const docRef = await addDoc(query, {
     ...data,
     createdAt: serverTimestamp(),
   });
+
+  console.log('Document written with ID: ', docRef.id);
+  return docRef.id;
+};
+
+export const checkExists = async (collectionName, docId) => {
+  const firestore = getFirestore();
+  const documentRef = doc(firestore, collectionName, `${docId}`);
+
+  const documentSnapshot = await getDoc(documentRef);
+
+  return documentSnapshot.exists();
+};
+
+export const createUser = async (collectionName, userData, userId) => {
+  try {
+    const userRef = doc(db, collectionName, `${userId}`);
+
+    await setDoc(userRef, {
+      ...userData,
+      createdAt: serverTimestamp(),
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const checkChatRoomExists = async (collectionName, member1, member2) => {
+  const firestore = getFirestore();
+  const chatRoomsRef = collection(firestore, collectionName);
+
+  const q = query(
+    chatRoomsRef,
+    where('userId1', 'in', [`${member1}`, `${member2}`]),
+    where('userId2', 'in', [`${member1}`, `${member2}`])
+  );
+  const querySnapshot = await getDocs(q);
+
+  if (querySnapshot.size > 0) {
+    const roomId = querySnapshot.docs[0].id;
+    return roomId;
+  } else {
+    console.log('Room does not exist');
+    return null;
+  }
+};
+
+export const getUserAccount = async (collectionName, userId) => {
+  const userRef = doc(db, collectionName, `${userId}`);
+  const docSnap = await getDoc(userRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    return null;
+  }
 };
 
 // tao keywords cho displayName, su dung cho search

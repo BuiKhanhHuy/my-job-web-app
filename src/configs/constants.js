@@ -14,6 +14,7 @@ import { ReactComponent as ImageSvg10 } from '../assets/images/svg-images/note_l
 import { ReactComponent as ImageSvg11 } from '../assets/images/svg-images/profile_data.svg';
 import { ReactComponent as ImageSvg12 } from '../assets/images/svg-images/my_documents.svg';
 import { ReactComponent as ImageSvg13 } from '../assets/images/svg-images/opinion.svg';
+import { ReactComponent as ImageSvg14 } from '../assets/images/svg-images/letter.svg';
 
 const PLATFORM = 'WEB';
 
@@ -165,4 +166,5 @@ export {
   ImageSvg11,
   ImageSvg12,
   ImageSvg13,
+  ImageSvg14
 };

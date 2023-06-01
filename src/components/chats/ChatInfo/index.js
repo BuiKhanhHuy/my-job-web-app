@@ -1,19 +1,35 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Box, Chip, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
-import { ROLES_NAME } from '../../../configs/constants';
+import MuiImageCustom from '../../MuiImageCustom';
 
-const ChatInfo = () => {
-  const { currentUser } = useSelector((state) => state.user);
-  const nav = useNavigate();
-
-  const isEmployer = React.useMemo(() => {
-    return currentUser?.roleName === ROLES_NAME.EMPLOYER;
-  }, [currentUser]);
-
-  return <div>Chat info</div>;
+const ChatInfo = ({ avatarUrl, title, subTitle }) => {
+  return (
+    <Stack justifyContent="center" alignItems="center" spacing={1} mt={3}>
+      <Box>
+        <MuiImageCustom
+          width={54}
+          height={54}
+          sx={{
+            borderRadius: 50,
+            border: 1,
+            borderColor: '#e0e0e0',
+            p: 0.25,
+          }}
+          src={avatarUrl}
+        />
+      </Box>
+      <Typography variant="subtitle2" textAlign="center" fontWeight="bold">
+        {title || '---'}
+      </Typography>
+      <Typography variant="subtitle2" textAlign="center" fontWeight="bold">
+        {subTitle || '---'}
+      </Typography>
+      <Typography textAlign="center" variant="caption">
+        Hãy bắt đầu cuộc trò chuyện bằng một lời chào 😍
+      </Typography>
+    </Stack>
+  );
 };
 
 export default ChatInfo;

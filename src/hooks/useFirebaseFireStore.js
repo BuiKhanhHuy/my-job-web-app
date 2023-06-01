@@ -2,24 +2,18 @@ import React from 'react';
 import db from '../configs/firebase-config';
 import {
   collection,
-  getDocs,
-  limit,
   onSnapshot,
   query,
   where,
-  startAfter,
   orderBy,
-  updateDoc,
-  doc,
-  writeBatch,
 } from 'firebase/firestore';
 
-const useFirebaseFireStore = (collectionName, condition) => {
+const useFirebaseFireStore = (collectionName, condition, sort = 'desc') => {
   const [docs, setDocs] = React.useState([]);
 
   React.useEffect(() => {
     const collectionRef = collection(db, collectionName);
-    let q = query(collectionRef);
+    let q = query(collectionRef, orderBy('createdAt', sort));
 
     if (condition) {
       if (!condition.compareValue) {
@@ -29,7 +23,8 @@ const useFirebaseFireStore = (collectionName, condition) => {
 
       q = query(
         collectionRef,
-        where(condition.fieldName, condition.operator, condition.compareValue)
+        where(condition.fieldName, condition.operator, condition.compareValue),
+        orderBy('createdAt', sort)
       );
     }
 
@@ -38,12 +33,12 @@ const useFirebaseFireStore = (collectionName, condition) => {
         ...doc.data(),
         id: doc.id,
       }));
-      
+
       setDocs(documents);
     });
 
     return unsubscribe;
-  }, [collectionName, condition]);
+  }, [collectionName, condition, sort]);
 
   return docs;
 };

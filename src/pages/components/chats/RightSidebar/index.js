@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   Box,
   Chip,
@@ -10,8 +11,16 @@ import {
 } from '@mui/material';
 import { Empty } from 'antd';
 
+import { ChatContext } from '../../../../context/ChatProvider';
 import jobPostActivityService from '../../../../services/jobPostActivityService';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
+
+import {
+  addDocument,
+  checkChatRoomExists,
+  checkExists,
+  createUser,
+} from '../../../../services/firebaseService';
 
 const pageSize = 12;
 
@@ -33,6 +42,9 @@ const LoadingComponentItem = () => {
 };
 
 const RightSidebar = () => {
+  const { setSelectedRoomId } = React.useContext(ChatContext);
+  const { currentUser } = useSelector((state) => state.user);
+  const { id: userId } = currentUser;
   const [isLoading, setIsLoading] = React.useState(true);
   const [jobPostsApplied, setJobPostsApplied] = React.useState([]);
   const [page, setPage] = React.useState(1);
@@ -60,6 +72,43 @@ const RightSidebar = () => {
     getJobPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
+
+  const handleAddRoom = async (partnerId, userData) => {
+    // kiem tra user nay da duoc tao account tren firestore
+    let allowCreateNewChatRoom = false;
+    const isExists = await checkExists('accounts', partnerId);
+    if (!isExists) {
+      // tao moi user tren firestore.
+      const createResult = await createUser('accounts', userData, partnerId);
+      if (createResult) {
+        // tao phong tro chuyen
+        allowCreateNewChatRoom = true;
+      }
+    } else {
+      allowCreateNewChatRoom = true;
+    }
+
+    // tao phong tro chuyen
+    if (allowCreateNewChatRoom) {
+      // neu da ton tai phong co 2 user này => setSelectRoomID
+      let chatRoomId = await checkChatRoomExists(
+        'chatRooms',
+        userId,
+        partnerId
+      );
+      if (chatRoomId === null) {
+        // neu chua ton tai thi tao phong moi
+        chatRoomId = await addDocument('chatRooms', {
+          members: [`${userId}`, `${partnerId}`],
+          userId1: `${userId}`,
+          userId2: `${partnerId}`,
+        });
+      }
+
+      // set phong hien tai voi chatRoomId
+      setSelectedRoomId(chatRoomId);
+    }
+  };
 
   return (
     <Box>
@@ -133,7 +182,20 @@ const RightSidebar = () => {
                     label="Nhắn tin"
                     color="success"
                     variant="outlined"
-                    onClick={() => {}}
+                    onClick={() =>
+                      handleAddRoom(value?.userId, {
+                        userId: value?.userId,
+                        name: value?.fullName,
+                        email: value?.userEmail,
+                        avatarUrl: value?.companyImageUrl,
+                        company: {
+                          companyId: value?.companyId,
+                          slug: value?.companySlug,
+                          companyName: value?.companyName,
+                          imageUrl: value?.companyImageUrl,
+                        },
+                      })
+                    }
                   />
                 </Box>
               </Stack>
@@ -161,6 +223,9 @@ const RightSidebar = () => {
 };
 
 const EmployerSidebar = () => {
+  const { setSelectedRoomId } = React.useContext(ChatContext);
+  const { currentUser } = useSelector((state) => state.user);
+  const { id: userId } = currentUser;
   const [isLoading, setIsLoading] = React.useState(true);
   const [jobPostsApplied, setJobPostsApplied] = React.useState([]);
   const [page, setPage] = React.useState(1);
@@ -192,6 +257,43 @@ const EmployerSidebar = () => {
       //   jobPostId: jobPostIdSelect,
     });
   }, [page /*jobPostIdSelect */]);
+
+  const handleAddRoom = async (partnerId, userData) => {
+    // kiem tra user nay da duoc tao account tren firestore
+    let allowCreateNewChatRoom = false;
+    const isExists = await checkExists('accounts', partnerId);
+    if (!isExists) {
+      // tao moi user tren firestore.
+      const createResult = await createUser('accounts', userData, partnerId);
+      if (createResult) {
+        // tao phong tro chuyen
+        allowCreateNewChatRoom = true;
+      }
+    } else {
+      allowCreateNewChatRoom = true;
+    }
+
+    // tao phong tro chuyen
+    if (allowCreateNewChatRoom) {
+      // neu da ton tai phong co 2 user này => setSelectRoomID
+      let chatRoomId = await checkChatRoomExists(
+        'chatRooms',
+        userId,
+        partnerId
+      );
+      if (chatRoomId === null) {
+        // neu chua ton tai thi tao phong moi
+        chatRoomId = await addDocument('chatRooms', {
+          members: [`${userId}`, `${partnerId}`],
+          userId1: `${userId}`,
+          userId2: `${partnerId}`,
+        });
+      }
+
+      // set phong hien tai voi chatRoomId
+      setSelectedRoomId(chatRoomId);
+    }
+  };
 
   return (
     <Box>
@@ -265,7 +367,7 @@ const EmployerSidebar = () => {
                     label="Nhắn tin"
                     color="success"
                     variant="outlined"
-                    onClick={() => {}}
+                    onClick={() => handleAddRoom(value?.userId)}
                   />
                 </Box>
               </Stack>
