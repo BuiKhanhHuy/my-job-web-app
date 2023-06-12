@@ -367,7 +367,15 @@ const EmployerSidebar = () => {
                     label="Nhắn tin"
                     color="success"
                     variant="outlined"
-                    onClick={() => handleAddRoom(value?.userId)}
+                    onClick={() =>
+                      handleAddRoom(value?.userId, {
+                        userId: value?.userId,
+                        name: value?.fullName,
+                        email: value?.userEmail,
+                        avatarUrl: value?.avatarUrl,
+                        company: null,
+                      })
+                    }
                   />
                 </Box>
               </Stack>

@@ -5,17 +5,27 @@ import {
   query,
   where,
   orderBy,
+  limit,
 } from 'firebase/firestore';
 import db from '../configs/firebase-config';
 
 import { getUserAccount } from '../services/firebaseService';
 
-const useFireStoreGetChatRoom = (condition, userId, sort = 'desc') => {
+const useFireStoreGetChatRoom = (
+  condition,
+  userId,
+  sort = 'desc',
+  limitNum = null
+) => {
   const [docs, setDocs] = React.useState([]);
 
   React.useEffect(() => {
     const collectionRef = collection(db, 'chatRooms');
-    let q = query(collectionRef, orderBy('createdAt', sort));
+    let q = query(
+      collectionRef,
+      orderBy('createdAt', sort),
+      limitNum && limit(limitNum)
+    );
 
     if (condition) {
       if (!condition.compareValue) {
@@ -26,7 +36,8 @@ const useFireStoreGetChatRoom = (condition, userId, sort = 'desc') => {
       q = query(
         collectionRef,
         where(condition.fieldName, condition.operator, condition.compareValue),
-        orderBy('createdAt', sort)
+        orderBy('createdAt', sort),
+        limitNum && limit(limitNum)
       );
     }
 

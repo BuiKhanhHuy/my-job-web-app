@@ -82,7 +82,7 @@ import Feedback from './components/Feedback';
 import ScrollToTop from './components/ScrollToTop';
 
 // chat
-import ChatPage from './pages/authPages/ChatPage';
+import ChatPage from './pages/chatPages/ChatPage';
 
 const mode = 'light';
 function App() {

@@ -10,7 +10,6 @@ import ChatWindow from '../../components/chats/ChatWindow';
 import LeftSidebar from '../../components/chats/LeftSidebar';
 // components
 import SidebarHeader from '../../../components/chats/SidebarHeader';
-import ChatInfo from '../../../components/chats/ChatInfo';
 
 const ChatPage = () => {
   const { currentUser } = useSelector((state) => state.user);

@@ -68,7 +68,12 @@ const ChatProvider = ({ children }) => {
     };
   }, [userId]);
 
-  const chatRooms = useFireStoreGetChatRoom(chatRoomsCondition, userId);
+  const chatRooms = useFireStoreGetChatRoom(
+    chatRoomsCondition,
+    userId,
+    'desc',
+    100
+  );
 
   const selectedRoom = React.useMemo(
     () => chatRooms.find((room) => room.id === selectedRoomId) || {},
