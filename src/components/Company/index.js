@@ -171,8 +171,8 @@ const Company = ({
                   color: 'inherit',
                 }}
               >
-                {companyName.substr(0, 60)}
-                {companyName.length > 60 && '...'}
+                {companyName.substr(0, 55)}
+                {companyName.length > 55 && '...'}
               </Typography>
             </Box>
             <Typography variant="body2" gutterBottom>
