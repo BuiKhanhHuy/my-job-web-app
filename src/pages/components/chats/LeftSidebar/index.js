@@ -116,7 +116,7 @@ const LeftSidebar = () => {
                   </Stack>
                 ))}
               </Box>
-              <Stack direction="row" justifyContent="center" mt={1}>
+              {/* <Stack direction="row" justifyContent="center" mt={1}>
                 <Button
                   color="primary"
                   variant="outlined"
@@ -125,7 +125,7 @@ const LeftSidebar = () => {
                 >
                   Xem thêm
                 </Button>
-              </Stack>
+              </Stack> */}
             </Stack>
           )}
         </Box>
