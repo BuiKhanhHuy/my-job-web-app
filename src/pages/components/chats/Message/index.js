@@ -6,11 +6,11 @@ import 'moment/locale/vi';
 import { ChatContext } from '../../../../context/ChatProvider';
 
 const Message = ({ userId, text, avatarUrl, createdAt }) => {
-  const { currentAccount } = React.useContext(ChatContext);
+  const { currentUserChat } = React.useContext(ChatContext);
 
   return (
     <>
-      {`${currentAccount?.userId}` === `${userId}` ? (
+      {`${currentUserChat?.userId}` === `${userId}` ? (
         <div className="d-flex flex-row justify-content-end">
           <div>
             <p
@@ -20,9 +20,13 @@ const Message = ({ userId, text, avatarUrl, createdAt }) => {
               {text}
             </p>
             <p className="small me-3 mb-3 rounded-3 text-muted">
-              <Moment calendar={null} format="DD/MM/YYYY LT">
-                {createdAt?.seconds * 1000}
-              </Moment>
+              {createdAt?.seconds ? (
+                <Moment calendar={null} format="DD/MM/YYYY LT">
+                  {createdAt?.seconds * 1000}
+                </Moment>
+              ) : (
+                '...'
+              )}
             </p>
           </div>
           <img
@@ -56,9 +60,13 @@ const Message = ({ userId, text, avatarUrl, createdAt }) => {
               {text}
             </p>
             <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
-              <Moment calendar={null} format="DD/MM/YYYY LT">
-                {createdAt?.seconds * 1000}
-              </Moment>
+              {createdAt?.seconds ? (
+                <Moment calendar={null} format="DD/MM/YYYY LT">
+                  {createdAt?.seconds * 1000}
+                </Moment>
+              ) : (
+                '...'
+              )}
             </p>
           </div>
         </div>

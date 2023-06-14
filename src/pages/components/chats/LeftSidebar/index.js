@@ -1,10 +1,30 @@
 import React from 'react';
-import { Box, Button, Skeleton, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import CircleIcon from '@mui/icons-material/Circle';
 
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+  orderBy,
+  startAfter,
+  limit,
+  getDocs,
+} from 'firebase/firestore';
+import db from '../../../../configs/firebase-config';
 import { ChatContext } from '../../../../context/ChatProvider';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
 import ChatRoomSearch from '../../../../components/chats/ChatRoomSearch';
 import { useDebounce } from '../../../../hooks';
+import { getUserAccount } from '../../../../services/firebaseService';
 
 const LoadingComponentItem = () => {
   return (
@@ -20,20 +40,165 @@ const LoadingComponentItem = () => {
   );
 };
 
-const LeftSidebar = () => {
-  const { chatRooms, setSelectedRoomId } = React.useContext(ChatContext);
-  // const [isLoading, setIsLoading] = React.useState(true);
-  const [searchText, setSearchText] = React.useState('');
+const LIMIT = 12;
+const chatRoomCollectionRef = collection(db, 'chatRooms');
 
+const LeftSidebar = () => {
+  const { currentUserChat, setSelectedRoomId } = React.useContext(ChatContext);
+  const [searchText, setSearchText] = React.useState('');
   const deboundedTextValue = useDebounce(searchText, 500);
 
-  const handleSelectRoom = (chatRoomId) => {
-    setSelectedRoomId(chatRoomId);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [hasMore, setHasMore] = React.useState(true);
+  const [lastDocument, setLastDocument] = React.useState(null);
+  const [chatRooms, setChatRooms] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [count, setCount] = React.useState(0);
+
+  const handleSelectRoom = (chatRoom) => {
+    setSelectedRoomId(chatRoom?.id);
   };
 
   React.useEffect(() => {
     console.log('==> Bắn API Search: ', deboundedTextValue);
   }, [deboundedTextValue]);
+
+  // lang nghe tong chat rooms
+  React.useEffect(() => {
+    if (currentUserChat) {
+      const q = query(
+        chatRoomCollectionRef,
+        where('members', 'array-contains', `${currentUserChat.userId}`)
+      );
+
+      const unsubscribe = onSnapshot(q, async (querySnapshot) => {
+        let total = 0;
+        querySnapshot.forEach((doc) => {
+          total = total + 1;
+        });
+
+        setCount(total);
+      });
+
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [currentUserChat]);
+
+  // load danh sach chat rooms
+  React.useEffect(() => {
+    if (currentUserChat) {
+      setIsLoading(true);
+      setHasMore(true);
+      setPage(1);
+
+      let q = query(
+        chatRoomCollectionRef,
+        where('members', 'array-contains', `${currentUserChat.userId}`),
+        orderBy('updatedAt', 'desc'),
+        limit(LIMIT)
+      );
+
+      const unsubscribe = onSnapshot(q, async (querySnapshot) => {
+        let chatRoomsData = [];
+
+        const promises = querySnapshot.docs.map(async (doc) => {
+          try {
+            let partnerId = '';
+            const chatRoomData = doc.data();
+
+            if (chatRoomData?.members[0] === `${currentUserChat.userId}`) {
+              partnerId = chatRoomData?.members[1];
+            } else {
+              partnerId = chatRoomData?.members[0];
+            }
+
+            const userAccount = await getUserAccount(
+              'accounts',
+              `${partnerId}`
+            );
+
+            chatRoomsData.push({
+              ...chatRoomData,
+              id: doc.id,
+              user: userAccount,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        });
+
+        if (querySnapshot.docs.length > 0) {
+          setLastDocument(querySnapshot.docs[querySnapshot.docs.length - 1]);
+        }
+        await Promise.all(promises);
+
+        setChatRooms(chatRoomsData);
+        setIsLoading(false);
+      });
+
+      return () => unsubscribe();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUserChat]);
+
+  // tai them du lieu
+  const handleLoadMore = () => {
+    const getMoreData = async () => {
+      if (lastDocument !== null) {
+        const q = query(
+          chatRoomCollectionRef,
+          where('members', 'array-contains', `${currentUserChat.userId}`),
+          orderBy('updatedAt', 'desc'),
+          startAfter(lastDocument),
+          limit(LIMIT)
+        );
+
+        const querySnapshot = await getDocs(q);
+        let chatRoomsData = [];
+
+        if (querySnapshot.docs.length > 0) {
+          setLastDocument(querySnapshot.docs[querySnapshot.docs.length - 1]);
+        }
+        const promises = querySnapshot.docs.map(async (doc) => {
+          try {
+            let partnerId = '';
+            const chatRoomData = doc.data();
+
+            if (chatRoomData?.members[0] === `${currentUserChat.userId}`) {
+              partnerId = chatRoomData?.members[1];
+            } else {
+              partnerId = chatRoomData?.members[0];
+            }
+
+            const userAccount = await getUserAccount(
+              'accounts',
+              `${partnerId}`
+            );
+
+            chatRoomsData.push({
+              ...chatRoomData,
+              id: doc.id,
+              user: userAccount,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        });
+        await Promise.all(promises);
+
+        setChatRooms([...chatRooms, ...chatRoomsData]);
+      }
+    };
+
+    if (Math.ceil(count / LIMIT) > page) {
+      setPage(page + 1);
+      getMoreData();
+    } else {
+      setHasMore(false);
+    }
+  };
 
   return (
     <Box>
@@ -45,9 +210,13 @@ const LeftSidebar = () => {
             placeholder="Tên công ty, tên nhà tuyển dụng, ..."
           />
         </Box>
-        <Box sx={{ maxHeight: '80vh', overflowY: 'auto' }}>
-          {false ? (
-            <Stack spacing={2}>
+        <Box
+          sx={{
+            height: '75vh',
+          }}
+        >
+          {isLoading ? (
+            <Stack spacing={2} overflow={'hidden'}>
               {Array.from(Array(12).keys()).map((value) => (
                 <LoadingComponentItem key={value} />
               ))}
@@ -58,10 +227,26 @@ const LeftSidebar = () => {
             </Typography>
           ) : (
             <Stack spacing={1}>
-              <Box>
+              <InfiniteScroll
+                height={'75vh'}
+                style={{
+                  overflowY: 'auto',
+                }}
+                dataLength={chatRooms.length}
+                next={handleLoadMore}
+                hasMore={hasMore}
+                loader={
+                  <Stack sx={{ py: 2 }} justifyContent="center">
+                    <CircularProgress
+                      color="secondary"
+                      sx={{ margin: '0 auto' }}
+                    />
+                  </Stack>
+                }
+              >
                 {chatRooms.map((value) => (
                   <Stack
-                    onClick={() => handleSelectRoom(value.id)}
+                    onClick={() => handleSelectRoom(value)}
                     direction="row"
                     spacing={1}
                     alignItems="center"
@@ -113,19 +298,18 @@ const LeftSidebar = () => {
                         {`${value?.user?.company?.companyName}` || '---'}
                       </Typography>
                     </Stack>
+                    <Box>
+                      {`${value?.recipientId}` ===
+                        `${currentUserChat.userId}` &&
+                        value?.unreadCount > 0 && (
+                          <CircleIcon
+                            style={{ color: '#2979ff', fontSize: 12 }}
+                          />
+                        )}
+                    </Box>
                   </Stack>
                 ))}
-              </Box>
-              {/* <Stack direction="row" justifyContent="center" mt={1}>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  sx={{ textTransform: 'inherit' }}
-                  size="small"
-                >
-                  Xem thêm
-                </Button>
-              </Stack> */}
+              </InfiniteScroll>
             </Stack>
           )}
         </Box>
@@ -135,18 +319,122 @@ const LeftSidebar = () => {
 };
 
 const EmployerSidebar = () => {
-  const { chatRooms, setSelectedRoomId } = React.useContext(ChatContext);
+  const { currentUserChat, setSelectedRoomId } = React.useContext(ChatContext);
   const [searchText, setSearchText] = React.useState('');
-
   const deboundedTextValue = useDebounce(searchText, 500);
 
-  const handleSelectRoom = (chatRoomId) => {
-    setSelectedRoomId(chatRoomId);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [allowLoadMore, setAllowLoadMore] = React.useState(true);
+  const [isLoadMore, setIsLoadMore] = React.useState(false);
+  const [lastDocument, setLastDocument] = React.useState(null);
+  const [chatRooms, setChatRooms] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [count, setCount] = React.useState(0);
+
+  const handleSelectRoom = (chatRoom) => {
+    setSelectedRoomId(chatRoom?.id);
   };
 
   React.useEffect(() => {
     console.log('==> Bắn API Search: ', deboundedTextValue);
   }, [deboundedTextValue]);
+
+  // lang nghe tong chat rooms
+  React.useEffect(() => {
+    if (currentUserChat) {
+      const q = query(
+        chatRoomCollectionRef,
+        where('members', 'array-contains', `${currentUserChat.userId}`)
+      );
+
+      const unsubscribe = onSnapshot(q, async (querySnapshot) => {
+        let total = 0;
+        querySnapshot.forEach((doc) => {
+          total = total + 1;
+        });
+
+        setCount(total);
+      });
+
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [currentUserChat]);
+
+  // load danh sach chat rooms
+  React.useEffect(() => {
+    if (currentUserChat) {
+      let q = query(
+        chatRoomCollectionRef,
+        where('members', 'array-contains', `${currentUserChat.userId}`),
+        orderBy('updatedAt', 'desc'),
+        limit(LIMIT)
+      );
+
+      // lay phan tu phia sau
+      if (lastDocument !== null) {
+        q = query(
+          chatRoomCollectionRef,
+          where('members', 'array-contains', `${currentUserChat.userId}`),
+          orderBy('updatedAt', 'desc'),
+          startAfter(lastDocument),
+          limit(LIMIT)
+        );
+      }
+
+      const unsubscribe = onSnapshot(q, async (querySnapshot) => {
+        let chatRoomsData = [];
+
+        const promises = querySnapshot.docs.map(async (doc) => {
+          try {
+            let partnerId = '';
+            const chatRoomData = doc.data();
+
+            if (chatRoomData?.members[0] === `${currentUserChat.userId}`) {
+              partnerId = chatRoomData?.members[1];
+            } else {
+              partnerId = chatRoomData?.members[0];
+            }
+
+            const userAccount = await getUserAccount(
+              'accounts',
+              `${partnerId}`
+            );
+
+            chatRoomsData.push({
+              ...chatRoomData,
+              id: doc.id,
+              user: userAccount,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        });
+
+        setLastDocument(querySnapshot.docs[querySnapshot.docs.length - 1]);
+        await Promise.all(promises);
+
+        setPage(page + 1);
+        setChatRooms([...chatRooms, ...chatRoomsData]);
+        setIsLoading(false);
+      });
+
+      return unsubscribe;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUserChat, isLoadMore]);
+
+  // tai them du lieu
+  const handleLoadMore = () => {
+    if (Math.ceil(count / LIMIT) > page && allowLoadMore) {
+      console.log('DUOC PHEP LOAD TIEP');
+      setIsLoadMore(!isLoadMore);
+    } else {
+      console.log('CAM LOAD NUA');
+      setAllowLoadMore(false);
+    }
+  };
 
   return (
     <Box>
@@ -158,8 +446,8 @@ const EmployerSidebar = () => {
             placeholder="Họ tên ứng viên ..."
           />
         </Box>
-        <Box sx={{ maxHeight: '80vh', overflowY: 'auto' }}>
-          {false ? (
+        <Box sx={{ height: '75vh', overflowY: 'auto' }}>
+          {isLoading ? (
             <Stack spacing={2}>
               {Array.from(Array(12).keys()).map((value) => (
                 <LoadingComponentItem key={value} />
@@ -172,73 +460,90 @@ const EmployerSidebar = () => {
           ) : (
             <Stack spacing={1}>
               <Box>
-                {chatRooms.map((value) => (
-                  <Stack
-                    onClick={() => handleSelectRoom(value.id)}
-                    direction="row"
-                    spacing={1}
-                    alignItems="center"
-                    key={value.id}
-                    sx={{
-                      p: 1,
-                      borderRadius: 2,
-                      '&:hover': {
-                        backgroundColor: '#ede7f6',
-                      },
-                    }}
-                  >
-                    <Box>
-                      <MuiImageCustom
-                        width={54}
-                        height={54}
-                        sx={{
-                          borderRadius: 50,
-                          border: 1,
-                          borderColor: '#e0e0e0',
-                          p: 0.25,
-                        }}
-                        src={`${value?.user?.avatarUrl}`}
+                <InfiniteScroll
+                  height={'75vh'}
+                  style={{
+                    overflowY: 'auto',
+                  }}
+                  dataLength={chatRooms.length}
+                  next={handleLoadMore}
+                  hasMore={allowLoadMore}
+                  loader={
+                    <Stack sx={{ py: 2 }} justifyContent="center">
+                      <CircularProgress
+                        color="secondary"
+                        sx={{ margin: '0 auto' }}
                       />
-                    </Box>
-                    <Stack flex={1} width={'50%'}>
-                      <span
-                        style={{
-                          fontWeight: 700,
-                          fontSize: 15,
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {`${value?.user?.name}` || '---'}
-                      </span>
-
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {`${value?.user?.email}` || '---'}
-                      </Typography>
                     </Stack>
-                  </Stack>
-                ))}
-              </Box>
-              {/* <Stack direction="row" justifyContent="center" mt={1}>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  sx={{ textTransform: 'inherit' }}
-                  size="small"
+                  }
                 >
-                  Xem thêm
-                </Button>
-              </Stack> */}
+                  {chatRooms.map((value) => (
+                    <Stack
+                      onClick={() => handleSelectRoom(value)}
+                      direction="row"
+                      spacing={1}
+                      alignItems="center"
+                      key={value.id}
+                      sx={{
+                        p: 1,
+                        borderRadius: 2,
+                        '&:hover': {
+                          backgroundColor: '#ede7f6',
+                        },
+                      }}
+                    >
+                      <Box>
+                        <MuiImageCustom
+                          width={54}
+                          height={54}
+                          sx={{
+                            borderRadius: 50,
+                            border: 1,
+                            borderColor: '#e0e0e0',
+                            p: 0.25,
+                          }}
+                          src={`${value?.user?.avatarUrl}`}
+                        />
+                      </Box>
+                      <Stack flex={1} width={'50%'}>
+                        <span
+                          style={{
+                            fontWeight: 700,
+                            fontSize: 15,
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          {`${value?.user?.name}` || '---'}
+                        </span>
+
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          {`${value?.user?.email}` || '---'}
+                        </Typography>
+                      </Stack>
+                      <Box>
+                        {`${value?.recipientId}` ===
+                          `${currentUserChat.userId}` &&
+                          value?.unreadCount > 0 && (
+                            <CircleIcon
+                              style={{ color: '#2979ff', fontSize: 12 }}
+                            />
+                          )}
+                      </Box>
+                    </Stack>
+                  ))}
+                </InfiniteScroll>
+              </Box>
             </Stack>
           )}
         </Box>

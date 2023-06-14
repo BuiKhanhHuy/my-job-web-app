@@ -8,6 +8,8 @@ import {
   query,
   where,
   getDocs,
+  updateDoc,
+  increment,
 } from 'firebase/firestore';
 import db, { serverTimestamp } from '../configs/firebase-config';
 
@@ -17,10 +19,26 @@ export const addDocument = async (collectionName, data) => {
   const docRef = await addDoc(query, {
     ...data,
     createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
   });
 
   console.log('Document written with ID: ', docRef.id);
   return docRef.id;
+};
+
+export const updateChatRoomByPartnerId = (partnerId, chatRoomId) => {
+  const chatRoomDocRef = doc(db, 'chatRooms', `${chatRoomId}`);
+  updateDoc(chatRoomDocRef, {
+    recipientId: `${partnerId}`,
+    unreadCount: increment(1),
+    updatedAt: serverTimestamp(),
+  })
+    .then(() => {
+      console.log('update chatRoom success');
+    })
+    .catch((error) => {
+      console.log('update chatRoom failed: ', error);
+    });
 };
 
 export const checkExists = async (collectionName, docId) => {
@@ -52,8 +70,7 @@ export const checkChatRoomExists = async (collectionName, member1, member2) => {
 
   const q = query(
     chatRoomsRef,
-    where('userId1', 'in', [`${member1}`, `${member2}`]),
-    where('userId2', 'in', [`${member1}`, `${member2}`])
+    where('membersString', 'array-contains', `${member1}-${member2}`)
   );
   const querySnapshot = await getDocs(q);
 
@@ -63,6 +80,31 @@ export const checkChatRoomExists = async (collectionName, member1, member2) => {
   } else {
     console.log('Room does not exist');
     return null;
+  }
+};
+
+export const getChatRoomById = async (chatRoomId, currentUserId) => {
+  const chatRoomRef = doc(db, 'chatRooms', `${chatRoomId}`);
+  const docSnap = await getDoc(chatRoomRef);
+
+  if (docSnap.exists()) {
+    let partnerId = '';
+    const chatRoomData = docSnap.data();
+
+    if (chatRoomData?.members[0] === `${currentUserId}`) {
+      partnerId = chatRoomData?.members[1];
+    } else {
+      partnerId = chatRoomData?.members[0];
+    }
+
+    const userAccount = await getUserAccount('accounts', `${partnerId}`);
+    return {
+      ...chatRoomData,
+      id: docSnap.id,
+      user: userAccount,
+    };
+  } else {
+    return {};
   }
 };
 

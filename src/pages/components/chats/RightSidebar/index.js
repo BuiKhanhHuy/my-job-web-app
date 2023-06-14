@@ -100,8 +100,9 @@ const RightSidebar = () => {
         // neu chua ton tai thi tao phong moi
         chatRoomId = await addDocument('chatRooms', {
           members: [`${userId}`, `${partnerId}`],
-          userId1: `${userId}`,
-          userId2: `${partnerId}`,
+          membersString: [`${userId}-${partnerId}`, `${partnerId}-${userId}`],
+          recipientId: `${partnerId}`,
+          unreadCount: 0
         });
       }
 
@@ -115,7 +116,7 @@ const RightSidebar = () => {
       <Typography sx={{ fontSize: 14, fontWeight: 700 }}>
         TIN TUYỂN DỤNG ĐÃ ỨNG TUYỂN
       </Typography>
-      <Box p={2} sx={{ maxHeight: '85vh', overflowY: 'auto' }}>
+      <Box p={2} sx={{ maxHeight: '80vh', overflowY: 'auto' }}>
         {isLoading ? (
           <Stack spacing={2}>
             {Array.from(Array(12).keys()).map((value) => (
@@ -300,7 +301,7 @@ const EmployerSidebar = () => {
       <Typography sx={{ fontSize: 14, fontWeight: 700 }}>
         ỨNG VIÊN ỨNG TUYỂN
       </Typography>
-      <Box p={2} sx={{ maxHeight: '85vh', overflowY: 'auto' }}>
+      <Box p={2} sx={{ height: '90vh', overflowY: 'auto' }}>
         {isLoading ? (
           <Stack spacing={2}>
             {Array.from(Array(12).keys()).map((value) => (
