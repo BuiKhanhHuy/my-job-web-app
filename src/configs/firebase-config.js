@@ -4,7 +4,7 @@ import { getFirestore, serverTimestamp } from 'firebase/firestore';
 
 let firebaseConfig = {};
 if (process.env.NODE_ENV === 'production') {
-  // pro
+  // production
   firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'production') {
     databaseURL: process.env.FIREBASE_DATABASE_URL,
   };
 } else {
-  // dev
+  // development
   firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -26,8 +26,6 @@ if (process.env.NODE_ENV === 'production') {
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
   };
 }
-
-console.log(process.env.REACT_APP_FIREBASE_API_KEY);
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);

@@ -286,8 +286,9 @@ const EmployerSidebar = () => {
         // neu chua ton tai thi tao phong moi
         chatRoomId = await addDocument('chatRooms', {
           members: [`${userId}`, `${partnerId}`],
-          userId1: `${userId}`,
-          userId2: `${partnerId}`,
+          membersString: [`${userId}-${partnerId}`, `${partnerId}-${userId}`],
+          recipientId: `${partnerId}`,
+          unreadCount: 0
         });
       }
 

@@ -5,8 +5,7 @@ import tokenService from '../services/tokenService';
 const notAuthenticationURL = ['api/auth/token/', 'api/auth/convert-token/'];
 
 const httpRequest = axios.create({
-  // baseURL: 'https://bkhuy-myjobapi.up.railway.app/',
-  baseURL: 'http://127.0.0.1:8000/',
+  baseURL: process.env.REACT_APP_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

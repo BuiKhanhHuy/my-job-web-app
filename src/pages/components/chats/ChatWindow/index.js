@@ -26,14 +26,14 @@ import {
 import db from '../../../../configs/firebase-config';
 import { ChatContext } from '../../../../context/ChatProvider';
 import Message from '../Message';
-import { ImageSvg14, ROLES_NAME } from '../../../../configs/constants';
-import NoDataCard from '../../../../components/NoDataCard';
+import { ROLES_NAME } from '../../../../configs/constants';
 import {
   addDocument,
   getChatRoomById,
   updateChatRoomByPartnerId,
 } from '../../../../services/firebaseService';
 import ChatInfo from '../../../../components/chats/ChatInfo';
+import { Empty } from 'antd';
 
 const LIMIT = 20;
 const messageCollectionRef = collection(db, 'messages');
@@ -103,12 +103,7 @@ const ChatWindow = () => {
       );
 
       const unsubscribe = onSnapshot(q, async (querySnapshot) => {
-        let total = 0;
-        querySnapshot.forEach((doc) => {
-          total = total + 1;
-        });
-
-        setCount(total);
+        setCount(querySnapshot?.size || 0);
       });
 
       return () => {
@@ -122,8 +117,6 @@ const ChatWindow = () => {
   // danh sach messages
   React.useEffect(() => {
     setIsLoading(true);
-    setHasMore(true);
-    setPage(1);
 
     let q = query(
       messageCollectionRef,
@@ -143,6 +136,8 @@ const ChatWindow = () => {
       }
 
       setMessages(messagesData);
+      setPage(1);
+      setHasMore(true);
       setIsLoading(false);
     });
 
@@ -347,10 +342,10 @@ const ChatWindow = () => {
             </Box>
           </Stack>
         ) : (
-          <Stack justifyContent="center">
-            <NoDataCard
-              title="Bạn không có cuộc trò chuyện nào..."
-              imgComponentSgv={<ImageSvg14 />}
+          <Stack justifyContent="center" alignItems="center">
+            <Empty
+              style={{ marginTop: 150 }}
+              description="Bạn chưa chọn cuộc trò chuyện nào ..."
             />
           </Stack>
         )}

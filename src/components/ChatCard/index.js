@@ -33,6 +33,7 @@ const ChatCard = () => {
     const unsubscribe = onSnapshot(q, async (querySnapshot) => {
       let total = 0;
       querySnapshot.forEach((doc) => {
+        
         const documentData = doc.data();
         const unreadCount = documentData.unreadCount || 0;
 

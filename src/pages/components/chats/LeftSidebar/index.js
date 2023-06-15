@@ -20,6 +20,9 @@ import {
   getDocs,
 } from 'firebase/firestore';
 import db from '../../../../configs/firebase-config';
+
+import NoDataCard from '../../../../components/NoDataCard';
+import { ImageSvg15 } from '../../../../configs/constants';
 import { ChatContext } from '../../../../context/ChatProvider';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
 import ChatRoomSearch from '../../../../components/chats/ChatRoomSearch';
@@ -40,7 +43,7 @@ const LoadingComponentItem = () => {
   );
 };
 
-const LIMIT = 12;
+const LIMIT = 20;
 const chatRoomCollectionRef = collection(db, 'chatRooms');
 
 const LeftSidebar = () => {
@@ -72,12 +75,7 @@ const LeftSidebar = () => {
       );
 
       const unsubscribe = onSnapshot(q, async (querySnapshot) => {
-        let total = 0;
-        querySnapshot.forEach((doc) => {
-          total = total + 1;
-        });
-
-        setCount(total);
+        setCount(querySnapshot?.size || 0);
       });
 
       return () => {
@@ -90,8 +88,6 @@ const LeftSidebar = () => {
   React.useEffect(() => {
     if (currentUserChat) {
       setIsLoading(true);
-      setHasMore(true);
-      setPage(1);
 
       let q = query(
         chatRoomCollectionRef,
@@ -135,6 +131,8 @@ const LeftSidebar = () => {
         await Promise.all(promises);
 
         setChatRooms(chatRoomsData);
+        setHasMore(true);
+        setPage(1);
         setIsLoading(false);
       });
 
@@ -215,9 +213,10 @@ const LeftSidebar = () => {
               ))}
             </Stack>
           ) : chatRooms.length === 0 ? (
-            <Typography variant="caption">
-              Chưa có cuộc trò chuyện nào
-            </Typography>
+            <NoDataCard
+              title="Không tìm thấy cuộc trò chuyện nào..."
+              imgComponentSgv={<ImageSvg15 />}
+            />
           ) : (
             <Stack spacing={1}>
               <InfiniteScroll
@@ -317,8 +316,7 @@ const EmployerSidebar = () => {
   const deboundedTextValue = useDebounce(searchText, 500);
 
   const [isLoading, setIsLoading] = React.useState(true);
-  const [allowLoadMore, setAllowLoadMore] = React.useState(true);
-  const [isLoadMore, setIsLoadMore] = React.useState(false);
+  const [hasMore, setHasMore] = React.useState(true);
   const [lastDocument, setLastDocument] = React.useState(null);
   const [chatRooms, setChatRooms] = React.useState([]);
   const [page, setPage] = React.useState(0);
@@ -341,12 +339,7 @@ const EmployerSidebar = () => {
       );
 
       const unsubscribe = onSnapshot(q, async (querySnapshot) => {
-        let total = 0;
-        querySnapshot.forEach((doc) => {
-          total = total + 1;
-        });
-
-        setCount(total);
+        setCount(querySnapshot?.size || 0);
       });
 
       return () => {
@@ -358,23 +351,14 @@ const EmployerSidebar = () => {
   // load danh sach chat rooms
   React.useEffect(() => {
     if (currentUserChat) {
+      setIsLoading(true);
+
       let q = query(
         chatRoomCollectionRef,
         where('members', 'array-contains', `${currentUserChat.userId}`),
         orderBy('updatedAt', 'desc'),
         limit(LIMIT)
       );
-
-      // lay phan tu phia sau
-      if (lastDocument !== null) {
-        q = query(
-          chatRoomCollectionRef,
-          where('members', 'array-contains', `${currentUserChat.userId}`),
-          orderBy('updatedAt', 'desc'),
-          startAfter(lastDocument),
-          limit(LIMIT)
-        );
-      }
 
       const unsubscribe = onSnapshot(q, async (querySnapshot) => {
         let chatRoomsData = [];
@@ -405,27 +389,69 @@ const EmployerSidebar = () => {
           }
         });
 
-        setLastDocument(querySnapshot.docs[querySnapshot.docs.length - 1]);
+        if (querySnapshot.docs.length > 0) {
+          setLastDocument(querySnapshot.docs[querySnapshot.docs.length - 1]);
+        }
         await Promise.all(promises);
 
-        setPage(page + 1);
-        setChatRooms([...chatRooms, ...chatRoomsData]);
+        setChatRooms(chatRoomsData);
+        setHasMore(true);
+        setPage(1);
         setIsLoading(false);
       });
 
-      return unsubscribe;
+      return () => unsubscribe();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUserChat, isLoadMore]);
+  }, [currentUserChat]);
 
   // tai them du lieu
   const handleLoadMore = () => {
-    if (Math.ceil(count / LIMIT) > page && allowLoadMore) {
-      console.log('DUOC PHEP LOAD TIEP');
-      setIsLoadMore(!isLoadMore);
+    const getMoreData = async () => {
+      if (lastDocument !== null) {
+        const q = query(
+          chatRoomCollectionRef,
+          where('members', 'array-contains', `${currentUserChat.userId}`),
+          orderBy('updatedAt', 'desc'),
+          startAfter(lastDocument),
+          limit(LIMIT)
+        );
+        const querySnapshot = await getDocs(q);
+        let chatRoomsData = [];
+        if (querySnapshot.docs.length > 0) {
+          setLastDocument(querySnapshot.docs[querySnapshot.docs.length - 1]);
+        }
+        const promises = querySnapshot.docs.map(async (doc) => {
+          try {
+            let partnerId = '';
+            const chatRoomData = doc.data();
+            if (chatRoomData?.members[0] === `${currentUserChat.userId}`) {
+              partnerId = chatRoomData?.members[1];
+            } else {
+              partnerId = chatRoomData?.members[0];
+            }
+            const userAccount = await getUserAccount(
+              'accounts',
+              `${partnerId}`
+            );
+            chatRoomsData.push({
+              ...chatRoomData,
+              id: doc.id,
+              user: userAccount,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        });
+        await Promise.all(promises);
+        setChatRooms([...chatRooms, ...chatRoomsData]);
+      }
+    };
+    if (Math.ceil(count / LIMIT) > page) {
+      setPage(page + 1);
+      getMoreData();
     } else {
-      console.log('CAM LOAD NUA');
-      setAllowLoadMore(false);
+      setHasMore(false);
     }
   };
 
@@ -447,9 +473,10 @@ const EmployerSidebar = () => {
               ))}
             </Stack>
           ) : chatRooms.length === 0 ? (
-            <Typography variant="caption">
-              Chưa có cuộc trò chuyện nào
-            </Typography>
+            <NoDataCard
+              title="Không tìm thấy cuộc trò chuyện nào..."
+              imgComponentSgv={<ImageSvg15 />}
+            />
           ) : (
             <Stack spacing={1}>
               <Box>
@@ -460,7 +487,7 @@ const EmployerSidebar = () => {
                   }}
                   dataLength={chatRooms.length}
                   next={handleLoadMore}
-                  hasMore={allowLoadMore}
+                  hasMore={hasMore}
                   loader={
                     <Stack sx={{ py: 2 }} justifyContent="center">
                       <CircularProgress
