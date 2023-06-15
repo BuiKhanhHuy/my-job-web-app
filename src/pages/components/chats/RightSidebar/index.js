@@ -102,6 +102,7 @@ const RightSidebar = () => {
           members: [`${userId}`, `${partnerId}`],
           membersString: [`${userId}-${partnerId}`, `${partnerId}-${userId}`],
           recipientId: `${partnerId}`,
+          createdBy: `${userId}`,
           unreadCount: 0
         });
       }
@@ -288,6 +289,7 @@ const EmployerSidebar = () => {
           members: [`${userId}`, `${partnerId}`],
           membersString: [`${userId}-${partnerId}`, `${partnerId}-${userId}`],
           recipientId: `${partnerId}`,
+          createdBy: `${userId}`,
           unreadCount: 0
         });
       }

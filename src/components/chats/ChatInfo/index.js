@@ -1,11 +1,13 @@
 import React from 'react';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box,  Stack, Typography } from '@mui/material';
 
 import MuiImageCustom from '../../MuiImageCustom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
-const ChatInfo = ({ avatarUrl, title, subTitle }) => {
+const ChatInfo = ({ avatarUrl, title, subTitle, description }) => {
   return (
-    <Stack justifyContent="center" alignItems="center" spacing={1} mt={3}>
+    <Stack justifyContent="center" alignItems="center" spacing={1.5} mt={3}>
       <Box>
         <MuiImageCustom
           width={54}
@@ -19,15 +21,22 @@ const ChatInfo = ({ avatarUrl, title, subTitle }) => {
           src={avatarUrl}
         />
       </Box>
-      <Typography variant="subtitle2" textAlign="center" fontWeight="bold">
-        {title || '---'}
-      </Typography>
-      <Typography variant="subtitle2" textAlign="center" fontWeight="bold">
-        {subTitle || '---'}
-      </Typography>
-      <Typography textAlign="center" variant="caption">
-        Hãy bắt đầu cuộc trò chuyện bằng một lời chào 😍
-      </Typography>
+      <Stack>
+        <Typography variant="subtitle2" textAlign="center" fontWeight="bold">
+          {title || '---'}
+        </Typography>
+        <Typography variant="subtitle2" textAlign="center" fontWeight="bold">
+          {subTitle || '---'}
+        </Typography>
+      </Stack>
+      <Stack>
+        <Typography textAlign="center" variant="caption" color="green">
+          <FontAwesomeIcon icon={faCheckCircle} /> {description}
+        </Typography>
+        <Typography textAlign="center" variant="caption">
+          Hãy bắt đầu cuộc trò chuyện bằng một lời chào 😍
+        </Typography>
+      </Stack>
     </Stack>
   );
 };
@@ -48,7 +57,7 @@ const HeaderChatInfo = ({ avatarUrl, title, subTitle }) => {
           src={avatarUrl}
         />
       </Box>
-      <Stack>
+      <Stack flex={1}>
         <Typography variant="subtitle2" fontWeight="bold">
           {title || '---'}
         </Typography>

@@ -7,6 +7,7 @@ import {
   Button,
   CircularProgress,
   Card,
+  Alert,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -217,20 +218,23 @@ const ChatWindow = () => {
   return (
     <Stack direction="column" justifyContent="space-around">
       <Card>
-        {selectedRoomId &&
-          (currentUser?.roleName === ROLES_NAME.JOB_SEEKER ? (
-            <ChatInfo.HeaderChatInfo
-              avatarUrl={selectedRoom?.user?.avatarUrl}
-              title={selectedRoom?.user?.name}
-              subTitle={selectedRoom?.user?.company?.companyName}
-            />
-          ) : (
-            <ChatInfo.HeaderChatInfo
-              avatarUrl={selectedRoom?.user?.avatarUrl}
-              title={selectedRoom?.user?.name}
-              subTitle={selectedRoom?.user?.email}
-            />
-          ))}
+        {selectedRoomId && (
+          <Stack>
+            {currentUser?.roleName === ROLES_NAME.JOB_SEEKER ? (
+              <ChatInfo.HeaderChatInfo
+                avatarUrl={selectedRoom?.user?.avatarUrl}
+                title={selectedRoom?.user?.name}
+                subTitle={selectedRoom?.user?.company?.companyName}
+              />
+            ) : (
+              <ChatInfo.HeaderChatInfo
+                avatarUrl={selectedRoom?.user?.avatarUrl}
+                title={selectedRoom?.user?.name}
+                subTitle={selectedRoom?.user?.email}
+              />
+            )}
+          </Stack>
+        )}
       </Card>
       <Box p={1}>
         {selectedRoomId ? (
@@ -251,12 +255,22 @@ const ChatWindow = () => {
                     avatarUrl={selectedRoom?.user?.avatarUrl}
                     title={selectedRoom?.user?.name}
                     subTitle={selectedRoom?.user?.company?.companyName}
+                    description={
+                      selectedRoom?.createdBy !== `${currentUserChat?.userId}`
+                        ? `${selectedRoom?.user?.company?.companyName} đã kết nối với bạn.`
+                        : `Bạn đã kết nối đến ${selectedRoom?.user?.company?.companyName}`
+                    }
                   />
                 ) : (
                   <ChatInfo
                     avatarUrl={selectedRoom?.user?.avatarUrl}
                     title={selectedRoom?.user?.name}
                     subTitle={selectedRoom?.user?.email}
+                    description={
+                      selectedRoom?.createdBy !== `${currentUserChat?.userId}`
+                        ? `${selectedRoom?.user?.name} đã kết nối với bạn.`
+                        : `Bạn đã kết nối đến ${selectedRoom?.user?.name}`
+                    }
                   />
                 )
               ) : (
