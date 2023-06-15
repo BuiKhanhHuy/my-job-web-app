@@ -1,9 +1,8 @@
 import React from 'react';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import Moment from 'react-moment';
-import 'moment/locale/vi';
 
 import { ChatContext } from '../../../../context/ChatProvider';
+import { formatMessageDate } from '../../../../utils/dateHelper';
 
 const Message = ({ userId, text, avatarUrl, createdAt }) => {
   const { currentUserChat } = React.useContext(ChatContext);
@@ -11,22 +10,26 @@ const Message = ({ userId, text, avatarUrl, createdAt }) => {
   return (
     <>
       {`${currentUserChat?.userId}` === `${userId}` ? (
-        <div className="d-flex flex-row justify-content-end">
+        <div
+          className="d-flex flex-row align-self-end justify-content-end"
+          style={{ maxWidth: '80%' }}
+        >
           <div>
             <p
-              className="small p-2 me-3 mb-1 text-white rounded-3"
-              style={{ backgroundColor: '#441da0' }}
+              className="small p-2 me-3 mb-1 text-white"
+              style={{
+                backgroundColor: '#441da0',
+                borderTopLeftRadius: 6,
+                borderTopRightRadius: 6,
+                borderBottomLeftRadius: 6,
+              }}
             >
               {text}
             </p>
             <p className="small me-3 mb-3 rounded-3 text-muted">
-              {createdAt?.seconds ? (
-                <Moment calendar={null} format="DD/MM/YYYY LT">
-                  {createdAt?.seconds * 1000}
-                </Moment>
-              ) : (
-                '...'
-              )}
+              {createdAt?.seconds
+                ? formatMessageDate(createdAt?.seconds * 1000)
+                : '...'}
             </p>
           </div>
           <img
@@ -41,7 +44,12 @@ const Message = ({ userId, text, avatarUrl, createdAt }) => {
           />
         </div>
       ) : (
-        <div className="d-flex flex-row justify-content-start">
+        <div
+          className="d-flex flex-row justify-content-start"
+          style={{
+            maxWidth: '80%',
+          }}
+        >
           <img
             src={avatarUrl}
             alt="avatar 1"
@@ -54,19 +62,20 @@ const Message = ({ userId, text, avatarUrl, createdAt }) => {
           />
           <div>
             <p
-              className="small p-2 ms-3 mb-1 rounded-3"
-              style={{ backgroundColor: '#f5f6f7' }}
+              className="small p-2 ms-3 mb-1"
+              style={{
+                backgroundColor: '#f5f6f7',
+                borderTopLeftRadius: 6,
+                borderTopRightRadius: 6,
+                borderBottomRightRadius: 6,
+              }}
             >
               {text}
             </p>
             <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
-              {createdAt?.seconds ? (
-                <Moment calendar={null} format="DD/MM/YYYY LT">
-                  {createdAt?.seconds * 1000}
-                </Moment>
-              ) : (
-                '...'
-              )}
+              {createdAt?.seconds
+                ? formatMessageDate(createdAt?.seconds * 1000)
+                : '...'}
             </p>
           </div>
         </div>

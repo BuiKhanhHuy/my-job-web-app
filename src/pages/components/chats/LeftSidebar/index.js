@@ -154,10 +154,8 @@ const LeftSidebar = () => {
           startAfter(lastDocument),
           limit(LIMIT)
         );
-
         const querySnapshot = await getDocs(q);
         let chatRoomsData = [];
-
         if (querySnapshot.docs.length > 0) {
           setLastDocument(querySnapshot.docs[querySnapshot.docs.length - 1]);
         }
@@ -165,18 +163,15 @@ const LeftSidebar = () => {
           try {
             let partnerId = '';
             const chatRoomData = doc.data();
-
             if (chatRoomData?.members[0] === `${currentUserChat.userId}`) {
               partnerId = chatRoomData?.members[1];
             } else {
               partnerId = chatRoomData?.members[0];
             }
-
             const userAccount = await getUserAccount(
               'accounts',
               `${partnerId}`
             );
-
             chatRoomsData.push({
               ...chatRoomData,
               id: doc.id,
@@ -187,11 +182,9 @@ const LeftSidebar = () => {
           }
         });
         await Promise.all(promises);
-
         setChatRooms([...chatRooms, ...chatRoomsData]);
       }
     };
-
     if (Math.ceil(count / LIMIT) > page) {
       setPage(page + 1);
       getMoreData();
@@ -216,7 +209,7 @@ const LeftSidebar = () => {
           }}
         >
           {isLoading ? (
-            <Stack spacing={2} overflow={'hidden'}>
+            <Stack spacing={2} overflow={'hidden'} height="100%">
               {Array.from(Array(12).keys()).map((value) => (
                 <LoadingComponentItem key={value} />
               ))}

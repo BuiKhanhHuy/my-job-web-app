@@ -52,7 +52,7 @@ const ChatPage = () => {
                 </span>
               </Typography>
             </Box>
-            <Box p={1}>
+            <Box>
               {/* Start: ChatWindow */}
               <ChatWindow />
               {/* End: ChatWindow */}

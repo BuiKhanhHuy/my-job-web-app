@@ -1,6 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Box, Stack, TextField, Button, CircularProgress } from '@mui/material';
+import {
+  Box,
+  Stack,
+  TextField,
+  Button,
+  CircularProgress,
+  Card,
+} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -13,6 +20,8 @@ import {
   startAfter,
   limit,
   getDocs,
+  doc,
+  updateDoc,
 } from 'firebase/firestore';
 import db from '../../../../configs/firebase-config';
 import { ChatContext } from '../../../../context/ChatProvider';
@@ -44,6 +53,35 @@ const ChatWindow = () => {
   const [page, setPage] = React.useState(1);
   const [count, setCount] = React.useState(0);
 
+  // cap nhat unreadCount
+  React.useEffect(() => {
+    if (selectedRoomId && currentUserChat) {
+      const chatRoomDocRef = doc(db, 'chatRooms', `${selectedRoomId}`);
+
+      const unsub = onSnapshot(chatRoomDocRef, (doc) => {
+        const { recipientId, unreadCount } = doc.data();
+
+        if (recipientId === `${currentUserChat.userId}` && unreadCount > 0) {
+          updateDoc(chatRoomDocRef, {
+            unreadCount: 0,
+          })
+            .then(() => {
+              console.log('update chatRoom success -> unreadCount=0');
+            })
+            .catch((error) => {
+              console.log(
+                'update chatRoom failed: -> unreadCount: Notchange',
+                error
+              );
+            });
+        }
+      });
+
+      return () => unsub();
+    }
+  }, [currentUserChat, selectedRoomId]);
+
+  // lay thong tin partner
   React.useEffect(() => {
     const getChatRoom = async (selectedRoomId, userId) => {
       const selectRoom = await getChatRoomById(selectedRoomId, userId);
@@ -183,122 +221,140 @@ const ChatWindow = () => {
 
   return (
     <Stack direction="column" justifyContent="space-around">
-      {selectedRoomId ? (
-        <Stack>
-          <Box height="75vh">
-            {isLoading ? (
-              <Stack
-                sx={{ py: 2 }}
-                justifyContent="center"
-                alignItems="center"
-                height={'100%'}
-              >
-                <CircularProgress color="secondary" sx={{ margin: 'auto' }} />
-              </Stack>
-            ) : messages.length === 0 ? (
-              currentUser?.roleName === ROLES_NAME.JOB_SEEKER ? (
-                <ChatInfo
-                  avatarUrl={selectedRoom?.user?.avatarUrl}
-                  title={selectedRoom?.user?.name}
-                  subTitle={selectedRoom?.user?.company?.companyName}
-                />
+      <Card>
+        {selectedRoomId &&
+          (currentUser?.roleName === ROLES_NAME.JOB_SEEKER ? (
+            <ChatInfo.HeaderChatInfo
+              avatarUrl={selectedRoom?.user?.avatarUrl}
+              title={selectedRoom?.user?.name}
+              subTitle={selectedRoom?.user?.company?.companyName}
+            />
+          ) : (
+            <ChatInfo.HeaderChatInfo
+              avatarUrl={selectedRoom?.user?.avatarUrl}
+              title={selectedRoom?.user?.name}
+              subTitle={selectedRoom?.user?.email}
+            />
+          ))}
+      </Card>
+      <Box p={1}>
+        {selectedRoomId ? (
+          <Stack>
+            <Box height="66vh">
+              {isLoading ? (
+                <Stack
+                  sx={{ py: 2 }}
+                  justifyContent="center"
+                  alignItems="center"
+                  height={'100%'}
+                >
+                  <CircularProgress color="secondary" sx={{ margin: 'auto' }} />
+                </Stack>
+              ) : messages.length === 0 ? (
+                currentUser?.roleName === ROLES_NAME.JOB_SEEKER ? (
+                  <ChatInfo
+                    avatarUrl={selectedRoom?.user?.avatarUrl}
+                    title={selectedRoom?.user?.name}
+                    subTitle={selectedRoom?.user?.company?.companyName}
+                  />
+                ) : (
+                  <ChatInfo
+                    avatarUrl={selectedRoom?.user?.avatarUrl}
+                    title={selectedRoom?.user?.name}
+                    subTitle={selectedRoom?.user?.email}
+                  />
+                )
               ) : (
-                <ChatInfo
-                  avatarUrl={selectedRoom?.user?.avatarUrl}
-                  title={selectedRoom?.user?.name}
-                  subTitle={selectedRoom?.user?.email}
-                />
-              )
-            ) : (
-              <div
-                id="scrollableDiv"
-                style={{
-                  height: '75vh',
-                  overflow: 'auto',
-                  display: 'flex',
-                  flexDirection: 'column-reverse',
-                }}
-              >
-                <InfiniteScroll
+                <div
+                  id="scrollableDiv"
                   style={{
-                    overflowY: 'auto',
-                    padding: 2,
+                    height: '66vh',
+                    overflow: 'auto',
                     display: 'flex',
                     flexDirection: 'column-reverse',
                   }}
-                  scrollableTarget="scrollableDiv"
-                  dataLength={messages.length}
-                  next={handleLoadMore}
-                  hasMore={hasMore}
-                  inverse={true}
-                  loader={
-                    <Stack sx={{ py: 2 }} justifyContent="center">
-                      <CircularProgress
-                        color="secondary"
-                        sx={{ margin: '0 auto' }}
+                >
+                  <InfiniteScroll
+                    style={{
+                      overflowY: 'auto',
+                      padding: 2,
+                      display: 'flex',
+                      flexDirection: 'column-reverse',
+                    }}
+                    scrollableTarget="scrollableDiv"
+                    dataLength={messages.length}
+                    next={handleLoadMore}
+                    hasMore={hasMore}
+                    inverse={true}
+                    loader={
+                      <Stack sx={{ py: 2 }} justifyContent="center">
+                        <CircularProgress
+                          color="secondary"
+                          sx={{ margin: '0 auto' }}
+                        />
+                      </Stack>
+                    }
+                  >
+                    {messages.map((value) => (
+                      <Message
+                        key={value.id}
+                        userId={value?.userId}
+                        text={value?.text}
+                        avatarUrl={
+                          `${currentUserChat?.userId}` === `${value?.userId}`
+                            ? currentUserChat?.avatarUrl
+                            : selectedRoom?.user?.avatarUrl
+                        }
+                        createdAt={value?.createdAt}
                       />
-                    </Stack>
-                  }
-                >
-                  {messages.map((value) => (
-                    <Message
-                      key={value.id}
-                      userId={value?.userId}
-                      text={value?.text}
-                      avatarUrl={
-                        `${currentUserChat?.userId}` === `${value?.userId}`
-                          ? currentUserChat?.avatarUrl
-                          : selectedRoom?.user?.avatarUrl
-                      }
-                      createdAt={value?.createdAt}
-                    />
-                  ))}
-                </InfiniteScroll>
-              </div>
-            )}
-          </Box>
-          <Box
-            flex={1}
-            p={2}
-            component="form"
-            onSubmit={(e) => handleOnSubmit(e)}
-          >
-            <Stack direction="row" spacing={2} alignItems="flex-end">
-              <Box flex={1}>
-                <TextField
-                  inputRef={inputRef}
-                  fullWidth
-                  placeholder={'Nhập nội dung tại đây ...'}
-                  defaultValue=""
-                  value={inputValue}
-                  onChange={handleInputChange}
-                  onKeyDown={handleKeyDown}
-                  multiline
-                  maxRows={5}
-                  variant="outlined"
-                />
-              </Box>
-              <Box>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  endIcon={<SendIcon />}
-                  type="submit"
-                >
-                  Gửi
-                </Button>
-              </Box>
-            </Stack>
-          </Box>
-        </Stack>
-      ) : (
-        <Stack justifyContent="center">
-          <NoDataCard
-            title="Bạn không có cuộc trò chuyện nào..."
-            imgComponentSgv={<ImageSvg14 />}
-          />
-        </Stack>
-      )}
+                    ))}
+                  </InfiniteScroll>
+                </div>
+              )}
+            </Box>
+            <Box
+              flex={1}
+              p={2}
+              component="form"
+              onSubmit={(e) => handleOnSubmit(e)}
+            >
+              <Stack direction="row" spacing={2} alignItems="flex-end">
+                <Box flex={1}>
+                  <TextField
+                    inputRef={inputRef}
+                    fullWidth
+                    placeholder={'Nhập nội dung tại đây ...'}
+                    defaultValue=""
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    multiline
+                    maxRows={5}
+                    variant="outlined"
+                  />
+                </Box>
+                <Box>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    endIcon={<SendIcon />}
+                    type="submit"
+                  >
+                    Gửi
+                  </Button>
+                </Box>
+              </Stack>
+            </Box>
+          </Stack>
+        ) : (
+          <Stack justifyContent="center">
+            <NoDataCard
+              title="Bạn không có cuộc trò chuyện nào..."
+              imgComponentSgv={<ImageSvg14 />}
+            />
+          </Stack>
+        )}
+      </Box>
     </Stack>
   );
 };
