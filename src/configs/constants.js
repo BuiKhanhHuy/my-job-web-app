@@ -137,6 +137,12 @@ const BANNER_TYPE = {
   MAIN_JOB_RIGHT: 'MAIN_JOB_RIGHT',
 };
 
+const JOB_POST_STATUS_BG_COLOR = {
+  1: 'warning',
+  2: 'error',
+  3: 'success',
+};
+
 export {
   PLATFORM,
   AUTH_PROVIDER,
@@ -151,6 +157,7 @@ export {
   LINKS,
   ICONS,
   BANNER_TYPE,
+  JOB_POST_STATUS_BG_COLOR,
   ImageSvg1,
   ImageSvg2,
   ImageSvg3,
@@ -165,5 +172,5 @@ export {
   ImageSvg12,
   ImageSvg13,
   ImageSvg14,
-  ImageSvg15
+  ImageSvg15,
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { Grid, Button, Stack, Tooltip, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -8,6 +9,7 @@ import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
 import SingleSelectCustom from '../../../../components/controls/SingleSelectCustom';
 
 const JobPostFilterForm = ({ handleFilter }) => {
+  const { allConfig } = useSelector((state) => state.config);
   const {
     control,
     handleSubmit,
@@ -17,13 +19,14 @@ const JobPostFilterForm = ({ handleFilter }) => {
     defaultValues: {
       kw: '',
       isUrgent: '',
+      statusId: '',
     },
   });
 
   return (
     <form onSubmit={handleSubmit(handleFilter)}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={5} lg={6} xl={6}>
+        <Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
           <TextFieldCustom
             name="kw"
             placeholder="Nhập tên tin đăng"
@@ -42,8 +45,27 @@ const JobPostFilterForm = ({ handleFilter }) => {
             placeholder="Trạng thái tuyển dụng"
           />
         </Grid>
+        <Grid item flex={1}>
+          <SingleSelectCustom
+            name="statusId"
+            control={control}
+            options={allConfig?.jobPostStatusOptions || []}
+            showRequired={true}
+            placeholder="Trạng thái duyệt"
+          />
+        </Grid>
         <Grid item>
-          <Stack direction="row" spacing={2} justifyContent={{xs: 'flex-end', sm: 'center', md: 'center', lg: 'center', xl: 'center'}}>
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent={{
+              xs: 'flex-end',
+              sm: 'center',
+              md: 'center',
+              lg: 'center',
+              xl: 'center',
+            }}
+          >
             <Tooltip title="Đặt lại" arrow>
               <IconButton
                 aria-label="refresh"

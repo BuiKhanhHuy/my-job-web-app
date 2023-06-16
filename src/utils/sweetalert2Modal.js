@@ -11,7 +11,7 @@ const confirmModal = (
 ) => {
   return Swal.fire({
     title: title,
-    text: text,
+    html: text,
     icon: icon,
     confirmButtonColor: '#441da0',
     showCancelButton: showCancelButton,
@@ -24,4 +24,13 @@ const confirmModal = (
   });
 };
 
-export { confirmModal };
+const errorModal = (title = '', text = '') => {
+  return Swal.fire({
+    icon: 'error',
+    title: title,
+    html: text,
+    confirmButtonColor: '#441da0',
+  });
+};
+
+export { confirmModal, errorModal };

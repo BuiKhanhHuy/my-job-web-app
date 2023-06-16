@@ -90,7 +90,6 @@ const defaultFilterData = {
   jobPostId: '',
 };
 
-
 const AppliedResumeCard = ({ title }) => {
   const { allConfig } = useSelector((state) => state.config);
   const [openPopup, setOpenPopup] = React.useState(false);
@@ -163,7 +162,14 @@ const AppliedResumeCard = ({ title }) => {
       jobPostId: jobPostIdSelect,
       status: applicationStatusSelect,
     });
-  }, [page, rowsPerPage, filterData, jobPostIdSelect, applicationStatusSelect, isSuccess]);
+  }, [
+    page,
+    rowsPerPage,
+    filterData,
+    jobPostIdSelect,
+    applicationStatusSelect,
+    isSuccess,
+  ]);
 
   const handleFilter = (data) => {
     setOpenPopup(false);
@@ -202,15 +208,20 @@ const AppliedResumeCard = ({ title }) => {
     });
   };
 
-  const handleChangeApplicationStatus = (id, value) => {
+  const handleChangeApplicationStatus = (id, value, callback) => {
     const changeStatus = async (id, data) => {
       setIsFullScreenLoading(true);
       try {
         await jobPostActivityService.changeApplicationStatus(id, data);
 
         toastMessages.success('Cập nhật thành công.');
+
+        // success
+        callback(true);
       } catch (error) {
+        // Failed
         errorHandling(error);
+        callback(false);
       } finally {
         setIsFullScreenLoading(false);
       }
@@ -237,7 +248,7 @@ const AppliedResumeCard = ({ title }) => {
       'Hồ sơ ứng tuyển này sẽ được xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn?',
       'warning'
     );
-  }
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -253,7 +264,6 @@ const AppliedResumeCard = ({ title }) => {
     setJobPostIdSelect('');
     setApplicationStatusSelect('');
   };
- 
 
   return (
     <>

@@ -228,14 +228,12 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
   return (
     <form id="modal-form" onSubmit={handleSubmit(handleAddOrUpdate)}>
       <Grid container spacing={2}>
-        {editData?.isVerify && (
-          <Grid item xs={12}>
-            <Alert severity="warning">
-              Bài đăng sẽ được chuyển về trang thái chờ kiểm duyệt nếu bạn cập
-              nhật!
-            </Alert>
-          </Grid>
-        )}
+        <Grid item xs={12}>
+          <Alert severity="warning">
+            Khi bạn cập nhật bài đăng, nó sẽ ở trạng thái chờ kiểm duyệt!
+          </Alert>
+        </Grid>
+
         <Grid item xs={12}>
           <TextFieldCustom
             name="jobName"
@@ -302,7 +300,7 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
             showRequired={true}
             placeholder="Nhập số lượng nhân sự cần tuyển"
             control={control}
-            type='number'
+            type="number"
           />
         </Grid>
         <Grid item xs={6}>
@@ -322,7 +320,7 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
             showRequired={true}
             placeholder="Nhập mức lương tối thiểu"
             control={control}
-            type='number'
+            type="number"
           />
         </Grid>
         <Grid item xs={6}>
@@ -332,7 +330,7 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
             showRequired={true}
             placeholder="Nhập mức lương tối đa"
             control={control}
-            type='number'
+            type="number"
           />
         </Grid>
         <Grid item xs={6}>
@@ -418,7 +416,7 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
             placeholder="Nhập vĩ độ tọa độ trên bản đồ của công ty."
             helperText="Tự động điền nếu bạn chọn địa chỉ được gợi ý."
             control={control}
-            type='number'
+            type="number"
           />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -429,7 +427,7 @@ const JobPostForm = ({ handleAddOrUpdate, editData, serverErrors }) => {
             placeholder="Nhập kinh độ tọa độ trên bản đồ của công ty."
             helperText="Tự động điền nếu bạn chọn địa chỉ được gợi ý."
             control={control}
-            type='number'
+            type="number"
           />
         </Grid>
         <Grid item xs={12}>

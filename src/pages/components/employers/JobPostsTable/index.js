@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Chip, IconButton, TableBody, TableCell, Tooltip } from '@mui/material';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import dayjs from 'dayjs';
@@ -6,9 +7,11 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 import DataTableCustom from '../../../../components/DataTableCustom';
 import NoDataCard from '../../../../components/NoDataCard';
+import { JOB_POST_STATUS_BG_COLOR } from '../../../../configs/constants';
 
 const JobPostsTable = (props) => {
   const { rows, isLoading, handleDelete, handleUpdate } = props;
+  const { allConfig } = useSelector((state) => state.config);
 
   return (
     <DataTableCustom {...props}>
@@ -50,11 +53,11 @@ const JobPostsTable = (props) => {
               <TableCell align="left">{row.appliedNumber}</TableCell>
               <TableCell align="left">{row.views}</TableCell>
               <TableCell align="left">
-                {row.isVerify ? (
-                  <Chip label="Đã duyệt" color="success" size="small" />
-                ) : (
-                  <Chip label="Chưa duyệt" color="warning" size="small" />
-                )}
+                <Chip
+                  label={allConfig?.jobPostStatusDict[row?.status] || '---'}
+                  color={JOB_POST_STATUS_BG_COLOR[row?.status] || 'default'}
+                  size="small"
+                />
               </TableCell>
               <TableCell align="right">
                 <Tooltip title="Cập nhật" arrow>

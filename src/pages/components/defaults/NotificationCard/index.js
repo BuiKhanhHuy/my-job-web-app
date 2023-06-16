@@ -167,6 +167,10 @@ const NotificationCard = ({ title }) => {
         handleRead(item.key);
         nav('/nha-tuyen-dung/danh-sach-ung-vien');
         break;
+      case 'POST_VERIFY_RESULT':
+        handleRead(item.key);
+        nav('/nha-tuyen-dung/tin-tuyen-dung');
+        break;
       case 'APPLY_JOB':
         handleRead(item.key);
         nav(

@@ -137,7 +137,7 @@ const SavedResumeTable = (props) => {
                     size="small"
                     variant="outlined"
                     color="error"
-                    sx={{ textTransform: 'inherit' }}
+                    sx={{ textTransform: 'inherit', width: 110 }}
                     startIcon={<FavoriteIcon />}
                     onClick={() => handleUnsave(row?.resume?.slug)}
                   >

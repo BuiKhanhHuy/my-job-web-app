@@ -29,6 +29,7 @@ import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import jobPostActivityService from '../../../../services/jobPostActivityService';
 import toastMessages from '../../../../utils/toastMessages';
 import errorHandling from '../../../../utils/errorHandling';
+import { confirmModal, errorModal } from '../../../../utils/sweetalert2Modal';
 
 const SendEmailComponent = ({
   jobPostActivityId,
@@ -104,6 +105,62 @@ const SendEmailComponent = ({
   );
 };
 
+const AppliedStatusComponent = ({
+  options,
+  defaultStatus,
+  id,
+  handleChangeApplicationStatus,
+}) => {
+  const { allConfig } = useSelector((state) => state.config);
+  const [applyStatus, setApplyStatus] = React.useState(defaultStatus);
+
+  const handleChangeValue = (e) => {
+    const chooseValue = e.target.value;
+
+    if (chooseValue < applyStatus) {
+      errorModal(
+        'Đã có lỗi',
+        `Bạn không được phép chuyển trạng thái hồ sơ từ <strong style="color:red;">"${
+          allConfig?.applicationStatusDict[applyStatus] || '---'
+        }"</strong> sang <strong style="color:red;">"${
+          allConfig?.applicationStatusDict[e.target.value] || '---'
+        }"</strong>`
+      );
+    } else {
+      confirmModal(
+        () =>
+          handleChangeApplicationStatus(id, chooseValue, (result) => {
+            if (result) {
+              setApplyStatus(chooseValue);
+            }
+          }),
+        'Cập nhật trạng thái hồ sơ',
+        `Hồ sơ sẽ được cập nhật sang trạng thái <strong style="color:red;">"${
+          allConfig?.applicationStatusDict[e.target.value] || '---'
+        }"</strong>. Bạn có chắc chắn?`,
+        'question'
+      );
+    }
+  };
+
+  return (
+    <TextField
+      id="jobPostActivityStatus"
+      size="small"
+      fullWidth
+      select
+      value={applyStatus}
+      onChange={handleChangeValue}
+    >
+      {options.map((option) => (
+        <MenuItem key={option.id} value={option.id}>
+          {option.name}
+        </MenuItem>
+      ))}
+    </TextField>
+  );
+};
+
 const AppliedResumeTable = (props) => {
   const nav = useNavigate();
   const { rows, isLoading, handleChangeApplicationStatus, handleDelete } =
@@ -168,22 +225,12 @@ const AppliedResumeTable = (props) => {
                   : 'Hồ sơ đính kèm'}
               </TableCell>
               <TableCell align="right">
-                <TextField
-                  id="jobPostActivityStatus"
-                  size="small"
-                  fullWidth
-                  select
-                  defaultValue={row?.status}
-                  onChange={(e) =>
-                    handleChangeApplicationStatus(row.id, e.target.value)
-                  }
-                >
-                  {(allConfig?.applicationStatusOptions || []).map((option) => (
-                    <MenuItem key={option.id} value={option.id}>
-                      {option.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                <AppliedStatusComponent
+                  options={allConfig?.applicationStatusOptions || []}
+                  defaultStatus={row?.status}
+                  id={row?.id}
+                  handleChangeApplicationStatus={handleChangeApplicationStatus}
+                />
               </TableCell>
               <TableCell align="right">
                 <Stack direction="row" spacing={1} justifyContent="flex-end">
