@@ -22,12 +22,13 @@ import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import xlsxUtils from '../../../../utils/xlsxUtils';
 
+import toastMessages from '../../../../utils/toastMessages';
+import { confirmModal } from '../../../../utils/sweetalert2Modal';
 import FormPopup from '../../../../components/controls/FormPopup';
 import AppliedResumeFilterForm from '../AppliedResumeFilterForm';
 import AppliedResumeTable from '../AppliedResumeTable';
 import jobPostActivityService from '../../../../services/jobPostActivityService';
 import jobService from '../../../../services/jobService';
-import toastMessages from '../../../../utils/toastMessages';
 
 const headCells = [
   {
@@ -93,6 +94,7 @@ const defaultFilterData = {
 const AppliedResumeCard = ({ title }) => {
   const { allConfig } = useSelector((state) => state.config);
   const [openPopup, setOpenPopup] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
   const [page, setPage] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(pageSize);
@@ -161,7 +163,7 @@ const AppliedResumeCard = ({ title }) => {
       jobPostId: jobPostIdSelect,
       status: applicationStatusSelect,
     });
-  }, [page, rowsPerPage, filterData, jobPostIdSelect, applicationStatusSelect]);
+  }, [page, rowsPerPage, filterData, jobPostIdSelect, applicationStatusSelect, isSuccess]);
 
   const handleFilter = (data) => {
     setOpenPopup(false);
@@ -215,6 +217,27 @@ const AppliedResumeCard = ({ title }) => {
     };
     changeStatus(id, { status: value });
   };
+
+  const handleDelete = (id) => {
+    const del = async (id) => {
+      try {
+        await jobPostActivityService.deleteJobPostActivity(id);
+        setIsSuccess(!isSuccess);
+        toastMessages.success('Xóa hồ sơ ứng tuyển thành công.');
+      } catch (error) {
+        errorHandling(error);
+      } finally {
+        setIsFullScreenLoading(false);
+      }
+    };
+
+    confirmModal(
+      () => del(id),
+      'Xóa hồ sơ ứng tuyển',
+      'Hồ sơ ứng tuyển này sẽ được xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn?',
+      'warning'
+    );
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -334,6 +357,7 @@ const AppliedResumeCard = ({ title }) => {
         handleChangeApplicationStatus={handleChangeApplicationStatus}
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
+        handleDelete={handleDelete}
       />
 
       {/* Start: form  */}

@@ -44,6 +44,11 @@ const jobPostActivityService = {
 
     return httpRequest.put(url, data);
   },
+  deleteJobPostActivity: (id) => {
+    const url = `/api/job/web/employer-job-posts-activity/${id}/`;
+
+    return httpRequest.delete(url);
+  },
 };
 
 export default jobPostActivityService;

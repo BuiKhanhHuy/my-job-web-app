@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import MarkEmailReadRoundedIcon from '@mui/icons-material/MarkEmailReadRounded';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import { CV_TYPES, ImageSvg13 } from '../../../../configs/constants';
 import DataTableCustom from '../../../../components/DataTableCustom';
@@ -105,7 +106,8 @@ const SendEmailComponent = ({
 
 const AppliedResumeTable = (props) => {
   const nav = useNavigate();
-  const { rows, isLoading, handleChangeApplicationStatus } = props;
+  const { rows, isLoading, handleChangeApplicationStatus, handleDelete } =
+    props;
   const { allConfig } = useSelector((state) => state.config);
 
   return (
@@ -186,16 +188,27 @@ const AppliedResumeTable = (props) => {
               <TableCell align="right">
                 <Stack direction="row" spacing={1} justifyContent="flex-end">
                   <Tooltip title="Xem hồ sơ" arrow>
-                    <IconButton aria-label="view" size="small">
-                      <RemoveRedEyeOutlinedIcon
-                        fontSize="small"
-                        color="primary"
-                        onClick={() =>
-                          nav(
-                            `/nha-tuyen-dung/chi-tiet-ung-vien/${row?.resumeSlug}`
-                          )
-                        }
-                      />
+                    <IconButton
+                      color="primary"
+                      aria-label="view"
+                      size="small"
+                      onClick={() =>
+                        nav(
+                          `/nha-tuyen-dung/chi-tiet-ung-vien/${row?.resumeSlug}`
+                        )
+                      }
+                    >
+                      <RemoveRedEyeOutlinedIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Xóa hồ sơ" arrow>
+                    <IconButton
+                      size="small"
+                      color="error"
+                      aria-label="delete"
+                      onClick={() => handleDelete(row?.id)}
+                    >
+                      <DeleteOutlineOutlinedIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                   <SendEmailComponent
