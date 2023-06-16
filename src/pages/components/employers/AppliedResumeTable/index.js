@@ -15,17 +15,97 @@ import {
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
+import MarkEmailReadRoundedIcon from '@mui/icons-material/MarkEmailReadRounded';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 
 import { CV_TYPES, ImageSvg13 } from '../../../../configs/constants';
 import DataTableCustom from '../../../../components/DataTableCustom';
 import { faFile, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import NoDataCard from '../../../../components/NoDataCard';
+import { convertEditorStateToHTMLString } from '../../../../utils/customData';
+import SendMailCard from '../SendMailCard';
+import BackdropLoading from '../../../../components/loading/BackdropLoading';
+import jobPostActivityService from '../../../../services/jobPostActivityService';
+import toastMessages from '../../../../utils/toastMessages';
+import errorHandling from '../../../../utils/errorHandling';
+
+const SendEmailComponent = ({
+  jobPostActivityId,
+  isSentEmail,
+  email,
+  fullName,
+}) => {
+  const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
+  const [openSendMailPopup, setOpenSendMailPopup] = React.useState(false);
+  const [sendMailData, setSendMailData] = React.useState(null);
+  const [sentEmail, setSentEmail] = React.useState(isSentEmail);
+
+  const handleOpenSendMail = (email, fullName) => {
+    setSendMailData({
+      fullName: fullName,
+      email: email,
+    });
+    setOpenSendMailPopup(true);
+  };
+
+  const handleSendEmail = (data) => {
+    const sendEmail = async (id, data) => {
+      setIsFullScreenLoading(true);
+      try {
+        await jobPostActivityService.sendEmail(id, data);
+
+        if (!sentEmail) {
+          setSentEmail(true);
+        }
+        setOpenSendMailPopup(false);
+        toastMessages.success('Gửi email thành công.');
+      } catch (error) {
+        errorHandling(error);
+      } finally {
+        setIsFullScreenLoading(false);
+      }
+    };
+
+    let newData = {
+      ...data,
+      content: convertEditorStateToHTMLString(data.content),
+    };
+    // execute
+    sendEmail(jobPostActivityId, newData);
+  };
+
+  return (
+    <>
+      <Button
+        variant="contained"
+        size="small"
+        color="secondary"
+        sx={{ textTransform: 'inherit', width: 110 }}
+        startIcon={
+          sentEmail ? <MarkEmailReadRoundedIcon /> : <ForwardToInboxIcon />
+        }
+        onClick={() => handleOpenSendMail(email, fullName)}
+      >
+        {sentEmail ? 'Gửi lại' : 'Gửi email'}
+      </Button>
+      {/* Start: send mail */}
+      <SendMailCard
+        openPopup={openSendMailPopup}
+        setOpenPopup={setOpenSendMailPopup}
+        sendMailData={sendMailData}
+        handleSendEmail={handleSendEmail}
+      />
+      {/* Start:  send mail */}
+      {/* Start: full screen loading */}
+      {isFullScreenLoading && <BackdropLoading />}
+      {/* End: full screen loading */}
+    </>
+  );
+};
 
 const AppliedResumeTable = (props) => {
   const nav = useNavigate();
-  const { rows, isLoading, handleChangeApplicationStatus, handleSendMail } =
-    props;
+  const { rows, isLoading, handleChangeApplicationStatus } = props;
   const { allConfig } = useSelector((state) => state.config);
 
   return (
@@ -118,16 +198,12 @@ const AppliedResumeTable = (props) => {
                       />
                     </IconButton>
                   </Tooltip>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    color="secondary"
-                    sx={{ textTransform: 'inherit' }}
-                    startIcon={<ForwardToInboxIcon />}
-                    onClick={() => handleSendMail(row?.email, row?.fullName)}
-                  >
-                    Gửi mail
-                  </Button>
+                  <SendEmailComponent
+                    jobPostActivityId={row.id}
+                    isSentEmail={row?.isSentEmail}
+                    email={row?.email}
+                    fullName={row?.fullName}
+                  />
                 </Stack>
               </TableCell>
             </TableBody>

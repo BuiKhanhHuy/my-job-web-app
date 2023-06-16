@@ -18,7 +18,6 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
-import { confirmModal } from '../../../../utils/sweetalert2Modal';
 import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import xlsxUtils from '../../../../utils/xlsxUtils';
@@ -29,7 +28,6 @@ import AppliedResumeTable from '../AppliedResumeTable';
 import jobPostActivityService from '../../../../services/jobPostActivityService';
 import jobService from '../../../../services/jobService';
 import toastMessages from '../../../../utils/toastMessages';
-import SendMailCard from '../SendMailCard';
 
 const headCells = [
   {
@@ -91,11 +89,10 @@ const defaultFilterData = {
   jobPostId: '',
 };
 
+
 const AppliedResumeCard = ({ title }) => {
   const { allConfig } = useSelector((state) => state.config);
   const [openPopup, setOpenPopup] = React.useState(false);
-  const [openSendMailPopup, setOpenSendMailPopup] = React.useState(false);
-  const [sendMailData, setSendMailData] = React.useState(null);
   const [page, setPage] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(pageSize);
@@ -233,14 +230,7 @@ const AppliedResumeCard = ({ title }) => {
     setJobPostIdSelect('');
     setApplicationStatusSelect('');
   };
-
-  const handleSendMail = (email, fullName) => {
-    setSendMailData({
-      fullName: fullName,
-      email: email,
-    });
-    setOpenSendMailPopup(true);
-  };
+ 
 
   return (
     <>
@@ -344,7 +334,6 @@ const AppliedResumeCard = ({ title }) => {
         handleChangeApplicationStatus={handleChangeApplicationStatus}
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
-        handleSendMail={handleSendMail}
       />
 
       {/* Start: form  */}
@@ -361,14 +350,6 @@ const AppliedResumeCard = ({ title }) => {
         />
       </FormPopup>
       {/* End: form */}
-
-      {/* Start: send mail */}
-      <SendMailCard
-        openPopup={openSendMailPopup}
-        setOpenPopup={setOpenSendMailPopup}
-        sendMailData={sendMailData}
-      />
-      {/* Start:  send mail */}
 
       {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}

@@ -5,19 +5,17 @@ import * as yup from 'yup';
 import { Grid } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
-import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import FormPopup from '../../../../components/controls/FormPopup';
-import errorHandling from '../../../../utils/errorHandling';
-import { convertEditorStateToHTMLString } from '../../../../utils/customData';
 import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
 import RichTextEditorCustom from '../../../../components/controls/RichTextEditorCustom';
 import CheckboxCustom from '../../../../components/controls/CheckboxCustom';
-import toastMessages from '../../../../utils/toastMessages';
-import emailService from '../../../../services/emailService';
 
-const SendMailCard = ({ openPopup, setOpenPopup, sendMailData }) => {
-  const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
-
+const SendMailCard = ({
+  openPopup,
+  setOpenPopup,
+  sendMailData,
+  handleSendEmail,
+}) => {
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -37,12 +35,20 @@ const SendMailCard = ({ openPopup, setOpenPopup, sendMailData }) => {
       .test('content', 'Nội dung email là bắt buộc.', (value) =>
         value.getCurrentContent().hasText()
       ),
-    isUrgent: yup.boolean().default(false),
+    isSendMe: yup.boolean().default(false),
   });
 
   const { control, reset, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
+
+  React.useEffect(() => {
+    if (openPopup) {
+      reset();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openPopup]);
 
   React.useEffect(() => {
     if (sendMailData) {
@@ -54,30 +60,6 @@ const SendMailCard = ({ openPopup, setOpenPopup, sendMailData }) => {
       reset();
     }
   }, [sendMailData, reset]);
-
-  const handleSendEmail = (data) => {
-    const sendEmail = async (data) => {
-      setIsFullScreenLoading(true);
-      try {
-        await emailService.sendEmailReplyToJobSeeker(data);
-
-        setOpenPopup(false);
-        reset();
-        toastMessages.success('Gửi email thành công.');
-      } catch (error) {
-        errorHandling(error);
-      } finally {
-        setIsFullScreenLoading(false);
-      }
-    };
-
-    let newData = {
-      ...data,
-      content: convertEditorStateToHTMLString(data.content),
-    };
-
-    sendEmail(newData);
-  };
 
   return (
     <>
@@ -137,9 +119,6 @@ const SendMailCard = ({ openPopup, setOpenPopup, sendMailData }) => {
           </Grid>
         </form>
       </FormPopup>
-      {/* Start: full screen loading */}
-      {isFullScreenLoading && <BackdropLoading />}
-      {/* End: full screen loading */}
     </>
   );
 };

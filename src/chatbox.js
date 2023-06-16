@@ -1,5 +1,4 @@
 import React from 'react';
-import Kommunicate from '@kommunicate/kommunicate-chatbot-plugin';
 import { AUTH_CONFIG } from './configs/constants';
 
 export const MyJobChatBot = () => {

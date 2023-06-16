@@ -1,5 +1,5 @@
 import React from 'react';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Card,
@@ -10,6 +10,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf } from '@fortawesome/free-regular-svg-icons';
@@ -19,10 +20,10 @@ import RoomIcon from '@mui/icons-material/Room';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import dayjs from 'dayjs';
 
 import { salaryString } from '../../utils/customData';
 import { useSelector } from 'react-redux';
-import dayjs from 'dayjs';
 import { CV_TYPES } from '../../configs/constants';
 
 const JobSeekerProfile = ({
@@ -39,6 +40,7 @@ const JobSeekerProfile = ({
   user,
   jobSeekerProfile,
   type,
+  lastViewedDate,
   handleSave,
 }) => {
   const nav = useNavigate();
@@ -72,20 +74,44 @@ const JobSeekerProfile = ({
               onClick={() => nav(`/nha-tuyen-dung/chi-tiet-ung-vien/${slug}`)}
             >
               {user?.fullName || (
-                 <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                 Chưa cập nhật
-               </span>
+                <span
+                  style={{
+                    color: '#e0e0e0',
+                    fontStyle: 'italic',
+                    fontSize: 13,
+                  }}
+                >
+                  Chưa cập nhật
+                </span>
               )}
               <span style={{ color: 'gray' }}>
                 (
                 {jobSeekerProfile?.old || (
-                   <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                   Chưa cập nhật
-                 </span>
+                  <span
+                    style={{
+                      color: '#e0e0e0',
+                      fontStyle: 'italic',
+                      fontSize: 13,
+                    }}
+                  >
+                    Chưa cập nhật
+                  </span>
                 )}{' '}
                 tuổi)
               </span>
             </span>
+            {lastViewedDate && (
+              <Chip
+                icon={<CheckCircleRoundedIcon />}
+                sx={{ marginLeft: 1 }}
+                label={`Xem lần cuối: ${dayjs(lastViewedDate).format(
+                  'DD/MM/YYYY HH:mm'
+                )}`}
+                color="success"
+                variant="outlined"
+                size="small"
+              />
+            )}
           </Typography>
           <Typography gutterBottom variant="body1">
             <span
@@ -100,9 +126,15 @@ const JobSeekerProfile = ({
                 />
               )}
               {title || (
-                 <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                 Chưa cập nhật
-               </span>
+                <span
+                  style={{
+                    color: '#e0e0e0',
+                    fontStyle: 'italic',
+                    fontSize: 13,
+                  }}
+                >
+                  Chưa cập nhật
+                </span>
               )}
             </span>
           </Typography>
@@ -114,9 +146,15 @@ const JobSeekerProfile = ({
                 icon={<MonetizationOnIcon />}
                 label={
                   salaryString(salaryMin, salaryMax) || (
-                    <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-            Chưa cập nhật
-          </span>
+                    <span
+                      style={{
+                        color: '#e0e0e0',
+                        fontStyle: 'italic',
+                        fontSize: 13,
+                      }}
+                    >
+                      Chưa cập nhật
+                    </span>
                   )
                 }
               />
@@ -126,9 +164,15 @@ const JobSeekerProfile = ({
                 icon={<WorkOutlineOutlinedIcon />}
                 label={
                   allConfig.experienceDict[experience] || (
-                    <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                    Chưa cập nhật
-                  </span>
+                    <span
+                      style={{
+                        color: '#e0e0e0',
+                        fontStyle: 'italic',
+                        fontSize: 13,
+                      }}
+                    >
+                      Chưa cập nhật
+                    </span>
                   )
                 }
               />
@@ -137,9 +181,15 @@ const JobSeekerProfile = ({
                 icon={<RoomIcon />}
                 label={
                   allConfig.cityDict[city] || (
-                    <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                    Chưa cập nhật
-                  </span>
+                    <span
+                      style={{
+                        color: '#e0e0e0',
+                        fontStyle: 'italic',
+                        fontSize: 13,
+                      }}
+                    >
+                      Chưa cập nhật
+                    </span>
                   )
                 }
               />

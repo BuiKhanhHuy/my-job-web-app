@@ -7,7 +7,6 @@ import {
   Button,
   CircularProgress,
   Card,
-  Alert,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import InfiniteScroll from 'react-infinite-scroll-component';

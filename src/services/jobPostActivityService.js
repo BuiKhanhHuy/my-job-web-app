@@ -19,6 +19,11 @@ const jobPostActivityService = {
   },
 
   // employer
+  sendEmail: (id, data) => {
+    const url = `/api/job/web/employer-job-posts-activity/${id}/send-email/`;
+
+    return httpRequest.post(url, data);
+  },
   getAppliedResume: (params = {}) => {
     const url = '/api/job/web/employer-job-posts-activity/';
 

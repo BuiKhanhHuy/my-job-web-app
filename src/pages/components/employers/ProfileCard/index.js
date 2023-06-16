@@ -153,6 +153,7 @@ const ProfileCard = () => {
                               city={value.city}
                               jobSeekerProfile={value.jobSeekerProfileDict}
                               type={value.type}
+                              lastViewedDate={value.lastViewedDate}
                               handleSave={handleSave}
                             />
                           </Grid>

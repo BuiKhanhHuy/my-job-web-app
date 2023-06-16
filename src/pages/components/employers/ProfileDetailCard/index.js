@@ -13,6 +13,8 @@ import {
   Typography,
   Button,
   Skeleton,
+  Chip,
+  Tooltip,
 } from '@mui/material';
 import ReactToPrint from 'react-to-print';
 import Moment from 'react-moment';
@@ -25,9 +27,15 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PrintIcon from '@mui/icons-material/Print';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import MarkEmailReadRoundedIcon from '@mui/icons-material/MarkEmailReadRounded';
 
 import { CV_TYPES } from '../../../../configs/constants';
-import { salaryString } from '../../../../utils/customData';
+import BackdropLoading from '../../../../components/loading/BackdropLoading';
+import {
+  convertEditorStateToHTMLString,
+  salaryString,
+} from '../../../../utils/customData';
 import NoDataCard from '../../../../components/NoDataCard';
 import downloadPdf from '../../../../utils/funcUtils';
 import toastMessages from '../../../../utils/toastMessages';
@@ -43,9 +51,9 @@ const item = (title, value) => {
       <Typography sx={{ fontWeight: 'bold', fontSize: 15 }}>{title}</Typography>
       <Typography sx={{ textAlign: 'justify' }}>
         {value || (
-           <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-           Chưa cập nhật
-         </span>
+          <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+            Chưa cập nhật
+          </span>
         )}
       </Typography>
     </Box>
@@ -61,6 +69,9 @@ const Loading = (
         </Box>
         <Stack flex={1}>
           <Typography variant="h4">
+            <Skeleton />
+          </Typography>
+          <Typography>
             <Skeleton />
           </Typography>
           <Typography>
@@ -165,12 +176,78 @@ const Loading = (
   </>
 );
 
+const SendEmailComponent = ({ resumeSlug, email, fullName, isSentEmail }) => {
+  const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
+  const [openSendMailPopup, setOpenSendMailPopup] = React.useState(false);
+  const [sendMailData, setSendMailData] = React.useState(null);
+  const [sentEmail, setSentEmail] = React.useState(isSentEmail);
+
+  const handleOpenSendMail = (email, fullName) => {
+    setSendMailData({
+      fullName: fullName,
+      email: email,
+    });
+    setOpenSendMailPopup(true);
+  };
+
+  const handleSendEmail = (data) => {
+    const sendEmail = async (slug, data) => {
+      setIsFullScreenLoading(true);
+      try {
+        await resumeService.sendEmail(slug, data);
+
+        if (!sentEmail) {
+          setSentEmail(true);
+        }
+        setOpenSendMailPopup(false);
+        toastMessages.success('Gửi email thành công.');
+      } catch (error) {
+        errorHandling(error);
+      } finally {
+        setIsFullScreenLoading(false);
+      }
+    };
+
+    let newData = {
+      ...data,
+      content: convertEditorStateToHTMLString(data.content),
+    };
+    // execute
+    sendEmail(resumeSlug, newData);
+  };
+
+  return (
+    <>
+      <Tooltip arrow title={sentEmail ? 'Gửi lại Email' : 'Gửi Email'}>
+        <Button
+          variant="contained"
+          size="small"
+          color="inherit"
+          sx={{ color: 'Gray' }}
+          onClick={() => handleOpenSendMail(email, fullName)}
+        >
+          {sentEmail ? <MarkEmailReadRoundedIcon color='success'/> : <ForwardToInboxIcon />}
+        </Button>
+      </Tooltip>
+      {/* Start: send mail */}
+      <SendMailCard
+        openPopup={openSendMailPopup}
+        setOpenPopup={setOpenSendMailPopup}
+        sendMailData={sendMailData}
+        handleSendEmail={handleSendEmail}
+      />
+      {/* Start:  send mail */}
+      {/* Start: full screen loading */}
+      {isFullScreenLoading && <BackdropLoading />}
+      {/* End: full screen loading */}
+    </>
+  );
+};
+
 const ProfileDetailCard = () => {
   const { slug: resumeSlug } = useParams();
   const { allConfig } = useSelector((state) => state.config);
   const [openPopup, setOpenPopup] = React.useState(false);
-  const [openSendMailPopup, setOpenSendMailPopup] = React.useState(false);
-  const [sendMailData, setSendMailData] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [profileDetail, setProfileDetail] = React.useState(null);
 
@@ -226,14 +303,6 @@ const ProfileDetailCard = () => {
     save(slug);
   };
 
-  const handleSendMail = (email, fullName) => {
-    setSendMailData({
-      fullName: fullName,
-      email: email,
-    });
-    setOpenSendMailPopup(true);
-  };
-
   return isLoading ? (
     Loading
   ) : profileDetail === null ? (
@@ -254,7 +323,7 @@ const ProfileDetailCard = () => {
               <Stack direction="row" spacing={2} alignItems="center">
                 <Box>
                   <Avatar
-                    src= {profileDetail?.user?.avatarUrl}
+                    src={profileDetail?.user?.avatarUrl}
                     sx={{ width: 110, height: 110 }}
                   />
                 </Box>
@@ -266,14 +335,34 @@ const ProfileDetailCard = () => {
                     sx={{ fontWeight: 'bold', fontSize: 16, color: 'Gray' }}
                   >
                     {profileDetail?.title || (
-                       <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                       Chưa cập nhật
-                     </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )}
                   </Typography>
                   <Typography>
                     Thời gian cập nhật:{' '}
                     {dayjs(profileDetail?.updateAt).format('DD/MM/YYYY')}
+                  </Typography>
+                  <Typography>
+                    {profileDetail?.lastViewedDate && (
+                      <Chip
+                        sx={{ mt: 1 }}
+                        icon={<CheckCircleRoundedIcon />}
+                        label={`Xem lần cuối: ${dayjs(
+                          profileDetail?.lastViewedDate
+                        ).format('DD/MM/YYYY HH:mm')}`}
+                        color="success"
+                        variant="outlined"
+                        size="small"
+                      />
+                    )}
                   </Typography>
                 </Stack>
               </Stack>
@@ -317,20 +406,14 @@ const ProfileDetailCard = () => {
                       <FavoriteBorderIcon />
                     )}
                   </Button>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    color="inherit"
-                    sx={{ color: 'Gray' }}
-                    onClick={() =>
-                      handleSendMail(
-                        profileDetail?.user?.email,
-                        profileDetail?.user?.fullName
-                      )
-                    }
-                  >
-                    <ForwardToInboxIcon />
-                  </Button>
+                  {/* Start: SendEmailComponent */}
+                  <SendEmailComponent
+                    resumeSlug={resumeSlug}
+                    email={profileDetail?.user?.email}
+                    fullName={profileDetail?.user?.fullName}
+                    isSentEmail={profileDetail?.isSentEmail}
+                  />
+                  {/* End: SendEmailComponent */}
                 </Stack>
                 {profileDetail?.type &&
                   profileDetail.type === CV_TYPES.cvUpload && (
@@ -389,9 +472,15 @@ const ProfileDetailCard = () => {
                   {item(
                     'Email',
                     profileDetail?.user?.email || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -399,9 +488,15 @@ const ProfileDetailCard = () => {
                   {item(
                     'Số điện thoại',
                     profileDetail?.jobSeekerProfile?.phone || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-            Chưa cập nhật
-          </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -411,9 +506,15 @@ const ProfileDetailCard = () => {
                     allConfig?.genderDict[
                       profileDetail?.jobSeekerProfile?.gender
                     ] || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -423,9 +524,15 @@ const ProfileDetailCard = () => {
                     dayjs(profileDetail?.jobSeekerProfile?.birthday).format(
                       'DD/MM/YYYY'
                     ) || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -435,9 +542,15 @@ const ProfileDetailCard = () => {
                     allConfig?.maritalStatusDict[
                       profileDetail?.jobSeekerProfile?.maritalStatus
                     ] || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-            Chưa cập nhật
-          </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -447,9 +560,15 @@ const ProfileDetailCard = () => {
                     allConfig?.cityDict[
                       profileDetail?.jobSeekerProfile?.location?.city
                     ] || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -458,7 +577,13 @@ const ProfileDetailCard = () => {
                     'Quận/Huyện',
                     profileDetail?.jobSeekerProfile?.location?.districtDict
                       ?.name || (
-                        <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
                         Chưa cập nhật
                       </span>
                     )
@@ -468,9 +593,15 @@ const ProfileDetailCard = () => {
                   {item(
                     'Địa chỉ',
                     profileDetail?.jobSeekerProfile?.location?.address || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -489,9 +620,15 @@ const ProfileDetailCard = () => {
                   {item(
                     'Vị trí mong muốn',
                     profileDetail?.title || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -499,9 +636,15 @@ const ProfileDetailCard = () => {
                   {item(
                     'Cấp bậc mong muốn',
                     allConfig?.positionDict[profileDetail?.position] || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -511,9 +654,15 @@ const ProfileDetailCard = () => {
                     allConfig?.academicLevelDict[
                       profileDetail?.academicLevel
                     ] || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -521,9 +670,15 @@ const ProfileDetailCard = () => {
                   {item(
                     'Kinh nghiệm',
                     allConfig?.experienceDict[profileDetail?.experience] || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -531,9 +686,15 @@ const ProfileDetailCard = () => {
                   {item(
                     'Nghề nghiệp',
                     allConfig?.careerDict[profileDetail?.career] || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -541,9 +702,15 @@ const ProfileDetailCard = () => {
                   {item(
                     'Địa điểm làm việc',
                     allConfig?.cityDict[profileDetail?.city] || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -562,9 +729,15 @@ const ProfileDetailCard = () => {
                     allConfig?.typeOfWorkplaceDict[
                       profileDetail?.typeOfWorkplace
                     ] || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -572,9 +745,15 @@ const ProfileDetailCard = () => {
                   {item(
                     'Hình thức làm việc',
                     allConfig?.jobTypeDict[profileDetail?.jobType] || (
-                      <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                      Chưa cập nhật
-                    </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )
                   )}
                 </Grid>
@@ -592,9 +771,15 @@ const ProfileDetailCard = () => {
                 <Card variant="outlined" sx={{ p: 2, borderWidth: 2 }}>
                   <Typography>
                     {profileDetail?.description || (
-                       <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                       Chưa cập nhật
-                     </span>
+                      <span
+                        style={{
+                          color: '#e0e0e0',
+                          fontStyle: 'italic',
+                          fontSize: 13,
+                        }}
+                      >
+                        Chưa cập nhật
+                      </span>
                     )}
                   </Typography>
                 </Card>
@@ -640,9 +825,15 @@ const ProfileDetailCard = () => {
                               <Grid item xs={7}>
                                 <Typography>
                                   {value?.description || (
-                                     <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                                     Chưa cập nhật
-                                   </span>
+                                    <span
+                                      style={{
+                                        color: '#e0e0e0',
+                                        fontStyle: 'italic',
+                                        fontSize: 13,
+                                      }}
+                                    >
+                                      Chưa cập nhật
+                                    </span>
                                   )}
                                 </Typography>
                               </Grid>
@@ -801,7 +992,11 @@ const ProfileDetailCard = () => {
                               >
                                 Mức độ thành thạo
                               </Typography>
-                              <Rating value={value?.level || 0} size="medium" readOnly/>
+                              <Rating
+                                value={value?.level || 0}
+                                size="medium"
+                                readOnly
+                              />
                             </Grid>
                             {index <
                               profileDetail.languageSkills.length - 1 && (
@@ -887,13 +1082,6 @@ const ProfileDetailCard = () => {
           )}
         </Stack>
       </Box>
-      {/* Start: send mail */}
-      <SendMailCard
-        openPopup={openSendMailPopup}
-        setOpenPopup={setOpenSendMailPopup}
-        sendMailData={sendMailData}
-      />
-      {/* Start:  send mail */}
     </>
   );
 };

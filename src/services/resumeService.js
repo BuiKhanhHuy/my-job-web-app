@@ -1,6 +1,11 @@
 import httpRequest from '../utils/httpRequest';
 
 const resumeService = {
+  sendEmail: (slug, data) => {
+    const url = `api/info/web/resumes/${slug}/send-email/`;
+
+    return httpRequest.post(url, data);
+  },
   getResumes: (params = {}) => {
     const url = 'api/info/web/resumes/';
 
