@@ -13,7 +13,7 @@ git clone https://github.com/BuiKhanhHuy/my-job-web-app.git
 ```
 #### Go to the project directory
 ```bash
-cd myjob_api
+cd my-job-web-app
 ```
 #### Update the data in the file `.env`
 ```bash
@@ -65,6 +65,6 @@ npm start
  
 ### 👉 [Live demo](https://bkhuy-myjob.netlify.app/)
 
-### 👉 Frontend repo link
-* #### 🌐  [Web-app](https://github.com/BuiKhanhHuy/my-job-web-app) 
-* #### 📱  [Mobile-app](https://github.com/BuiKhanhHuy/MyJobApp) 
+### 👉 Backend & Mobile repo link
+* #### 🖥️  [Backend server](https://github.com/BuiKhanhHuy/myjob_api) 
+* #### 📱  [Mobile app](https://github.com/BuiKhanhHuy/MyJobApp) 
