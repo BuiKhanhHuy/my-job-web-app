@@ -1,10 +1,10 @@
 <p align="center">
  <img src="https://github.com/BuiKhanhHuy/myjob_api/assets/69914972/ef0c454d-7947-46ab-a5e6-64ffe964bb3a" width="200"  alt="Image" />
 </p>
+<h1 align="center">JOB PORTAL SYSTEM</h1>
+<h2 align="center">MyJob Web Application (ReactJS)</h2>
 
-<h1 align="center">MyJob Web Application (ReactJS)</h3>
-
-❗Must run [Server Backend](https://github.com/BuiKhanhHuy/MyJobApp)  first
+❗Must run [Server Backend](https://github.com/BuiKhanhHuy/myjob_api)  first
 ### 👉 Setup
 
 #### Clone repo
@@ -58,9 +58,7 @@ npm start
 
 ### 👉 Go to http://localhost:8000/swagger/
 <img src="https://github.com/BuiKhanhHuy/myjob_api/assets/69914972/bdf34cb0-40e9-4403-9345-5e6f6299df3a" alt="Image" /> 
-
-### 👉 Go to http://localhost:8000/admin/
-<img src="https://github.com/BuiKhanhHuy/myjob_api/assets/69914972/c411ed48-6c1e-4940-a51a-8d30859aa90e" alt="Image" /> 
+ 
 
 ### 👉 Frontend repo link
 * #### 🌐  [Web-app](https://github.com/BuiKhanhHuy/my-job-web-app) 
