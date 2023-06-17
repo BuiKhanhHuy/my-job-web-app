@@ -64,6 +64,12 @@ npm start
 
  
 ### 👉 [Live demo](https://bkhuy-myjob.netlify.app/)
+* Job seeker:
+  * Email:
+  * Password: 
+* Employer
+  * Email: employer100@gmail.com
+  * Password: 123
 
 ### 👉 Backend & Mobile repo link
 * #### 🖥️  [Backend server](https://github.com/BuiKhanhHuy/myjob_api) 
