@@ -56,9 +56,9 @@ npm install
 npm start
 ```
 
-### 👉 Go to http://localhost:8000/swagger/
-<img src="https://github.com/BuiKhanhHuy/myjob_api/assets/69914972/bdf34cb0-40e9-4403-9345-5e6f6299df3a" alt="Image" /> 
+### 👉 [Video demo](https://www.youtube.com/watch?v=4vq1rl6vj5c)
  
+### 👉 [Live demo](https://bkhuy-myjob.netlify.app/)
 
 ### 👉 Frontend repo link
 * #### 🌐  [Web-app](https://github.com/BuiKhanhHuy/my-job-web-app) 
