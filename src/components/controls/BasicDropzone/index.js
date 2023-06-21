@@ -8,6 +8,7 @@ import {
   faCircleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 
+
 const FileDropzone = ({ accept, onDrop, values }) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept,
