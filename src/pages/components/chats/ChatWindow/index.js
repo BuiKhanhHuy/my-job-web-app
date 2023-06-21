@@ -42,6 +42,7 @@ const ChatWindow = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { currentUserChat, selectedRoomId } = React.useContext(ChatContext);
   const inputRef = React.useRef(null);
+  const messageListRef = React.useRef(null);
   const [inputValue, setInputValue] = React.useState('');
 
   const [selectedRoom, setSelectedRoom] = React.useState({});
@@ -214,6 +215,14 @@ const ChatWindow = () => {
     }
   };
 
+  React.useEffect(() => {
+    // scroll to bottom after message changed
+    if (messageListRef?.current) {
+      messageListRef.current.scrollTop =
+        messageListRef.current.scrollHeight + 50;
+    }
+  }, [messages]);
+
   return (
     <Stack direction="column" justifyContent="space-around">
       <Card>
@@ -274,6 +283,7 @@ const ChatWindow = () => {
                 )
               ) : (
                 <div
+                  ref={messageListRef}
                   id="scrollableDiv"
                   style={{
                     height: '66vh',

@@ -14,10 +14,15 @@ import {
   faBriefcase,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  resetSearchCompany,
+  resetSearchJobPostFilter,
+  resetSearchResume,
+} from '../../../../redux/filterSlice';
 
 const AccountSwitchMenu = ({ isShowButton = false }) => {
   const nav = useNavigate();
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const { isAuthenticated, currentUser } = useSelector((state) => state.user);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -32,9 +37,13 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
 
   const handleLogout = (path) => {
     const accessToken = tokenService.getAccessTokenFromCookie();
-    dispath(removeUserInfo(accessToken))
+    dispatch(removeUserInfo(accessToken))
       .unwrap()
       .then(() => {
+        dispatch(resetSearchJobPostFilter());
+        dispatch(resetSearchCompany());
+        dispatch(resetSearchResume());
+
         nav(path);
       })
       .catch((error) => {
@@ -159,7 +168,7 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
             color="inherit"
             onClick={handleLogin}
             size="small"
-            sx={{  textTransform: 'inherit' }}
+            sx={{ textTransform: 'inherit' }}
           >
             {currentUser?.roleName === ROLES_NAME.EMPLOYER
               ? 'Đăng nhập ứng viên'
@@ -170,7 +179,7 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
             fullWidth
             size="small"
             color="inherit"
-            sx={{  textTransform: 'inherit' }}
+            sx={{ textTransform: 'inherit' }}
             onClick={handleSignUp}
           >
             {currentUser?.roleName === ROLES_NAME.EMPLOYER

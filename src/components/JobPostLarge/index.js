@@ -30,6 +30,13 @@ const JobPostLarge = ({
   const theme = useTheme();
   const nav = useNavigate();
   const { allConfig } = useSelector((state) => state.config);
+  const [width, setWidth] = React.useState('95%');
+  const myRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const elementWidth = myRef.current?.offsetWidth - 100;
+    setWidth(elementWidth);
+  }, []);
 
   return (
     <Card
@@ -44,7 +51,7 @@ const JobPostLarge = ({
       }}
       onClick={() => nav(`/viec-lam/${slug}`)}
     >
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={2} ref={myRef}>
         <Box>
           <MuiImageCustom
             width={100}
@@ -52,21 +59,20 @@ const JobPostLarge = ({
             src={companyImageUrl}
             sx={{
               border: 0.5,
-              borderColor: theme.palette.mode === 'light' ? '#e0e0e0' : '#121212',
+              borderColor:
+                theme.palette.mode === 'light' ? '#e0e0e0' : '#121212',
               borderRadius: 1.5,
               p: 0.5,
               backgroundColor: 'white',
             }}
           />
         </Box>
-        <Stack flex={1} justifyContent="center" spacing={0.8} >
+        <Stack flex={1} justifyContent="center" spacing={0.5} width={width}>
           <Box>
             <Typography
               sx={{ fontSize: 18, fontWeight: 'bold' }}
               style={{
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
+                WebkitLineClamp: 2,
               }}
             >
               {jobName}
@@ -85,15 +91,24 @@ const JobPostLarge = ({
           </Typography>
 
           <Stack direction="row" spacing={1.5}>
-            <Typography sx={{ fontWeight: 'bold', fontSize: 15 }} variant="body1">
+            <Typography
+              sx={{ fontWeight: 'bold', fontSize: 15 }}
+              variant="body1"
+            >
               <FontAwesomeIcon icon={faCircleDollarToSlot} color="#bdbdbd" />{' '}
               {salaryString(salaryMin, salaryMax)}
             </Typography>
-            <Typography sx={{ fontWeight: 'bold', fontSize: 15 }} variant="body1">
+            <Typography
+              sx={{ fontWeight: 'bold', fontSize: 15 }}
+              variant="body1"
+            >
               <FontAwesomeIcon icon={faLocationDot} color="#bdbdbd" />{' '}
               {allConfig?.cityDict[cityId] || 'Chưa cập nhật'}
             </Typography>
-            <Typography sx={{ fontWeight: 'bold', fontSize: 15 }} variant="body1">
+            <Typography
+              sx={{ fontWeight: 'bold', fontSize: 15 }}
+              variant="body1"
+            >
               <FontAwesomeIcon icon={faCalendarDays} color="#bdbdbd" />{' '}
               {dayjs(deadline).format('DD/MM/YYYY')}
             </Typography>

@@ -46,7 +46,7 @@ const MainJobPostCard = () => {
     <>
       <Box sx={{ pt: 2, pb: 3 }}>
         <Typography variant="h5">
-          Kết quả tìm kiếm (<span style={{ color: 'red' }}>{count}</span> tin
+          Kết quả tìm kiếm (<span style={{ color: 'red' }}>{count.toLocaleString()}</span> tin
           đăng)
         </Typography>
       </Box>

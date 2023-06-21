@@ -1,14 +1,35 @@
 import React from 'react';
-import { AUTH_CONFIG } from './configs/constants';
+import { AUTH_CONFIG, ROLES_NAME } from './configs/constants';
+import { useSelector } from 'react-redux';
 
 export const MyJobChatBot = () => {
+  // const { isAuthenticated, currentUser } = useSelector((state) => state.user);
+
+  // React.useState(() => {
+  //   if (isAuthenticated && currentUser?.roleName === ROLES_NAME.EMPLOYER) {
+  //     console.log('UPDATE LAI BOT');
+  //     window.Kommunicate.updateSettings({
+  //       defaultBotIds: [AUTH_CONFIG.EMPLOYER_BOT_ID],
+  //       defaultAssignee: AUTH_CONFIG.EMPLOYER_BOT_ID,
+  //       skipRouting: true,
+  //     });
+  //   }
+  // }, [isAuthenticated, currentUser]);
+
   React.useEffect(() => {
     (function (d, m) {
+      // var defaultSettings = {
+      //   defaultBotIds: [AUTH_CONFIG.JOB_SEEKER_BOT_ID],
+      //   defaultAssignee: AUTH_CONFIG.JOB_SEEKER_BOT_ID,
+      //   skipRouting: true,
+      // };
+
       var kommunicateSettings = {
         appId: AUTH_CONFIG.CHAT_APP_ID,
         popupWidget: true,
         automaticChatOpenOnNavigation: true,
         onInit: function () {
+          // window.Kommunicate.updateSettings(defaultSettings);
           var cssChanges =
             ".mck-msg-right .mck-msg-box{background-color: '#441da0'!important;color:white!important;} .mck-box-top {background-color: '#441da0'!important;}";
           window.Kommunicate.customizeWidgetCss(cssChanges);
@@ -119,11 +140,11 @@ export const MyJobChatBot = () => {
           },
           'voice.output': {
             location: {
-              'init': 'Một vị trí đã được chia sẻ với bạn.',
-              'lat': 'Vĩ độ là ',
-              'lon': 'và Kinh độ là '
+              init: 'Một vị trí đã được chia sẻ với bạn.',
+              lat: 'Vĩ độ là ',
+              lon: 'và Kinh độ là ',
             },
-            attachment: 'Bạn có một tập tin đính kèm.'
+            attachment: 'Bạn có một tập tin đính kèm.',
           },
           'waiting.queue.message': {
             'contact.name': 'Đang xếp hàng...',

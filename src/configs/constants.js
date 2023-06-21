@@ -50,6 +50,8 @@ const AUTH_CONFIG = {
 
   // RNKommunicateChat
   CHAT_APP_ID: process.env.REACT_APP_CHAT_APP_ID,
+  JOB_SEEKER_BOT_ID: process.env.REACT_APP_JOB_SEEKER_BOT_ID,
+  EMPLOYER_BOT_ID: process.env.REACT_APP_EMPLOYER_BOT_ID,
 };
 
 const ROLES_NAME = {

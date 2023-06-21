@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import {
@@ -37,6 +37,7 @@ const pages = [
 const Header = (props) => {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down('md'));
+  const location = useLocation();
   const nav = useNavigate();
   const { currentUser, isAuthenticated } = useSelector((state) => state.user);
 
@@ -259,6 +260,9 @@ const Header = (props) => {
                     mr: 1,
                     color: 'white',
                     display: 'block',
+                    backgroundColor: location?.pathname?.startsWith(page.path)
+                      ? 'rgba(255, 255, 255, 0.1)'
+                      : null,
                   }}
                 >
                   {page.label}

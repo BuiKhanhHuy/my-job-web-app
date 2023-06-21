@@ -11,6 +11,11 @@ import { removeUserInfo } from '../../../../redux/userSlice';
 
 import { ROLES_NAME } from '../../../../configs/constants';
 import tokenService from '../../../../services/tokenService';
+import {
+  resetSearchCompany,
+  resetSearchJobPostFilter,
+  resetSearchResume,
+} from '../../../../redux/filterSlice';
 
 const jobSeekerUserMenu = [
   {
@@ -28,7 +33,7 @@ const employerUserMenu = [
 
 const UserMenu = ({ anchorElUser, open, handleCloseUserMenu }) => {
   const nav = useNavigate();
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
 
   const menuItems = React.useMemo(() => {
@@ -42,9 +47,13 @@ const UserMenu = ({ anchorElUser, open, handleCloseUserMenu }) => {
   const handleLogout = () => {
     const roleName = currentUser.roleName;
     const accessToken = tokenService.getAccessTokenFromCookie();
-    dispath(removeUserInfo(accessToken))
+    dispatch(removeUserInfo(accessToken))
       .unwrap()
       .then(() => {
+        dispatch(resetSearchJobPostFilter());
+        dispatch(resetSearchCompany());
+        dispatch(resetSearchResume());
+
         switch (roleName) {
           case ROLES_NAME.JOB_SEEKER:
             nav('/dang-nhap-ung-vien');

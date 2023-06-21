@@ -22,11 +22,16 @@ import { IMAGES, ROLES_NAME } from '../../../../configs/constants';
 import { removeUserInfo } from '../../../../redux/userSlice';
 import tokenService from '../../../../services/tokenService';
 import AccountSwitchMenu from '../AccountSwitchMenu';
+import {
+  resetSearchCompany,
+  resetSearchJobPostFilter,
+  resetSearchResume,
+} from '../../../../redux/filterSlice';
 
 const drawerWidth = 240;
 
 const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const nav = useNavigate();
   const theme = useTheme();
 
@@ -38,9 +43,13 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
   const handleLogout = () => {
     const roleName = currentUser.roleName;
     const accessToken = tokenService.getAccessTokenFromCookie();
-    dispath(removeUserInfo(accessToken))
+    dispatch(removeUserInfo(accessToken))
       .unwrap()
       .then(() => {
+        dispatch(resetSearchJobPostFilter());
+        dispatch(resetSearchCompany());
+        dispatch(resetSearchResume());
+
         switch (roleName) {
           case ROLES_NAME.JOB_SEEKER:
             nav('/dang-nhap-ung-vien');
