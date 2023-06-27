@@ -27,7 +27,7 @@ import tokenService from '../../../services/tokenService';
 import EmployerLoginForm from '../../components/auths/EmployerLoginForm';
 
 const EmployerLogin = () => {
-  TabTitle("Đăng nhập tài khoản Nhà tuyển dụng")
+  TabTitle('Đăng nhập tài khoản Nhà tuyển dụng');
 
   const dispatch = useDispatch();
   const nav = useNavigate();
@@ -130,13 +130,13 @@ const EmployerLogin = () => {
       <Container
         maxWidth="sm"
         sx={{
-          marginTop:  {xs: 2, sm: 4, md: 8, lg: 8, xl: 8},
+          marginTop: { xs: 2, sm: 4, md: 8, lg: 8, xl: 8 },
           p: 0,
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        <Card sx={{ p: {xs: 2, sm: 6, md: 6, lg: 6, xl: 6}, pt: 2 }}>
+        <Card sx={{ p: { xs: 2, sm: 6, md: 6, lg: 6, xl: 6 }, pt: 2 }}>
           <Box
             sx={{
               display: 'flex',
@@ -148,9 +148,16 @@ const EmployerLogin = () => {
             <Avatar sx={{ m: 1, bgcolor: 'error.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5" align='center'>
+            <Typography component="h1" variant="h5" align="center">
               Đăng nhập tài khoản nhà tuyển dụng
             </Typography>
+          </Box>
+          <Box>
+            <Alert severity="info">
+              <AlertTitle>Thông tin đăng nhập</AlertTitle>
+              <Typography>Email: <strong>employer[1-4900]@gmail.com</strong></Typography>
+              <Typography>Password: <strong>123</strong></Typography>
+            </Alert>
           </Box>
           {errorMessage ? (
             <Box>
@@ -170,7 +177,7 @@ const EmployerLogin = () => {
             ''
           )}
 
-          <Box sx={{ mt: {xs: 3, sm: 4, md: 4, lg: 4, xl: 4} }}>
+          <Box sx={{ mt: { xs: 3, sm: 4, md: 4, lg: 4, xl: 4 } }}>
             {/* Start: login form */}
             <EmployerLoginForm onLogin={handleLogin} />
             {/* End: login form */}
