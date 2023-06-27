@@ -236,7 +236,7 @@ const JobSeekerLogin = () => {
             <Alert severity="info">
               <AlertTitle>Thông tin đăng nhập</AlertTitle>
               <Typography>
-                Email: <strong>nguyentantai1691@gmail.com</strong>
+                Email: <strong>test@gmail.com</strong>
               </Typography>
               <Typography>
                 Password: <strong>123</strong>
