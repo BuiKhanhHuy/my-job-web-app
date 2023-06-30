@@ -78,7 +78,7 @@ npm start
 ### 👉 [Live demo](https://bkhuy-myjob.netlify.app/)
 
 - Job seeker:
-  - Email: nguyentantai1691@gmail.com
+  - Email: test@gmail.com
   - Password: 123
 - Employer
   - Email: employer[1-4900]@gmail.com
