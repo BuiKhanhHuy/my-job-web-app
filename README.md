@@ -4,34 +4,37 @@
  
 </p>
 <h1 align="center">JOB PORTAL SYSTEM</h1>
-<h2 align="center">MyJob Web Application (ReactJS)</h2>
+<h1 align="center">MyJob Web Application (ReactJS)</h1>
 
-❗Must run [Server Backend](https://github.com/BuiKhanhHuy/myjob_api) first
+❗❗❗Must run [Server Backend](https://github.com/BuiKhanhHuy/myjob_api) first
 
-### 👉 Setup
+## Setup
 
-#### Clone repo
+### 👉 Clone repo
 
 ```bash
 git clone https://github.com/BuiKhanhHuy/my-job-web-app.git
 ```
 
-#### Go to the project directory
+### 👉 Go to the project directory
 
 ```bash
 cd my-job-web-app
 ```
 
-#### Update the data in the file `.env`
-
-```bash
-|--> .env
+### 👉 Update the data in `.env` file 
+Create `.env` file  
+```plaintext
+my-job-web-app/
+  |-- ...
+  |-- src
+  |-- .env 👈
 ```
 
 ```bash
-REACT_APP_NODE_ENV=
+REACT_APP_NODE_ENV=local
 
-REACT_APP_BASE_URL=
+REACT_APP_BASE_URL=http://localhost:8001 (server URL)
 
 REACT_APP_MYJOB_SERVER_CLIENT_ID=
 REACT_APP_MYJOB_SERVER_CLIENT_SECRECT=
@@ -57,13 +60,13 @@ REACT_APP_FIREBASE_APP_ID=
 REACT_APP_FIREBASE_MEASUREMENT_ID=
 ```
 
-#### Install dependencies
+### 👉 Install dependencies
 
 ```bash
 npm install
 ```
 
-#### Start server
+### 👉 Start server
 
 ```bash
 npm start

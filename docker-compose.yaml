@@ -1,0 +1,42 @@
+version: 'version'
+
+services:
+  frontend_nginx:
+    image: myjob-frontend-nginx
+    container_name: myjob-frontend-nginx-container
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - REACT_APP_NODE_ENV=production
+      - REACT_APP_BASE_URL=https://127.0.0.1:8001/
+      - REACT_APP_MYJOB_SERVER_CLIENT_ID=tyL9BKk78we2N62FTy6rCV75efm1Pq8Cys43weP6
+      - REACT_APP_MYJOB_SERVER_CLIENT_SECRECT=RC8foVq5K8asqCZnuZUFT1QMX1qsYl9YFo2ZFOPv55r8hohHl14Lr1tvQZyG9MggkOpFqKRKegBmjVj3BV2eBTBOMTDqS43zb2xXLvH4RG3VjLsvYj6b6nsKaS1n4bGR
+      - REACT_APP_FACEBOOK_CLIENT_ID=503591871851468
+      - REACT_APP_FACEBOOK_CLIENT_SECRET=87054023f865721b313376d492bb4c04
+      - REACT_APP_GOOGLE_CLIENT_ID=717983009047-l046emjuhge9p8s9rqs4p7j9idsrnsb9.apps.googleusercontent.com
+      - REACT_APP_GOOGLE_CLIENT_SECRET=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
+      - REACT_APP_GOONGAPI_KEY=UMRiT4CiOH9UU9Ju9L1YJLSYZM5EQberRoSsyfDW
+      - REACT_APP_GOONGAPI_ACCESS_TOKEN=q2ehn14wfdLdZkDXejl5d1X6pBxZf0ssca6jrEOo
+      - REACT_APP_BING_MAPS_KEY=Av0DmLVNRE8m7HZGSTySLkyPaLX3Gg3b3cdt7I0ArXWxSmtKwqCpsUW6OE21t2z2
+      - REACT_APP_CHAT_APP_ID=37525d7363aaf26cc2d1c20b3f4b28d74
+      - REACT_APP_JOB_SEEKER_BOT_ID=myjob-ai-tttpi
+      - REACT_APP_EMPLOYER_BOT_ID=myjob-ai-6vsxv
+      - REACT_APP_FIREBASE_API_KEY=AIzaSyCKr_uSX5ObUgxEEfLIOYhze750NPlTjgM
+      - REACT_APP_FIREBASE_AUTH_DOMAIN=myjobpro-6283b.firebaseapp.com
+      - REACT_APP_FIREBASE_PROJECT_ID=myjobpro-6283b
+      - REACT_APP_FIREBASE_STORAGE_BUCKET=myjobpro-6283b.appspot.com
+      - REACT_APP_FIREBASE_MESSAGING_SENDER_ID=734184453591
+      - REACT_APP_FIREBASE_APP_ID=1:734184453591:web:226041c4414b54c9b8c792
+      - REACT_APP_FIREBASE_DATABASE_URL=https://myjobpro-6283b-default-rtdb.asia-southeast1.firebasedatabase.app/
+    networks:
+      - myjob-frontend-network
+    ports:
+      - "80:80"
+    expose:
+      - 80
+
+networks:
+  myjob-frontend-network:
+    name: myjob-frontend-network
