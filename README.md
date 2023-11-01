@@ -6,24 +6,26 @@
 <h1 align="center">JOB PORTAL SYSTEM</h1>
 <h1 align="center">MyJob Web Application (ReactJS)</h1>
 
-❗❗❗Must run [Server Backend](https://github.com/BuiKhanhHuy/myjob_api) first
+❗Must run [SERVER](https://github.com/BuiKhanhHuy/myjob_api) first
 
 ## Setup
 
 ### 👉 Clone repo
 
-```bash
+```plaintext
 git clone https://github.com/BuiKhanhHuy/my-job-web-app.git
 ```
 
 ### 👉 Go to the project directory
 
-```bash
+```plaintext
 cd my-job-web-app
 ```
 
-### 👉 Update the data in `.env` file 
-Create `.env` file  
+### 👉 Update the data in `.env` file
+
+Create `.env` file
+
 ```plaintext
 my-job-web-app/
   |-- ...
@@ -31,7 +33,7 @@ my-job-web-app/
   |-- .env 👈
 ```
 
-```bash
+```plaintext
 REACT_APP_NODE_ENV=local
 
 REACT_APP_BASE_URL=http://localhost:8001 (server URL)
@@ -60,34 +62,31 @@ REACT_APP_FIREBASE_APP_ID=
 REACT_APP_FIREBASE_MEASUREMENT_ID=
 ```
 
-### 👉 Install dependencies
+### 👉 Run app
 
-```bash
-npm install
-```
+<table><tbody><tr><td><h4>Docker</h4></td><td><h4>Manual (Windows)</h4></td></tr><tr><td><pre><code class="language-plaintext">docker compose -p myjob-web-app up -d</code></pre><p>→ Go to: <a href="http://localhost:80">http://localhost:80</a></p></td><td><pre><code class="language-plaintext">npm install</code></pre><pre><code class="language-plaintext">npm start</code></pre><p>→ Go to: <a href="http://localhost:3000">http://localhost:3000</a></p></td></tr></tbody></table>
 
-### 👉 Start server
+## Video demo
 
-```bash
-npm start
-```
+#### **👉 Link**: [https://www.youtube.com/watch?v=4vq1rl6vj5c](https://www.youtube.com/watch?v=4vq1rl6vj5c)
 
-### 👉 [Video demo](https://www.youtube.com/watch?v=4vq1rl6vj5c)
+[![Watch the video](https://github.com/BuiKhanhHuy/my-job-web-app/assets/69914972/6ed3db35-f195-4295-b152-a861fa30b3d7)](https://www.youtube.com/watch?v=4vq1rl6vj5c)
 
-<a href="https://www.youtube.com/watch?v=4vq1rl6vj5c" target="_blank">
- <img src="https://github.com/BuiKhanhHuy/my-job-web-app/assets/69914972/6ed3db35-f195-4295-b152-a861fa30b3d7" alt="Watch the video" border="10" />
-</a>
+## Live demo
 
-### 👉 [Live demo](https://bkhuy-myjob.netlify.app/)
+#### 👉 Link: [https://bkhuy-myjob.netlify.app/](https://bkhuy-myjob.netlify.app/)
 
-- Job seeker:
-  - Email: nguyentantai1691@gmail.com
-  - Password: 123
-- Employer
-  - Email: employer[1-4900]@gmail.com
-  - Password: 123
+#### 👉 Test account
 
-### 👉 Backend & Mobile repo link
+*   Job seeker:
+    *   Email: nguyentantai1691@gmail.com
+    *   Password: 123
+*   Employer
+    *   Email: employer\[1-4900\]@gmail.com
+    *   Password: 123
 
-- #### 🖥️ [Backend server](https://github.com/BuiKhanhHuy/myjob_api)
-- #### 📱 [Mobile app](https://github.com/BuiKhanhHuy/MyJobApp)
+## Backend & Mobile repo link
+
+### 🖥️ [Backend server](https://github.com/BuiKhanhHuy/myjob_api)
+
+### 📱 [Mobile app](https://github.com/BuiKhanhHuy/MyJobApp)
