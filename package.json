@@ -68,6 +68,7 @@
     "react-toastify": "^9.1.1",
     "reactjs-social-login": "^2.6.2",
     "recharts": "^2.4.3",
+    "sass": "^1.69.5",
     "styled-components": "^5.3.8",
     "sweetalert2": "^11.7.3",
     "swiper": "^9.1.0",
