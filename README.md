@@ -79,7 +79,7 @@ REACT_APP_FIREBASE_MEASUREMENT_ID=
 #### 👉 Test account
 
 *   Job seeker:
-    *   Email: nguyentantai1691@gmail.com
+    *   Email: test@gmail.com
     *   Password: 123
 *   Employer
     *   Email: employer\[1-4900\]@gmail.com
