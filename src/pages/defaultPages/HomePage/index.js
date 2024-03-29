@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
   Avatar,
@@ -27,6 +28,7 @@ import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard
 export default function HomePage() {
   TabTitle("Tìm việc nhanh, tuyển dụng hiệu quả tại MyJob")
   const { isAuthenticated, currentUser } = useSelector((state) => state.user);
+  const nav = useNavigate()
 
   return (
     <>
@@ -146,6 +148,7 @@ export default function HomePage() {
               color="primary"
               size="large"
               startIcon={<SearchIcon />}
+              onClick={() => nav('/viec-lam')}
             >
               Bắt đầu khám phá
             </Button>

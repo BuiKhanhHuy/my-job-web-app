@@ -198,7 +198,7 @@ const CompanyDetailPage = () => {
       } catch (error) {
         errorHandling(error);
       } finally {
-        // setIsLoadingFollow(false);
+        setIsLoadingFollow(false);
       }
     };
 
@@ -435,9 +435,19 @@ const CompanyDetailPage = () => {
                           icon={faGlobe}
                           style={{ marginRight: 6 }}
                         />{' '}
-                        <Link target="_blank" href={companyDetail.websiteUrl}>
-                          {companyDetail.websiteUrl}
-                        </Link>
+                        {
+                          companyDetail.websiteUrl ? 
+                           <Link target="_blank" href={companyDetail.websiteUrl}> {companyDetail.websiteUrl }</Link> : 
+                           <span
+                          style={{
+                            color: '#e0e0e0',
+                            fontStyle: 'italic',
+                            fontSize: 13,
+                          }}
+                        >
+                          Chưa cập nhật
+                        </span>
+                        }
                       </Typography>
                     </Box>
                   </Box>

@@ -56,14 +56,18 @@ const JobSeekerLogin = () => {
 
       try {
         const resData = await authService.getToken(email, password, roleName);
-        const { access_token: accessToken, refresh_token: refreshToken } =
-          resData.data;
+        const {
+          access_token: accessToken,
+          refresh_token: refreshToken,
+          backend,
+        } = resData.data;
 
         // save cookie
         const isSaveTokenToCookie =
           tokenService.saveAccessTokenAndRefreshTokenToCookie(
             accessToken,
-            refreshToken
+            refreshToken,
+            backend
           );
         if (isSaveTokenToCookie) {
           dispatch(getUserInfo())
@@ -145,14 +149,18 @@ const JobSeekerLogin = () => {
         provider,
         token
       );
-      const { access_token: accessToken, refresh_token: refreshToken } =
-        resData.data;
+      const {
+        access_token: accessToken,
+        refresh_token: refreshToken,
+        backend,
+      } = resData.data;
 
       // save cookie
       const isSaveTokenToCookie =
         tokenService.saveAccessTokenAndRefreshTokenToCookie(
           accessToken,
-          refreshToken
+          refreshToken,
+          backend
         );
       if (isSaveTokenToCookie) {
         dispatch(getUserInfo())
@@ -232,7 +240,7 @@ const JobSeekerLogin = () => {
               Đăng nhập tài khoản ứng viên
             </Typography>
           </Box>
-          <Box>
+          {/* <Box>
             <Alert severity="info">
               <AlertTitle>Thông tin đăng nhập</AlertTitle>
               <Typography>
@@ -242,7 +250,7 @@ const JobSeekerLogin = () => {
                 Password: <strong>123</strong>
               </Typography>
             </Alert>
-          </Box>
+          </Box> */}
           {errorMessage ? (
             <Box>
               <Alert severity="error">

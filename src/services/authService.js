@@ -29,13 +29,14 @@ const authService = {
 
     return httpRequest.post(url, data);
   },
-  revokToken: (accessToken) => {
+  revokToken: (accessToken, backend) => {
     const url = 'api/auth/revoke-token/';
 
     const data = {
       client_id: AUTH_CONFIG.CLIENT_ID,
       client_secret: AUTH_CONFIG.CLIENT_SECRECT,
       token: accessToken,
+      backend: backend
     };
 
     return httpRequest.post(url, data);
@@ -99,6 +100,16 @@ const authService = {
 
     return httpRequest.post(url, data);
   },
+  getUserSettings: () => {
+    const url = 'api/auth/settings/';
+
+    return httpRequest.get(url);
+  },
+  updateUserSettings: (data) => {
+    const url = 'api/auth/settings/';
+
+    return httpRequest.put(url, data);
+  }
 };
 
 export default authService;

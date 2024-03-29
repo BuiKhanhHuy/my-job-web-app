@@ -23,6 +23,7 @@ import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSear
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 import { IMAGES } from '../../../../configs/constants';
 
@@ -255,6 +256,23 @@ const drawer = (location, theme) => (
               nodeId="13"
               labelText="Tài khoản"
               labelIcon={AccountCircleOutlinedIcon}
+            />
+          </NavLink>
+          <NavLink
+            to="/nha-tuyen-dung/cai-dat"
+            style={{
+              textDecoration: 'none',
+              display: 'block',
+              backgroundColor:
+                location.pathname === '/nha-tuyen-dung/cai-dat'
+                  ? 'rgba(68, 29, 160, 0.08)'
+                  : 'inherit',
+            }}
+          >
+            <StyledTreeItem
+              nodeId="14"
+              labelText="Cài đặt"
+              labelIcon={SettingsOutlinedIcon}
             />
           </NavLink>
         </StyledTreeItem>

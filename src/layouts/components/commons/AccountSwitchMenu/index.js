@@ -37,7 +37,8 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
 
   const handleLogout = (path) => {
     const accessToken = tokenService.getAccessTokenFromCookie();
-    dispatch(removeUserInfo(accessToken))
+    const backend = tokenService.getProviderFromCookie();
+    dispatch(removeUserInfo({accessToken, backend}))
       .unwrap()
       .then(() => {
         dispatch(resetSearchJobPostFilter());

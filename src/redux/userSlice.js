@@ -31,13 +31,13 @@ const updateUserInfo = createAsyncThunk(
 
 const removeUserInfo = createAsyncThunk(
   'user/removeUserInfo',
-  async (accessToken, thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
       /**
        * Khong revoktoken
        * RevokToken -> token app -> chet theo
        */
-      // await authService.revokToken(accessToken);
+      await authService.revokToken(data.accessToken, data.backend);
 
       const removeResult =
         tokenService.removeAccessTokenAndRefreshTokenFromCookie();

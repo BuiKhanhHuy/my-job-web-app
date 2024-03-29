@@ -247,13 +247,13 @@ const ChatWindow = () => {
       <Box p={1}>
         {selectedRoomId ? (
           <Stack>
-            <Box height="66vh">
+            <Box height="100%">
               {isLoading ? (
                 <Stack
                   sx={{ py: 2 }}
                   justifyContent="center"
                   alignItems="center"
-                  height={'100%'}
+                  height={'72vh'}
                 >
                   <CircularProgress color="secondary" sx={{ margin: 'auto' }} />
                 </Stack>
@@ -286,7 +286,7 @@ const ChatWindow = () => {
                   ref={messageListRef}
                   id="scrollableDiv"
                   style={{
-                    height: '66vh',
+                    height: '72vh',
                     overflow: 'auto',
                     display: 'flex',
                     flexDirection: 'column-reverse',

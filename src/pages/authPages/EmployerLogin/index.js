@@ -52,14 +52,18 @@ const EmployerLogin = () => {
       setIsFullScreenLoading(true);
       try {
         const resData = await authService.getToken(email, password, roleName);
-        const { access_token: accessToken, refresh_token: refreshToken } =
-          resData.data;
+        const {
+          access_token: accessToken,
+          refresh_token: refreshToken,
+          backend,
+        } = resData.data;
 
         // save cookie
         const isSaveTokenToCookie =
           tokenService.saveAccessTokenAndRefreshTokenToCookie(
             accessToken,
-            refreshToken
+            refreshToken,
+            backend
           );
         if (isSaveTokenToCookie) {
           dispatch(getUserInfo())
@@ -152,13 +156,17 @@ const EmployerLogin = () => {
               Đăng nhập tài khoản nhà tuyển dụng
             </Typography>
           </Box>
-          <Box>
+          {/* <Box>
             <Alert severity="info">
               <AlertTitle>Thông tin đăng nhập</AlertTitle>
-              <Typography>Email: <strong>employer[1-4900]@gmail.com</strong></Typography>
-              <Typography>Password: <strong>123</strong></Typography>
+              <Typography>
+                Email: <strong>employer[1-4900]@gmail.com</strong>
+              </Typography>
+              <Typography>
+                Password: <strong>123</strong>
+              </Typography>
             </Alert>
-          </Box>
+          </Box> */}
           {errorMessage ? (
             <Box>
               <Alert severity="error">

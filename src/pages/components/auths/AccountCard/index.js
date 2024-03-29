@@ -57,7 +57,8 @@ const AccountCard = ({ title }) => {
             path = '/';
         }
         const accessToken = tokenService.getAccessTokenFromCookie();
-        dispatch(removeUserInfo(accessToken))
+        const backend = tokenService.getProviderFromCookie();
+        dispatch(removeUserInfo({accessToken, backend}))
           .unwrap()
           .then(() => {
             nav(path);

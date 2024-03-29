@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useTheme } from '@mui/material/styles';
+import * as React from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useTheme } from "@mui/material/styles";
 import {
   AppBar,
   Avatar,
@@ -17,26 +17,26 @@ import {
   Toolbar,
   Typography,
   useMediaQuery,
-} from '@mui/material';
+} from "@mui/material";
 
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 
-import { IMAGES } from '../../../../configs/constants';
-import UserMenu from '../UserMenu';
-import LeftDrawer from '../LeftDrawer';
-import AccountSwitchMenu from '../AccountSwitchMenu';
-import NotificationCard from '../../../../components/NotificationCard';
-import ChatCard from '../../../../components/ChatCard';
+import { IMAGES } from "../../../../configs/constants";
+import UserMenu from "../UserMenu";
+import LeftDrawer from "../LeftDrawer";
+import AccountSwitchMenu from "../AccountSwitchMenu";
+import NotificationCard from "../../../../components/NotificationCard";
+import ChatCard from "../../../../components/ChatCard";
 
 const pages = [
-  { id: 1, label: 'Việc làm', path: '/viec-lam' },
-  { id: 2, label: 'Công ty', path: '/cong-ty' },
-  { id: 3, label: 'Về chúng tôi', path: '/ve-chung-toi' },
+  { id: 1, label: "Việc làm", path: "/viec-lam" },
+  { id: 2, label: "Công ty", path: "/cong-ty" },
+  { id: 3, label: "Về chúng tôi", path: "/ve-chung-toi" },
 ];
 
 const Header = (props) => {
   const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down('md'));
+  const isSmall = useMediaQuery(theme.breakpoints.down("md"));
   const location = useLocation();
   const nav = useNavigate();
   const { currentUser, isAuthenticated } = useSelector((state) => state.user);
@@ -62,11 +62,11 @@ const Header = (props) => {
   };
 
   const handleLogin = () => {
-    nav('/dang-nhap-ung-vien');
+    nav("/dang-nhap-ung-vien");
   };
 
   const handleSignUp = () => {
-    nav('/dang-ky-tai-khoan-ung-vien');
+    nav("/dang-ky-tai-khoan-ung-vien");
   };
 
   const authArea = isAuthenticated ? (
@@ -77,9 +77,9 @@ const Header = (props) => {
         sx={{
           p: 0.5,
           borderRadius: 50,
-          backgroundColor: 'transparent',
-          borderColor: '#7e57c2',
-          cursor: 'pointer',
+          backgroundColor: "transparent",
+          borderColor: "#7e57c2",
+          cursor: "pointer",
         }}
       >
         <Stack direction="row" justifyContent="center" alignItems="center">
@@ -89,13 +89,13 @@ const Header = (props) => {
             sx={{
               px: 1,
               color: (theme) =>
-                theme.palette.mode === 'light' ? 'white' : 'white',
+                theme.palette.mode === "light" ? "white" : "white",
               display: {
-                xs: 'none',
-                sm: 'block',
-                md: 'block',
-                lg: 'block',
-                xl: 'block',
+                xs: "none",
+                sm: "block",
+                md: "block",
+                lg: "block",
+                xl: "block",
               },
             }}
           >
@@ -116,11 +116,11 @@ const Header = (props) => {
       sx={{
         ml: 3,
         display: {
-          xs: 'block',
-          sm: 'block',
-          md: 'block',
-          lg: 'block',
-          xl: 'block',
+          xs: "block",
+          sm: "block",
+          md: "block",
+          lg: "block",
+          xl: "block",
         },
       }}
     >
@@ -128,7 +128,7 @@ const Header = (props) => {
         <Button
           variant="outlined"
           color="inherit"
-          sx={{ color: 'white' }}
+          sx={{ color: "white" }}
           onClick={handleLogin}
         >
           Đăng nhập
@@ -137,13 +137,13 @@ const Header = (props) => {
           variant="outlined"
           color="inherit"
           sx={{
-            color: 'white',
+            color: "white",
             display: {
-              xs: 'none',
-              sm: 'block',
-              md: 'block',
-              lg: 'block',
-              xl: 'block',
+              xs: "none",
+              sm: "block",
+              md: "block",
+              lg: "block",
+              xl: "block",
             },
           }}
           onClick={handleSignUp}
@@ -167,11 +167,11 @@ const Header = (props) => {
               to="/"
             >
               <Avatar
-                src={IMAGES.getTextLogo('light')}
+                src={IMAGES.getTextLogo("light")}
                 sx={{
-                  display: { xs: 'none', md: 'flex' },
+                  display: { xs: "none", md: "flex" },
                   mr: 1,
-                  width: '100%',
+                  width: "100%",
                   height: 42,
                   pb: 0.5,
                 }}
@@ -185,8 +185,8 @@ const Header = (props) => {
               variant="middle"
               sx={{
                 mx: 2,
-                borderColor: 'lightgray',
-                display: { xs: 'none', md: 'flex' },
+                borderColor: "lightgray",
+                display: { xs: "none", md: "flex" },
               }}
             />
             <IconButton
@@ -194,20 +194,20 @@ const Header = (props) => {
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { md: 'none' } }}
+              sx={{ mr: 2, display: { md: "none" } }}
             >
               <MenuIcon />
             </IconButton>
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <Avatar
-                src={IMAGES.getLogo('medium', 'light')}
+                src={IMAGES.getLogo("medium", "light")}
                 sx={{
                   display: {
-                    xs: 'flex',
-                    sm: 'flex',
-                    md: 'none',
-                    lg: 'none',
-                    xl: 'none',
+                    xs: "flex",
+                    sm: "flex",
+                    md: "none",
+                    lg: "none",
+                    xl: "none",
                   },
                   mr: 1,
                   width: 40,
@@ -218,21 +218,20 @@ const Header = (props) => {
               />
 
               <Menu
-                id="menu-appbar"
                 anchorEl={anchorElNav}
                 anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
+                  vertical: "bottom",
+                  horizontal: "left",
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
+                  vertical: "top",
+                  horizontal: "left",
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
-                  display: { xs: 'block', md: 'none' },
+                  display: { xs: "block", md: "none" },
                 }}
               >
                 {pages.map((page) => (
@@ -248,25 +247,24 @@ const Header = (props) => {
               </Menu>
             </Box>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
-                <Button
-                  component={NavLink}
-                  to={page.path}
-                  key={page.id}
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    my: 2,
-                    mr: 1,
-                    color: 'white',
-                    display: 'block',
-                    backgroundColor: location?.pathname?.startsWith(page.path)
-                      ? 'rgba(255, 255, 255, 0.1)'
-                      : null,
-                  }}
-                >
-                  {page.label}
-                </Button>
+                <Link to={page.path} key={page.id} onClick={handleCloseNavMenu}>
+                  <Button
+                    color="primary"
+                    sx={{
+                      my: 2,
+                      mr: 1,
+                      color: "white",
+                      display: "block",
+                      backgroundColor: location?.pathname?.startsWith(page.path)
+                        ? "rgba(255, 255, 255, 0.1)"
+                        : null,
+                    }}
+                  >
+                    {page.label}
+                  </Button>
+                </Link>
               ))}
             </Box>
 
@@ -292,7 +290,7 @@ const Header = (props) => {
                   orientation="vertical"
                   flexItem
                   variant="middle"
-                  sx={{ mx: 2, borderColor: 'lightgray' }}
+                  sx={{ mx: 2, borderColor: "lightgray" }}
                 />
 
                 {/* Start: Account switch menu */}

@@ -75,9 +75,10 @@ import { default as EmployerProfilePage } from './pages/employerPages/ProfilePag
 import { default as ProfileDetailPage } from './pages/employerPages/ProfileDetailPage';
 import { default as EmployerCompanyPage } from './pages/employerPages/CompanyPage';
 import { default as EmployerAccountPage } from './pages/employerPages/AccountPage';
+import { default as EmployerSettingPage } from './pages/employerPages/SettingPage';
 
 // chatbot
-import { MyJobChatBot } from './chatbox';
+import { MyJobChatBot } from './chatbot';
 import Feedback from './components/Feedback';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -118,7 +119,7 @@ function App() {
             MuiCssBaseline: {
               styleOverrides: {
                 body: {
-                  scrollbarColor: '#441da0 #441da0',
+                  scrollbarColor: '#441da0 #fff',
                   '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
                     backgroundColor: '#fff',
                   },
@@ -148,7 +149,6 @@ function App() {
               },
             },
           },
-
           palette: {
             mode: mode,
             primary: {
@@ -254,14 +254,14 @@ function App() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: '#441da0',
-            },
-          }}
-        >
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#441da0',
+          },
+        }}
+      >
+        <ThemeProvider theme={theme}>
           <CssBaseline enableColorScheme />
           {loading ? (
             <BackdropLoading bgColor="white" />
@@ -371,6 +371,7 @@ function App() {
                   <Route path="cong-ty" element={<EmployerCompanyPage />} />
                   <Route path="thong-bao" element={<NotificationPage />} />
                   <Route path="tai-khoan" element={<EmployerAccountPage />} />
+                  <Route path="cai-dat" element={<EmployerSettingPage />} />
                 </Route>
                 {/* End: Employer */}
                 {/* Start: Auth */}
@@ -477,12 +478,10 @@ function App() {
           {/* Start: Feedback */}
           {isAuthenticated && <Feedback />}
           {/* End: Feedback */}
-        </ConfigProvider>
-      </ThemeProvider>
-      {/* Start: Chatbot */}
-      <MyJobChatBot />
-      {/* End: Chatbot */}
 
+          <MyJobChatBot />
+        </ThemeProvider>
+      </ConfigProvider>
       {/* Start: ScrollToTop */}
       <ScrollToTop />
       {/* End: ScrollToTop */}

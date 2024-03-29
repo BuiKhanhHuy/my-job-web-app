@@ -18,9 +18,9 @@ const SidebarHeader = () => {
 
   const handleRedirect = () => {
     if (isEmployer) {
-      nav('/');
-    } else {
       nav('/nha-tuyen-dung');
+    } else {
+      nav('/');
     }
   };
 

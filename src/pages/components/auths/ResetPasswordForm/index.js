@@ -11,7 +11,12 @@ const ResetPasswordForm = ({ handleResetPassword, serverErrors = {} }) => {
     newPassword: yup
       .string()
       .required('Mật khẩu mới là bắt buộc!')
-      .max(128, 'Mật khẩu mới vượt quá độ dài cho phép.'),
+      .min(8, 'Mật khẩu phải có ít nhất 8 ký tự.')
+      .max(128, 'Mật khẩu mới vượt quá độ dài cho phép.')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        'Phải chứa một chữ hoa, một chữ thường, một số và một ký tự đặc biệt'
+      ),
     confirmPassword: yup
       .string()
       .required('Mật khẩu xác nhận là bắt buộc.')

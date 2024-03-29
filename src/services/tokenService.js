@@ -8,7 +8,7 @@ const tokenService = {
       if (accessToken && accessToken !== undefined) {
         return accessToken;
       }
-      
+
       return null;
     } catch (error) {
       return null;
@@ -26,10 +26,31 @@ const tokenService = {
       return null;
     }
   },
-  saveAccessTokenAndRefreshTokenToCookie: (accessToken, refreshToken) => {
+  getProviderFromCookie: () => {
+    try {
+      const provider = Cookies.get(AUTH_CONFIG.BACKEND_KEY);
+      if (provider && provider !== undefined) {
+        return provider;
+      }
+
+      return null;
+    } catch (error) {
+      return null;
+    }
+  },
+  saveAccessTokenAndRefreshTokenToCookie: (
+    accessToken,
+    refreshToken,
+    provider
+  ) => {
     try {
       Cookies.set(AUTH_CONFIG.ACCESS_TOKEN_KEY, accessToken, { expires: 365 });
-      Cookies.set(AUTH_CONFIG.REFRESH_TOKEN_KEY, refreshToken, { expires: 365 });
+      Cookies.set(AUTH_CONFIG.REFRESH_TOKEN_KEY, refreshToken, {
+        expires: 365,
+      });
+      Cookies.set(AUTH_CONFIG.BACKEND_KEY, provider, {
+        expires: 365,
+      });
 
       return true;
     } catch (error) {
@@ -40,6 +61,7 @@ const tokenService = {
     try {
       Cookies.remove(AUTH_CONFIG.ACCESS_TOKEN_KEY);
       Cookies.remove(AUTH_CONFIG.REFRESH_TOKEN_KEY);
+      Cookies.remove(AUTH_CONFIG.BACKEND_KEY);
 
       return true;
     } catch (error) {

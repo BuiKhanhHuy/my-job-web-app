@@ -43,7 +43,8 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
   const handleLogout = () => {
     const roleName = currentUser.roleName;
     const accessToken = tokenService.getAccessTokenFromCookie();
-    dispatch(removeUserInfo(accessToken))
+    const backend = tokenService.getProviderFromCookie();
+    dispatch(removeUserInfo({accessToken, backend}))
       .unwrap()
       .then(() => {
         dispatch(resetSearchJobPostFilter());

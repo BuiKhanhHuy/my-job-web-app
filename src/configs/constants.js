@@ -28,6 +28,7 @@ const AUTH_CONFIG = {
   // BACKEND
   CLIENT_ID: process.env.REACT_APP_MYJOB_SERVER_CLIENT_ID,
   CLIENT_SECRECT: process.env.REACT_APP_MYJOB_SERVER_CLIENT_SECRECT,
+  BACKEND_KEY: 'backend',
   ACCESS_TOKEN_KEY: 'access_token',
   REFRESH_TOKEN_KEY: 'refresh_token',
   PASSWORD_KEY: 'password',
@@ -48,10 +49,20 @@ const AUTH_CONFIG = {
   // BING MAP
   BING_MAPS_KEY: process.env.REACT_APP_BING_MAPS_KEY,
 
-  // RNKommunicateChat
-  CHAT_APP_ID: process.env.REACT_APP_CHAT_APP_ID,
-  JOB_SEEKER_BOT_ID: process.env.REACT_APP_JOB_SEEKER_BOT_ID,
-  EMPLOYER_BOT_ID: process.env.REACT_APP_EMPLOYER_BOT_ID,
+  // Dialogflow chatbot
+  JOB_SEEKER_BOT: {
+    AGENT_ID:
+      process.env.JOB_SEEKER_BOT_AGENT_ID ||
+      '1a0c784b-fda8-4ed7-94c9-7877fc79ec88',
+    CHAT_TITLE: 'MyJob AI',
+    CHAT_ICON: 'https://res.cloudinary.com/dtnpj540t/image/upload/v1705727937/my-job/system-images/job-seeker-chatbot-icon.png',
+  },
+  EMPLOYER_BOT: {
+    AGENT_ID: process.env.EMPLOYER_BOT_AGENT_ID ||
+    '',
+    CHAT_TITLE: 'MyJob AI',
+    CHAT_ICON: 'https://res.cloudinary.com/dtnpj540t/image/upload/v1705747491/my-job/system-images/employer-chatbot-icon.png',
+  },
 };
 
 const ROLES_NAME = {

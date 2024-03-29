@@ -28,7 +28,12 @@ const JobSeekerSignUpForm = ({
     password: yup
       .string()
       .required('Mật khẩu là bắt buộc!')
-      .max(128, 'Mật khẩu vượt quá độ dài cho phép.'),
+      .min(8, 'Mật khẩu phải có ít nhất 8 ký tự.')
+      .max(128, 'Mật khẩu vượt quá độ dài cho phép.')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        'Phải chứa một chữ hoa, một chữ thường, một số và một ký tự đặc biệt'
+      ),
     confirmPassword: yup
       .string()
       .required('Mật khẩu xác nhận là bắt buộc.')
@@ -83,7 +88,7 @@ const JobSeekerSignUpForm = ({
           showRequired={true}
         />
       </Stack>
-      <Button fullWidth variant="contained" type='submit' sx={{ mt: 3, mb: 2 }}>
+      <Button fullWidth variant="contained" type="submit" sx={{ mt: 3, mb: 2 }}>
         Đăng ký
       </Button>
       <Divider>HOẶC</Divider>
