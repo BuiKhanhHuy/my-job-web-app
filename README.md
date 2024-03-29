@@ -74,12 +74,12 @@ REACT_APP_FIREBASE_MEASUREMENT_ID=
 
 ## Live demo
 
-#### 👉 Link: [https://bkhuy-myjob.netlify.app/](https://bkhuy-myjob.netlify.app/)
+#### 👉 Link: http://myjob.id.vn/
 
 #### 👉 Test account
 
 *   Job seeker:
-    *   Email: nguyentantai1691@gmail.com
+    *   Email: test@gmail.com
     *   Password: 123
 *   Employer
     *   Email: employer\[1-4900\]@gmail.com
