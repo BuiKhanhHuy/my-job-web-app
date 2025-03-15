@@ -196,6 +196,11 @@ const ROUTES = {
     CHAT: 'ket-noi-voi-nha-tuyen-dung',
   },
   EMPLOYER: {
+    INTRODUCE: 'gioi-thieu',
+    SERVICE: 'dich-vu',
+    PRICING: 'bao-gia',
+    SUPPORT: 'ho-tro',
+    BLOG: 'blog-tuyen-dung',
     DASHBOARD: '',
     JOB_POST: 'tin-tuyen-dung',
     APPLIED_PROFILE: 'ho-so-ung-tuyen',
