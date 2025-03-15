@@ -21,23 +21,33 @@ import {
 
 import MenuIcon from "@mui/icons-material/Menu";
 
-import { IMAGES, ROUTES } from "../../../../configs/constants";
+import { HOST_NAME, IMAGES, ROUTES } from "../../../../configs/constants";
 import UserMenu from "../UserMenu";
 import LeftDrawer from "../LeftDrawer";
 import AccountSwitchMenu from "../AccountSwitchMenu";
 import NotificationCard from "../../../../components/NotificationCard";
 import ChatCard from "../../../../components/ChatCard";
 
-const pages = [
-  { id: 1, label: "Việc làm", path: `/${ROUTES.JOB_SEEKER.JOBS}` },
-  { id: 2, label: "Công ty", path: `/${ROUTES.JOB_SEEKER.COMPANY}` },
-  { id: 3, label: "Về chúng tôi", path: `/${ROUTES.JOB_SEEKER.ABOUT_US}` },
-];
+const pages = {
+  [HOST_NAME.MYJOB]: [
+    { id: 1, label: "Việc làm", path: `/${ROUTES.JOB_SEEKER.JOBS}` },
+    { id: 2, label: "Công ty", path: `/${ROUTES.JOB_SEEKER.COMPANY}` },
+    { id: 3, label: "Về chúng tôi", path: `/${ROUTES.JOB_SEEKER.ABOUT_US}` },
+  ],
+  [HOST_NAME.EMPLOYER_MYJOB]: [
+    { id: 1, label: "Giới thiệu", path: `/${ROUTES.EMPLOYER.INTRODUCE}` },
+    { id: 2, label: "Dịch vụ", path: `/${ROUTES.EMPLOYER.SERVICE}` },
+    { id: 3, label: "Báo giá", path: `/${ROUTES.EMPLOYER.PRICING}` },
+    { id: 4, label: "Hỗ trợ", path: `/${ROUTES.EMPLOYER.SUPPORT}` },
+    { id: 5, label: "Blog tuyển dụng", path: `/${ROUTES.EMPLOYER.BLOG}` },
+  ],
+};
 
 const Header = (props) => {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("md"));
   const location = useLocation();
+  const hostName = window.location.hostname;
   const nav = useNavigate();
   const { currentUser, isAuthenticated } = useSelector((state) => state.user);
 
@@ -234,7 +244,7 @@ const Header = (props) => {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
+                {pages[hostName]?.map((page) => (
                   <MenuItem
                     key={page.id}
                     onClick={handleCloseNavMenu}
@@ -248,7 +258,7 @@ const Header = (props) => {
             </Box>
 
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
+              {pages[hostName]?.map((page) => (
                 <Link to={page.path} key={page.id} onClick={handleCloseNavMenu}>
                   <Button
                     color="primary"
@@ -304,7 +314,7 @@ const Header = (props) => {
 
       <Box component="nav">
         <LeftDrawer
-          pages={pages}
+          pages={pages[hostName] || []}
           mobileOpen={mobileOpen}
           handleDrawerToggle={handleDrawerToggle}
         />
