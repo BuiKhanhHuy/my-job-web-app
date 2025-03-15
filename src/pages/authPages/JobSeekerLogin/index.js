@@ -18,6 +18,7 @@ import {
   AUTH_CONFIG,
   AUTH_PROVIDER,
   ROLES_NAME,
+  ROUTES,
 } from '../../../configs/constants';
 import toastMessages from '../../../utils/toastMessages';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
@@ -112,7 +113,7 @@ const JobSeekerLogin = () => {
               roleName: roleName,
             })
           );
-          nav('/email-verification-required');
+          nav(`/${ROUTES.AUTH.EMAIL_VERIFICATION}`);
 
           return;
         } else if (exists === false) {
@@ -281,7 +282,7 @@ const JobSeekerLogin = () => {
           <Grid container sx={{ mt: 3 }}>
             <Grid item xs>
               <Link
-                to="/quen-mat-khau"
+                to={`/${ROUTES.AUTH.FORGOT_PASSWORD}`}
                 variant="body2"
                 style={{ textDecoration: 'none', color: '#441da0' }}
               >
@@ -290,7 +291,7 @@ const JobSeekerLogin = () => {
             </Grid>
             <Grid item>
               <Link
-                to="/dang-ky-tai-khoan-ung-vien"
+                to={`/${ROUTES.AUTH.REGISTER}`}
                 variant="body2"
                 style={{ textDecoration: 'none', color: '#441da0' }}
               >

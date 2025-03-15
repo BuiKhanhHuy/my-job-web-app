@@ -5,7 +5,7 @@ import { Avatar, Box, Card, Container, Grid, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { TabTitle } from '../../../utils/generalFunction';
-import { PLATFORM, ROLES_NAME } from '../../../configs/constants';
+import { PLATFORM, ROLES_NAME, ROUTES } from '../../../configs/constants';
 import errorHandling from '../../../utils/errorHandling';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
 
@@ -36,7 +36,7 @@ const EmployerSignUp = () => {
             roleName: roleName,
           })
         );
-        nav('/email-verification-required');
+        nav(`/${ROUTES.AUTH.EMAIL_VERIFICATION}`);
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -114,7 +114,7 @@ const EmployerSignUp = () => {
             <Grid item xs></Grid>
             <Grid item>
               <Link
-                to="/dang-nhap-nha-tuyen-dung"
+                to={`/${ROUTES.AUTH.LOGIN}`}
                 variant="body2"
                 style={{ textDecoration: 'none', color: '#441da0' }}
               >

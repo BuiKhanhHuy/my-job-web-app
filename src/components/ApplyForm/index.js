@@ -18,10 +18,11 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faFile, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import errorHandling from '../../utils/errorHandling';
-import { CV_TYPES, REGEX_VATIDATE } from '../../configs/constants';
+import { CV_TYPES, REGEX_VATIDATE, ROUTES } from '../../configs/constants';
 
 import TextFieldCustom from '../controls/TextFieldCustom';
 import jobSeekerProfileService from '../../services/jobSeekerProfileService';
+import { formatRoute } from '../../utils/funcUtils';
 
 const ApplyForm = ({ handleApplyJob }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -149,8 +150,8 @@ const ApplyForm = ({ handleApplyJob }) => {
                               target="_blank"
                               href={
                                 value.type === CV_TYPES.cvWebsite
-                                  ? `/ung-vien/ho-so-tung-buoc/${value.slug}`
-                                  : `/ung-vien/ho-so-dinh-kem/${value.slug}`
+                                  ? `/${ROUTES.JOB_SEEKER.DASHBOARD}/${formatRoute(ROUTES.JOB_SEEKER.STEP_PROFILE, value.slug)}`
+                                  : `/${ROUTES.JOB_SEEKER.DASHBOARD}/${formatRoute(ROUTES.JOB_SEEKER.ATTACHED_PROFILE, value.slug)}`
                               }
                               style={{
                                 textDecoration: 'none',

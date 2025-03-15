@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 
 import { TabTitle } from '../../../utils/generalFunction';
+import { ROUTES } from '../../../configs/constants';
 import BoxProfile from '../../components/jobSeekers/BoxProfile';
 import ProfileUpload from '../../components/jobSeekers/ProfileUpload';
 import CompanyViewedCard from '../../components/jobSeekers/CompanyViewedCard';
@@ -54,7 +55,7 @@ const ProfilePage = () => {
                     variant="text"
                     color="primary"
                     component={Link}
-                    to="/ung-vien/cong-ty-cua-toi"
+                    to={`/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.MY_COMPANY}`}
                   >
                     Xem chi tiết
                   </Button>

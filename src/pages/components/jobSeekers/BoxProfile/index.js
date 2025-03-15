@@ -31,7 +31,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { CV_TYPES } from '../../../../configs/constants';
+import { CV_TYPES, ROUTES } from '../../../../configs/constants';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
 import toastMessages from '../../../../utils/toastMessages';
 import errorHandling from '../../../../utils/errorHandling';
@@ -42,6 +42,7 @@ import CVDoc from '../../../../components/CVDoc';
 import { reloadResume } from '../../../../redux/profileSlice';
 import jobSeekerProfileService from '../../../../services/jobSeekerProfileService';
 import resumeService from '../../../../services/resumeService';
+import { formatRoute } from '../../../../utils/funcUtils';
 
 const Loading = () => {
   return (
@@ -454,7 +455,7 @@ const BoxProfile = ({ title }) => {
                     color="primary"
                     startIcon={<EditIcon />}
                     onClick={() =>
-                      nav(`/ung-vien/ho-so-tung-buoc/${resume.slug}`)
+                      nav(`/${ROUTES.JOB_SEEKER.DASHBOARD}/${formatRoute(ROUTES.JOB_SEEKER.STEP_PROFILE, resume.slug)}`)
                     }
                   >
                     Chỉnh sửa hồ sơ

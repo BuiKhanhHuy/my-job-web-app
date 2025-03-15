@@ -12,6 +12,8 @@ import {
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 import MuiImageCustom from '../MuiImageCustom';
+import { formatRoute } from '../../utils/funcUtils';
+import { ROUTES } from '../../configs/constants';
 
 const JobPost = ({
   id,
@@ -48,7 +50,7 @@ const JobPost = ({
           boxShadow: 5,
         },
       }}
-      onClick={() => nav(`/viec-lam/${slug}`)}
+      onClick={() => nav(`/${formatRoute(ROUTES.JOB_SEEKER.JOB_DETAIL, slug)}`)}
     >
       <Stack direction="row" spacing={1} alignItems="center" ref={myRef}>
         <Stack>

@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 
 import statisticService from '../../../../services/statisticService';
+import { ROUTES } from '../../../../configs/constants';
 
 const SidebarViewTotal = () => {
   const nav = useNavigate();
@@ -68,7 +69,7 @@ const SidebarViewTotal = () => {
         <Button
           variant="contained"
           size="small"
-          onClick={() => nav('/viec-lam')}
+          onClick={() => nav(`/${ROUTES.JOB_SEEKER.JOBS}`)}
         >
           Khám phá ngay
         </Button>

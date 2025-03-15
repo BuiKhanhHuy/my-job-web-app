@@ -1,117 +1,48 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Stack, Typography, Button, Menu } from '@mui/material';
-
-import { confirmModal } from '../../../../utils/sweetalert2Modal';
-import { ROLES_NAME } from '../../../../configs/constants';
-import tokenService from '../../../../services/tokenService';
-import { removeUserInfo } from '../../../../redux/userSlice';
-import errorHandling from '../../../../utils/errorHandling';
+import { Stack, Typography, Button } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRight,
   faBriefcase,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  resetSearchCompany,
-  resetSearchJobPostFilter,
-  resetSearchResume,
-} from '../../../../redux/filterSlice';
+import { HOST_NAME, ROUTES } from '../../../../configs/constants';
+import { buildURL } from '../../../../utils/funcUtils';
 
 const AccountSwitchMenu = ({ isShowButton = false }) => {
-  const nav = useNavigate();
-  const dispatch = useDispatch();
-  const { isAuthenticated, currentUser } = useSelector((state) => state.user);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const hostName = window.location.hostname;
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = (path) => {
-    const accessToken = tokenService.getAccessTokenFromCookie();
-    const backend = tokenService.getProviderFromCookie();
-    dispatch(removeUserInfo({accessToken, backend}))
-      .unwrap()
-      .then(() => {
-        dispatch(resetSearchJobPostFilter());
-        dispatch(resetSearchCompany());
-        dispatch(resetSearchResume());
-
-        nav(path);
-      })
-      .catch((error) => {
-        errorHandling(error);
-      });
-  };
-
-  const handleLogin = () => {
-    let path = '/dang-nhap-nha-tuyen-dung';
-
-    if (isAuthenticated) {
-      let title = '';
-      let text =
-        'Tài khoản đang đăng nhập hiện tại sẽ được đăng xuất. Bạn có chắc chắn?';
-      let path = '';
-      switch (currentUser?.roleName) {
-        case ROLES_NAME.JOB_SEEKER:
-          title = 'Đăng nhập nhà tuyển dụng';
-          path = '/dang-nhap-nha-tuyen-dung';
-          break;
-        case ROLES_NAME.EMPLOYER:
-          title = 'Đăng nhập ứng viên';
-          path = '/dang-nhap-ung-vien';
-          break;
-        default:
-          break;
-      }
-
-      handleClose();
-      confirmModal(() => handleLogout(path), title, text, 'warning');
-    } else {
-      handleClose();
-      nav(path);
+  const handleClick = () => {
+    switch(hostName) {
+      case HOST_NAME.MYJOB:
+        window.open(buildURL(HOST_NAME.EMPLOYER_MYJOB), '_blank');
+        break;
+      case HOST_NAME.EMPLOYER_MYJOB:
+        window.open(buildURL(HOST_NAME.MYJOB), '_blank');
+        break;
+      default:
+        window.open(buildURL(HOST_NAME.MYJOB), '_blank');
     }
   };
 
-  const handleSignUp = () => {
-    let path = '/dang-ky-tai-khoan-nha-tuyen-dung';
+  const handleClickAuth = (isLogin = false) => {
+    const path = isLogin ? ROUTES.AUTH.LOGIN : ROUTES.AUTH.REGISTER;
 
-    if (isAuthenticated) {
-      let title = '';
-      let text =
-        'Tài khoản đang đăng nhập hiện tại sẽ được đăng xuất. Bạn có chắc chắn?';
-      let path = '';
-      switch (currentUser?.roleName) {
-        case ROLES_NAME.JOB_SEEKER:
-          title = 'Đăng ký tài khoản nhà tuyển dụng';
-          path = '/dang-ky-tai-khoan-nha-tuyen-dung';
-          break;
-        case ROLES_NAME.EMPLOYER:
-          title = 'Đăng ký tài khoản ứng viên';
-          path = '/dang-ky-tai-khoan-ung-vien';
-          break;
-        default:
-          break;
-      }
-
-      handleClose();
-      confirmModal(() => handleLogout(path), title, text, 'warning');
-    } else {
-      handleClose();
-      nav(path);
+    switch(hostName) {
+      case HOST_NAME.MYJOB:
+        window.open(`${buildURL(HOST_NAME.EMPLOYER_MYJOB)}/${path}`, '_blank');
+        break;
+      case HOST_NAME.EMPLOYER_MYJOB:
+        window.open(`${buildURL(HOST_NAME.MYJOB)}/${path}`, '_blank');
+        break;
+      default:
+        window.open(`${buildURL(HOST_NAME.MYJOB)}/${path}`, '_blank');
     }
-  };
+  }
+
 
   const title = React.useMemo(() => {
-    return currentUser?.roleName === ROLES_NAME.JOB_SEEKER ? (
+    return hostName === HOST_NAME.MYJOB ? (
       <Stack direction="row" alignItems="center">
         <FontAwesomeIcon
           color="#2c95ff"
@@ -126,7 +57,7 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
           </Typography>
         </Stack>
       </Stack>
-    ) : currentUser?.roleName === ROLES_NAME.EMPLOYER ? (
+    ) : hostName === HOST_NAME.EMPLOYER_MYJOB ? (
       <Stack direction="row" alignItems="center">
         <FontAwesomeIcon
           color="#2c95ff"
@@ -157,7 +88,7 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
         </Stack>
       </Stack>
     );
-  }, [currentUser]);
+  }, [hostName]);
 
   return (
     <div>
@@ -167,11 +98,11 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
             variant="outlined"
             fullWidth
             color="inherit"
-            onClick={handleLogin}
+            onClick={() => handleClickAuth(true)}
             size="small"
             sx={{ textTransform: 'inherit' }}
           >
-            {currentUser?.roleName === ROLES_NAME.EMPLOYER
+            {hostName === HOST_NAME.EMPLOYER_MYJOB
               ? 'Đăng nhập ứng viên'
               : 'Đăng nhập NTD'}
           </Button>
@@ -181,9 +112,9 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
             size="small"
             color="inherit"
             sx={{ textTransform: 'inherit' }}
-            onClick={handleSignUp}
+            onClick={() => handleClickAuth(false)}
           >
-            {currentUser?.roleName === ROLES_NAME.EMPLOYER
+            {hostName === HOST_NAME.EMPLOYER_MYJOB
               ? 'Đăng ký ứng viên'
               : 'Đăng ký NTD'}
           </Button>
@@ -193,60 +124,6 @@ const AccountSwitchMenu = ({ isShowButton = false }) => {
           <Typography sx={{ ml: 1, cursor: 'pointer' }} onClick={handleClick}>
             {title}
           </Typography>
-          <Menu
-            id="account-switch-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                overflow: 'visible',
-                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                mt: 1.5,
-                '& .MuiAvatar-root': {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                '&:before': {
-                  content: '""',
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: 'background.paper',
-                  transform: 'translateY(-50%) rotate(45deg)',
-                  zIndex: 0,
-                },
-              },
-            }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          >
-            <Stack spacing={1} sx={{ p: 1 }}>
-              <Button
-                variant="contained"
-                fullWidth
-                onClick={handleLogin}
-                sx={{ color: 'white' }}
-              >
-                Đăng nhập
-              </Button>
-              <Button
-                variant="contained"
-                fullWidth
-                color="warning"
-                sx={{ color: 'white' }}
-                onClick={handleSignUp}
-              >
-                Đăng ký
-              </Button>
-            </Stack>
-          </Menu>{' '}
         </>
       )}
     </div>

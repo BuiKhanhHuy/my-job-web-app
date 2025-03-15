@@ -9,7 +9,7 @@ import { List, Avatar as AntAvatar } from 'antd';
 import { FileOutlined, FilePdfOutlined } from '@ant-design/icons';
 
 import jobSeekerProfileService from '../../../../services/jobSeekerProfileService';
-import { CV_TYPES } from '../../../../configs/constants';
+import { CV_TYPES, ROUTES } from '../../../../configs/constants';
 
 const JobApplicationCard = () => {
   const nav = useNavigate();
@@ -44,7 +44,7 @@ const JobApplicationCard = () => {
         <IconButton
           aria-label="ArrowForward"
           size="medium"
-          onClick={() => nav('/ung-vien/ho-so')}
+          onClick={() => nav(`/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.PROFILE}`)}
         >
           <ArrowForwardIcon />
         </IconButton>

@@ -13,4 +13,16 @@ const downloadPdf = async (url, fileName) => {
   link.parentNode.removeChild(link);
 };
 
+export const formatRoute = (route, value, paramKey = ":slug") => {
+  const regex = new RegExp(`${paramKey}`, "g");
+  return route.replace(regex, value);
+};
+
+export const buildURL = (hostname) => {
+  const protocol = window.location.protocol; 
+  const port = window.location.port ? `:${window.location.port}` : "";
+
+  return `${protocol}//${hostname}${port}`;
+};
+
 export default downloadPdf;

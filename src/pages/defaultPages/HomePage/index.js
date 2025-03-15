@@ -17,7 +17,7 @@ import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import SearchIcon from '@mui/icons-material/Search';
 
 import { TabTitle } from '../../../utils/generalFunction';
-import { HOME_FILTER_CAREER, ROLES_NAME } from '../../../configs/constants';
+import { HOME_FILTER_CAREER, ROLES_NAME, ROUTES } from '../../../configs/constants';
 import TopCompanyCarousel from '../../../components/TopCompanyCarousel';
 import CareerCarousel from '../../../components/CareerCarousel';
 import FeedbackCarousel from '../../../components/FeedbackCarousel';
@@ -148,7 +148,7 @@ export default function HomePage() {
               color="primary"
               size="large"
               startIcon={<SearchIcon />}
-              onClick={() => nav('/viec-lam')}
+              onClick={() => nav(`/${ROUTES.JOB_SEEKER.JOBS}`)}
             >
               Bắt đầu khám phá
             </Button>

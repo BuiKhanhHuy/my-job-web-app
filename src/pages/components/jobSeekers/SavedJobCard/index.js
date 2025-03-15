@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Box, Stack, Button, Pagination } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { ImageSvg5 } from '../../../../configs/constants';
+import { ImageSvg5, ROUTES } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import JobPostAction from '../../../../components/JobPostAction';
 import jobService from '../../../../services/jobService';
@@ -76,7 +76,7 @@ const SavedJobCard = () => {
           <NoDataCard title="Bạn chưa lưu công việc nào" imgComponentSgv={<ImageSvg5 />}>
             <Button
               component={Link}
-              to="/viec-lam"
+              to={`/${ROUTES.JOB_SEEKER.JOBS}`}
               variant="contained"
               color="primary"
               sx={{ textTransform: 'inherit' }}

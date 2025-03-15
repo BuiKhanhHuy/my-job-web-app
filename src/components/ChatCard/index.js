@@ -10,7 +10,7 @@ import {
   where,
 } from 'firebase/firestore';
 import db from '../../configs/firebase-config'; 
-import { ROLES_NAME } from '../../configs/constants';
+import { ROLES_NAME, ROUTES } from '../../configs/constants';
 
 const chatRoomCollectionRef = collection(db, 'chatRooms');
 
@@ -51,9 +51,9 @@ const ChatCard = () => {
 
   const handleRedirect = () => {
     if (isEmployer) {
-      nav('/ket-noi-voi-ung-vien');
+      nav(`/${ROUTES.EMPLOYER.CHAT}`);
     } else {
-      nav('/ket-noi-voi-nha-tuyen-dung');
+      nav(`/${ROUTES.JOB_SEEKER.CHAT}`);
     }
   };
 

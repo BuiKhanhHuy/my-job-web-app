@@ -10,6 +10,7 @@ import { Box, Card, Skeleton, Stack, Typography } from '@mui/material';
 import commonService from '../../services/commonService';
 import MuiImageCustom from '../MuiImageCustom';
 import { searchJobPost } from '../../redux/filterSlice';
+import { ROUTES } from '../../configs/constants';
 
 const Loading = (
   <>
@@ -102,7 +103,7 @@ const CareerCarousel = () => {
 
   const handleFilter = (id) => {
     dispatch(searchJobPost({ ...jobPostFilter, careerId: id }));
-    nav('/viec-lam');
+    nav(`/${ROUTES.JOB_SEEKER.JOBS}`);
   };
 
   return (

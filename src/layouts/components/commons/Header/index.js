@@ -21,7 +21,7 @@ import {
 
 import MenuIcon from "@mui/icons-material/Menu";
 
-import { IMAGES } from "../../../../configs/constants";
+import { IMAGES, ROUTES } from "../../../../configs/constants";
 import UserMenu from "../UserMenu";
 import LeftDrawer from "../LeftDrawer";
 import AccountSwitchMenu from "../AccountSwitchMenu";
@@ -29,9 +29,9 @@ import NotificationCard from "../../../../components/NotificationCard";
 import ChatCard from "../../../../components/ChatCard";
 
 const pages = [
-  { id: 1, label: "Việc làm", path: "/viec-lam" },
-  { id: 2, label: "Công ty", path: "/cong-ty" },
-  { id: 3, label: "Về chúng tôi", path: "/ve-chung-toi" },
+  { id: 1, label: "Việc làm", path: `/${ROUTES.JOB_SEEKER.JOBS}` },
+  { id: 2, label: "Công ty", path: `/${ROUTES.JOB_SEEKER.COMPANY}` },
+  { id: 3, label: "Về chúng tôi", path: `/${ROUTES.JOB_SEEKER.ABOUT_US}` },
 ];
 
 const Header = (props) => {
@@ -62,11 +62,11 @@ const Header = (props) => {
   };
 
   const handleLogin = () => {
-    nav("/dang-nhap-ung-vien");
+    nav(`/${ROUTES.AUTH.LOGIN}`);
   };
 
   const handleSignUp = () => {
-    nav("/dang-ky-tai-khoan-ung-vien");
+    nav(`/${ROUTES.AUTH.REGISTER}`);
   };
 
   const authArea = isAuthenticated ? (

@@ -5,6 +5,7 @@ import { Grid, InputBase, Paper, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 import { searchJobPost } from '../../../../redux/filterSlice';
+import { ROUTES } from '../../../../configs/constants';
 
 const CategoryCard = ({ options, type }) => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const CategoryCard = ({ options, type }) => {
       default:
         break;
     }
-    nav('/viec-lam');
+    nav(`/${ROUTES.JOB_SEEKER.JOBS}`);
   };
 
   return (
