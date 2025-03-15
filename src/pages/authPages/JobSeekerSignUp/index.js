@@ -17,6 +17,7 @@ import {
   AUTH_PROVIDER,
   PLATFORM,
   ROLES_NAME,
+  ROUTES,
 } from '../../../configs/constants';
 
 import { TabTitle } from '../../../utils/generalFunction';
@@ -52,7 +53,7 @@ const JobSeekerSignUp = () => {
             roleName: roleName,
           })
         );
-        nav('/email-verification-required');
+        nav(`/${ROUTES.AUTH.EMAIL_VERIFICATION}`);
       } catch (error) {
         errorHandling(error, setServerErrors);
       } finally {
@@ -190,7 +191,7 @@ const JobSeekerSignUp = () => {
             <Grid item xs></Grid>
             <Grid item>
               <Link
-                to="/dang-nhap-ung-vien"
+                to={`/${ROUTES.AUTH.LOGIN}`}
                 variant="body2"
                 style={{ textDecoration: 'none', color: '#441da0' }}
               >

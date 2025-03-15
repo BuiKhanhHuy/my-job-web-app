@@ -9,7 +9,7 @@ import errorHandling from "../../../../utils/errorHandling";
 
 import { removeUserInfo } from "../../../../redux/userSlice";
 
-import { ROLES_NAME } from "../../../../configs/constants";
+import { ROLES_NAME, ROUTES } from "../../../../configs/constants";
 import tokenService from "../../../../services/tokenService";
 import {
   resetSearchCompany,
@@ -20,14 +20,14 @@ import {
 const jobSeekerUserMenu = [
   {
     label: "Quản lý tài khoản",
-    path: "/ung-vien",
+    path: ROUTES.JOB_SEEKER.DASHBOARD,
   },
 ];
 
 const employerUserMenu = [
   {
     label: "Trang quản lý NTD",
-    path: "/nha-tuyen-dung",
+    path: ROUTES.EMPLOYER.DASHBOARD,
   },
 ];
 
@@ -45,7 +45,6 @@ const UserMenu = ({ anchorElUser, open, handleCloseUserMenu }) => {
   }, [currentUser]);
 
   const handleLogout = () => {
-    const roleName = currentUser.roleName;
     const accessToken = tokenService.getAccessTokenFromCookie();
     const backend = tokenService.getProviderFromCookie();
     dispatch(removeUserInfo({ accessToken, backend }))
@@ -55,16 +54,7 @@ const UserMenu = ({ anchorElUser, open, handleCloseUserMenu }) => {
         dispatch(resetSearchCompany());
         dispatch(resetSearchResume());
 
-        switch (roleName) {
-          case ROLES_NAME.JOB_SEEKER:
-            nav("/dang-nhap-ung-vien");
-            break;
-          case ROLES_NAME.EMPLOYER:
-            nav("/dang-nhap-nha-tuyen-dung");
-            break;
-          default:
-            nav("/");
-        }
+        nav(`/${ROUTES.AUTH.LOGIN}`);
       })
       .catch((error) => {
         errorHandling(error);

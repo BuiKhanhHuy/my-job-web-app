@@ -10,6 +10,8 @@ import {
   faFontAwesome,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
+import { formatRoute } from '../../utils/funcUtils';
+import { ROUTES } from '../../configs/constants';
 
 const CompanyAction = ({ id, views, createAt, resume, company, children }) => {
   const nav = useNavigate();
@@ -72,7 +74,7 @@ const CompanyAction = ({ id, views, createAt, resume, company, children }) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                   }}
-                  onClick={() => nav(`/cong-ty/${company?.slug}`)}
+                  onClick={() => nav(`/${formatRoute(ROUTES.JOB_SEEKER.COMPANY_DETAIL, company?.slug)}`)}
                 >
                   {company?.companyName}
                 </Typography>
@@ -186,7 +188,7 @@ const CompanyActionFollow = ({ id, company, children }) => {
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                       }}
-                      onClick={() => nav(`/cong-ty/${company?.slug}`)}
+                      onClick={() => nav(`/${formatRoute(ROUTES.JOB_SEEKER.COMPANY_DETAIL, company?.slug)}`)}
                     >
                       {company?.companyName}
                     </Typography>

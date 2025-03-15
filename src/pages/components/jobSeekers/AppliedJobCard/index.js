@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 
-import { CV_TYPES, ImageSvg5 } from '../../../../configs/constants';
+import { CV_TYPES, ImageSvg5, ROUTES } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import JobPostAction from '../../../../components/JobPostAction';
 import errorHandling from '../../../../utils/errorHandling';
@@ -70,7 +70,7 @@ const AppliedJobCard = () => {
           >
             <Button
               component={Link}
-              to="/viec-lam"
+              to={`/${ROUTES.JOB_SEEKER.JOBS}`}
               variant="contained"
               color="primary"
               sx={{ textTransform: 'inherit' }}

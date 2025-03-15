@@ -14,11 +14,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 
-import { CV_TYPES, ImageSvg12 } from '../../../../configs/constants';
+import { CV_TYPES, ImageSvg12, ROUTES } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import DataTableCustom from '../../../../components/DataTableCustom';
 import { salaryString } from '../../../../utils/customData';
 import { faFile, faFilePdf } from '@fortawesome/free-regular-svg-icons';
+import { formatRoute } from '../../../../utils/funcUtils';
 
 const SavedResumeTable = (props) => {
   const nav = useNavigate();
@@ -127,7 +128,7 @@ const SavedResumeTable = (props) => {
                         color="primary"
                         onClick={() =>
                           nav(
-                            `/nha-tuyen-dung/chi-tiet-ung-vien/${row?.resume?.slug}`
+                            `/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, row?.resume?.slug)}`
                           )
                         }
                       />

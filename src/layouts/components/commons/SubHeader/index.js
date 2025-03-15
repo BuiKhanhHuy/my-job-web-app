@@ -12,6 +12,7 @@ import SubHeaderDialog from '../SubHeaderDialog';
 import commonService from '../../../../services/commonService';
 
 import { searchJobPost } from '../../../../redux/filterSlice';
+import { ROUTES } from '../../../../configs/constants';
 
 const listItems = (items, handleFilter) => (
   <Stack
@@ -62,7 +63,7 @@ const SubHeader = () => {
   const handleFilter = (id) => {
     dispatch(searchJobPost({ ...jobPostFilter, careerId: id }));
 
-    nav('/viec-lam');
+    nav(`/${ROUTES.JOB_SEEKER.JOBS}`);
   };
 
   return (

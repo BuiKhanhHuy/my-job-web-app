@@ -24,7 +24,8 @@ import dayjs from 'dayjs';
 
 import { salaryString } from '../../utils/customData';
 import { useSelector } from 'react-redux';
-import { CV_TYPES } from '../../configs/constants';
+import { CV_TYPES, ROUTES } from '../../configs/constants';
+import { formatRoute } from '../../utils/funcUtils';
 
 const JobSeekerProfile = ({
   id,
@@ -71,7 +72,7 @@ const JobSeekerProfile = ({
           <Typography variant="subtitle2" sx={{ fontSize: 16 }}>
             <span
               style={{ cursor: 'pointer' }}
-              onClick={() => nav(`/nha-tuyen-dung/chi-tiet-ung-vien/${slug}`)}
+              onClick={() => nav(`/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, slug)}`)}
             >
               {user?.fullName || (
                 <span
@@ -116,7 +117,7 @@ const JobSeekerProfile = ({
           <Typography gutterBottom variant="body1">
             <span
               style={{ cursor: 'pointer' }}
-              onClick={() => nav(`/nha-tuyen-dung/chi-tiet-ung-vien/${slug}`)}
+              onClick={() => nav(`/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, slug)}`)}
             >
               {type === CV_TYPES.cvUpload && (
                 <FontAwesomeIcon
@@ -225,7 +226,7 @@ const JobSeekerProfile = ({
                   fontSize="small"
                   color="primary"
                   onClick={() =>
-                    nav(`/nha-tuyen-dung/chi-tiet-ung-vien/${slug}`)
+                    nav(`/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, slug)}`)
                   }
                 />
               </IconButton>

@@ -9,6 +9,8 @@ import { Box, Card, Skeleton, Stack, Typography } from '@mui/material';
 
 import MuiImageCustom from '../MuiImageCustom';
 import companyService from '../../services/companyService';
+import { ROUTES } from '../../configs/constants';
+import { formatRoute } from '../../utils/funcUtils';
 
 const Loading = () => {
   return (
@@ -136,7 +138,7 @@ const TopCompanyCarousel = () => {
                       
                     }}
                     variant="outlined"
-                    onClick={() => nav(`/cong-ty/${value.slug}`)}
+                    onClick={() => nav(`/${formatRoute(ROUTES.JOB_SEEKER.COMPANY_DETAIL, value.slug)}`)}
                   >
                     <Stack direction="row" justifyContent="center">
                       <MuiImageCustom

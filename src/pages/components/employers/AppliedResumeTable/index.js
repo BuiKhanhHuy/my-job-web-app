@@ -19,7 +19,7 @@ import MarkEmailReadRoundedIcon from '@mui/icons-material/MarkEmailReadRounded';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
-import { CV_TYPES, ImageSvg13 } from '../../../../configs/constants';
+import { CV_TYPES, ImageSvg13, ROUTES } from '../../../../configs/constants';
 import DataTableCustom from '../../../../components/DataTableCustom';
 import { faFile, faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import NoDataCard from '../../../../components/NoDataCard';
@@ -30,6 +30,7 @@ import jobPostActivityService from '../../../../services/jobPostActivityService'
 import toastMessages from '../../../../utils/toastMessages';
 import errorHandling from '../../../../utils/errorHandling';
 import { confirmModal, errorModal } from '../../../../utils/sweetalert2Modal';
+import { formatRoute } from '../../../../utils/funcUtils';
 
 const SendEmailComponent = ({
   jobPostActivityId,
@@ -241,7 +242,7 @@ const AppliedResumeTable = (props) => {
                       size="small"
                       onClick={() =>
                         nav(
-                          `/nha-tuyen-dung/chi-tiet-ung-vien/${row?.resumeSlug}`
+                          `/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, row?.resumeSlug)}`
                         )
                       }
                     >

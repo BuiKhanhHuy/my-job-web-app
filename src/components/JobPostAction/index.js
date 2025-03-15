@@ -12,6 +12,8 @@ import {
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 import MuiImageCustom from '../MuiImageCustom';
+import { ROUTES } from '../../configs/constants';
+import { formatRoute } from '../../utils/funcUtils';
 
 const JobPostAction = ({
   id,
@@ -93,7 +95,7 @@ const JobPostAction = ({
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                     }}
-                    onClick={() => nav(`/viec-lam/${slug}`)}
+                    onClick={() => nav(`/${formatRoute(ROUTES.JOB_SEEKER.JOB_DETAIL, slug)}`)}
                   >
                     {jobName}
                   </Typography>

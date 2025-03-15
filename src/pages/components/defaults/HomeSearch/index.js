@@ -11,6 +11,7 @@ import {
   resetSearchJobPostFilter,
   searchJobPost,
 } from '../../../../redux/filterSlice';
+import { ROUTES } from '../../../../configs/constants';
 
 const HomeSearch = () => {
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ const HomeSearch = () => {
     handleSaveKeyworLocalStorage(data?.kw);
 
     dispatch(searchJobPost(data));
-    nav('/viec-lam');
+    nav(`/${ROUTES.JOB_SEEKER.JOBS}`);
   };
 
   return (

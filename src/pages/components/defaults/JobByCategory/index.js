@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 import { searchJobPost } from '../../../../redux/filterSlice';
+import { ROUTES } from '../../../../configs/constants';
 
 const maxItem = 6;
 
@@ -34,7 +35,7 @@ const JobByCategory = () => {
       default:
         break;
     }
-    nav('/viec-lam');
+    nav(`/${ROUTES.JOB_SEEKER.JOBS}`);
   };
 
   return (
@@ -65,7 +66,7 @@ const JobByCategory = () => {
                 color="#441da0"
                 sx={{ mt: 1, fontWeight: 'bold', textDecoration: 'none' }}
                 component={Link}
-                to="/viec-lam-theo-nganh-nghe"
+                to={`/${ROUTES.JOB_SEEKER.JOBS_BY_CAREER}`}
               >
                 Xem tất cả nghề nghiệp <FontAwesomeIcon icon={faChevronRight} />
               </Typography>
@@ -100,7 +101,7 @@ const JobByCategory = () => {
                 color="#441da0"
                 sx={{ mt: 1, fontWeight: 'bold', textDecoration: 'none' }}
                 component={Link}
-                to="/viec-lam-theo-tinh-thanh"
+                to={`/${ROUTES.JOB_SEEKER.JOBS_BY_CITY}`}
               >
                 Xem tất cả khu vực <FontAwesomeIcon icon={faChevronRight} />
               </Typography>
@@ -135,7 +136,7 @@ const JobByCategory = () => {
                 color="#441da0"
                 sx={{ mt: 1, fontWeight: 'bold', textDecoration: 'none' }}
                 component={Link}
-                to="/viec-lam-theo-hinh-thuc-lam-viec"
+                to={`/${ROUTES.JOB_SEEKER.JOBS_BY_TYPE}`}
               >
                 Xem tất cả hình thức làm việc{' '}
                 <FontAwesomeIcon icon={faChevronRight} />

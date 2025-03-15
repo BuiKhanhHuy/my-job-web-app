@@ -5,7 +5,7 @@ import { Box, Chip, Divider, Stack } from '@mui/material';
 import GridViewIcon from '@mui/icons-material/GridView';
 import HomeIcon from '@mui/icons-material/Home';
 
-import { IMAGES, ROLES_NAME } from '../../../configs/constants';
+import { IMAGES, ROLES_NAME, ROUTES } from '../../../configs/constants';
 import MuiImageCustom from '../../MuiImageCustom';
 
 const SidebarHeader = () => {
@@ -18,9 +18,9 @@ const SidebarHeader = () => {
 
   const handleRedirect = () => {
     if (isEmployer) {
-      nav('/nha-tuyen-dung');
+      nav(`/${ROUTES.EMPLOYER.DASHBOARD}`);
     } else {
-      nav('/');
+      nav(`/${ROUTES.JOB_SEEKER.HOME}`);
     }
   };
 

@@ -25,6 +25,7 @@ import { useDebounce } from '../../../hooks';
 import { searchJobPostWithKeyword } from '../../../redux/filterSlice';
 import jobService from '../../../services/jobService';
 import { Spin } from 'antd';
+import { ROUTES } from '../../../configs/constants';
 
 const InputBaseSearchHomeCustom = ({
   name,
@@ -96,7 +97,7 @@ const InputBaseSearchHomeCustom = ({
     dispatch(searchJobPostWithKeyword({ kw: kw }));
     switch (location) {
       case 'HOME':
-        nav('/viec-lam');
+        nav(`/${ROUTES.JOB_SEEKER.JOBS}`);
         break;
       default:
         break;

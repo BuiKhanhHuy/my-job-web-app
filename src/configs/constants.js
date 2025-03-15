@@ -17,7 +17,14 @@ import { ReactComponent as ImageSvg13 } from '../assets/images/svg-images/opinio
 import { ReactComponent as ImageSvg14 } from '../assets/images/svg-images/letter.svg';
 import { ReactComponent as ImageSvg15 } from '../assets/images/svg-images/sad.svg';
 
+const ENV = process.env.REACT_APP_NODE_ENV || 'development';
+
 const PLATFORM = 'WEB';
+
+const HOST_NAME = {
+  MYJOB: process.env.REACT_APP_MYJOB_HOST_NAME || '127.0.0.1',
+  EMPLOYER_MYJOB: process.env.REACT_APP_EMPLOYER_MYJOB_HOST_NAME || 'localhost',
+};
 
 const AUTH_PROVIDER = {
   FACEBOOK: 'facebook',
@@ -156,8 +163,57 @@ const JOB_POST_STATUS_BG_COLOR = {
   3: 'success',
 };
 
+const ROUTES = {
+  AUTH: {
+    EMAIL_VERIFICATION: 'email-verification-required',
+    LOGIN: 'dang-nhap',
+    REGISTER: 'dang-ky',
+    FORGOT_PASSWORD: 'quen-mat-khau',
+    RESET_PASSWORD: 'cap-nhat-mat-khau/:token',
+  },
+  ERROR: {
+    NOT_FOUND: '*',
+    FORBIDDEN: 'forbidden',
+  },
+  JOB_SEEKER: {
+    HOME: '',
+    JOBS: 'viec-lam',
+    JOB_DETAIL: 'viec-lam/:slug',
+    COMPANY: 'cong-ty',
+    COMPANY_DETAIL: 'cong-ty/:slug',
+    ABOUT_US: 've-chung-toi',
+    JOBS_BY_CAREER: 'viec-lam-theo-nganh-nghe',
+    JOBS_BY_CITY: 'viec-lam-theo-tinh-thanh',
+    JOBS_BY_TYPE: 'viec-lam-theo-hinh-thuc-lam-viec',
+    DASHBOARD: 'bang-dieu-khien',
+    PROFILE: 'ho-so',
+    STEP_PROFILE: 'ho-so-tung-buoc/:slug',
+    ATTACHED_PROFILE: 'ho-so-dinh-kem/:slug',
+    MY_JOB: 'viec-lam-cua-toi',
+    MY_COMPANY: 'cong-ty-cua-toi',
+    NOTIFICATION: 'thong-bao',
+    ACCOUNT: 'tai-khoan',
+    CHAT: 'ket-noi-voi-nha-tuyen-dung',
+  },
+  EMPLOYER: {
+    DASHBOARD: '',
+    JOB_POST: 'tin-tuyen-dung',
+    APPLIED_PROFILE: 'ho-so-ung-tuyen',
+    SAVED_PROFILE: 'ho-so-da-luu',
+    PROFILE: 'danh-sach-ung-vien',
+    PROFILE_DETAIL: 'chi-tiet-ung-vien/:slug',
+    COMPANY: 'cong-ty',
+    NOTIFICATION: 'thong-bao',
+    ACCOUNT: 'tai-khoan',
+    SETTING: 'cai-dat',
+    CHAT: 'ket-noi-voi-ung-vien',
+  },
+};
+
 export {
+  ENV,
   PLATFORM,
+  HOST_NAME,
   AUTH_PROVIDER,
   AUTH_CONFIG,
   ROLES_NAME,
@@ -171,6 +227,7 @@ export {
   ICONS,
   BANNER_TYPE,
   JOB_POST_STATUS_BG_COLOR,
+  ROUTES,
   ImageSvg1,
   ImageSvg2,
   ImageSvg3,

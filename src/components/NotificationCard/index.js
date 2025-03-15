@@ -30,8 +30,9 @@ import {
 } from 'firebase/firestore';
 import db from '../../configs/firebase-config';
 
-import { IMAGES } from '../../configs/constants';
+import { IMAGES, ROUTES } from '../../configs/constants';
 import MuiImageCustom from '../MuiImageCustom';
+import { formatRoute } from '../../utils/funcUtils';
 
 const PAGE_SIZE = 5;
 
@@ -225,28 +226,28 @@ const NotificationCard = () => {
         break;
       case 'EMPLOYER_VIEWED_RESUME':
         handleRead(item.key);
-        nav('/ung-vien/cong-ty-cua-toi');
+        nav(`/${ROUTES.JOB_SEEKER.MY_COMPANY}`);
         break;
       case 'EMPLOYER_SAVED_RESUME':
         handleRead(item.key);
-        nav('/ung-vien/cong-ty-cua-toi');
+        nav(`/${ROUTES.JOB_SEEKER.MY_COMPANY}`);
         break;
       case 'APPLY_STATUS':
         handleRead(item.key);
-        nav('/ung-vien/viec-lam-cua-toi');
+        nav(`/${ROUTES.JOB_SEEKER.MY_JOB}`);
         break;
       case 'COMPANY_FOLLOWED':
         handleRead(item.key);
-        nav('/nha-tuyen-dung/danh-sach-ung-vien');
+        nav(`/${ROUTES.EMPLOYER.PROFILE}`);
         break;
       case 'POST_VERIFY_RESULT':
         handleRead(item.key);
-        nav('/nha-tuyen-dung/tin-tuyen-dung');
+        nav(`/${ROUTES.EMPLOYER.JOB_POST}`);
         break;
       case 'APPLY_JOB':
         handleRead(item.key);
         nav(
-          `/nha-tuyen-dung/chi-tiet-ung-vien/${item['APPLY_JOB']?.resume_slug}`
+          `/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, item['APPLY_JOB']?.resume_slug)}`
         );
         break;
       default:

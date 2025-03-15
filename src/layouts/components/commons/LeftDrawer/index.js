@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
 import errorHandling from '../../../../utils/errorHandling';
 
-import { IMAGES, ROLES_NAME } from '../../../../configs/constants';
+import { IMAGES, ROUTES } from '../../../../configs/constants';
 import { removeUserInfo } from '../../../../redux/userSlice';
 import tokenService from '../../../../services/tokenService';
 import AccountSwitchMenu from '../AccountSwitchMenu';
@@ -35,13 +35,12 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
   const nav = useNavigate();
   const theme = useTheme();
 
-  const { isAuthenticated, currentUser } = useSelector((state) => state.user);
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
   const handleLogout = () => {
-    const roleName = currentUser.roleName;
     const accessToken = tokenService.getAccessTokenFromCookie();
     const backend = tokenService.getProviderFromCookie();
     dispatch(removeUserInfo({accessToken, backend}))
@@ -51,16 +50,7 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
         dispatch(resetSearchCompany());
         dispatch(resetSearchResume());
 
-        switch (roleName) {
-          case ROLES_NAME.JOB_SEEKER:
-            nav('/dang-nhap-ung-vien');
-            break;
-          case ROLES_NAME.EMPLOYER:
-            nav('/dang-nhap-nha-tuyen-dung');
-            break;
-          default:
-            nav('/');
-        }
+        nav(`/${ROUTES.AUTH.LOGIN}`);
       })
       .catch((error) => {
         errorHandling(error);
@@ -165,7 +155,7 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
                   xl: 'none',
                 },
               }}
-              onClick={() => nav('/dang-ky-tai-khoan-ung-vien')}
+              onClick={() => nav(`/${ROUTES.AUTH.REGISTER}`)}
             >
               Đăng ký
             </Button>

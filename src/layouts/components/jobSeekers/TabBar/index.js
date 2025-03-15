@@ -11,38 +11,39 @@ import WorkIcon from "@mui/icons-material/Work";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
+import { ROUTES } from "../../../../configs/constants";
 
 const tabItems = [
-  { id: 1, label: "My MyJob", icon: <DashboardIcon />, path: "/ung-vien" },
+  { id: 1, label: "My MyJob", icon: <DashboardIcon />, path: `/${ROUTES.JOB_SEEKER.DASHBOARD}` },
   {
     id: 2,
     label: "Hồ sơ xin việc",
     icon: <AssignmentIndIcon />,
-    path: "/ung-vien/ho-so",
+    path: `/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.PROFILE}`,
   },
   {
     id: 3,
     label: "Việc làm của tôi",
     icon: <WorkIcon />,
-    path: "/ung-vien/viec-lam-cua-toi",
+    path: `/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.MY_JOB}`,
   },
   {
     id: 4,
     label: "Công ty của tôi",
     icon: <ApartmentIcon />,
-    path: "/ung-vien/cong-ty-cua-toi",
+    path: `/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.MY_COMPANY}`,
   },
   {
     id: 5,
     label: "MyJob thông báo",
     icon: <CircleNotificationsIcon />,
-    path: "/ung-vien/thong-bao",
+    path: `/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.NOTIFICATION}`,
   },
   {
     id: 6,
     label: "Tài khoản & cài đặt",
     icon: <ManageAccountsOutlinedIcon />,
-    path: "/ung-vien/tai-khoan",
+    path: `/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.ACCOUNT}`,
   },
 ];
 

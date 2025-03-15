@@ -4,7 +4,7 @@ import { Box, Stack, Pagination, Button } from '@mui/material';
 
 import errorHandling from '../../../../utils/errorHandling';
 import toastMessages from '../../../../utils/toastMessages';
-import { ImageSvg7 } from '../../../../configs/constants';
+import { ImageSvg7, ROUTES } from '../../../../configs/constants';
 import NoDataCard from '../../../../components/NoDataCard';
 import CompanyAction from '../../../../components/CompanyAction';
 import companyFollowed from '../../../../services/companyFollowed';
@@ -78,7 +78,7 @@ const CompanyFollowedCard = () => {
               variant="contained"
               color="primary"
               component={Link}
-              to="/cong-ty"
+              to={`/${ROUTES.JOB_SEEKER.COMPANY}`}
             >
               Tìm công ty
             </Button>

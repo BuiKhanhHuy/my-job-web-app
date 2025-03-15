@@ -25,7 +25,7 @@ import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
-import { IMAGES } from '../../../../configs/constants';
+import { IMAGES, ROUTES } from '../../../../configs/constants';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -89,7 +89,7 @@ StyledTreeItem.propTypes = {
 const drawer = (location, theme) => (
   <div>
     <Toolbar>
-      <Box component={Link} to="/nha-tuyen-dung">
+      <Box component={Link} to={`/${ROUTES.EMPLOYER.DASHBOARD}`}>
         <Avatar
           src={IMAGES.getTextLogo(
             theme.palette.mode === 'light' ? 'dark' : 'light'
@@ -115,12 +115,12 @@ const drawer = (location, theme) => (
       >
         <StyledTreeItem nodeId="1" labelText="Tổng quan">
           <NavLink
-            to="/nha-tuyen-dung"
+            to={`/${ROUTES.EMPLOYER.DASHBOARD}`}
             style={{
               textDecoration: 'none',
               display: 'block',
               backgroundColor:
-                location.pathname === '/nha-tuyen-dung'
+                location.pathname === `/${ROUTES.EMPLOYER.DASHBOARD}`
                   ? 'rgba(68, 29, 160, 0.08)'
                   : 'inherit',
             }}
@@ -134,12 +134,12 @@ const drawer = (location, theme) => (
         </StyledTreeItem>
         <StyledTreeItem nodeId="2" labelText="Quản lý đăng tuyển">
           <NavLink
-            to="/nha-tuyen-dung/tin-tuyen-dung"
+            to={`/${ROUTES.EMPLOYER.JOB_POST}`}
             style={{
               textDecoration: 'none',
               display: 'block',
               backgroundColor:
-                location.pathname === '/nha-tuyen-dung/tin-tuyen-dung'
+                location.pathname === `/${ROUTES.EMPLOYER.JOB_POST}`
                   ? 'rgba(68, 29, 160, 0.08)'
                   : 'inherit',
             }}
@@ -153,12 +153,12 @@ const drawer = (location, theme) => (
         </StyledTreeItem>
         <StyledTreeItem nodeId="3" labelText="Quản lý ứng viên">
           <NavLink
-            to="/nha-tuyen-dung/ho-so-ung-tuyen"
+            to={`/${ROUTES.EMPLOYER.APPLIED_PROFILE}`}
             style={{
               textDecoration: 'none',
               display: 'block',
               backgroundColor:
-                location.pathname === '/nha-tuyen-dung/ho-so-ung-tuyen'
+                location.pathname === `/${ROUTES.EMPLOYER.APPLIED_PROFILE}`
                   ? 'rgba(68, 29, 160, 0.08)'
                   : 'inherit',
             }}
@@ -170,12 +170,12 @@ const drawer = (location, theme) => (
             />
           </NavLink>
           <NavLink
-            to="/nha-tuyen-dung/ho-so-da-luu"
+            to={`/${ROUTES.EMPLOYER.SAVED_PROFILE}`}
             style={{
               textDecoration: 'none',
               display: 'block',
               backgroundColor:
-                location.pathname === '/nha-tuyen-dung/ho-so-da-luu'
+                location.pathname === `/${ROUTES.EMPLOYER.SAVED_PROFILE}`
                   ? 'rgba(68, 29, 160, 0.08)'
                   : 'inherit',
             }}
@@ -187,12 +187,12 @@ const drawer = (location, theme) => (
             />
           </NavLink>
           <NavLink
-            to="/nha-tuyen-dung/danh-sach-ung-vien"
+            to={`/${ROUTES.EMPLOYER.PROFILE}`}
             style={{
               textDecoration: 'none',
               display: 'block',
               backgroundColor:
-                location.pathname === '/nha-tuyen-dung/danh-sach-ung-vien'
+                location.pathname === `/${ROUTES.EMPLOYER.PROFILE}`
                   ? 'rgba(68, 29, 160, 0.08)'
                   : 'inherit',
             }}
@@ -206,12 +206,12 @@ const drawer = (location, theme) => (
         </StyledTreeItem>
         <StyledTreeItem nodeId="4" labelText="Quản lý thông báo">
           <NavLink
-            to="/nha-tuyen-dung/thong-bao"
+            to={`/${ROUTES.EMPLOYER.NOTIFICATION}`}
             style={{
               textDecoration: 'none',
               display: 'block',
               backgroundColor:
-                location.pathname === '/nha-tuyen-dung/thong-bao'
+                location.pathname === `/${ROUTES.EMPLOYER.NOTIFICATION}`
                   ? 'rgba(68, 29, 160, 0.08)'
                   : 'inherit',
             }}
@@ -225,12 +225,12 @@ const drawer = (location, theme) => (
         </StyledTreeItem>
         <StyledTreeItem nodeId="5" labelText="Quản lý tài khoản">
           <NavLink
-            to="/nha-tuyen-dung/cong-ty"
+            to={`/${ROUTES.EMPLOYER.COMPANY}`}
             style={{
               textDecoration: 'none',
               display: 'block',
               backgroundColor:
-                location.pathname === '/nha-tuyen-dung/cong-ty'
+                location.pathname === `/${ROUTES.EMPLOYER.COMPANY}`
                   ? 'rgba(68, 29, 160, 0.08)'
                   : 'inherit',
             }}
@@ -242,12 +242,12 @@ const drawer = (location, theme) => (
             />
           </NavLink>
           <NavLink
-            to="/nha-tuyen-dung/tai-khoan"
+            to={`/${ROUTES.EMPLOYER.ACCOUNT}`}
             style={{
               textDecoration: 'none',
               display: 'block',
               backgroundColor:
-                location.pathname === '/nha-tuyen-dung/tai-khoan'
+                location.pathname === `/${ROUTES.EMPLOYER.ACCOUNT}`
                   ? 'rgba(68, 29, 160, 0.08)'
                   : 'inherit',
             }}
@@ -259,12 +259,12 @@ const drawer = (location, theme) => (
             />
           </NavLink>
           <NavLink
-            to="/nha-tuyen-dung/cai-dat"
+            to={`/${ROUTES.EMPLOYER.SETTING}`}
             style={{
               textDecoration: 'none',
               display: 'block',
               backgroundColor:
-                location.pathname === '/nha-tuyen-dung/cai-dat'
+                location.pathname === `/${ROUTES.EMPLOYER.SETTING}`
                   ? 'rgba(68, 29, 160, 0.08)'
                   : 'inherit',
             }}

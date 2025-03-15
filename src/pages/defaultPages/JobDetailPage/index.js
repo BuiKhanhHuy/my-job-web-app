@@ -36,7 +36,8 @@ import jobService from '../../../services/jobService';
 import ApplyCard from '../../../components/ApplyCard';
 import SocialNetworkSharingPopup from '../../../components/SocialNetworkSharingPopup/SocialNetworkSharingPopup';
 import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
-import { ROLES_NAME } from '../../../configs/constants';
+import { ROLES_NAME, ROUTES } from '../../../configs/constants';
+import { formatRoute } from '../../../utils/funcUtils';
 
 const Loading = (
   <>
@@ -369,7 +370,7 @@ const JobDetailPage = () => {
                         <Typography
                           variant="h6"
                           component={Link}
-                          to={`/cong-ty/${jobPostDetail?.companyDict?.slug}`}
+                          to={`/${formatRoute(ROUTES.JOB_SEEKER.COMPANY_DETAIL, jobPostDetail?.companyDict?.slug)}`}
                           sx={{ color: 'inherit', textDecoration: 'none' }}
                         >
                           {jobPostDetail?.companyDict?.companyName}

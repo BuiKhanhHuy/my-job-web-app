@@ -10,7 +10,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { ICONS, IMAGES, LINKS } from '../../../../configs/constants';
+import { ICONS, IMAGES, LINKS, ROUTES } from '../../../../configs/constants';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
 
 const Footer = () => {
@@ -31,7 +31,7 @@ const Footer = () => {
             <ListItem>
               <ListItemText
                 sx={{ cursor: 'pointer' }}
-                onClick={() => nav('/ve-chung-toi')}
+                onClick={() => nav(`/${ROUTES.JOB_SEEKER.ABOUT_US}`)}
                 primary="Về MyJob"
               />
             </ListItem>
@@ -80,35 +80,35 @@ const Footer = () => {
             <ListItem>
               <ListItemText
                 sx={{ cursor: 'pointer' }}
-                onClick={() => nav('/nha-tuyen-dung/tin-tuyen-dung')}
+                onClick={() => nav(`/${ROUTES.EMPLOYER.JOB_POST}`)}
                 primary="Đăng Tin Tuyển Dụng"
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 sx={{ cursor: 'pointer' }}
-                onClick={() => nav('/nha-tuyen-dung/danh-sach-ung-vien')}
+                onClick={() => nav(`/${ROUTES.EMPLOYER.PROFILE}`)}
                 primary="Tìm Kiếm Hồ Sơ"
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 sx={{ cursor: 'pointer' }}
-                onClick={() => nav('/nha-tuyen-dung')}
+                onClick={() => nav(`/${ROUTES.EMPLOYER.DASHBOARD}`)}
                 primary="Quản Lý Nhà Tuyển Dụng"
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 sx={{ cursor: 'pointer' }}
-                onClick={() => nav('/tro-chuyen')}
+                onClick={() => nav(`/${ROUTES.EMPLOYER.CHAT}`)}
                 primary="Tin Nhắn"
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 sx={{ cursor: 'pointer' }}
-                onClick={() => nav('/thong-bao')}
+                onClick={() => nav(`/${ROUTES.EMPLOYER.NOTIFICATION}`)}
                 primary="Thông Báo"
               />
             </ListItem>
@@ -129,35 +129,35 @@ const Footer = () => {
             <ListItem>
               <ListItemText
                 sx={{ cursor: 'pointer' }}
-                onClick={() => nav('/viec-lam')}
+                onClick={() => nav(`/${ROUTES.JOB_SEEKER.JOBS}`)}
                 primary="Việc Làm"
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 sx={{ cursor: 'pointer' }}
-                onClick={() => nav('/cong-ty')}
+                onClick={() => nav(`/${ROUTES.JOB_SEEKER.COMPANY}`)}
                 primary="Công ty"
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 sx={{ cursor: 'pointer' }}
-                onClick={() => nav('/ung-vien')}
+                onClick={() => nav(`/${ROUTES.JOB_SEEKER.DASHBOARD}`)}
                 primary="Quản Lý Ứng Viên"
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 sx={{ cursor: 'pointer' }}
-                onClick={() => nav('/ung-vien/tin-nhan')}
+                onClick={() => nav(`/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.CHAT}`)}
                 primary="Tin Nhắn"
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 sx={{ cursor: 'pointer' }}
-                onClick={() => nav('/ung-vien/thong-bao')}
+                onClick={() => nav(`/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.NOTIFICATION}`)}
                 primary="Thông Báo"
               />
             </ListItem>

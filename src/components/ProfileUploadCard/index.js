@@ -17,7 +17,8 @@ import StarIcon from '@mui/icons-material/Star';
 import EditIcon from '@mui/icons-material/Edit';
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteForever from '@mui/icons-material/DeleteForever';
-import downloadPdf from '../../utils/funcUtils';
+import downloadPdf, { formatRoute } from '../../utils/funcUtils';
+import { ROUTES } from '../../configs/constants';
 
 const ProfileUploadCard = ({
   resumeImage,
@@ -113,7 +114,7 @@ const ProfileUploadCard = ({
                 aria-label="delete"
                 color="warning"
                 size="small"
-                onClick={() => nav(`/ung-vien/ho-so-dinh-kem/${slug}`)}
+                onClick={() => nav(`/${ROUTES.JOB_SEEKER.DASHBOARD}/${formatRoute(ROUTES.JOB_SEEKER.ATTACHED_PROFILE, slug)}`)}
               >
                 <EditIcon />
               </IconButton>

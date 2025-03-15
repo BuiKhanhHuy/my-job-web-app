@@ -14,7 +14,7 @@ import {
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { TabTitle } from '../../../utils/generalFunction';
-import { ROLES_NAME } from '../../../configs/constants';
+import { ROLES_NAME, ROUTES } from '../../../configs/constants';
 import toastMessages from '../../../utils/toastMessages';
 import BackdropLoading from '../../../components/loading/BackdropLoading';
 
@@ -69,7 +69,7 @@ const EmployerLogin = () => {
           dispatch(getUserInfo())
             .unwrap()
             .then(() => {
-              nav('/nha-tuyen-dung');
+              nav(`/${ROUTES.EMPLOYER.DASHBOARD}`);
             })
             .catch(() => {
               toastMessages.error('Đã xảy ra lỗi, vui lòng đăng nhập lại!');
@@ -107,7 +107,7 @@ const EmployerLogin = () => {
               roleName: roleName,
             })
           );
-          nav('/email-verification-required');
+          nav(`/${ROUTES.AUTH.EMAIL_VERIFICATION}`);
 
           return;
         } else if (exists === false) {
@@ -193,7 +193,7 @@ const EmployerLogin = () => {
           <Grid container sx={{ mt: 3 }}>
             <Grid item xs>
               <Link
-                to="/quen-mat-khau"
+                to={`/${ROUTES.AUTH.FORGOT_PASSWORD}`}
                 variant="body2"
                 style={{ textDecoration: 'none', color: '#441da0' }}
               >
@@ -202,7 +202,7 @@ const EmployerLogin = () => {
             </Grid>
             <Grid item>
               <Link
-                to="/dang-ky-tai-khoan-nha-tuyen-dung"
+                to={`/${ROUTES.AUTH.REGISTER}`}
                 variant="body2"
                 style={{ textDecoration: 'none', color: '#441da0' }}
               >

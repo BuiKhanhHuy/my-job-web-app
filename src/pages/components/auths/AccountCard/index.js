@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
-import { ROLES_NAME } from '../../../../configs/constants';
+import { ROLES_NAME, ROUTES } from '../../../../configs/constants';
 import toastMessages from '../../../../utils/toastMessages';
 import errorHandling from '../../../../utils/errorHandling';
 import BackdropLoading from '../../../../components/loading/BackdropLoading';
@@ -45,17 +45,7 @@ const AccountCard = ({ title }) => {
         setOpenPopup(false);
         toastMessages.success('Đổi mật khẩu thành công.');
 
-        let path = '';
-        switch (currentUser.roleName) {
-          case ROLES_NAME.EMPLOYER:
-            path = '/dang-nhap-nha-tuyen-dung';
-            break;
-          case ROLES_NAME.JOB_SEEKER:
-            path = '/dang-nhap-ung-vien';
-            break;
-          default:
-            path = '/';
-        }
+        let path = ROUTES.AUTH.LOGIN;
         const accessToken = tokenService.getAccessTokenFromCookie();
         const backend = tokenService.getProviderFromCookie();
         dispatch(removeUserInfo({accessToken, backend}))
