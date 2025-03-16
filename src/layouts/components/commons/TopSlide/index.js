@@ -11,6 +11,20 @@ import HomeSearch from '../../../../pages/components/defaults/HomeSearch';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
 import myjobService from '../../../../services/myjobService';
 
+const styles = {
+  ".swiper-pagination-bullet": {
+    width: 10,
+    height: 10,
+    opacity: 0.5,
+    backgroundColor: "#8b6bd4",
+  },
+  ".swiper-pagination-bullet-active": {
+    width: 10,
+    height: 10,
+    opacity: 1,
+  },
+};
+
 const RenderItem = ({ item }) => {
   const [location, setLocation] = React.useState({
     position: 'absolute',
@@ -100,7 +114,7 @@ const TopSlide = () => {
       className="justify-content-center"
       style={{ height: 320, position: 'relative' }}
     >
-      <Box>
+      <Box sx={styles}>
         <Swiper
           spaceBetween={30}
           pagination={{

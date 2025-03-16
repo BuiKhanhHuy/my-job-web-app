@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Stack, CircularProgress } from '@mui/material';
+import React from "react";
+import { Box, Stack, CircularProgress, Typography } from "@mui/material";
 
 import {
   Chart as ChartJS,
@@ -10,11 +10,12 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 
-import { Empty } from 'antd';
-import statisticService from '../../../../services/statisticService';
+import { Empty } from "antd";
+import statisticService from "../../../../services/statisticService";
+import defaultTheme from "../../../../themeConfigs/defaultTheme";
 
 ChartJS.register(
   CategoryScale,
@@ -30,7 +31,34 @@ export const options = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: 'bottom',
+      position: "bottom",
+      labels: {
+        padding: 20,
+        usePointStyle: true,
+        pointStyle: "circle",
+      },
+    },
+    tooltip: {
+      backgroundColor: "rgba(255, 255, 255, 0.95)",
+      titleColor: "#212529",
+      bodyColor: "#212529",
+      borderColor: "#e9ecef",
+      borderWidth: 1,
+      padding: 12,
+      boxPadding: 6,
+      usePointStyle: true,
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        color: "#f0f1f5",
+      },
     },
   },
 };
@@ -46,7 +74,7 @@ const ActivityChart = () => {
         const resData = await statisticService.jobSeekerActivityStatistics();
         setData(resData.data);
       } catch (error) {
-        console.error('Error: ', error);
+        console.error("Error: ", error);
       } finally {
         setIsLoading(false);
       }
@@ -61,23 +89,35 @@ const ActivityChart = () => {
         {
           label: data?.title1,
           data: data?.data1 || [],
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235, 0.5)',
-          tension: 0.5,
+          borderColor: defaultTheme.palette.primary.main,
+          backgroundColor: defaultTheme.palette.primary.light,
+          tension: 0.4,
+          borderWidth: 2,
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          pointBackgroundColor: defaultTheme.palette.primary.main,
         },
         {
           label: data?.title2,
           data: data?.data2 || [],
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
-          tension: 0.5,
+          borderColor: defaultTheme.palette.secondary.main,
+          backgroundColor: defaultTheme.palette.secondary.light,
+          tension: 0.4,
+          borderWidth: 2,
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          pointBackgroundColor: defaultTheme.palette.secondary.main,
         },
         {
           label: data?.title3,
           data: data?.data3 || [],
-          borderColor: 'rgba(255, 206, 86 )',
-          backgroundColor: 'rgba(255, 206, 86, 0.5)',
-          tension: 0.5,
+          borderColor: defaultTheme.palette.info.main,
+          backgroundColor: defaultTheme.palette.info.light,
+          tension: 0.4,
+          borderWidth: 2,
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          pointBackgroundColor: defaultTheme.palette.info.main,
         },
       ],
     };
@@ -87,14 +127,26 @@ const ActivityChart = () => {
 
   return (
     <>
-      <Box sx={{ px: { xs: 0, sm: 1, md: 1, lg: 1, xl: 1 } }}>
-        <Stack justifyContent="center" alignItems="center">
+      <Box
+        sx={{
+          px: { xs: 0, sm: 1, md: 1, lg: 1, xl: 1 },
+        }}
+      >
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          sx={{ minHeight: 360 }}
+        >
           {isLoading ? (
-            <CircularProgress color="secondary" />
+            <CircularProgress sx={{ color: "primary.main" }} />
           ) : data.length === 0 ? (
             <Empty
               image={Empty.PRESENTED_IMAGE_SIMPLE}
-              description="Không có dữ liệu để thống kê"
+              description={
+                <Typography variant="body2" color="text.secondary">
+                  Không có dữ liệu để thống kê
+                </Typography>
+              }
             />
           ) : (
             <Line options={options} data={dataOptions} height={320} />

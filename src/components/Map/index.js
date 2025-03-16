@@ -33,7 +33,7 @@ const Map = ({ title, subTitle, latitude, longitude }) => {
       />
     </Box>
   ) : (
-    <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+    <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13, padding: 20 }}>
       Chưa thể xác định vị trí trên bản đồ
     </span>
   );

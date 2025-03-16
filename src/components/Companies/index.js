@@ -1,11 +1,11 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Box, Grid, Pagination, Stack, Typography } from '@mui/material';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
 
-import { ImageSvg4 } from '../../configs/constants';
-import NoDataCard from '../NoDataCard';
-import Company from '../Company';
-import companyService from '../../services/companyService';
+import { ImageSvg4 } from "../../configs/constants";
+import NoDataCard from "../NoDataCard";
+import Company from "../Company";
+import companyService from "../../services/companyService";
 
 const Companies = () => {
   const { companyFilter } = useSelector((state) => state.filter);
@@ -46,19 +46,46 @@ const Companies = () => {
     <>
       <Stack
         direction={{
-          xs: 'column',
-          sm: 'row',
-          md: 'row',
-          lg: 'row',
-          xl: 'row',
+          xs: "column",
+          sm: "row",
+          md: "row",
+          lg: "row",
+          xl: "row",
         }}
-        sx={{ py: 3 }}
+        sx={{ pb: 3 }}
         justifyContent="space-between"
       >
-        <Box>
-          <Typography variant="h5" gutterBottom>
-            Công Ty Nổi Bật (
-            <span style={{ color: 'red', fontWeight: 'bold' }}>{count}</span>)
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            mb: 2,
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{
+              color: "text.primary",
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            Công ty nổi bật
+            <Box
+              component="span"
+              sx={{
+                color: "primary.main",
+                fontWeight: 600,
+                backgroundColor: "primary.background",
+                padding: "4px 12px",
+                borderRadius: "20px",
+                fontSize: "0.9em",
+              }}
+            >
+              {count} công ty
+            </Box>
           </Typography>
         </Box>
       </Stack>
@@ -104,7 +131,7 @@ const Companies = () => {
                   color="primary"
                   size="medium"
                   variant="text"
-                  sx={{ margin: '0 auto' }}
+                  sx={{ margin: "0 auto" }}
                   count={Math.ceil(count / pageSize)}
                   page={page}
                   onChange={handleChangePage}

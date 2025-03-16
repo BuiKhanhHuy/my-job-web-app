@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { Box, Button, Grid, Stack, Typography } from '@mui/material';
+import { Button, Grid, Stack, Typography } from '@mui/material';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -51,9 +51,21 @@ const ProfileSearch = () => {
             <TextFieldCustom
               name="kw"
               showRequired={true}
-              placeholder="Nhập từ khóa"
+              placeholder="Nhập từ khóa tìm kiếm..."
               control={control}
-              icon={<SearchIcon />}
+              icon={<SearchIcon sx={{ color: 'grey.500' }} />}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  backgroundColor: 'background.paper',
+                  borderRadius: '12px',
+                  '&:hover': {
+                    backgroundColor: 'grey.50',
+                  },
+                  '& fieldset': {
+                    borderColor: 'grey.200',
+                  },
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
@@ -63,6 +75,18 @@ const ProfileSearch = () => {
               options={allConfig?.cityOptions || []}
               showRequired={true}
               placeholder="Chọn Tỉnh/Thành phố"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  backgroundColor: 'background.paper',
+                  borderRadius: '12px',
+                  '&:hover': {
+                    backgroundColor: 'grey.50',
+                  },
+                  '& fieldset': {
+                    borderColor: 'grey.200',
+                  },
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={3} lg={2} xl={2}>
@@ -71,14 +95,22 @@ const ProfileSearch = () => {
                 variant="contained"
                 color="secondary"
                 startIcon={<SearchIcon />}
-                sx={{ color: 'white', height: '100%' }}
+                sx={{
+                  height: '100%',
+                  borderRadius: '12px',
+                  boxShadow: 'none',
+                  background: (theme) => theme.palette.secondary.gradient,
+                  '&:hover': {
+                    boxShadow: (theme) => theme.customShadows.medium,
+                  }
+                }}
                 type="submit"
               >
                 Tìm kiếm
               </Button>
             </Stack>
           </Grid>
-        </Grid>{' '}
+        </Grid>
       </Grid>
       <Grid
         item
@@ -90,153 +122,232 @@ const ProfileSearch = () => {
         component="form"
         onSubmit={handleSubmit(handleFilter)}
       >
-        <Stack spacing={2}>
+        <Stack 
+          spacing={2.5}
+          sx={{
+            backgroundColor: 'background.paper',
+            borderRadius: '16px',
+            padding: 3,
+            border: '1px solid',
+            borderColor: 'grey.100',
+            boxShadow: (theme) => theme.customShadows.card
+          }}
+        >
           <Stack
             direction="row"
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h6">Bộ lọc nâng cao: </Typography>
+            <Typography variant="h6" sx={{ fontWeight: 600 }}>Bộ lọc nâng cao</Typography>
             <Button
               variant="text"
               color="error"
               size="small"
               startIcon={<RefreshIcon />}
-              sx={{ textTransform: 'inherit' }}
+              sx={{ 
+                textTransform: 'inherit',
+                '&:hover': {
+                  backgroundColor: 'error.background'
+                }
+              }}
               onClick={handleReset}
             >
               Xóa lọc
             </Button>
           </Stack>
-          <Stack spacing={1}>
-            <Box>
-              <Typography variant="subtitle2">
-                <FontAwesomeIcon
-                  icon={faBriefcase}
-                  style={{ marginRight: 3 }}
-                />{' '}
+          <Stack spacing={2}>
+            <Stack spacing={1}>
+              <Typography variant="subtitle2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.700' }}>
+                <FontAwesomeIcon icon={faBriefcase} style={{ marginRight: 8, color: '#441da0' }} />
                 Ngành nghề
               </Typography>
-            </Box>
-            <SingleSelectCustom
-              name="careerId"
-              control={control}
-              options={allConfig?.careerOptions || []}
-              placeholder="Tất cả ngành nghề"
-            />
-          </Stack>
-          <Stack spacing={1}>
-            <Box>
-              <Typography variant="subtitle2">
-                <FontAwesomeIcon
-                  icon={faMagicWandSparkles}
-                  style={{ marginRight: 3 }}
-                />{' '}
+              <SingleSelectCustom
+                name="careerId"
+                control={control}
+                options={allConfig?.careerOptions || []}
+                placeholder="Tất cả ngành nghề"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: 'background.paper',
+                    borderRadius: '10px',
+                    '&:hover': {
+                      backgroundColor: 'grey.50',
+                    },
+                    '& fieldset': {
+                      borderColor: 'grey.200',
+                    }
+                  }
+                }}
+              />
+            </Stack>
+            <Stack spacing={1}>
+              <Typography variant="subtitle2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.700' }}>
+                <FontAwesomeIcon icon={faMagicWandSparkles} style={{ marginRight: 8, color: '#441da0' }} />
                 Kinh nghiệm
               </Typography>
-            </Box>
-            <SingleSelectCustom
-              name="experienceId"
-              control={control}
-              options={allConfig?.experienceOptions || []}
-              placeholder="Tất cả kinh nghiệm"
-            />
-          </Stack>
-          <Stack spacing={1}>
-            <Box>
-              <Typography variant="subtitle2">
-                <FontAwesomeIcon icon={faUsers} style={{ marginRight: 3 }} />{' '}
+              <SingleSelectCustom
+                name="experienceId"
+                control={control}
+                options={allConfig?.experienceOptions || []}
+                placeholder="Tất cả kinh nghiệm"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: 'background.paper',
+                    borderRadius: '10px',
+                    '&:hover': {
+                      backgroundColor: 'grey.50',
+                    },
+                    '& fieldset': {
+                      borderColor: 'grey.200',
+                    }
+                  }
+                }}
+              />
+            </Stack>
+            <Stack spacing={1}>
+              <Typography variant="subtitle2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.700' }}>
+                <FontAwesomeIcon icon={faUsers} style={{ marginRight: 8, color: '#441da0' }} />
                 Cấp bậc
               </Typography>
-            </Box>
-            <SingleSelectCustom
-              name="positionId"
-              control={control}
-              options={allConfig?.positionOptions || []}
-              placeholder="Tất cả cấp bậc"
-            />
-          </Stack>
-          <Stack spacing={1}>
-            <Box>
-              <Typography variant="subtitle2">
-                <FontAwesomeIcon
-                  icon={faGraduationCap}
-                  style={{ marginRight: 3 }}
-                />{' '}
+              <SingleSelectCustom
+                name="positionId"
+                control={control}
+                options={allConfig?.positionOptions || []}
+                placeholder="Tất cả cấp bậc"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: 'background.paper',
+                    borderRadius: '10px',
+                    '&:hover': {
+                      backgroundColor: 'grey.50',
+                    },
+                    '& fieldset': {
+                      borderColor: 'grey.200',
+                    }
+                  }
+                }}
+              />
+            </Stack>
+            <Stack spacing={1}>
+              <Typography variant="subtitle2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.700' }}>
+                <FontAwesomeIcon icon={faGraduationCap} style={{ marginRight: 8, color: '#441da0' }} />
                 Học vấn
               </Typography>
-            </Box>
-            <SingleSelectCustom
-              name="academicLevelId"
-              control={control}
-              options={allConfig?.academicLevelOptions || []}
-              placeholder="Tất cả học vấn"
-            />
-          </Stack>
-          <Stack spacing={1}>
-            <Box>
-              <Typography variant="subtitle2">
-                <FontAwesomeIcon icon={faBuilding} style={{ marginRight: 3 }} />{' '}
+              <SingleSelectCustom
+                name="academicLevelId"
+                control={control}
+                options={allConfig?.academicLevelOptions || []}
+                placeholder="Tất cả học vấn"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: 'background.paper',
+                    borderRadius: '10px',
+                    '&:hover': {
+                      backgroundColor: 'grey.50',
+                    },
+                    '& fieldset': {
+                      borderColor: 'grey.200',
+                    }
+                  }
+                }}
+              />
+            </Stack>
+            <Stack spacing={1}>
+              <Typography variant="subtitle2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.700' }}>
+                <FontAwesomeIcon icon={faBuilding} style={{ marginRight: 8, color: '#441da0' }} />
                 Nơi làm việc
               </Typography>
-            </Box>
-            <SingleSelectCustom
-              name="typeOfWorkplaceId"
-              control={control}
-              options={allConfig?.typeOfWorkplaceOptions || []}
-              placeholder="Tất cả nơi làm việc"
-            />
-          </Stack>
-          <Stack spacing={1}>
-            <Box>
-              <Typography variant="subtitle2">
-                <FontAwesomeIcon
-                  icon={faPersonDigging}
-                  style={{ marginRight: 3 }}
-                />{' '}
+              <SingleSelectCustom
+                name="typeOfWorkplaceId"
+                control={control}
+                options={allConfig?.typeOfWorkplaceOptions || []}
+                placeholder="Tất cả nơi làm việc"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: 'background.paper',
+                    borderRadius: '10px',
+                    '&:hover': {
+                      backgroundColor: 'grey.50',
+                    },
+                    '& fieldset': {
+                      borderColor: 'grey.200',
+                    }
+                  }
+                }}
+              />
+            </Stack>
+            <Stack spacing={1}>
+              <Typography variant="subtitle2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.700' }}>
+                <FontAwesomeIcon icon={faPersonDigging} style={{ marginRight: 8, color: '#441da0' }} />
                 Hình thức làm việc
               </Typography>
-            </Box>
-            <SingleSelectCustom
-              name="jobTypeId"
-              control={control}
-              options={allConfig?.jobTypeOptions || []}
-              placeholder="Tất cả hình thức làm việc"
-            />
-          </Stack>
-          <Stack spacing={1}>
-            <Box>
-              <Typography variant="subtitle2">
-                <FontAwesomeIcon
-                  icon={faVenusMars}
-                  style={{ marginRight: 3 }}
-                />{' '}
+              <SingleSelectCustom
+                name="jobTypeId"
+                control={control}
+                options={allConfig?.jobTypeOptions || []}
+                placeholder="Tất cả hình thức làm việc"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: 'background.paper',
+                    borderRadius: '10px',
+                    '&:hover': {
+                      backgroundColor: 'grey.50',
+                    },
+                    '& fieldset': {
+                      borderColor: 'grey.200',
+                    }
+                  }
+                }}
+              />
+            </Stack>
+            <Stack spacing={1}>
+              <Typography variant="subtitle2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.700' }}>
+                <FontAwesomeIcon icon={faVenusMars} style={{ marginRight: 8, color: '#441da0' }} />
                 Giới tính
               </Typography>
-            </Box>
-            <SingleSelectCustom
-              name="genderId"
-              control={control}
-              options={allConfig?.genderOptions || []}
-              placeholder="Tất cả giới tính"
-            />
-          </Stack>
-          <Stack spacing={1}>
-            <Box>
-              <Typography variant="subtitle2">
-                <FontAwesomeIcon
-                  icon={faPeopleRoof}
-                  style={{ marginRight: 3 }}
-                />{' '}
+              <SingleSelectCustom
+                name="genderId"
+                control={control}
+                options={allConfig?.genderOptions || []}
+                placeholder="Tất cả giới tính"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: 'background.paper',
+                    borderRadius: '10px',
+                    '&:hover': {
+                      backgroundColor: 'grey.50',
+                    },
+                    '& fieldset': {
+                      borderColor: 'grey.200',
+                    }
+                  }
+                }}
+              />
+            </Stack>
+            <Stack spacing={1}>
+              <Typography variant="subtitle2" sx={{ display: 'flex', alignItems: 'center', color: 'grey.700' }}>
+                <FontAwesomeIcon icon={faPeopleRoof} style={{ marginRight: 8, color: '#441da0' }} />
                 Tình trạng hôn nhân
               </Typography>
-            </Box>
-            <SingleSelectCustom
-              name="maritalStatusId"
-              control={control}
-              options={allConfig?.maritalStatusOptions || []}
-              placeholder="Tất cả tình trạng hôn nhân"
-            />
+              <SingleSelectCustom
+                name="maritalStatusId"
+                control={control}
+                options={allConfig?.maritalStatusOptions || []}
+                placeholder="Tất cả tình trạng hôn nhân"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: 'background.paper',
+                    borderRadius: '10px',
+                    '&:hover': {
+                      backgroundColor: 'grey.50',
+                    },
+                    '& fieldset': {
+                      borderColor: 'grey.200',
+                    }
+                  }
+                }}
+              />
+            </Stack>
           </Stack>
         </Stack>
       </Grid>

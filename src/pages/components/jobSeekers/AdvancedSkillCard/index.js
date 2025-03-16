@@ -18,8 +18,8 @@ import {
 } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
 import toastMessages from '../../../../utils/toastMessages';
@@ -187,43 +187,105 @@ const AdvancedSkillCard = ({ title }) => {
 
   return (
     <>
-      <Box>
+      <Box
+        sx={{
+          backgroundColor: 'background.paper',
+          borderRadius: 3,
+          p: 3,
+          boxShadow: (theme) => theme.customShadows.card,
+        }}
+      >
         {isLoadingAdvancedSkills ? (
           Loading
         ) : (
-          <Stack>
+          <Stack spacing={3}>
             <Box>
               <Stack
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Typography variant="h6">{title}</Typography>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 600,
+                  }}
+                >
+                  {title}
+                </Typography>
                 <Fab
                   size="small"
                   color="primary"
-                  aria-label="edit"
+                  aria-label="add"
                   onClick={handleShowAdd}
+                  sx={{
+                    boxShadow: (theme) => theme.customShadows.medium,
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                    transition: "all 0.2s ease-in-out",
+                  }}
                 >
-                  <AddIcon sx={{ color: 'white', fontSize: 30 }} />
+                  <AddIcon />
                 </Fab>
               </Stack>
             </Box>
-            <Divider sx={{ mt: 2, mb: 3 }} />
-            <Box sx={{ px: 1 }}>
+            <Divider sx={{ my: 0, borderColor: 'grey.500' }}/>
+            <Box>
               {advancedSkills.length === 0 ? (
                 <EmptyCard
                   content="Bạn hãy thêm kỹ năng chuyên môn của mình để nhà tuyển dụng tham khảo"
                   onClick={handleShowAdd}
                 />
               ) : (
-                <TableContainer component={Box}>
-                  <Table aria-label="simple table" size="small">
+                <TableContainer 
+                  sx={{
+                    boxShadow: 'none',
+                    bgcolor: 'transparent',
+                  }}
+                >
+                  <Table 
+                    aria-label="advanced skills table" 
+                    size="medium"
+                  >
                     <TableHead>
                       <TableRow>
-                        <TableCell align="left">Kỹ năng</TableCell>
-                        <TableCell align="left">Trình độ</TableCell>
-                        <TableCell align="right">Hành động</TableCell>
+                        <TableCell 
+                          align="left"
+                          sx={{
+                            color: 'text.secondary',
+                            fontWeight: 600,
+                            fontSize: '0.875rem',
+                            borderBottom: '2px solid',
+                            borderColor: 'primary.light',
+                          }}
+                        >
+                          Kỹ năng
+                        </TableCell>
+                        <TableCell 
+                          align="left"
+                          sx={{
+                            color: 'text.secondary',
+                            fontWeight: 600,
+                            fontSize: '0.875rem',
+                            borderBottom: '2px solid',
+                            borderColor: 'primary.light',
+                          }}
+                        >
+                          Trình độ
+                        </TableCell>
+                        <TableCell 
+                          align="right"
+                          sx={{
+                            color: 'text.secondary',
+                            fontWeight: 600,
+                            fontSize: '0.875rem',
+                            borderBottom: '2px solid',
+                            borderColor: 'primary.light',
+                          }}
+                        >
+                          Hành động
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -232,9 +294,22 @@ const AdvancedSkillCard = ({ title }) => {
                           key={value.id}
                           sx={{
                             '&:last-child td, &:last-child th': { border: 0 },
+                            '&:hover': {
+                              bgcolor: 'primary.background',
+                            },
+                            transition: 'background-color 0.2s ease-in-out',
                           }}
                         >
-                          <TableCell align="left">{value?.name}</TableCell>
+                          <TableCell 
+                            align="left"
+                            sx={{
+                              color: 'text.primary',
+                              fontWeight: 500,
+                              fontSize: '0.875rem',
+                            }}
+                          >
+                            {value?.name}
+                          </TableCell>
                           <TableCell align="left">
                             <Rating
                               name="level-read-only"
@@ -250,20 +325,32 @@ const AdvancedSkillCard = ({ title }) => {
                               justifyContent="flex-end"
                             >
                               <IconButton
-                                color="warning"
-                                aria-label="edit advanced-skills"
+                                size="small"
+                                sx={{
+                                  color: 'secondary.main',
+                                  bgcolor: 'secondary.background',
+                                  '&:hover': {
+                                    bgcolor: 'secondary.light',
+                                    color: 'white',
+                                  },
+                                }}
                                 onClick={() => handleShowUpdate(value.id)}
                               >
-                                <EditIcon />
+                                <ModeEditOutlineOutlinedIcon fontSize="small" />
                               </IconButton>
                               <IconButton
-                                color="error"
-                                aria-label="delete advanced-skills"
-                                onClick={() =>
-                                  handleDeleteAdvancedSkill(value.id)
-                                }
+                                size="small"
+                                sx={{
+                                  color: 'error.main',
+                                  bgcolor: 'error.background',
+                                  '&:hover': {
+                                    bgcolor: 'error.main',
+                                    color: 'white',
+                                  },
+                                }}
+                                onClick={() => handleDeleteAdvancedSkill(value.id)}
                               >
-                                <DeleteIcon />
+                                <DeleteOutlineOutlinedIcon fontSize="small" />
                               </IconButton>
                             </Stack>
                           </TableCell>

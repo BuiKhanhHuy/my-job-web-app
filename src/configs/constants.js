@@ -21,6 +21,8 @@ const ENV = process.env.REACT_APP_NODE_ENV || 'development';
 
 const PLATFORM = 'WEB';
 
+const APP_NAME = 'MyJob';
+
 const HOST_NAME = {
   MYJOB: process.env.REACT_APP_MYJOB_HOST_NAME || '127.0.0.1',
   EMPLOYER_MYJOB: process.env.REACT_APP_EMPLOYER_MYJOB_HOST_NAME || 'localhost',
@@ -152,6 +154,23 @@ const LINKS = {
   YOUTUBE_LINK: 'https://www.youtube.com/channel/UCn49BvcP1w1mamaOSGTKVZw',
 };
 
+const LOADING_IMAGES = {
+  LOADING_SPINNER: require('../assets/images/loading/loading-spinner.gif'),
+};
+
+
+const FEEDBACK_IMAGES = {
+  "1star": require('../assets/images/feedbacks/1star.gif'),
+  "2star": require('../assets/images/feedbacks/2star.gif'),
+  "3star": require('../assets/images/feedbacks/3star.gif'),
+  "4star": require('../assets/images/feedbacks/4star.gif'),
+  "5star": require('../assets/images/feedbacks/5star.gif'),
+}
+
+const LOGO_IMAGES = {
+  LOGO_WITH_BG: require('../assets/logo/logo-with-bg.jpg'),
+}
+
 const BANNER_TYPE = {
   HOME: 'HOME',
   MAIN_JOB_RIGHT: 'MAIN_JOB_RIGHT',
@@ -218,6 +237,7 @@ const ROUTES = {
 export {
   ENV,
   PLATFORM,
+  APP_NAME,
   HOST_NAME,
   AUTH_PROVIDER,
   AUTH_CONFIG,
@@ -228,6 +248,9 @@ export {
   DATE_OPTIONS,
   IMAGES,
   ABOUT_IMAGES,
+  LOADING_IMAGES,
+  FEEDBACK_IMAGES,
+  LOGO_IMAGES,
   LINKS,
   ICONS,
   BANNER_TYPE,

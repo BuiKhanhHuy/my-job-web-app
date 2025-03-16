@@ -9,17 +9,26 @@ const FeedbackCard = ({ id, avatarUrl, fullName, content }) => {
     <Card
       sx={{
         alignItems: 'center',
-        p: 1,
-        py: 1,
-        mb: 0.5,
-        boxShadow: 3,
+        p: 3,
+        py: 3,
+        mb: 1,
+        boxShadow: (theme) => theme.customShadows.card,
+        transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+        '&:hover': {
+          transform: 'translateY(-4px)',
+          boxShadow: (theme) => theme.customShadows.large,
+        },
       }}
     >
-      <Stack sx={{ my: 2 }} direction="row" justifyContent="center">
+      <Stack sx={{ mb: 3 }} direction="row" justifyContent="center">
         <MuiImageCustom
-          sx={{ borderRadius: '50%' }}
-          width={110}
-          height={110}
+          sx={{
+            borderRadius: '50%',
+            border: (theme) => `4px solid ${theme.palette.primary.light}`,
+            boxShadow: (theme) => theme.customShadows.medium,
+          }}
+          width={120}
+          height={120}
           src={avatarUrl}
         />
       </Stack>
@@ -30,29 +39,40 @@ const FeedbackCard = ({ id, avatarUrl, fullName, content }) => {
         sx={{
           textAlign: 'center',
           fontWeight: 'bold',
+          color: (theme) => theme.palette.primary.main,
+          mb: 2,
         }}
       >
         {fullName}
       </Typography>
-      <Typography textAlign="center">
-        <FontAwesomeIcon icon={faQuoteLeft} fontSize={25} color="#fca34d" />
+      <Typography textAlign="center" sx={{ mb: 2 }}>
+        <FontAwesomeIcon 
+          icon={faQuoteLeft} 
+          fontSize={30} 
+          color={(theme) => theme.palette.warning.main}
+          style={{ opacity: 0.8 }} 
+        />
       </Typography>
       <Box>
         <Typography
-          variant="caption"
+          variant="body2"
           display="block"
           gutterBottom
-          sx={{ textAlign: 'justify', color: '#757575', px: 1 }}
-          style={{
-            height: '135px',
+          sx={{
+            textAlign: 'center',
+            color: (theme) => theme.palette.text.secondary,
+            px: 2,
+            lineHeight: 1.8,
+            fontStyle: 'italic',
+            height: '120px',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             display: '-webkit-box',
-            WebkitLineClamp: '1',
-            WebkitBoxOrient: 'horizontal',
+            WebkitLineClamp: '4',
+            WebkitBoxOrient: 'vertical',
           }}
         >
-          {content }
+          {content}
         </Typography>
       </Box>
     </Card>
@@ -60,29 +80,52 @@ const FeedbackCard = ({ id, avatarUrl, fullName, content }) => {
 };
 
 const Loading = () => (
-  <>
-    <Card
-      sx={{
-        alignItems: 'center',
-        p: 1,
-        py: 1,
-        mb: 0.5,
-        boxShadow: 3,
+  <Card
+    sx={{
+      alignItems: 'center',
+      p: 3,
+      py: 3,
+      mb: 1,
+      boxShadow: (theme) => theme.customShadows.card,
+    }}
+  >
+    <Skeleton
+      variant="circular"
+      width={120}
+      height={120}
+      sx={{ 
+        margin: '0 auto',
+        mb: 3,
+        backgroundColor: (theme) => theme.palette.grey[200]
       }}
-    >
-      <Skeleton
-        variant="circular"
-        width={110}
-        height={110}
-        style={{ margin: '0 auto' }}
+    />
+    <Stack sx={{ height: 200, width: '100%' }}>
+      <Skeleton 
+        height={30}
+        width="60%"
+        sx={{ 
+          margin: '0 auto',
+          mb: 2,
+          backgroundColor: (theme) => theme.palette.grey[200]
+        }}
       />
-      <Stack sx={{ height: 200 }}>
-        <Skeleton />
-        <Skeleton />
-        <Skeleton sx={{ flex: 1 }} />
-      </Stack>
-    </Card>
-  </>
+      <Skeleton 
+        height={20}
+        width="40%"
+        sx={{ 
+          margin: '0 auto',
+          mb: 3,
+          backgroundColor: (theme) => theme.palette.grey[200]
+        }}
+      />
+      <Skeleton 
+        height={100}
+        sx={{ 
+          backgroundColor: (theme) => theme.palette.grey[200]
+        }}
+      />
+    </Stack>
+  </Card>
 );
 
 FeedbackCard.Loading = Loading;

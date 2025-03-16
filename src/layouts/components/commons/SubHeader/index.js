@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faListUl } from '@fortawesome/free-solid-svg-icons';
 import SubHeaderDialog from '../SubHeaderDialog';
 import commonService from '../../../../services/commonService';
+import { useTheme } from '@mui/material/styles';
 
 import { searchJobPost } from '../../../../redux/filterSlice';
 import { ROUTES } from '../../../../configs/constants';
@@ -17,23 +18,35 @@ import { ROUTES } from '../../../../configs/constants';
 const listItems = (items, handleFilter) => (
   <Stack
     direction="row"
-    spacing={4}
+    spacing={2}
     alignContent="center"
-    sx={{ overflow: 'hidden' }}
+    sx={{ 
+      overflow: 'hidden',
+      '& .MuiTypography-root:hover': {
+        transform: 'translateY(-2px)',
+        transition: 'transform 0.2s ease-in-out'
+      }
+    }}
   >
     {items.map((item) => (
       <Typography
         variant="body2"
         key={item.id}
         sx={{
-          fontWeight: 'bold',
+          fontWeight: 600,
           cursor: 'pointer',
           whiteSpace: 'nowrap',
+          padding: '6px 12px',
+          borderRadius: '16px',
+          transition: 'all 0.2s ease-in-out',
+          '&:hover': {
+            backgroundColor: (theme) => theme.palette.primary.background,
+            color: (theme) => theme.palette.primary.main,
+          }
         }}
-       
         onClick={() => handleFilter(item.id)}
       >
-      <span  style={{ color: '#451da0' }}>{item?.name}</span>  
+        {item?.name}
       </Typography>
     ))}
   </Stack>
@@ -45,6 +58,7 @@ const SubHeader = () => {
   const { jobPostFilter } = useSelector((state) => state.filter);
   const [open, setOpen] = React.useState(false);
   const [topCareers, setTopCareers] = React.useState([]);
+  const theme = useTheme();
 
   React.useEffect(() => {
     const getTopCarreers = async () => {
@@ -75,9 +89,9 @@ const SubHeader = () => {
             bgcolor: (theme) =>
               theme.palette.mode === 'light' ? 'white' : 'black',
             boxShadow: 0,
-            borderBottom: 0.8,
+            borderBottom: 1,
             borderColor: (theme) =>
-              theme.palette.mode === 'light' ? '#e0e0e0' : '#441da0',
+              theme.palette.mode === 'light' ? theme.palette.grey[200] : theme.palette.primary.dark,
           }}
         >
           <Container maxWidth="xl">
@@ -86,16 +100,33 @@ const SubHeader = () => {
               sx={{
                 color: (theme) =>
                   theme.palette.mode === 'light' ? 'black' : 'white',
+                py: 0.5,
+                gap: 1
               }}
             >
               <Box
-                sx={{ marginRight: 2, cursor: 'pointer' }}
+                sx={{ 
+                  cursor: 'pointer',
+                  width: 40,
+                  height: 40,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '12px',
+                  transition: 'all 0.2s ease-in-out',
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.background,
+                    transform: 'scale(1.05)'
+                  }
+                }}
                 onClick={() => setOpen(true)}
               >
                 <FontAwesomeIcon
                   icon={faListUl}
-                  fontSize={24}
-                  color="#441da0"
+                  fontSize={20}
+                  style={{ 
+                    color: theme.palette.primary.main
+                  }}
                 />
               </Box>
               {listItems(topCareers, handleFilter)}

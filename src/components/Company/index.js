@@ -57,7 +57,7 @@ const FollowComponent = ({ slug, isFollowed }) => {
             onClick={() => handleFollow(slug)}
             startIcon={
               followed ? (
-                <BookmarkIcon style={{ color: 'white' }} />
+                <BookmarkIcon sx={{ color: 'common.white' }} />
               ) : (
                 <BookmarkBorderIcon />
               )
@@ -102,8 +102,11 @@ const Company = ({
     <Card
       sx={{
         p: 2,
+        transition: 'all 0.3s ease-in-out',
         '&:hover': {
-          borderColor: '#441da0',
+          borderColor: (theme) => theme.palette.primary.main,
+          transform: 'translateY(-4px)',
+          boxShadow: (theme) => theme.customShadows.large,
         },
       }}
       variant="outlined"
@@ -119,112 +122,150 @@ const Company = ({
         justifyContent={'space-between'}
       >
         <Box>
-          <Box>
+          <Box sx={{ position: 'relative' }}>
             <MuiImageCustom
               width="100%"
               height={180}
               fit="cover"
               src={companyCoverImageUrl || IMAGES.coverImageDefault}
-              sx={{ borderRadius: 1.5 }}
+              sx={{ 
+                borderRadius: 2,
+                filter: 'brightness(0.9)',
+              }}
               duration={1500}
             />
-          </Box>
-          <Box sx={{ px: 2 }}>
-            <Stack direction="row" justifyContent="space-between">
-              <Box
-                sx={{ width: 85, height: 85, marginTop: -5 }}
-                component={Link}
-                to={`/${formatRoute(ROUTES.JOB_SEEKER.COMPANY_DETAIL, slug)}`}
-              >
-                <MuiImageCustom
-                  width={80}
-                  height={80}
-                  src={companyImageUrl}
-                  sx={{
-                    bgcolor: 'white',
-                    boxShadow: 4,
-                    p: 0.75,
-                    borderRadius: 2,
-                  }}
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: -40,
+                left: 16,
+                width: 85,
+                height: 85,
+                transition: 'transform 0.3s ease',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                },
+              }}
+              component={Link}
+              to={`/${formatRoute(ROUTES.JOB_SEEKER.COMPANY_DETAIL, slug)}`}
+            >
+              <MuiImageCustom
+                width={80}
+                height={80}
+                src={companyImageUrl}
+                sx={{
+                  bgcolor: 'white',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  p: 0.75,
+                  borderRadius: 3,
+                }}
+              />
+            </Box>
+            <Box 
+              sx={{ 
+                position: 'absolute', 
+                top: 12, 
+                right: 12,
+                bgcolor: 'rgba(255,255,255,0.9)', 
+                borderRadius: 2,
+                px: 1.5,
+                py: 0.5,
+              }}
+            >
+              <Typography variant="caption" sx={{ fontWeight: 500 }}>
+                <FontAwesomeIcon
+                  icon={faUsers}
+                  style={{ marginRight: 4 }}
+                  color={(theme) => theme.palette.custom.mutedText} 
                 />
-              </Box>
-              <Box sx={{ py: 1 }}>
-                <Typography variant="caption" display="block">
-                  <FontAwesomeIcon
-                    icon={faUsers}
-                    style={{ marginRight: 2 }}
-                    color="#bdbdbd"
-                  />{' '}
-                  {followNumber} lượt theo dõi
-                </Typography>
-              </Box>
-            </Stack>
+                {followNumber} lượt theo dõi
+              </Typography>
+            </Box>
           </Box>
-          <Box sx={{ p: 2, width: '100%' }}>
-            <Box mb={1}>
+
+          <Box sx={{ p: 2, pt: 5, width: '100%' }}>
+            <Box mb={2}>
               <Typography
                 variant="h6"
-                gutterBottom
                 component={Link}
                 to={`/${formatRoute(ROUTES.JOB_SEEKER.COMPANY_DETAIL, slug)}`}
                 sx={{
                   textDecoration: 'none',
                   color: 'inherit',
+                  fontWeight: 600,
+                  transition: 'color 0.2s ease',
+                  '&:hover': {
+                    color: (theme) => theme.palette.primary.main,
+                  },
                 }}
               >
                 {companyName.substr(0, 55)}
                 {companyName.length > 55 && '...'}
               </Typography>
             </Box>
-            <Typography variant="body2" gutterBottom>
-              <FontAwesomeIcon
-                icon={faFontAwesome}
-                style={{ marginRight: 2 }}
-                color="#bdbdbd"
-              />{' '}
-              {fieldOperation || (
-                  <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                  Chưa cập nhật
-                </span>
-              )}
-            </Typography>
-            <Typography variant="body2" gutterBottom>
-              <FontAwesomeIcon
-                icon={faMapLocation}
-                style={{ marginRight: 2 }}
-                color="#bdbdbd"
-              />{' '}
-              {allConfig?.cityDict[city] || (
-                <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                Chưa cập nhật
-              </span>
-              )}
-            </Typography>
-            <Typography variant="body2" gutterBottom>
-              <FontAwesomeIcon
-                icon={faUser}
-                style={{ marginRight: 2 }}
-                color="#bdbdbd"
-              />{' '}
-              {allConfig?.employeeSizeDict[employeeSize] || (
-                 <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                 Chưa cập nhật
-               </span>
-              )}
-            </Typography>
-            <Typography variant="body2" gutterBottom>
-              <FontAwesomeIcon
-                icon={faBriefcase}
-                style={{ marginRight: 2 }}
-                color="#bdbdbd"
-              />{' '}
-              {jobPostNumber} việc làm
-            </Typography>
+
+            <Stack spacing={1.5}>
+              <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <FontAwesomeIcon
+                  icon={faFontAwesome}
+                  style={{ width: 16 }}
+                  sx={{ color: 'grey.600' }}
+                />
+                {fieldOperation || (
+                  <span style={{ color: '#9e9e9e', fontStyle: 'italic', fontSize: 13 }}>
+                    Chưa cập nhật
+                  </span>
+                )}
+              </Typography>
+
+              <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <FontAwesomeIcon
+                  icon={faMapLocation}
+                  style={{ width: 16 }}
+                  sx={{ color: 'grey.600' }}
+                />
+                {allConfig?.cityDict[city] || (
+                  <span style={{ color: '#9e9e9e', fontStyle: 'italic', fontSize: 13 }}>
+                    Chưa cập nhật
+                  </span>
+                )}
+              </Typography>
+
+              <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <FontAwesomeIcon
+                  icon={faUser}
+                  style={{ width: 16 }}
+                  sx={{ color: 'grey.600' }}
+                />
+                {allConfig?.employeeSizeDict[employeeSize] || (
+                  <span style={{ color: '#9e9e9e', fontStyle: 'italic', fontSize: 13 }}>
+                    Chưa cập nhật
+                  </span>
+                )}
+              </Typography>
+
+              <Typography 
+                variant="body2" 
+                sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center',
+                  gap: 1,
+                  color: 'primary.main',
+                  fontWeight: 500
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faBriefcase}
+                  style={{ width: 16 }}
+                  sx={{ color: 'primary.main' }}
+                />
+                {jobPostNumber} việc làm
+              </Typography>
+            </Stack>
           </Box>
         </Box>
-        {/* Start: FollowComponent */}
+
         <FollowComponent slug={slug} isFollowed={isFollowed} />
-        {/* End: FollowComponent */}
       </Stack>
     </Card>
   );

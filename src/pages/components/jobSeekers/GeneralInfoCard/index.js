@@ -10,7 +10,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 
 import FormPopup from '../../../../components/controls/FormPopup';
 import GeneralInfoForm from '../GeneralInfoForm';
@@ -22,7 +22,7 @@ import resumeService from '../../../../services/resumeService';
 import { salaryString } from '../../../../utils/customData';
 
 const Loading = (
-  <>
+  <Box sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 2, boxShadow: 'custom.info' }}>
     <Box>
       <Stack
         direction="row"
@@ -63,19 +63,31 @@ const Loading = (
         </Grid>
       </Grid>
     </Box>
-  </>
+  </Box>
 );
 
 const item = (title, value) => {
   return (
-    <Box>
-      <Typography sx={{ fontWeight: 'bold' }}>{title}</Typography>
-      <Typography sx={{textAlign: 'justify'}}>
-        {value || (
-           <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-           Chưa cập nhật
-         </span>
-        )}
+    <Box sx={{
+      p: 1,
+      backgroundColor: 'background.paper',
+    }}>
+      <Typography 
+        sx={{ 
+          fontWeight: 600,
+          color: 'primary.main',
+          fontSize: '0.875rem',
+          mb: 1
+        }}
+      >
+        {title}
+      </Typography>
+      <Typography sx={{
+        color: value ? 'text.primary' : 'text.disabled',
+        fontStyle: value ? 'normal' : 'italic',
+        fontSize: value ? '1rem' : '0.875rem',
+      }}>
+        {value || 'Chưa cập nhật'}
       </Typography>
     </Box>
   );
@@ -127,91 +139,114 @@ const GeneralInfoCard = ({ title }) => {
   };
 
   return (
-    <>
-      <Box>
-        <Stack>
-          {isLoadingResumeDetail ? (
-            Loading
-          ) : resumeDetail === null ? (
-            <h1>PRofile detail null</h1>
-          ) : (
-            <>
-              <Box>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
+    <Box sx={{ 
+      backgroundColor: 'background.paper', 
+      borderRadius: 3,
+      p: 3,
+      boxShadow: (theme) => theme.customShadows.card,
+    }}>
+      <Stack spacing={3}>
+        {isLoadingResumeDetail ? (
+          Loading
+        ) : resumeDetail === null ? (
+          <Typography variant="h6" color="error.main" textAlign="center">
+            Không tìm thấy thông tin hồ sơ
+          </Typography>
+        ) : (
+          <>
+            <Box>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography 
+                  variant="h5"
+                  sx={{ 
+                    fontWeight: 600,
+                  }}
                 >
-                  <Typography variant="h6">{title}</Typography>
-                  <Fab
-                    size="small"
-                    color="secondary"
-                    aria-label="edit"
-                    onClick={() => setOpenPopup(true)}
-                  >
-                    <EditIcon sx={{ color: 'white' }} />
-                  </Fab>
-                </Stack>
-              </Box>
-              <Divider sx={{ mt: 2, mb: 3 }} />
-              <Box sx={{ px: 1 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    {item('Mục tiêu nghề nghiệp', resumeDetail?.description)}
-                    <Divider sx={{ pt: 2, pb: 2 }} />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-                    <Stack spacing={2}>
-                      {item('Vị trí mong muốn', resumeDetail?.title)}
-                      {item(
-                        'Cấp bậc mong muốn',
-                        allConfig.positionDict[resumeDetail?.position]
-                      )}
-                      {item(
-                        'Trình độ học vấn',
-                        allConfig.academicLevelDict[resumeDetail?.academicLevel]
-                      )}
-                      {item(
-                        'Kinh nghiệm',
-                        allConfig.experienceDict[resumeDetail?.experience]
-                      )}
-                      {item(
-                        'Nghề nghiệp',
-                        allConfig.careerDict[resumeDetail?.career]
-                      )}
-                    </Stack>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-                    <Stack spacing={2}>
-                      {item(
-                        'Địa điểm làm việc',
-                        allConfig.cityDict[resumeDetail?.city]
-                      )}
-                      {item(
-                        'Mức lương mong muốn',
-                        salaryString(
-                          resumeDetail?.salaryMin,
-                          resumeDetail?.salaryMax
-                        )
-                      )}
-                      {item(
-                        'Nơi làm việc',
-                        allConfig.typeOfWorkplaceDict[
-                          resumeDetail?.typeOfWorkplace
-                        ]
-                      )}
-                      {item(
-                        'Hình thức làm việc',
-                        allConfig.jobTypeDict[resumeDetail?.jobType]
-                      )}
-                    </Stack>
-                  </Grid>
+                  {title}
+                </Typography>
+                <Fab
+                  size="small"
+                  color="secondary"
+                  aria-label="edit"
+                  onClick={() => setOpenPopup(true)}
+                  sx={{
+                    boxShadow: (theme) => theme.customShadows.medium,
+                    '&:hover': {
+                      transform: 'scale(1.1)',
+                    },
+                    transition: 'all 0.2s ease-in-out',
+                  }}
+                >
+                  <EditIcon />
+                </Fab>
+              </Stack>
+            </Box>
+
+            <Divider sx={{ my: 0, borderColor: 'grey.500' }}/>
+
+            <Stack sx={{ px: 1 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  {item('Mục tiêu nghề nghiệp', resumeDetail?.description)}
+                  <Divider sx={{ my: 1, borderColor: 'grey.300' }} />
                 </Grid>
-              </Box>
-            </>
-          )}
-        </Stack>
-      </Box>
+                
+                <Grid item xs={12} sm={6}>
+                  <Stack spacing={1.5}>
+                    {item('Vị trí mong muốn', resumeDetail?.title)}
+                    {item(
+                      'Cấp bậc mong muốn',
+                      allConfig.positionDict[resumeDetail?.position]
+                    )}
+                    {item(
+                      'Trình độ học vấn',
+                      allConfig.academicLevelDict[resumeDetail?.academicLevel]
+                    )}
+                    {item(
+                      'Kinh nghiệm',
+                      allConfig.experienceDict[resumeDetail?.experience]
+                    )}
+                    {item(
+                      'Nghề nghiệp',
+                      allConfig.careerDict[resumeDetail?.career]
+                    )}
+                  </Stack>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <Stack spacing={1.5}>
+                    {item(
+                      'Địa điểm làm việc',
+                      allConfig.cityDict[resumeDetail?.city]
+                    )}
+                    {item(
+                      'Mức lương mong muốn',
+                      salaryString(
+                        resumeDetail?.salaryMin,
+                        resumeDetail?.salaryMax
+                      )
+                    )}
+                    {item(
+                      'Nơi làm việc',
+                      allConfig.typeOfWorkplaceDict[
+                        resumeDetail?.typeOfWorkplace
+                      ]
+                    )}
+                    {item(
+                      'Hình thức làm việc',
+                      allConfig.jobTypeDict[resumeDetail?.jobType]
+                    )}
+                  </Stack>
+                </Grid>
+              </Grid>
+            </Stack>
+          </>
+        )}
+      </Stack>
 
       {/* Start: form  */}
       <FormPopup
@@ -229,7 +264,7 @@ const GeneralInfoCard = ({ title }) => {
       {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}
       {/* End: full screen loading */}
-    </>
+    </Box>
   );
 };
 

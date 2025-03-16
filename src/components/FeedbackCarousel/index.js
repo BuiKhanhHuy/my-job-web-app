@@ -10,6 +10,26 @@ import FeedbackCard from '../FeedbackCard';
 import myjobService from '../../services/myjobService';
 import NoDataCard from '../NoDataCard';
 
+const styles = {
+  ".swiper-pagination": {
+    bottom: "-5px !important", // Move down 10px,
+  },
+  ".swiper-wrapper": {
+    paddingBottom: "30px", // Add padding to avoid being blocked
+  },
+  ".swiper-pagination-bullet": {
+    width: 15,
+    height: 15,
+    opacity: 0.5,
+    backgroundColor: "#8b6bd4",
+  },
+  ".swiper-pagination-bullet-active": {
+    width: 15,
+    height: 15,
+    opacity: 1,
+  },
+};
+
 const FeedbackCarousel = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [feedbacks, setFeedbacks] = React.useState([]);
@@ -59,7 +79,7 @@ const FeedbackCarousel = () => {
 
   return (
     <div id="feed-back-carousel">
-      <Box>
+      <Box sx={styles}>
         {isLoading ? (
           <Swiper
             slidesPerView={col}

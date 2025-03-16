@@ -1,7 +1,8 @@
-import toSlug from './customData';
+import toSlug from "./customData";
+import { APP_NAME } from "../configs/constants";
 
 const downloadPdf = async (url, fileName) => {
-  const fileDownloadName = `MyJob_CV-${toSlug(fileName || 'mytitle')}`;
+  const fileDownloadName = `${APP_NAME}_CV-${toSlug(fileName || "mytitle")}`;
   const response = await fetch(url);
   const blob = await response.blob();
   const urlBlob = window.URL.createObjectURL(new Blob([blob]));

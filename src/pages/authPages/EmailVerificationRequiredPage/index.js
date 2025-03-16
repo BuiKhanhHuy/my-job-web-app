@@ -3,9 +3,8 @@ import { useSelector } from 'react-redux';
 import { Box, Card, Container, Stack, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopeCircleCheck } from '@fortawesome/free-solid-svg-icons';
-
 import { TabTitle } from '../../../utils/generalFunction';
-
+import { APP_NAME } from '../../../configs/constants';
 const EmailVerificationRequiredPage = () => {
   TabTitle("Xác thực email")
   const { email } = useSelector((state) => state.auth);
@@ -24,7 +23,7 @@ const EmailVerificationRequiredPage = () => {
           Xác nhận email
         </Typography>
         <Typography variant="subtitle2 ">
-          Cảm ơn bạn đã đăng ký tài khoản MyJob
+          Cảm ơn bạn đã đăng ký tài khoản {APP_NAME}
         </Typography>
       </Stack>
       <Card sx={{ p: 6, pt: 2, boxShadow: 0 }}>

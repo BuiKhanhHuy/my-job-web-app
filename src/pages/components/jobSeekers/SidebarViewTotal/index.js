@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Box,
@@ -7,10 +7,10 @@ import {
   CircularProgress,
   Stack,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 
-import statisticService from '../../../../services/statisticService';
-import { ROUTES } from '../../../../configs/constants';
+import statisticService from "../../../../services/statisticService";
+import { ROUTES } from "../../../../configs/constants";
 
 const SidebarViewTotal = () => {
   const nav = useNavigate();
@@ -25,7 +25,7 @@ const SidebarViewTotal = () => {
 
         setData(resData.data);
       } catch (error) {
-        console.error('Error: ', error);
+        console.error("Error: ", error);
       } finally {
         setIsLoading(false);
       }
@@ -46,12 +46,37 @@ const SidebarViewTotal = () => {
       </Box>
       <Box sx={{ pt: 2 }}>
         <Stack direction="row" spacing={2}>
-          <Box>
-            <Avatar sx={{ width: 80, height: 80, bgcolor: '#441da0' }}>
+          <Box
+            sx={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                width: 100,
+                height: 100,
+                borderRadius: "50%",
+                background: (theme) => theme.palette.primary.background,
+                animation: "pulse 2s infinite",
+              }}
+            />
+            <Avatar
+              sx={{
+                width: 80,
+                height: 80,
+                background: (theme) => theme.palette.primary.gradient,
+                fontSize: "1.75rem",
+                fontWeight: 700,
+              }}
+            >
               {isLoading ? (
                 <CircularProgress color="secondary" />
               ) : data === null ? (
-                '---'
+                "---"
               ) : (
                 data?.totalView
               )}
@@ -68,8 +93,18 @@ const SidebarViewTotal = () => {
       <Stack sx={{ pt: 3 }} direction="row" justifyContent="flex-end">
         <Button
           variant="contained"
-          size="small"
+          size="medium"
           onClick={() => nav(`/${ROUTES.JOB_SEEKER.JOBS}`)}
+          sx={{
+            background: (theme) => theme.palette.primary.gradient,
+            px: 3,
+            "&:hover": {
+              background: (theme) => theme.palette.primary.gradient,
+              opacity: 0.9,
+              transform: "translateY(-1px)",
+              transition: "all 0.2s",
+            },
+          }}
         >
           Khám phá ngay
         </Button>

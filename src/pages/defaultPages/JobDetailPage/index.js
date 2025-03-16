@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import dayjs from 'dayjs';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import dayjs from "dayjs";
 import {
   Box,
   Button,
@@ -11,33 +11,37 @@ import {
   Skeleton,
   Stack,
   Typography,
-} from '@mui/material';
-import { LoadingButton } from '@mui/lab';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarDay,
   faEye,
   faClockFour,
-} from '@fortawesome/free-solid-svg-icons';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
+} from "@fortawesome/free-solid-svg-icons";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
 
-import { QRCode, Space } from 'antd';
+import { QRCode, Space } from "antd";
 
-import { TabTitle } from '../../../utils/generalFunction';
-import toastMessages from '../../../utils/toastMessages';
-import errorHandling from '../../../utils/errorHandling';
-import MuiImageCustom from '../../../components/MuiImageCustom';
-import { salaryString } from '../../../utils/customData';
-import NoDataCard from '../../../components/NoDataCard';
-import Map from '../../../components/Map';
-import jobService from '../../../services/jobService';
-import ApplyCard from '../../../components/ApplyCard';
-import SocialNetworkSharingPopup from '../../../components/SocialNetworkSharingPopup/SocialNetworkSharingPopup';
-import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
-import { ROLES_NAME, ROUTES } from '../../../configs/constants';
-import { formatRoute } from '../../../utils/funcUtils';
+import { TabTitle } from "../../../utils/generalFunction";
+import toastMessages from "../../../utils/toastMessages";
+import errorHandling from "../../../utils/errorHandling";
+import MuiImageCustom from "../../../components/MuiImageCustom";
+import { salaryString } from "../../../utils/customData";
+import NoDataCard from "../../../components/NoDataCard";
+import Map from "../../../components/Map";
+import jobService from "../../../services/jobService";
+import ApplyCard from "../../../components/ApplyCard";
+import SocialNetworkSharingPopup from "../../../components/SocialNetworkSharingPopup/SocialNetworkSharingPopup";
+import FilterJobPostCard from "../../components/defaults/FilterJobPostCard";
+import { ROLES_NAME, ROUTES } from "../../../configs/constants";
+import { formatRoute } from "../../../utils/funcUtils";
+import PersonIcon from "@mui/icons-material/Person";
+import EmailIcon from "@mui/icons-material/Email";
+import PhoneIcon from "@mui/icons-material/Phone";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const Loading = (
   <>
@@ -214,14 +218,18 @@ const Loading = (
 const item = (title, value) => {
   return (
     <Box>
-      <Typography variant="body2" color="#bdbdbd" sx={{ fontWeight: 'normal' }}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ fontWeight: "normal", pb: 1 }}
+      >
         {title}
       </Typography>
-      <Typography variant="body1" gutterBottom sx={{ textAlign: 'justify' }}>
+      <Typography variant="body1" gutterBottom sx={{ textAlign: "justify" }}>
         {value ? (
-          <span style={{ fontWeight: 'bold' }}>{value}</span>
+          <span style={{ fontWeight: "bold" }}>{value}</span>
         ) : (
-          <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
+          <span style={{ color: "#e0e0e0", fontStyle: "italic", fontSize: 13 }}>
             Chưa cập nhật
           </span>
         )}
@@ -246,21 +254,46 @@ const ActionComponent = ({
         <Button
           variant="contained"
           size="large"
-          sx={{ textTransform: 'inherit' }}
+          sx={{
+            textTransform: "none",
+            background: "linear-gradient(45deg, #FF9800 30%, #FF5722 90%)",
+            color: "white",
+            fontWeight: 600,
+            "&:hover": {
+              background: "linear-gradient(45deg, #FB8C00 30%, #F4511E 90%)",
+            },
+          }}
           disabled={isApplied}
           onClick={handleShowApplyForm}
         >
-          {isApplied ? 'Đã ứng tuyển' : 'Nộp hồ sơ'}
+          {isApplied ? "Đã ứng tuyển" : "Nộp hồ sơ"}
         </Button>
         <LoadingButton
           onClick={handleSave}
           startIcon={isSaved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           loading={isLoadingSave}
           loadingPosition="start"
-          variant="outlined"
-          sx={{ textTransform: 'inherit' }}
+          variant={isSaved ? "contained" : "outlined"}
+          sx={{
+            textTransform: "none",
+            ...(isSaved
+              ? {
+                  backgroundColor: "#9c27b0",
+                  "&:hover": {
+                    backgroundColor: "#7b1fa2",
+                  },
+                }
+              : {
+                  borderColor: "#9c27b0",
+                  color: "#9c27b0",
+                  "&:hover": {
+                    borderColor: "#7b1fa2",
+                    backgroundColor: "rgba(156,39,176,0.04)",
+                  },
+                }),
+          }}
         >
-          <span>{isSaved ? 'Đã lưu' : 'Lưu'}</span>
+          <span>{isSaved ? "Đã lưu" : "Lưu tin"}</span>
         </LoadingButton>
       </>
     )}
@@ -268,7 +301,15 @@ const ActionComponent = ({
       variant="outlined"
       size="large"
       startIcon={<ShareIcon />}
-      sx={{ textTransform: 'inherit' }}
+      sx={{
+        textTransform: "none",
+        borderColor: "#9c27b0",
+        color: "#9c27b0",
+        "&:hover": {
+          borderColor: "#7b1fa2",
+          backgroundColor: "rgba(156,39,176,0.04)",
+        },
+      }}
       onClick={() => setOpenSharePopup(true)}
     >
       Chia sẻ
@@ -291,10 +332,10 @@ const JobDetailPage = () => {
     const getJobPostDetail = async (jobPostSlug) => {
       try {
         const resData = await jobService.getJobPostDetailById(jobPostSlug);
-        const data = resData.data
+        const data = resData.data;
 
         setJobPostDetail(data);
-        TabTitle(data?.jobName)
+        TabTitle(data?.jobName);
       } catch (error) {
       } finally {
         setIsLoading(false);
@@ -320,7 +361,7 @@ const JobDetailPage = () => {
 
         setJobPostDetail({ ...jobPostDetail, isSaved: isSaved });
         toastMessages.success(
-          isSaved ? 'Lưu thành công.' : 'Hủy lưu thành công.'
+          isSaved ? "Lưu thành công." : "Hủy lưu thành công."
         );
       } catch (error) {
         errorHandling(error);
@@ -348,7 +389,11 @@ const JobDetailPage = () => {
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
               {/* Start: thong tin chung */}
               <Card
-                sx={{ py: 2, px: { xs: 1.5, sm: 1.5, md: 2, lg: 4, xl: 4 } }}
+                sx={{
+                  py: 2,
+                  px: { xs: 1.5, sm: 1.5, md: 2, lg: 4, xl: 4 },
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                }}
               >
                 <Stack>
                   <Box>
@@ -359,9 +404,9 @@ const JobDetailPage = () => {
                           height={75}
                           src={jobPostDetail?.companyDict?.companyImageUrl}
                           sx={{
-                            bgcolor: 'white',
+                            bgcolor: "white",
                             borderRadius: 2,
-                            boxShadow: 6,
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
                             p: 0.5,
                           }}
                         />
@@ -370,8 +415,11 @@ const JobDetailPage = () => {
                         <Typography
                           variant="h6"
                           component={Link}
-                          to={`/${formatRoute(ROUTES.JOB_SEEKER.COMPANY_DETAIL, jobPostDetail?.companyDict?.slug)}`}
-                          sx={{ color: 'inherit', textDecoration: 'none' }}
+                          to={`/${formatRoute(
+                            ROUTES.JOB_SEEKER.COMPANY_DETAIL,
+                            jobPostDetail?.companyDict?.slug
+                          )}`}
+                          sx={{ color: "inherit", textDecoration: "none" }}
                         >
                           {jobPostDetail?.companyDict?.companyName}
                         </Typography>
@@ -385,8 +433,8 @@ const JobDetailPage = () => {
                           ] || (
                             <span
                               style={{
-                                color: '#e0e0e0',
-                                fontStyle: 'italic',
+                                color: "#e0e0e0",
+                                fontStyle: "italic",
                                 fontSize: 13,
                               }}
                             >
@@ -398,7 +446,7 @@ const JobDetailPage = () => {
                       <Box>
                         <Space direction="vertical" align="center">
                           <QRCode
-                            value={window.location.href || '-'}
+                            value={window.location.href || "-"}
                             size={75}
                           />
                         </Space>
@@ -406,59 +454,70 @@ const JobDetailPage = () => {
                     </Stack>
                   </Box>
                   <Divider sx={{ my: 2 }} />
-                  <Stack spacing={2}>
-                    <Box>
-                      <Typography variant="h5" sx={{ fontSize: 26 }}>
-                        {jobPostDetail?.jobName}
-                      </Typography>
-                    </Box>
-                    <Stack
-                      direction={{
-                        sx: 'column',
-                        sm: 'row',
-                        md: 'row',
-                        lg: 'row',
-                        xl: 'row',
-                      }}
-                      spacing={3}
-                    >
-                      <Typography variant="subtitle2">
+                  <Box>
+                    <Typography variant="h5" sx={{ fontSize: 26, mb: 2 }}>
+                      {jobPostDetail?.jobName}
+                    </Typography>
+
+                    <Stack direction="row" spacing={3} sx={{ mb: 2 }}>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          color: "text.secondary",
+                        }}
+                      >
                         <FontAwesomeIcon
                           icon={faCalendarDay}
                           style={{
                             marginRight: 6,
                             fontSize: 15,
-                            color: '#bdbdbd',
+                            color: "#9c27b0",
                           }}
-                        />{' '}
-                        Hạn nộp hồ sơ:{' '}
-                        {dayjs(jobPostDetail?.deadline).format('DD/MM/YYYY')}
+                        />
+                        Hạn nộp:{" "}
+                        {dayjs(jobPostDetail?.deadline).format("DD/MM/YYYY")}
                       </Typography>
-                      <Typography variant="subtitle2">
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          color: "text.secondary",
+                        }}
+                      >
                         <FontAwesomeIcon
                           icon={faEye}
                           style={{
                             marginRight: 6,
                             fontSize: 15,
-                            color: '#bdbdbd',
+                            color: "#9c27b0",
                           }}
-                        />{' '}
-                        Lượt xem: {jobPostDetail?.views}
+                        />
+                        {jobPostDetail?.views} lượt xem
                       </Typography>
-                      <Typography variant="subtitle2">
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          color: "text.secondary",
+                        }}
+                      >
                         <FontAwesomeIcon
                           icon={faClockFour}
                           style={{
                             marginRight: 6,
                             fontSize: 15,
-                            color: '#bdbdbd',
+                            color: "#9c27b0",
                           }}
-                        />{' '}
-                        Đăng ngày:{' '}
-                        {dayjs(jobPostDetail?.createAt).format('DD/MM/YYYY')}
+                        />
+                        Đăng ngày:{" "}
+                        {dayjs(jobPostDetail?.createAt).format("DD/MM/YYYY")}
                       </Typography>
                     </Stack>
-                    {/* Start: ActionComponent */}
+
                     <ActionComponent
                       isApplied={jobPostDetail.isApplied}
                       isSaved={jobPostDetail.isSaved}
@@ -469,164 +528,39 @@ const JobDetailPage = () => {
                       isAuthenticated={isAuthenticated}
                       currentUser={currentUser}
                     />
-                    {/* End: ActionComponent */}
-                  </Stack>
+                  </Box>
+
                   <Divider sx={{ my: 2 }} />
-                  <Box>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
-                        <Typography
-                          variant="body2"
-                          gutterBottom
-                          color="#bdbdbd"
-                        >
-                          Yêu cầu kinh nghiệm
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          gutterBottom
-                          sx={{ fontWeight: 'bold' }}
-                        >
-                          {allConfig?.experienceDict[
-                            jobPostDetail?.experience
-                          ] || (
-                            <span
-                              style={{
-                                color: '#e0e0e0',
-                                fontStyle: 'italic',
-                                fontSize: 13,
-                              }}
-                            >
-                              Chưa cập nhật
-                            </span>
-                          )}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
-                        <Typography
-                          variant="body2"
-                          gutterBottom
-                          color="#bdbdbd"
-                        >
-                          Mức lương
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          gutterBottom
-                          sx={{ fontWeight: 'bold' }}
-                        >
-                          {salaryString(
-                            jobPostDetail?.salaryMin,
-                            jobPostDetail?.salaryMax
-                          )}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
-                        <Typography
-                          variant="body2"
-                          gutterBottom
-                          color="#bdbdbd"
-                        >
-                          Cấp bậc
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          gutterBottom
-                          sx={{ fontWeight: 'bold' }}
-                        >
-                          {allConfig?.positionDict[jobPostDetail?.position] || (
-                            <span
-                              style={{
-                                color: '#e0e0e0',
-                                fontStyle: 'italic',
-                                fontSize: 13,
-                              }}
-                            >
-                              Chưa cập nhật
-                            </span>
-                          )}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
-                        <Typography
-                          variant="body2"
-                          gutterBottom
-                          color="#bdbdbd"
-                        >
-                          Hình thức làm việc
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          gutterBottom
-                          sx={{ fontWeight: 'bold' }}
-                        >
-                          {allConfig?.jobTypeDict[jobPostDetail?.jobType] || (
-                            <span
-                              style={{
-                                color: '#e0e0e0',
-                                fontStyle: 'italic',
-                                fontSize: 13,
-                              }}
-                            >
-                              Chưa cập nhật
-                            </span>
-                          )}
-                        </Typography>
-                      </Grid>
+
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6} md={3}>
+                      {item(
+                        "Mức lương",
+                        salaryString(
+                          jobPostDetail?.salaryMin,
+                          jobPostDetail?.salaryMax
+                        )
+                      )}
                     </Grid>
-                  </Box>
-                  <Divider sx={{ my: 2 }} />
-                  <Box>
-                    <Stack>
-                      <Typography variant="h5" gutterBottom>
-                        Thông tin
-                      </Typography>
-                      <Box>
-                        <Grid container spacing={2}>
-                          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                            {item(
-                              'Nghề nghiệp',
-                              allConfig.careerDict[jobPostDetail?.career]
-                            )}
-                          </Grid>
-                          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                            {item(
-                              'Nơi làm việc',
-                              allConfig.typeOfWorkplaceDict[
-                                jobPostDetail?.typeOfWorkplace
-                              ]
-                            )}
-                          </Grid>
-                          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                            {item(
-                              'Học vấn',
-                              allConfig.academicLevelDict[
-                                jobPostDetail?.academicLevel
-                              ]
-                            )}
-                          </Grid>
-                          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                            {item('Số lượng tuyển', jobPostDetail?.quantity)}
-                          </Grid>
-                          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                            {item(
-                              'Khu vực tuyển',
-                              allConfig.cityDict[jobPostDetail?.location?.city]
-                            )}
-                          </Grid>
-                          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                            {item(
-                              'Yêu cầu giới tính',
-                              allConfig.genderDict[
-                                jobPostDetail?.genderRequired
-                              ]
-                            )}
-                          </Grid>
-                        </Grid>
-                      </Box>
-                    </Stack>
-                  </Box>
-                  <Box></Box>
+                    <Grid item xs={12} sm={6} md={3}>
+                      {item(
+                        "Kinh nghiệm",
+                        allConfig?.experienceDict[jobPostDetail?.experience]
+                      )}
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                      {item(
+                        "Cấp bậc",
+                        allConfig?.positionDict[jobPostDetail?.position]
+                      )}
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                      {item(
+                        "Hình thức",
+                        allConfig?.jobTypeDict[jobPostDetail?.jobType]
+                      )}
+                    </Grid>
+                  </Grid>
                 </Stack>
               </Card>
               {/* End: thong tin chung */}
@@ -634,56 +568,140 @@ const JobDetailPage = () => {
               {/* Start: mo ta chi tiet */}
               <Card
                 sx={{
-                  py: 4,
+                  p: 4,
                   mt: 3,
                   px: { xs: 1.5, sm: 1.5, md: 2, lg: 4, xl: 4 },
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                 }}
               >
                 <Stack spacing={4}>
+                  {/* Mô tả công việc */}
                   <Box>
-                    <Typography variant="h5">Mô tả công việc</Typography>
-                    <Box sx={{ pt: 1 }}>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: jobPostDetail?.jobDescription,
-                        }}
-                      ></div>
-                    </Box>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontSize: "1.3rem",
+                        fontWeight: 700,
+                        mb: 2,
+                        "&::after": {
+                          content: '""',
+                          display: "block",
+                          width: "50px",
+                          height: "3px",
+                          background: "#9c27b0",
+                          borderRadius: "2px",
+                          mt: 1,
+                        },
+                      }}
+                    >
+                      Mô tả công việc
+                    </Typography>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: jobPostDetail?.jobDescription,
+                      }}
+                    />
                   </Box>
+
+                  {/* Yêu cầu công việc */}
                   <Box>
-                    <Typography variant="h5">Yêu cầu công việc</Typography>
-                    <Box sx={{ pt: 1 }}>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: jobPostDetail?.jobRequirement,
-                        }}
-                      ></div>
-                    </Box>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontSize: "1.3rem",
+                        fontWeight: 700,
+                        mb: 2,
+                        "&::after": {
+                          content: '""',
+                          display: "block",
+                          width: "50px",
+                          height: "3px",
+                          background: "#9c27b0",
+                          borderRadius: "2px",
+                          mt: 1,
+                        },
+                      }}
+                    >
+                      Yêu cầu công việc
+                    </Typography>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: jobPostDetail?.jobRequirement,
+                      }}
+                    />
                   </Box>
+
+                  {/* Quyền lợi */}
                   <Box>
-                    <Typography variant="h5">Quyền lợi</Typography>
-                    <Box sx={{ pt: 1 }}>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: jobPostDetail?.benefitsEnjoyed,
-                        }}
-                      ></div>
-                    </Box>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontSize: "1.3rem",
+                        fontWeight: 700,
+                        mb: 2,
+                        "&::after": {
+                          content: '""',
+                          display: "block",
+                          width: "50px",
+                          height: "3px",
+                          background: "#9c27b0",
+                          borderRadius: "2px",
+                          mt: 1,
+                        },
+                      }}
+                    >
+                      Quyền lợi
+                    </Typography>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: jobPostDetail?.benefitsEnjoyed,
+                      }}
+                    />
+                  </Box>
+
+                  {/* Thông tin bổ sung */}
+                  <Box sx={{ mt: 2 }}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} sm={6}>
+                        {item(
+                          "Nghề nghiệp",
+                          allConfig.careerDict[jobPostDetail?.career]
+                        )}
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        {item(
+                          "Nơi làm việc",
+                          allConfig.typeOfWorkplaceDict[
+                            jobPostDetail?.typeOfWorkplace
+                          ]
+                        )}
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        {item(
+                          "Học vấn",
+                          allConfig.academicLevelDict[
+                            jobPostDetail?.academicLevel
+                          ]
+                        )}
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        {item("Số lượng tuyển", jobPostDetail?.quantity)}
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        {item(
+                          "Khu vực tuyển",
+                          allConfig.cityDict[jobPostDetail?.location?.city]
+                        )}
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        {item(
+                          "Yêu cầu giới tính",
+                          allConfig.genderDict[jobPostDetail?.genderRequired]
+                        )}
+                      </Grid>
+                    </Grid>
                   </Box>
                 </Stack>
-                <Divider sx={{ my: 2 }} />
-                {/* Start: ActionComponent */}
-                <ActionComponent
-                  isApplied={jobPostDetail.isApplied}
-                  isSaved={jobPostDetail.isSaved}
-                  isLoadingSave={isLoadingSave}
-                  handleSave={handleSave}
-                  handleShowApplyForm={handleShowApplyForm}
-                  setOpenSharePopup={setOpenSharePopup}
-                  isAuthenticated={isAuthenticated}
-                  currentUser={currentUser}
-                />
-                {/* End: ActionComponent */}
               </Card>
               {/* End: mo ta chi tiet */}
 
@@ -693,52 +711,173 @@ const JobDetailPage = () => {
                   py: 4,
                   mt: 3,
                   px: { xs: 1.5, sm: 1.5, md: 2, lg: 4, xl: 4 },
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                 }}
               >
-                <Grid container spacing={2}>
+                <Grid container spacing={4}>
                   <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                     <Box>
-                      <Typography variant="h5">Thông tin liên hệ</Typography>
-                      <Stack sx={{ pt: 1 }} spacing={2}>
-                        <Box>
-                          {item(
-                            'Người liên hệ',
-                            jobPostDetail?.contactPersonName
-                          )}
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          fontSize: "1.3rem",
+                          fontWeight: 700,
+                          mb: 3,
+                          "&::after": {
+                            content: '""',
+                            display: "block",
+                            width: "50px",
+                            height: "3px",
+                            background: "#9c27b0",
+                            borderRadius: "2px",
+                            mt: 1,
+                          },
+                        }}
+                      >
+                        Thông tin liên hệ
+                      </Typography>
+
+                      <Stack spacing={2.5}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 2,
+                            p: 2,
+                            borderRadius: 2,
+                            bgcolor: "rgba(156,39,176,0.04)",
+                            transition: "all 0.2s",
+                            "&:hover": {
+                              bgcolor: "rgba(156,39,176,0.08)",
+                              transform: "translateX(8px)",
+                            }
+                          }}
+                        >
+                          <PersonIcon sx={{ color: "#9c27b0", fontSize: 24 }} />
+                          <Box>
+                            <Typography variant="body2" color="text.secondary" gutterBottom>
+                              Người liên hệ
+                            </Typography>
+                            <Typography variant="body1" fontWeight={500}>
+                              {jobPostDetail?.contactPersonName || "Chưa cập nhật"}
+                            </Typography>
+                          </Box>
                         </Box>
-                        <Box>
-                          {item(
-                            'Email liên hệ',
-                            jobPostDetail?.contactPersonEmail
-                          )}
+
+                        <Box
+                          sx={{
+                            display: "flex", 
+                            alignItems: "center",
+                            gap: 2,
+                            p: 2,
+                            borderRadius: 2,
+                            bgcolor: "rgba(156,39,176,0.04)",
+                            transition: "all 0.2s",
+                            "&:hover": {
+                              bgcolor: "rgba(156,39,176,0.08)", 
+                              transform: "translateX(8px)",
+                            }
+                          }}
+                        >
+                          <EmailIcon sx={{ color: "#9c27b0", fontSize: 24 }} />
+                          <Box>
+                            <Typography variant="body2" color="text.secondary" gutterBottom>
+                              Email liên hệ
+                            </Typography>
+                            <Typography variant="body1" fontWeight={500}>
+                              {jobPostDetail?.contactPersonEmail || "Chưa cập nhật"}
+                            </Typography>
+                          </Box>
                         </Box>
-                        <Box>
-                          {item(
-                            'SĐT liên hệ',
-                            jobPostDetail?.contactPersonPhone
-                          )}
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center", 
+                            gap: 2,
+                            p: 2,
+                            borderRadius: 2,
+                            bgcolor: "rgba(156,39,176,0.04)",
+                            transition: "all 0.2s",
+                            "&:hover": {
+                              bgcolor: "rgba(156,39,176,0.08)",
+                              transform: "translateX(8px)",
+                            }
+                          }}
+                        >
+                          <PhoneIcon sx={{ color: "#9c27b0", fontSize: 24 }} />
+                          <Box>
+                            <Typography variant="body2" color="text.secondary" gutterBottom>
+                              Số điện thoại
+                            </Typography>
+                            <Typography variant="body1" fontWeight={500}>
+                              {jobPostDetail?.contactPersonPhone || "Chưa cập nhật"}
+                            </Typography>
+                          </Box>
                         </Box>
-                        <Box>
-                          {item('Địa chỉ', jobPostDetail?.location?.address)}
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 2, 
+                            p: 2,
+                            borderRadius: 2,
+                            bgcolor: "rgba(156,39,176,0.04)",
+                            transition: "all 0.2s",
+                            "&:hover": {
+                              bgcolor: "rgba(156,39,176,0.08)",
+                              transform: "translateX(8px)",
+                            }
+                          }}
+                        >
+                          <LocationOnIcon sx={{ color: "#9c27b0", fontSize: 24 }} />
+                          <Box>
+                            <Typography variant="body2" color="text.secondary" gutterBottom>
+                              Địa chỉ
+                            </Typography>
+                            <Typography variant="body1" fontWeight={500}>
+                              {jobPostDetail?.location?.address || "Chưa cập nhật"}
+                            </Typography>
+                          </Box>
                         </Box>
                       </Stack>
                     </Box>
                   </Grid>
+
                   <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                     <Box>
-                      <Typography variant="body2" color="#bdbdbd">
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          fontSize: "1.3rem",
+                          fontWeight: 700,
+                          mb: 3,
+                          "&::after": {
+                            content: '""',
+                            display: "block",
+                            width: "50px", 
+                            height: "3px",
+                            background: "#9c27b0",
+                            borderRadius: "2px",
+                            mt: 1,
+                          },
+                        }}
+                      >
                         Bản đồ
                       </Typography>
-                      <Stack sx={{ pt: 1 }} spacing={2}>
-                        <Box>
-                          <Map
-                            title={jobPostDetail?.jobName}
-                            subTitle={jobPostDetail?.location?.address}
-                            latitude={jobPostDetail?.location?.lat}
-                            longitude={jobPostDetail?.location?.lng}
-                          />
-                        </Box>
-                      </Stack>
+                      <Box sx={{ 
+                        borderRadius: 2,
+                        overflow: "hidden",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.08)"
+                      }}>
+                        <Map
+                          title={jobPostDetail?.jobName}
+                          subTitle={jobPostDetail?.location?.address}
+                          latitude={jobPostDetail?.location?.lat}
+                          longitude={jobPostDetail?.location?.lng}
+                        />
+                      </Box>
                     </Box>
                   </Grid>
                 </Grid>
@@ -751,7 +890,7 @@ const JobDetailPage = () => {
                 <Stack spacing={2}>
                   <Typography variant="h5">Việc làm tương tự</Typography>
                   <Box
-                    sx={{ width: 120, height: 5, backgroundColor: '#441da0' }}
+                    sx={{ width: 120, height: 5, backgroundColor: "#441da0" }}
                   ></Box>
                   <Box>
                     {/* Start: FilterJobPostCard */}
@@ -793,21 +932,21 @@ const JobDetailPage = () => {
         }}
         linkedin={{
           url: window.location.href,
-          source: '',
-          title: '',
-          summary: '',
+          source: "",
+          title: "",
+          summary: "",
         }}
         twitter={{
           url: window.location.href,
-          title: '',
-          via: '',
+          title: "",
+          via: "",
           hashtags: [],
           related: [],
         }}
         email={{
           url: window.location.href,
-          subject: '',
-          body: '',
+          subject: "",
+          body: "",
         }}
       />
       {/* End: SocialNetworkSharingPopup */}

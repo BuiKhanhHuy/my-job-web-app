@@ -1,26 +1,25 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
-import { ROLES_NAME, ROUTES } from '../../../../configs/constants';
-import toastMessages from '../../../../utils/toastMessages';
-import errorHandling from '../../../../utils/errorHandling';
-import BackdropLoading from '../../../../components/loading/BackdropLoading';
+import { ROUTES } from "../../../../configs/constants";
+import toastMessages from "../../../../utils/toastMessages";
+import errorHandling from "../../../../utils/errorHandling";
+import BackdropLoading from "../../../../components/loading/BackdropLoading";
 
-import FormPopup from '../../../../components/controls/FormPopup';
-import AccountForm from '../AccountForm';
-import UpdatePasswordForm from '../UpdatePasswordForm';
-import { updateUserInfo, removeUserInfo } from '../../../../redux/userSlice';
-import authService from '../../../../services/authService';
-import tokenService from '../../../../services/tokenService';
-import AvatarCard from '../AvatarCard';
+import FormPopup from "../../../../components/controls/FormPopup";
+import AccountForm from "../AccountForm";
+import UpdatePasswordForm from "../UpdatePasswordForm";
+import { updateUserInfo, removeUserInfo } from "../../../../redux/userSlice";
+import authService from "../../../../services/authService";
+import tokenService from "../../../../services/tokenService";
+import AvatarCard from "../AvatarCard";
 
-const AccountCard = ({ title }) => {
+const AccountCard = ({ title, sx }) => {
   const dispatch = useDispatch();
   const nav = useNavigate();
-  const { currentUser } = useSelector((state) => state.user);
   const [openPopup, setOpenPopup] = React.useState(false);
   const [isFullScreenLoading, setIsFullScreenLoading] = React.useState(false);
   const [serverErrors, setServerErrors] = React.useState(null);
@@ -29,7 +28,7 @@ const AccountCard = ({ title }) => {
     dispatch(updateUserInfo(data))
       .unwrap()
       .then(() =>
-        toastMessages.success('Cập nhật thông tin tài khoản thành công.')
+        toastMessages.success("Cập nhật thông tin tài khoản thành công.")
       )
       .catch((error) => {
         errorHandling(error, setServerErrors);
@@ -43,18 +42,18 @@ const AccountCard = ({ title }) => {
         await authService.changePassword(data);
 
         setOpenPopup(false);
-        toastMessages.success('Đổi mật khẩu thành công.');
+        toastMessages.success("Đổi mật khẩu thành công.");
 
         let path = ROUTES.AUTH.LOGIN;
         const accessToken = tokenService.getAccessTokenFromCookie();
         const backend = tokenService.getProviderFromCookie();
-        dispatch(removeUserInfo({accessToken, backend}))
+        dispatch(removeUserInfo({ accessToken, backend }))
           .unwrap()
           .then(() => {
             nav(path);
           })
           .catch((err) => {
-            toastMessages.error('Đã xảy ra lỗi!');
+            toastMessages.error("Đã xảy ra lỗi!");
           });
       } catch (error) {
         errorHandling(error, setServerErrors);
@@ -68,52 +67,81 @@ const AccountCard = ({ title }) => {
 
   return (
     <>
-      <Box>
-        <Stack>
+      <Box
+        sx={{
+          background: "#fff",
+          borderRadius: 3,
+          boxShadow: (theme) => theme.customShadows.card,
+          p: 3,
+          ...sx
+        }}
+      >
+        <Stack spacing={3}>
           <Box>
             <Stack
               direction="row"
               justifyContent="space-between"
               alignItems="center"
             >
-              <Typography variant="h6">{title}</Typography>
+              <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                {title}
+              </Typography>
             </Stack>
           </Box>
-          <Divider sx={{ mt: 2, mb: 3 }} />
-          <Box sx={{ px: 1 }}>
-            <Grid container>
+
+          <Divider sx={{ my: 0, borderColor: "grey.500" }} />
+
+          <Box sx={{ px: { xs: 0, sm: 2 } }}>
+            <Grid container spacing={4}>
               <Grid item xs={12}>
-                {/* Start: Avatar card */}
                 <AvatarCard />
-                {/* End: Avatar card */}
               </Grid>
+
               <Grid item xs={12}>
                 <Box>
-                  {/* Start: Account form */}
                   <AccountForm handleUpdate={handleUpdateAccount} />
-                  {/* End: Account form */}
                 </Box>
+
                 <Box>
                   <Typography
-                    sx={{ color: '#441da0', mt: 1.5, textAlign: 'right' }}
+                    sx={{
+                      color: "primary.main",
+                      mt: 2,
+                      textAlign: "right",
+                      "&:hover": {
+                        color: "primary.dark",
+                        textDecoration: "underline",
+                      },
+                    }}
                     variant="subtitle2"
-                    gutterBottom
                   >
                     <span
-                      style={{ cursor: 'pointer' }}
+                      style={{ cursor: "pointer" }}
                       onClick={() => setOpenPopup(true)}
                     >
                       Thay đổi mật khẩu
                     </span>
                   </Typography>
                 </Box>
-                <Stack sx={{ mt: 3 }} direction="row" justifyContent="center">
+
+                <Stack sx={{ mt: 4 }} direction="row" justifyContent="center">
                   <Button
                     variant="contained"
                     color="primary"
                     startIcon={<SaveOutlinedIcon />}
                     type="submit"
                     form="account-form"
+                    sx={{
+                      px: 4,
+                      py: 1,
+                      fontSize: "0.9rem",
+                      background: (theme) => theme.palette.primary.gradient,
+                      "&:hover": {
+                        background: (theme) => theme.palette.primary.gradient,
+                        opacity: 0.9,
+                        boxShadow: (theme) => theme.customShadows.medium,
+                      },
+                    }}
                   >
                     Cập nhật
                   </Button>
@@ -124,7 +152,6 @@ const AccountCard = ({ title }) => {
         </Stack>
       </Box>
 
-      {/* Start: form  */}
       <FormPopup
         title="Cập nhật mật khẩu"
         openPopup={openPopup}
@@ -135,11 +162,8 @@ const AccountCard = ({ title }) => {
           serverErrors={serverErrors}
         />
       </FormPopup>
-      {/* End: form */}
 
-      {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}
-      {/* End: full screen loading */}
     </>
   );
 };

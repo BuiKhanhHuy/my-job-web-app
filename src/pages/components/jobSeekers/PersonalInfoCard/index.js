@@ -1,6 +1,6 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import dayjs from 'dayjs';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
 import {
   Box,
   Divider,
@@ -9,18 +9,18 @@ import {
   Skeleton,
   Stack,
   Typography,
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
-import NoDataCard from '../../../../components/NoDataCard';
-import toastMessages from '../../../../utils/toastMessages';
-import errorHandling from '../../../../utils/errorHandling';
-import BackdropLoading from '../../../../components/loading/BackdropLoading';
-import FormPopup from '../../../../components/controls/FormPopup';
-import PersonalProfileForm from '../PersonalProfileForm';
+import NoDataCard from "../../../../components/NoDataCard";
+import toastMessages from "../../../../utils/toastMessages";
+import errorHandling from "../../../../utils/errorHandling";
+import BackdropLoading from "../../../../components/loading/BackdropLoading";
+import FormPopup from "../../../../components/controls/FormPopup";
+import PersonalProfileForm from "../PersonalProfileForm";
 
-import jobSeekerProfileService from '../../../../services/jobSeekerProfileService';
-import { getUserInfo } from '../../../../redux/userSlice';
+import jobSeekerProfileService from "../../../../services/jobSeekerProfileService";
+import { getUserInfo } from "../../../../redux/userSlice";
 
 const Loading = (
   <>
@@ -69,21 +69,37 @@ const Loading = (
 
 const item = (title, value) => {
   return (
-    <Box>
-      <Typography sx={{ fontWeight: 'bold' }}>{title}</Typography>
-      <Typography>
-        {value || (
-           <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-           Chưa cập nhật
-         </span>
-        )}
+    <Box
+      sx={{
+        p: 1,
+        backgroundColor: "background.paper",
+      }}
+    >
+      <Typography
+        sx={{
+          fontWeight: 600,
+          color: "primary.main",
+          fontSize: "0.875rem",
+          mb: 1,
+        }}
+      >
+        {title}
+      </Typography>
+      <Typography
+        sx={{
+          color: value ? "text.primary" : "text.disabled",
+          fontStyle: value ? "normal" : "italic",
+          fontSize: value ? "1rem" : "0.875rem",
+        }}
+      >
+        {value || "Chưa cập nhật"}
       </Typography>
     </Box>
   );
 };
 
 const PersonalInfoCard = ({ title }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { allConfig } = useSelector((state) => state.config);
   const [openPopup, setOpenPopup] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
@@ -115,10 +131,10 @@ const PersonalInfoCard = ({ title }) => {
       try {
         await jobSeekerProfileService.updateProfile(data);
 
-        dispatch(getUserInfo())
+        dispatch(getUserInfo());
         setIsSuccess(!isSuccess);
         setOpenPopup(false);
-        toastMessages.success('Cập nhật thông tin cá nhân thành công.');
+        toastMessages.success("Cập nhật thông tin cá nhân thành công.");
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -131,69 +147,85 @@ const PersonalInfoCard = ({ title }) => {
 
   return (
     <>
-      <Box>
-        <Stack>
+      <Box
+        sx={{
+          backgroundColor: "background.paper",
+          borderRadius: 3,
+          p: 3,
+          boxShadow: (theme) => theme.customShadows.card,
+        }}
+      >
+        <Stack spacing={3}>
           <Box>
             <Stack
               direction="row"
               justifyContent="space-between"
               alignItems="center"
             >
-              <Typography variant="h6">{title}</Typography>
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: 600,
+                }}
+              >
+                {title}
+              </Typography>
               {profile && (
                 <Fab
                   size="small"
                   color="secondary"
                   aria-label="edit"
                   onClick={() => setOpenPopup(true)}
+                  sx={{
+                    boxShadow: (theme) => theme.customShadows.medium,
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                    transition: "all 0.2s ease-in-out",
+                  }}
                 >
-                  <EditIcon sx={{ color: 'white' }} />
+                  <EditIcon />
                 </Fab>
               )}
             </Stack>
           </Box>
-          <Divider sx={{ mt: 2, mb: 3 }} />
+          <Divider sx={{ my: 0, borderColor: 'grey.500' }}/>
           {isLoadingProfile ? (
             Loading
           ) : profile === null ? (
             <NoDataCard />
           ) : (
-            <>
-              <Stack sx={{ px: 1 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
-                    <Stack spacing={2}>
-                      {item('Họ và tên', profile?.user?.fullName)}
-                      {item('Số điện thoại', profile?.phone)}
-                      {item('Giới tính', allConfig.genderDict[profile?.gender])}
-                      {item(
-                        'Ngày sinh',
-                        profile?.birthday
-                          ? dayjs(profile.birthday).format('DD/MM/YYYY')
-                          : profile?.birthday
-                      )}
-                      {item(
-                        'Tình trạng hôn nhân',
-                        allConfig.maritalStatusDict[profile?.maritalStatus]
-                      )}
-                    </Stack>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={8} lg={8} xl={8}>
-                    <Stack spacing={2}>
-                      {item(
-                        'Tỉnh/Thành phố',
-                        allConfig.cityDict[profile?.location?.city]
-                      )}
-                      {item(
-                        'Quận/Huyện',
-                        profile?.location?.districtDict?.name
-                      )}
-                      {item('Địa chỉ', profile?.location?.address)}
-                    </Stack>
-                  </Grid>
+            <Stack sx={{ px: 1 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+                  <Stack spacing={1.5}>
+                    {item("Họ và tên", profile?.user?.fullName)}
+                    {item("Số điện thoại", profile?.phone)}
+                    {item("Giới tính", allConfig.genderDict[profile?.gender])}
+                    {item(
+                      "Ngày sinh",
+                      profile?.birthday
+                        ? dayjs(profile.birthday).format("DD/MM/YYYY")
+                        : profile?.birthday
+                    )}
+                    {item(
+                      "Tình trạng hôn nhân",
+                      allConfig.maritalStatusDict[profile?.maritalStatus]
+                    )}
+                  </Stack>
                 </Grid>
-              </Stack>
-            </>
+                <Grid item xs={12} sm={6} md={8} lg={8} xl={8}>
+                  <Stack spacing={1.5}>
+                    {item(
+                      "Tỉnh/Thành phố",
+                      allConfig.cityDict[profile?.location?.city]
+                    )}
+                    {item("Quận/Huyện", profile?.location?.districtDict?.name)}
+                    {item("Địa chỉ", profile?.location?.address)}
+                  </Stack>
+                </Grid>
+              </Grid>
+            </Stack>
           )}
         </Stack>
       </Box>

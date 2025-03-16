@@ -98,7 +98,7 @@ const UserMenu = ({ anchorElUser, open, handleCloseUserMenu }) => {
     >
       <Stack spacing={1} sx={{ p: 1 }}>
         {menuItems.map((item) => (
-          <Link to={item.path} key={item.path}>
+          <Link to={`/${item.path}`} key={item.path}>
             <Button
               color="primary"
               variant="text"

@@ -170,72 +170,116 @@ const SavedResumeCard = ({ title }) => {
   };
 
   return (
-    <>
-      <Box>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Typography variant="h5">{title}</Typography>
-          <Button
-            variant="outlined"
-            color="secondary"
-            startIcon={<FileDownloadOutlinedIcon />}
-            onClick={handleExport}
-          >
-            Tải danh sách
-          </Button>
-        </Stack>
-      </Box>
-
-      <Divider sx={{ mt: 2, mb: 3 }} />
-
-      <Stack
-        direction={{
-          xs: 'column',
-          sm: 'column',
-          md: 'row',
-          lg: 'row',
-          xl: 'row',
-        }}
-        alignItems={{
-          xs: 'flex-start',
-          sm: 'flex-start',
-          md: 'center',
-          lg: 'center',
-          xl: 'center',
-        }}
-        sx={{ mb: 3 }}
-        spacing={2}
+    <Box sx={{ 
+      px: { xs: 1, sm: 2 }, 
+      py: { xs: 2, sm: 2 }, 
+      backgroundColor: 'background.paper', 
+      borderRadius: 2 
+    }}>
+      {/* Header Section */}
+      <Stack 
+        direction={{ xs: 'column', sm: 'row' }}
+        alignItems={{ xs: 'flex-start', sm: 'center' }}
+        justifyContent="space-between"
+        spacing={{ xs: 2, sm: 0 }}
+        mb={4}
       >
-        <Box>
-          <Typography variant="subtitle2">Bộ lọc: </Typography>
-        </Box>
-        <Box flex={1}>
-          {/* Start: SavedResumeFilterForm */}
-          <SavedResumeFilterForm handleFilter={handleFilter} />
-          {/* End: SavedResumeFilterForm */}
-        </Box>
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            fontWeight: 600,
+            background: 'primary.gradient',
+            WebkitBackgroundClip: 'text',
+            fontSize: { xs: '1.25rem', sm: '1.5rem' }
+          }}
+        >
+          {title}
+        </Typography>
+        <Button
+          variant="outlined"
+          color="secondary"
+          startIcon={<FileDownloadOutlinedIcon />}
+          onClick={handleExport}
+          sx={{
+            borderRadius: 2,
+            px: 3,
+            width: { xs: '100%', sm: 'auto' },
+            '&:hover': {
+              backgroundColor: 'secondary.backgroundHover'
+            }
+          }}
+        >
+          Tải danh sách
+        </Button>
       </Stack>
 
-      {isLoading ? <LinearProgress color="primary" /> : <Divider />}
-      <SavedResumeTable
-        headCells={headCells}
-        isLoading={isLoading}
-        rows={resumes}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        count={count}
-        handleUnsave={handleSave}
-        handleChangePage={handleChangePage}
-        handleChangeRowsPerPage={handleChangeRowsPerPage}
-      />
+      {/* Filter Section */}
+      <Box sx={{ mb: 3 }}>
+        <Typography 
+          variant="subtitle1" 
+          sx={{ 
+            color: 'text.secondary',
+            fontWeight: 600,
+            mb: 2
+          }}
+        >
+          Bộ lọc:
+        </Typography>
 
-      {/* Start: full screen loading */}
+        <Box sx={{
+          backgroundColor: 'background.paper',
+          borderRadius: 2,
+          width: '100%'
+        }}>
+          <SavedResumeFilterForm 
+            handleFilter={handleFilter}
+          />
+        </Box>
+      </Box>
+
+      {/* Loading Progress */}
+      {isLoading ? (
+        <Box sx={{ width: '100%', mb: 2 }}>
+          <LinearProgress 
+            color="primary"
+            sx={{
+              height: { xs: 4, sm: 6 },
+              borderRadius: 3,
+              backgroundColor: 'primary.background'
+            }}
+          />
+        </Box>
+      ) : (
+        <Divider sx={{ mb: 2 }} />
+      )}
+
+      {/* Table Section */}
+      <Box sx={{
+        backgroundColor: 'background.paper',
+        borderRadius: 2,
+        boxShadow: 'custom.card',
+        overflow: 'hidden',
+        width: '100%',
+        '& .MuiTableContainer-root': {
+          overflowX: 'auto'
+        }
+      }}>
+        <SavedResumeTable
+          headCells={headCells}
+          isLoading={isLoading}
+          rows={resumes}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          count={count}
+          handleUnsave={handleSave}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Box>
+
+      {/* Loading Backdrop */}
       {isFullScreenLoading && <BackdropLoading />}
-      {/* End: full screen loading */}
-    </>
+    </Box>
   );
 };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Box,
   Card,
   Chip,
   IconButton,
@@ -26,6 +25,7 @@ import { salaryString } from '../../utils/customData';
 import { useSelector } from 'react-redux';
 import { CV_TYPES, ROUTES } from '../../configs/constants';
 import { formatRoute } from '../../utils/funcUtils';
+import defaultTheme from '../../themeConfigs/defaultTheme';
 
 const JobSeekerProfile = ({
   id,
@@ -50,9 +50,15 @@ const JobSeekerProfile = ({
   return (
     <Card
       sx={{
-        p: 1.5,
+        p: 2,
+        transition: 'all 0.3s ease',
+        border: `1px solid ${defaultTheme.palette.grey[200]}`,
+        backgroundColor: defaultTheme.palette.background.paper,
         '&:hover': {
-          borderColor: '#441da0',
+          borderColor: defaultTheme.palette.primary.main,
+          backgroundColor: defaultTheme.palette.primary.background,
+          transform: 'translateY(-2px)',
+          boxShadow: defaultTheme.customShadows.card,
         },
       }}
       variant="outlined"
@@ -68,135 +74,155 @@ const JobSeekerProfile = ({
         justifyContent="space-between"
         spacing={2}
       >
-        <Stack spacing={0.5}>
-          <Typography variant="subtitle2" sx={{ fontSize: 16 }}>
-            <span
-              style={{ cursor: 'pointer' }}
-              onClick={() => nav(`/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, slug)}`)}
+        <Stack spacing={1}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Typography 
+              variant="subtitle1" 
+              sx={{ 
+                fontSize: '1rem',
+                fontWeight: 600,
+                color: defaultTheme.palette.grey[800],
+                '&:hover': {
+                  color: defaultTheme.palette.primary.main,
+                }
+              }}
             >
-              {user?.fullName || (
-                <span
-                  style={{
-                    color: '#e0e0e0',
-                    fontStyle: 'italic',
-                    fontSize: 13,
-                  }}
-                >
-                  Chưa cập nhật
-                </span>
-              )}
-              <span style={{ color: 'gray' }}>
-                (
-                {jobSeekerProfile?.old || (
-                  <span
-                    style={{
-                      color: '#e0e0e0',
+              <span
+                style={{ cursor: 'pointer' }}
+                onClick={() => nav(`/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, slug)}`)}
+              >
+                {user?.fullName || (
+                  <Typography
+                    component="span"
+                    sx={{
+                      color: defaultTheme.palette.text.placeholder,
                       fontStyle: 'italic',
-                      fontSize: 13,
+                      ...defaultTheme.palette.text.italic
                     }}
                   >
                     Chưa cập nhật
-                  </span>
-                )}{' '}
-                tuổi)
+                  </Typography>
+                )}
+                <Typography
+                  component="span"
+                  sx={{
+                    color: defaultTheme.palette.grey[600],
+                    ml: 0.5,
+                    fontSize: '0.95rem'
+                  }}
+                >
+                  (
+                  {jobSeekerProfile?.old || (
+                    <span style={defaultTheme.palette.text.italic}>
+                      Chưa cập nhật
+                    </span>
+                  )}{' '}
+                  tuổi)
+                </Typography>
               </span>
-            </span>
+            </Typography>
             {lastViewedDate && (
               <Chip
                 icon={<CheckCircleRoundedIcon />}
-                sx={{ marginLeft: 1 }}
                 label={`Xem lần cuối: ${dayjs(lastViewedDate).format(
                   'DD/MM/YYYY HH:mm'
                 )}`}
                 color="success"
                 variant="outlined"
                 size="small"
+                sx={{
+                  borderRadius: '6px',
+                  backgroundColor: defaultTheme.palette.success.background,
+                  borderColor: defaultTheme.palette.success.light,
+                  '& .MuiChip-label': {
+                    px: 1,
+                  }
+                }}
               />
             )}
+          </Stack>
+
+          <Typography 
+            variant="h6"
+            sx={{
+              cursor: 'pointer',
+              color: defaultTheme.palette.primary.main,
+              fontWeight: 500,
+              '&:hover': {
+                color: defaultTheme.palette.primary.dark,
+              }
+            }}
+            onClick={() => nav(`/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, slug)}`)}
+          >
+            {type === CV_TYPES.cvUpload && (
+              <FontAwesomeIcon
+                icon={faFilePdf}
+                style={{ marginRight: 8 }}
+                color={defaultTheme.palette.error.main}
+              />
+            )}
+            {title || (
+              <Typography
+                component="span"
+                sx={defaultTheme.palette.text.italic}
+              >
+                Chưa cập nhật
+              </Typography>
+            )}
           </Typography>
-          <Typography gutterBottom variant="body1">
-            <span
-              style={{ cursor: 'pointer' }}
-              onClick={() => nav(`/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, slug)}`)}
-            >
-              {type === CV_TYPES.cvUpload && (
-                <FontAwesomeIcon
-                  icon={faFilePdf}
-                  style={{ marginRight: 5 }}
-                  color="red"
-                />
-              )}
-              {title || (
-                <span
-                  style={{
-                    color: '#e0e0e0',
-                    fontStyle: 'italic',
-                    fontSize: 13,
-                  }}
-                >
-                  Chưa cập nhật
-                </span>
-              )}
-            </span>
-          </Typography>
-          <Stack direction="row" spacing={1}>
-            <Box>
-              <Chip
-                sx={{ mr: 1 }}
-                size="small"
-                icon={<MonetizationOnIcon />}
-                label={
-                  salaryString(salaryMin, salaryMax) || (
-                    <span
-                      style={{
-                        color: '#e0e0e0',
-                        fontStyle: 'italic',
-                        fontSize: 13,
-                      }}
-                    >
-                      Chưa cập nhật
-                    </span>
-                  )
+
+          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ gap: 1 }}>
+            <Chip
+              size="small"
+              icon={<MonetizationOnIcon />}
+              label={
+                salaryString(salaryMin, salaryMax) || (
+                  <Typography component="span" sx={defaultTheme.palette.text.italic}>
+                    Chưa cập nhật
+                  </Typography>
+                )
+              }
+              sx={{
+                backgroundColor: defaultTheme.palette.secondary.background,
+                color: defaultTheme.palette.secondary.dark,
+                '&:hover': {
+                  backgroundColor: defaultTheme.palette.secondary.backgroundHover,
                 }
-              />
-              <Chip
-                sx={{ mr: 1 }}
-                size="small"
-                icon={<WorkOutlineOutlinedIcon />}
-                label={
-                  allConfig.experienceDict[experience] || (
-                    <span
-                      style={{
-                        color: '#e0e0e0',
-                        fontStyle: 'italic',
-                        fontSize: 13,
-                      }}
-                    >
-                      Chưa cập nhật
-                    </span>
-                  )
-                }
-              />
-              <Chip
-                size="small"
-                icon={<RoomIcon />}
-                label={
-                  allConfig.cityDict[city] || (
-                    <span
-                      style={{
-                        color: '#e0e0e0',
-                        fontStyle: 'italic',
-                        fontSize: 13,
-                      }}
-                    >
-                      Chưa cập nhật
-                    </span>
-                  )
-                }
-              />
-            </Box>
+              }}
+            />
+            <Chip
+              size="small"
+              icon={<WorkOutlineOutlinedIcon />}
+              label={
+                allConfig.experienceDict[experience] || (
+                  <Typography component="span" sx={defaultTheme.palette.text.italic}>
+                    Chưa cập nhật
+                  </Typography>
+                )
+              }
+              sx={{
+                backgroundColor: defaultTheme.palette.primary.background,
+                color: defaultTheme.palette.primary.main,
+              }}
+            />
+            <Chip
+              size="small"
+              icon={<RoomIcon />}
+              label={
+                allConfig.cityDict[city] || (
+                  <Typography component="span" sx={defaultTheme.palette.text.italic}>
+                    Chưa cập nhật
+                  </Typography>
+                )
+              }
+              sx={{
+                backgroundColor: defaultTheme.palette.info.background,
+                color: defaultTheme.palette.info.main,
+              }}
+            />
           </Stack>
         </Stack>
+
         <Stack
           alignItems={{
             xs: 'flex-start',
@@ -205,43 +231,74 @@ const JobSeekerProfile = ({
             lg: 'flex-end',
             xl: 'flex-end',
           }}
+          spacing={1}
         >
-          <Box>
+          <Stack direction="row" spacing={1}>
             <Tooltip title="Lưu hồ sơ" arrow>
               <IconButton
                 aria-label="save"
                 size="small"
                 onClick={() => handleSave(slug)}
+                sx={{
+                  color: isSaved ? defaultTheme.palette.error.main : defaultTheme.palette.grey[400],
+                  '&:hover': {
+                    backgroundColor: defaultTheme.palette.error.background,
+                  }
+                }}
               >
                 {isSaved ? (
-                  <FavoriteIcon fontSize="small" color="error" />
+                  <FavoriteIcon fontSize="small" />
                 ) : (
                   <FavoriteBorderOutlinedIcon fontSize="small" />
                 )}
               </IconButton>
             </Tooltip>
             <Tooltip title="Xem hồ sơ" arrow>
-              <IconButton aria-label="view" size="small">
-                <RemoveRedEyeOutlinedIcon
-                  fontSize="small"
-                  color="primary"
-                  onClick={() =>
-                    nav(`/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, slug)}`)
+              <IconButton 
+                aria-label="view" 
+                size="small"
+                onClick={() => nav(`/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, slug)}`)}
+                sx={{
+                  color: defaultTheme.palette.primary.main,
+                  '&:hover': {
+                    backgroundColor: defaultTheme.palette.primary.background,
                   }
-                />
+                }}
+              >
+                <RemoveRedEyeOutlinedIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-          </Box>
-          <Box>
-            <Typography variant="caption">
-              Thời gian cập nhật: {dayjs(updateAt).format('DD/MM/YYYY')}
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant="caption">
-              NTD quan tâm: {viewEmployerNumber}
-            </Typography>
-          </Box>
+          </Stack>
+
+          <Typography 
+            variant="caption"
+            sx={{
+              color: defaultTheme.palette.grey[600],
+              display: 'flex',
+              alignItems: 'center',
+              gap: 0.5
+            }}
+          >
+            Cập nhật: {dayjs(updateAt).format('DD/MM/YYYY')}
+          </Typography>
+
+          <Typography
+            variant="caption"
+            sx={{
+              color: defaultTheme.palette.grey[600],
+              display: 'flex',
+              alignItems: 'center',
+              gap: 0.5
+            }}
+          >
+            <RemoveRedEyeOutlinedIcon 
+              sx={{ 
+                fontSize: '1rem',
+                color: defaultTheme.palette.grey[500]
+              }} 
+            />
+            {viewEmployerNumber} NTD quan tâm
+          </Typography>
         </Stack>
       </Stack>
     </Card>
@@ -250,7 +307,7 @@ const JobSeekerProfile = ({
 
 const Loading = () => (
   <>
-    <Card sx={{ p: 1.5, boxShadow: 0 }}>
+    <Card sx={{ p: 1, boxShadow: 0 }}>
       <Stack
         direction={{
           xs: 'column',
@@ -260,7 +317,7 @@ const Loading = () => (
           xl: 'row',
         }}
         justifyContent="space-between"
-        spacing={2}
+        spacing={1.5}
       >
         <Stack direction="column" flex={1}>
           <Skeleton />

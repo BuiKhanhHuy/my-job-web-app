@@ -30,27 +30,94 @@ const FileUploadCustom = ({
   return (
     <div>
       {title && (
-        <Typography variant="subtitle2" gutterBottom>
-          {title} {showRequired && <span style={{ color: 'red' }}>*</span>}
+        <Typography 
+          variant="subtitle2" 
+          gutterBottom 
+          sx={{
+            fontWeight: 500,
+            color: 'text.primary',
+            mb: 1
+          }}
+        >
+          {title} {showRequired && <span style={{ color: 'error.main' }}>*</span>}
         </Typography>
       )}
-      <Stack spacing={1} direction="column">
-        {selectedFile && (
-          <Alert icon={<FilePresentIcon fontSize="inherit" />} severity="info">
-            {selectedFile?.name}
-          </Alert>
-        )}
-        <Box>
-          <Button
-            variant="contained"
-            color="info"
-            startIcon={<FileUploadIcon />}
-            sx={{ textTransform: 'inherit' }}
-            component="label"
-            onClick={handleInputClick}
-          >
-            Tải file
-          </Button>
+      <Stack spacing={2} direction="column">
+        <Box
+          sx={{
+            border: '2px dashed',
+            borderColor: 'grey.200',
+            borderRadius: 2,
+            p: 3,
+            textAlign: 'center',
+            bgcolor: 'grey.50',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease-in-out',
+            '&:hover': {
+              borderColor: 'primary.main',
+              bgcolor: 'primary.background'
+            }
+          }}
+          onClick={handleInputClick}
+        >
+          {!selectedFile ? (
+            <>
+              <FileUploadIcon 
+                sx={{ 
+                  fontSize: 40, 
+                  color: 'primary.main',
+                  mb: 1
+                }} 
+              />
+              <Typography variant="subtitle1" sx={{ color: 'text.primary', mb: 0.5 }}>
+                Kéo thả file vào đây hoặc
+              </Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  px: 3,
+                  py: 1,
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  boxShadow: 'none'
+                }}
+              >
+                Chọn file
+              </Button>
+              <Typography variant="caption" sx={{ display: 'block', mt: 1, color: 'text.secondary' }}>
+                Chỉ chấp nhận file PDF
+              </Typography>
+            </>
+          ) : (
+            <Alert 
+              icon={<FilePresentIcon fontSize="inherit" />} 
+              severity="success"
+              sx={{
+                '& .MuiAlert-message': {
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1
+                }
+              }}
+            >
+              <Typography variant="body2">
+                {selectedFile?.name}
+              </Typography>
+              <Button
+                size="small"
+                color="error"
+                variant="text"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedFile(null);
+                }}
+                sx={{ ml: 2 }}
+              >
+                Xóa
+              </Button>
+            </Alert>
+          )}
         </Box>
       </Stack>
       <Controller
@@ -67,17 +134,19 @@ const FileUploadCustom = ({
               onChange={(e) => handleFileChange(e, field.onChange)}
             />
             {fieldState.invalid && (
-              <span
-                style={{
-                  color: 'red',
-                  fontSize: 13,
-                  marginTop: 1,
-                  marginLeft: 1,
+              <Typography
+                variant="caption"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 0.5,
+                  color: 'error.main',
+                  mt: 1
                 }}
               >
-                <FontAwesomeIcon icon={faCircleExclamation} />{' '}
+                <FontAwesomeIcon icon={faCircleExclamation} />
                 {fieldState.error?.message}
-              </span>
+              </Typography>
             )}
           </>
         )}

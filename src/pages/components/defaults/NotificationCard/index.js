@@ -1,24 +1,24 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import Moment from 'react-moment';
-import 'moment/locale/vi';
+import React from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Moment from "react-moment";
+import "moment/locale/vi";
 import {
   Box,
   Button,
   CircularProgress,
   Divider,
   IconButton,
-  List,
   ListItem,
   ListItemAvatar,
   ListItemButton,
   ListItemText,
   Stack,
-  Tooltip,
   Typography,
-} from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
+} from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 import {
   collection,
@@ -32,13 +32,13 @@ import {
   updateDoc,
   doc,
   writeBatch,
-} from 'firebase/firestore';
-import db from '../../../../configs/firebase-config';
+} from "firebase/firestore";
+import db from "../../../../configs/firebase-config";
 
-import { IMAGES, ImageSvg9, ROUTES } from '../../../../configs/constants';
-import MuiImageCustom from '../../../../components/MuiImageCustom';
-import NoDataCard from '../../../../components/NoDataCard';
-import { formatRoute } from '../../../../utils/funcUtils';
+import { IMAGES, ImageSvg9, ROUTES } from "../../../../configs/constants";
+import MuiImageCustom from "../../../../components/MuiImageCustom";
+import NoDataCard from "../../../../components/NoDataCard";
+import { formatRoute } from "../../../../utils/funcUtils";
 
 const PAGE_SIZE = 10;
 const NotificationCard = ({ title }) => {
@@ -52,11 +52,11 @@ const NotificationCard = ({ title }) => {
   React.useEffect(() => {
     const notificationsRef = collection(
       db,
-      'users',
+      "users",
       `${currentUser.id}`,
-      'notifications'
+      "notifications"
     );
-    const allQuery = query(notificationsRef, where('is_deleted', '==', false));
+    const allQuery = query(notificationsRef, where("is_deleted", "==", false));
 
     const unsubscribe = onSnapshot(allQuery, (querySnapshot) => {
       let total = 0;
@@ -75,15 +75,15 @@ const NotificationCard = ({ title }) => {
     setIsLoading(true);
     const notificationsRef = collection(
       db,
-      'users',
+      "users",
       `${currentUser.id}`,
-      'notifications'
+      "notifications"
     );
     const first = query(
       notificationsRef,
-      where('is_deleted', '==', false),
+      where("is_deleted", "==", false),
 
-      orderBy('time', 'desc'),
+      orderBy("time", "desc"),
       limit(PAGE_SIZE)
     );
 
@@ -108,14 +108,14 @@ const NotificationCard = ({ title }) => {
   const loadMore = async () => {
     const notificationsRef = collection(
       db,
-      'users',
+      "users",
       `${currentUser.id}`,
-      'notifications'
+      "notifications"
     );
     const nextQuery = query(
       notificationsRef,
-      where('is_deleted', '==', false),
-      orderBy('time', 'desc'),
+      where("is_deleted", "==", false),
+      orderBy("time", "desc"),
       startAfter(lastKey),
       limit(PAGE_SIZE)
     );
@@ -137,45 +137,48 @@ const NotificationCard = ({ title }) => {
   };
 
   const handleRead = (key) => {
-    updateDoc(doc(db, 'users', `${currentUser.id}`, 'notifications', key), {
+    updateDoc(doc(db, "users", `${currentUser.id}`, "notifications", key), {
       is_read: true,
     })
       .then(() => {})
       .catch((error) => {
-        console.log('read noti failed: ', error);
+        console.log("read noti failed: ", error);
       });
   };
 
   const handleClickItem = (item) => {
     switch (item.type) {
-      case 'SYSTEM':
+      case "SYSTEM":
         handleRead(item.key);
-        nav('/');
+        nav("/");
         break;
-      case 'EMPLOYER_VIEWED_RESUME':
-        handleRead(item.key);
-        nav(`/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.MY_COMPANY}`);
-        break;
-      case 'EMPLOYER_SAVED_RESUME':
+      case "EMPLOYER_VIEWED_RESUME":
         handleRead(item.key);
         nav(`/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.MY_COMPANY}`);
         break;
-      case 'APPLY_STATUS':
+      case "EMPLOYER_SAVED_RESUME":
+        handleRead(item.key);
+        nav(`/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.MY_COMPANY}`);
+        break;
+      case "APPLY_STATUS":
         handleRead(item.key);
         nav(`/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.MY_JOB}`);
         break;
-      case 'COMPANY_FOLLOWED':
+      case "COMPANY_FOLLOWED":
         handleRead(item.key);
         nav(`/${ROUTES.EMPLOYER.PROFILE}`);
         break;
-      case 'POST_VERIFY_RESULT':
+      case "POST_VERIFY_RESULT":
         handleRead(item.key);
         nav(`/${ROUTES.EMPLOYER.JOB_POST}`);
         break;
-      case 'APPLY_JOB':
+      case "APPLY_JOB":
         handleRead(item.key);
         nav(
-          `/${formatRoute(ROUTES.EMPLOYER.PROFILE_DETAIL, item['APPLY_JOB']?.resume_slug)}`
+          `/${formatRoute(
+            ROUTES.EMPLOYER.PROFILE_DETAIL,
+            item["APPLY_JOB"]?.resume_slug
+          )}`
         );
         break;
       default:
@@ -184,7 +187,7 @@ const NotificationCard = ({ title }) => {
   };
 
   const handleRemove = (key) => {
-    updateDoc(doc(db, 'users', `${currentUser.id}`, 'notifications', key), {
+    updateDoc(doc(db, "users", `${currentUser.id}`, "notifications", key), {
       is_deleted: true,
     })
       .then(() => {
@@ -196,7 +199,7 @@ const NotificationCard = ({ title }) => {
         }
       })
       .catch((error) => {
-        console.log('deleted noti failed: ', error);
+        console.log("deleted noti failed: ", error);
       });
   };
 
@@ -204,13 +207,13 @@ const NotificationCard = ({ title }) => {
     // Get a reference to the notifications collection
     const notificationsRef = collection(
       db,
-      'users',
+      "users",
       `${currentUser.id}`,
-      'notifications'
+      "notifications"
     );
     const deleteQuery = query(
       notificationsRef,
-      where('is_deleted', '==', false)
+      where("is_deleted", "==", false)
     );
     const querySnapshot = await getDocs(deleteQuery);
 
@@ -231,11 +234,11 @@ const NotificationCard = ({ title }) => {
     // Get a reference to the notifications collection
     const notificationsRef = collection(
       db,
-      'users',
+      "users",
       `${currentUser.id}`,
-      'notifications'
+      "notifications"
     );
-    const readQuery = query(notificationsRef, where('is_read', '==', false));
+    const readQuery = query(notificationsRef, where("is_read", "==", false));
     const querySnapshot = await getDocs(readQuery);
 
     // Create a batch write operation
@@ -252,167 +255,176 @@ const NotificationCard = ({ title }) => {
   };
 
   return (
-    <>
-      <Stack>
-        <Box>
-          <Stack
-            direction={{
-              xs: 'column',
-              sm: 'row',
-              md: 'row',
-              lg: 'row',
-              xl: 'row',
-            }}
-            justifyContent="space-between"
-            alignItems={{
-              xs: 'flex-start',
-              sm: 'center',
-              md: 'center',
-              lg: 'center',
-              xl: 'center',
-            }}
+    <Box>
+      <Stack spacing={3}>
+        <Stack
+          direction={{
+            xs: "column",
+            sm: "row",
+          }}
+          justifyContent="space-between"
+          alignItems={{
+            xs: "flex-start",
+            sm: "center",
+          }}
+          spacing={2}
+        >
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: 600, color: "text.primary" }}
           >
-            <Typography variant="h6" textAlign="left">
-              {title}
-            </Typography>
-            <Stack direction="row" spacing={2}>
-              {notifications.length > 0 && (
-                <>
-                  <Button
-                    variant="text"
-                    sx={{ textTransform: 'inherit' }}
-                    onClick={handleMakeAllRead}
-                  >
-                    Đánh dấu tất cả đã đọc
-                  </Button>
+            {title}
+          </Typography>
+          <Stack direction="row" spacing={1}>
+            {notifications.length > 0 && (
+              <>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  startIcon={<CheckCircleOutlineIcon />}
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: 2,
+                    "&:hover": {
+                      backgroundColor: "primary.light",
+                      color: "primary.contrastText",
+                    },
+                  }}
+                  onClick={handleMakeAllRead}
+                >
+                  Đánh dấu đã đọc
+                </Button>
 
-                  <Button
-                    color="error"
-                    variant="text"
-                    sx={{ textTransform: 'inherit' }}
-                    onClick={handleRemoveAll}
-                  >
-                    Xóa tất cả
-                  </Button>
-                </>
+                <Button
+                  color="error"
+                  variant="outlined"
+                  size="small"
+                  startIcon={<DeleteOutlineIcon />}
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: 2,
+                    "&:hover": {
+                      backgroundColor: "error.light",
+                      color: "error.contrastText",
+                    },
+                  }}
+                  onClick={handleRemoveAll}
+                >
+                  Xóa tất cả
+                </Button>
+              </>
+            )}
+          </Stack>
+        </Stack>
+
+        <Divider sx={{ borderColor: "grey.500" }} />
+
+        <Box>
+          {isLoading ? (
+            <Stack justifyContent="center" direction="row" py={5}>
+              <CircularProgress color="primary" />
+            </Stack>
+          ) : notifications.length === 0 ? (
+            <NoDataCard
+              title="Chưa có thông báo nào."
+              imgComponentSgv={<ImageSvg9 />}
+            />
+          ) : (
+            <Stack spacing={2}>
+              {notifications.map((value, index) => (
+                <Box
+                  key={value?.key}
+                  sx={{
+                    bgcolor: value?.is_read ? "transparent" : "action.hover",
+                    borderRadius: 2,
+                    transition: "all 0.2s",
+                    // '&:hover': {
+                    //   bgcolor: 'action.selected',
+                    // }
+                  }}
+                >
+                  <ListItem alignItems="flex-start" sx={{ py: 2 }}>
+                    <ListItemButton
+                      onClick={() => handleClickItem(value)}
+                      sx={{ borderRadius: 2 }}
+                    >
+                      <ListItemAvatar>
+                        <MuiImageCustom
+                          width={50}
+                          height={50}
+                          src={value?.image || IMAGES.notificationImageDefault}
+                          sx={{
+                            borderRadius: 2,
+                            border: 1,
+                            borderColor: "divider",
+                          }}
+                          duration={500}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Typography
+                            variant="subtitle1"
+                            sx={{
+                              fontWeight: value?.is_read ? 400 : 600,
+                              color: "text.primary",
+                              mb: 0.5,
+                            }}
+                          >
+                            {value?.title}
+                          </Typography>
+                        }
+                        secondary={
+                          <Stack spacing={1}>
+                            <Typography variant="body2" color="text.secondary">
+                              {value?.content}
+                            </Typography>
+                            <Typography
+                              variant="caption"
+                              sx={{ color: "text.disabled" }}
+                            >
+                              <Moment fromNow>
+                                {value?.time?.seconds * 1000}
+                              </Moment>
+                            </Typography>
+                          </Stack>
+                        }
+                      />
+                      <IconButton
+                        size="small"
+                        color="error"
+                        sx={{
+                          opacity: 0.7,
+                          "&:hover": { opacity: 1 },
+                        }}
+                        onClick={() => handleRemove(value.key)}
+                      >
+                        <ClearIcon fontSize="small" />
+                      </IconButton>
+                    </ListItemButton>
+                  </ListItem>
+                </Box>
+              ))}
+
+              {Math.ceil(count / PAGE_SIZE) > 1 && (
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  onClick={loadMore}
+                  sx={{
+                    mt: 2,
+                    textTransform: "none",
+                    borderRadius: 2,
+                  }}
+                >
+                  Xem thêm
+                </Button>
               )}
             </Stack>
-          </Stack>
-        </Box>
-        <Divider sx={{ mt: 2, mb: 3 }} />
-        <Box sx={{ px: 1 }}>
-          <>
-            <Stack>
-              <Box>
-                {isLoading ? (
-                  <Stack justifyContent="center" direction="row" py={5}>
-                    <CircularProgress color="secondary" />
-                  </Stack>
-                ) : notifications.length === 0 ? (
-                  <NoDataCard
-                    title="Chưa có thông báo nào."
-                    imgComponentSgv={<ImageSvg9 />}
-                  />
-                ) : (
-                  <>
-                    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                      {notifications.map((value, index) => (
-                        <>
-                          <ListItem
-                            key={value?.key}
-                            alignItems="center"
-                            secondaryAction={
-                              <Tooltip title="Xóa thông báo" arrow>
-                                <IconButton
-                                  aria-label="delete"
-                                  color="error"
-                                  onClick={() => handleRemove(value.key)}
-                                >
-                                  <ClearIcon />
-                                </IconButton>
-                              </Tooltip>
-                            }
-                          >
-                            <ListItemButton
-                              onClick={() => handleClickItem(value)}
-                            >
-                              <ListItemAvatar style={{ marginRight: 10 }}>
-                                <MuiImageCustom
-                                  width={65}
-                                  height={65}
-                                  src={
-                                    value?.image ||
-                                    IMAGES.notificationImageDefault
-                                  }
-                                  sx={{
-                                    p: 0.5,
-                                    borderRadius: 1.5,
-                                    maxHeight: 150,
-                                    border: 0.5,
-                                    borderColor: '#d1c4e9',
-                                  }}
-                                  duration={500}
-                                />
-                              </ListItemAvatar>
-                              <ListItemText
-                                primary={
-                                  value?.is_read ? (
-                                    <span>{value?.title}</span>
-                                  ) : (
-                                    <span style={{ fontWeight: 'bold' }}>
-                                      {value?.title}
-                                    </span>
-                                  )
-                                }
-                                secondary={
-                                  <Stack>
-                                    <Typography
-                                      sx={{ display: 'inline' }}
-                                      component="span"
-                                      variant="body2"
-                                      color="text.primary"
-                                    >
-                                      {value?.content}
-                                    </Typography>
-                                    <Typography
-                                      variant="caption"
-                                      fontSize={12}
-                                      color="#bdbdbd"
-                                    >
-                                      <Moment fromNow>
-                                        {value?.time?.seconds * 1000}
-                                      </Moment>
-                                    </Typography>
-                                  </Stack>
-                                }
-                              />
-                            </ListItemButton>
-                          </ListItem>
-                          {notifications.length - 1 !== index && (
-                            <Divider component="li" />
-                          )}
-                        </>
-                      ))}
-                    </List>
-                    {Math.ceil(count / PAGE_SIZE) > 1 && (
-                      <Stack justifyContent="center" direction="row">
-                        <Button
-                          size="medium"
-                          onClick={loadMore}
-                          variant="contained"
-                        >
-                          Xem thêm
-                        </Button>
-                      </Stack>
-                    )}
-                  </>
-                )}
-              </Box>
-            </Stack>
-          </>
+          )}
         </Box>
       </Stack>
-    </>
+    </Box>
   );
 };
 

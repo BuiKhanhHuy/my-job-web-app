@@ -11,10 +11,10 @@ import WorkIcon from "@mui/icons-material/Work";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
-import { ROUTES } from "../../../../configs/constants";
+import { ROUTES, APP_NAME } from "../../../../configs/constants";
 
 const tabItems = [
-  { id: 1, label: "My MyJob", icon: <DashboardIcon />, path: `/${ROUTES.JOB_SEEKER.DASHBOARD}` },
+  { id: 1, label: `My ${APP_NAME}`, icon: <DashboardIcon />, path: `/${ROUTES.JOB_SEEKER.DASHBOARD}` },
   {
     id: 2,
     label: "Hồ sơ xin việc",
@@ -35,7 +35,7 @@ const tabItems = [
   },
   {
     id: 5,
-    label: "MyJob thông báo",
+    label: `${APP_NAME} thông báo`,
     icon: <CircleNotificationsIcon />,
     path: `/${ROUTES.JOB_SEEKER.DASHBOARD}/${ROUTES.JOB_SEEKER.NOTIFICATION}`,
   },
@@ -64,7 +64,12 @@ const TabBar = () => {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ 
+      width: "100%",
+      px: 5,
+      pt: 2,
+      backgroundColor: (theme) => theme.palette.grey[50]
+    }}>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -72,15 +77,34 @@ const TabBar = () => {
         scrollButtons
         allowScrollButtonsMobile
         aria-label="nav tabs job seeker"
+        sx={{
+          minHeight: '60px',
+          '& .MuiTabs-scroller': {
+            height: '100%'
+          },
+          '& .MuiTabScrollButton-root': {
+            width: 48,
+            height: '100%',
+          }
+        }}
       >
         {tabItems.map((tab) => (
           <Tab
             onClick={() => nav(tab.path)}
-            classes={{ selected: true }}
             key={tab.id}
             icon={tab.icon}
             iconPosition="start"
             label={tab.label}
+            sx={{
+              mx: 0.5,
+              transition: 'all 0.2s ease-in-out',
+              '&:first-of-type': {
+                ml: 0
+              },
+              '&:last-of-type': {
+                mr: 0
+              }
+            }}
           />
         ))}
       </Tabs>

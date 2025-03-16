@@ -1,6 +1,6 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import Moment from 'react-moment';
+import React from "react";
+import { useParams } from "react-router-dom";
+import Moment from "react-moment";
 import {
   Accordion,
   AccordionDetails,
@@ -12,7 +12,7 @@ import {
   Skeleton,
   Stack,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Timeline,
   TimelineConnector,
@@ -21,23 +21,23 @@ import {
   TimelineItem,
   timelineItemClasses,
   TimelineSeparator,
-} from '@mui/lab';
+} from "@mui/lab";
 
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AddIcon from "@mui/icons-material/Add";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import { confirmModal } from '../../../../utils/sweetalert2Modal';
-import toastMessages from '../../../../utils/toastMessages';
-import errorHandling from '../../../../utils/errorHandling';
-import BackdropLoading from '../../../../components/loading/BackdropLoading';
-import EmptyCard from '../../../../components/EmptyCard';
-import FormPopup from '../../../../components/controls/FormPopup';
-import ExperienceDetaiForm from '../ExperienceDetailForm';
+import { confirmModal } from "../../../../utils/sweetalert2Modal";
+import toastMessages from "../../../../utils/toastMessages";
+import errorHandling from "../../../../utils/errorHandling";
+import BackdropLoading from "../../../../components/loading/BackdropLoading";
+import EmptyCard from "../../../../components/EmptyCard";
+import FormPopup from "../../../../components/controls/FormPopup";
+import ExperienceDetaiForm from "../ExperienceDetailForm";
 
-import resumeService from '../../../../services/resumeService';
-import expericenDetailService from '../../../../services/expericenDetailService';
+import resumeService from "../../../../services/resumeService";
+import expericenDetailService from "../../../../services/expericenDetailService";
 
 const Loading = (
   <Stack>
@@ -133,7 +133,7 @@ const ExperienceDetailCard = ({ title }) => {
 
         setOpenPopup(false);
         setIsSuccess(!isSuccess);
-        toastMessages.success('Thêm kinh nghiệm làm việc thành công.');
+        toastMessages.success("Thêm kinh nghiệm làm việc thành công.");
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -148,7 +148,7 @@ const ExperienceDetailCard = ({ title }) => {
 
         setOpenPopup(false);
         setIsSuccess(!isSuccess);
-        toastMessages.success('Cập nhật kinh nghiệm làm việc thành công.');
+        toastMessages.success("Cập nhật kinh nghiệm làm việc thành công.");
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -156,7 +156,7 @@ const ExperienceDetailCard = ({ title }) => {
       }
     };
 
-    if ('id' in data) {
+    if ("id" in data) {
       // update
       update(data);
     } else {
@@ -175,7 +175,7 @@ const ExperienceDetailCard = ({ title }) => {
         await expericenDetailService.deleteExperienceDetailById(id);
 
         setIsSuccess(!isSuccess);
-        toastMessages.success('Xóa kinh nghiệm làm việc thành công.');
+        toastMessages.success("Xóa kinh nghiệm làm việc thành công.");
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -185,38 +185,59 @@ const ExperienceDetailCard = ({ title }) => {
 
     confirmModal(
       () => del(id),
-      'Xóa kinh nghiệm làm việc',
-      'Kinh nghiệm làm việc này sẽ được xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn?',
-      'warning'
+      "Xóa kinh nghiệm làm việc",
+      "Kinh nghiệm làm việc này sẽ được xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn?",
+      "warning"
     );
   };
 
   return (
     <>
-      <Box>
+      <Box
+        sx={{
+          backgroundColor: "background.paper",
+          borderRadius: 3,
+          p: 3,
+          boxShadow: (theme) => theme.customShadows.card,
+        }}
+      >
         {isLoadingExperiencesDetail ? (
           Loading
         ) : (
-          <Stack>
+          <Stack spacing={3}>
             <Box>
               <Stack
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Typography variant="h6">{title}</Typography>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 600,
+                  }}
+                >
+                  {title}
+                </Typography>
                 <Fab
                   size="small"
                   color="primary"
                   aria-label="add"
                   onClick={handleShowAdd}
+                  sx={{
+                    boxShadow: (theme) => theme.customShadows.medium,
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                    transition: "all 0.2s ease-in-out",
+                  }}
                 >
-                  <AddIcon sx={{ color: 'white', fontSize: 30 }} />
+                  <AddIcon />
                 </Fab>
               </Stack>
             </Box>
-            <Divider sx={{ mt: 2, mb: 3 }} />
-            <Box sx={{ px: 1 }}>
+            <Divider sx={{ my: 0, borderColor: "grey.500" }} />
+            <Box>
               {experiencesDetail.length === 0 ? (
                 <EmptyCard
                   content="Bạn hãy thêm kinh nghiệm làm việc của mình để nhà tuyển dụng tham khảo"
@@ -229,73 +250,143 @@ const ExperienceDetailCard = ({ title }) => {
                       flex: 0,
                       padding: 0,
                     },
+                    mt: 0,
                   }}
                 >
                   {experiencesDetail.map((value) => (
                     <TimelineItem key={value.id}>
                       <TimelineSeparator>
-                        <TimelineDot color="warning" />
-                        <TimelineConnector />
+                        <TimelineDot
+                          sx={{
+                            background: (theme) =>
+                              theme.palette.primary.gradient,
+                            boxShadow: (theme) => theme.customShadows.small,
+                          }}
+                        />
+                        <TimelineConnector sx={{ bgcolor: "primary.light" }} />
                       </TimelineSeparator>
                       <TimelineContent>
-                        <Typography variant="body1" gutterBottom>
-                          <Moment format="DD/MM/yyyy">{value.startDate}</Moment>{' '}
-                          -{' '}
-                          {value.endDate ? (
-                            <Moment format="DD/MM/yyyy">{value.endDate}</Moment>
-                          ) : (
-                            'Hiện tại'
-                          )}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          gutterBottom
-                          sx={{ fontWeight: 'bold' }}
+                        <Box
+                          sx={{
+                            p: 1,
+                          }}
                         >
-                          {value.jobName}
-                        </Typography>
-                        <Typography variant="body1" gutterBottom>
-                          {value.companyName}
-                        </Typography>
+                          <Typography
+                            variant="body2"
+                            color="primary.main"
+                            sx={{ fontWeight: 600, mb: 1 }}
+                          >
+                            <Moment format="DD/MM/yyyy">
+                              {value.startDate}
+                            </Moment>{" "}
+                            -{" "}
+                            {value.endDate ? (
+                              <Moment format="DD/MM/yyyy">
+                                {value.endDate}
+                              </Moment>
+                            ) : (
+                              "Hiện tại"
+                            )}
+                          </Typography>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            sx={{
+                              fontWeight: "bold",
+                              color: "text.primary",
+                            }}
+                          >
+                            {value.jobName}
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: "text.secondary",
+                              mb: 2,
+                            }}
+                          >
+                            {value.companyName}
+                          </Typography>
 
-                        <Stack direction="row" spacing={1}>
-                          <IconButton
-                            color="warning"
-                            aria-label="edit experience detail"
-                            onClick={() => handleShowUpdate(value.id)}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                          <IconButton
-                            color="error"
-                            aria-label="delete experience detail"
-                            onClick={() =>
-                              handleDeleteExperiencesDetail(value.id)
-                            }
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </Stack>
+                          <Stack direction="row" spacing={1}>
+                            <IconButton
+                              size="small"
+                              sx={{
+                                color: "secondary.main",
+                                bgcolor: "secondary.background",
+                                "&:hover": {
+                                  bgcolor: "secondary.light",
+                                  color: "white",
+                                },
+                              }}
+                              onClick={() => handleShowUpdate(value.id)}
+                            >
+                              <ModeEditOutlineOutlinedIcon fontSize="small" />
+                            </IconButton>
+                            <IconButton
+                              size="small"
+                              sx={{
+                                color: "error.main",
+                                bgcolor: "error.background",
+                                "&:hover": {
+                                  bgcolor: "error.main",
+                                  color: "white",
+                                },
+                              }}
+                              onClick={() =>
+                                handleDeleteExperiencesDetail(value.id)
+                              }
+                            >
+                              <DeleteOutlineOutlinedIcon fontSize="small" />
+                            </IconButton>
+                          </Stack>
 
-                        <Accordion sx={{ boxShadow: 0 }}>
-                          <AccordionSummary
-                            sx={{ p: 0, m: 0 }}
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
+                          <Accordion
+                            sx={{
+                              boxShadow: "none",
+                              bgcolor: "transparent",
+                              "&:before": {
+                                display: "none",
+                              },
+                            }}
                           >
-                            <Typography color="gray">Mô tả chi tiết</Typography>
-                          </AccordionSummary>
-                          <AccordionDetails sx={{ p: 0, m: 0 }}>
-                            <Typography>
-                              {value.description || (
-                                 <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                                 Chưa cập nhật
-                               </span>
-                              )}
-                            </Typography>
-                          </AccordionDetails>
-                        </Accordion>
+                            <AccordionSummary
+                              expandIcon={
+                                <ExpandMoreIcon
+                                  sx={{
+                                    color: "primary.main",
+                                    fontSize: 20,
+                                  }}
+                                />
+                              }
+                            >
+                              <Typography
+                                variant="body2"
+                                sx={{
+                                  color: "text.secondary",
+                                  fontWeight: 500,
+                                }}
+                              >
+                                Mô tả chi tiết
+                              </Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                              <Typography
+                                variant="body2"
+                                sx={{
+                                  color: value.description
+                                    ? "text.primary"
+                                    : "text.placeholder",
+                                  fontStyle: value.description
+                                    ? "normal"
+                                    : "italic",
+                                }}
+                              >
+                                {value.description || "Chưa cập nhật"}
+                              </Typography>
+                            </AccordionDetails>
+                          </Accordion>
+                        </Box>
                       </TimelineContent>
                     </TimelineItem>
                   ))}

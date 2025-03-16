@@ -12,6 +12,29 @@ import companyService from '../../services/companyService';
 import { ROUTES } from '../../configs/constants';
 import { formatRoute } from '../../utils/funcUtils';
 
+const styles = {
+  ".swiper-pagination": {
+    bottom: "-5px !important",
+  },
+  ".swiper-wrapper": {
+    paddingBottom: "30px",
+    paddingTop: "4px",
+  },
+  ".swiper-pagination-bullet": {
+    width: 12,
+    height: 12,
+    opacity: 0.5,
+    backgroundColor: (theme) => theme.palette.primary.main,
+    transition: "all 0.3s ease",
+  },
+  ".swiper-pagination-bullet-active": {
+    width: 24,
+    height: 12,
+    opacity: 1,
+    borderRadius: "6px",
+  },
+};
+
 const Loading = () => {
   return (
     <>
@@ -20,9 +43,11 @@ const Loading = () => {
           sx={{
             alignItems: 'center',
             boxShadow: 0,
-            p: 1,
+            p: 2,
             mb: 0.5,
             minHeight: 165,
+            borderRadius: 3,
+            bgcolor: 'background.paper',
           }}
         >
           <Stack direction="row" justifyContent="center">
@@ -39,7 +64,6 @@ const Loading = () => {
             gutterBottom={true}
             sx={{
               textAlign: 'center',
-
               mt: 1,
             }}
           >
@@ -103,7 +127,7 @@ const TopCompanyCarousel = () => {
 
   return (
     <div id="top-company-carousel">
-      <Box>
+      <Box sx={styles}>
         <Swiper
           slidesPerView={col}
           spaceBetween={15}
@@ -126,41 +150,57 @@ const TopCompanyCarousel = () => {
                 <SwiperSlide key={value.id}>
                   <Card
                     sx={{
+                      boxShadow: 0,
                       alignItems: 'center',
-                      p: 1,
+                      p: 2,
                       mb: 0.5,
+                      mt: 1,
                       cursor: 'pointer',
-                      '&:hover': {
-                        color: '#fca34d',
-                        boxShadow: 9,
-                      },
                       minHeight: 165,
-                      
+                      borderRadius: 3,
+                      transition: 'all 0.3s ease',
+                      border: '1px solid',
+                      borderColor: 'grey.200',
+                      bgcolor: 'background.paper',
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        boxShadow: (theme) => theme.customShadows.medium,
+                        borderColor: 'primary.main',
+                        '& .company-name': {
+                          color: 'primary.main',
+                        }
+                      },
                     }}
-                    variant="outlined"
                     onClick={() => nav(`/${formatRoute(ROUTES.JOB_SEEKER.COMPANY_DETAIL, value.slug)}`)}
                   >
                     <Stack direction="row" justifyContent="center">
                       <MuiImageCustom
-                        width={100}
-                        height={100}
+                        width={120}
+                        height={120}
                         src={value?.companyImageUrl}
                         duration={1500}
-                        sx={{ margin: '0 auto' }}
+                        sx={{ 
+                          margin: '0 auto',
+                          borderRadius: 2,
+                          p: 1,
+                          bgcolor: 'grey.50'
+                        }}
                       />
                     </Stack>
                     <Typography
                       variant="h6"
                       component="h6"
-                      gutterBottom={true}
+                      className="company-name"
                       sx={{
                         textAlign: 'center',
-                        fontWeight: 'bold',
+                        fontWeight: 600,
                         fontSize: 16,
-                        mt: 1,
+                        mt: 2,
+                        color: 'grey.800',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
+                        transition: 'color 0.3s ease',
                       }}
                     >
                       {value?.companyName}

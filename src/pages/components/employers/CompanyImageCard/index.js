@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Upload, Modal } from 'antd';
+import { Box, Typography} from "@mui/material";
+import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 
 import toastMessages from '../../../../utils/toastMessages';
 import errorHandling from '../../../../utils/errorHandling';
@@ -112,7 +114,18 @@ const CompanyImageCard = () => {
     });
 
   return (
-    <>
+    <Box>
+      <Typography 
+        variant="subtitle1" 
+        sx={{ 
+          mb: 2,
+          fontWeight: 600,
+          color: 'text.primary'
+        }}
+      >
+        Thư viện ảnh công ty
+      </Typography>
+
       <Upload
         multiple={true}
         listType="picture-card"
@@ -120,23 +133,83 @@ const CompanyImageCard = () => {
         onPreview={handlePreview}
         onRemove={handleDelete}
         customRequest={handleCustomRequest}
+        className="company-image-upload"
+        sx={{
+          '& .ant-upload-list-picture-card .ant-upload-list-item': {
+            borderRadius: 2,
+            border: `1px solid ${theme => theme.palette.grey[200]}`,
+            overflow: 'hidden',
+          },
+          '& .ant-upload.ant-upload-select': {
+            borderRadius: 2,
+            border: `2px dashed ${theme => theme.palette.grey[300]}`,
+            backgroundColor: theme => theme.palette.grey[50],
+            transition: 'all 0.2s ease-in-out',
+            '&:hover': {
+              borderColor: 'primary.main',
+              backgroundColor: 'primary.background'
+            }
+          }
+        }}
       >
-        {fileList.length < 15 && '+ Tải lên'}
+        {fileList.length < 15 && (
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            p: 1
+          }}>
+            <CameraAltOutlinedIcon sx={{ 
+              fontSize: 24, 
+              color: 'primary.main',
+              mb: 1 
+            }} />
+            <Typography 
+              variant="body2"
+              sx={{ 
+                color: 'text.secondary',
+                textAlign: 'center'
+              }}
+            >
+              Tải lên
+            </Typography>
+          </Box>
+        )}
       </Upload>
+
       <Modal
         zIndex={8000}
         open={previewVisible}
-        title="Xem hình ảnh"
+        title={
+          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+            Xem hình ảnh
+          </Typography>
+        }
         footer={null}
         onCancel={() => setPreviewVisible(false)}
+        style={{
+          borderRadius: 16,
+          overflow: 'hidden'
+        }}
+        bodyStyle={{
+          padding: 24
+        }}
       >
-        <img alt="Preview" style={{ width: '100%' }} src={previewImage} />
+        <Box
+          component="img"
+          src={previewImage}
+          alt="Preview"
+          sx={{
+            width: '100%',
+            borderRadius: 2,
+            boxShadow: theme => theme.customShadows.small
+          }}
+        />
       </Modal>
 
-      {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}
-      {/* End: full screen loading */}
-    </>
+    </Box>
   );
 };
 

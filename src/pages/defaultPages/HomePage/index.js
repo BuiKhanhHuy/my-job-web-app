@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   Avatar,
   Box,
@@ -10,25 +10,30 @@ import {
   Stack,
   Typography,
   Button,
-} from '@mui/material';
+} from "@mui/material";
 
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
-import SearchIcon from '@mui/icons-material/Search';
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
+import SearchIcon from "@mui/icons-material/Search";
 
-import { TabTitle } from '../../../utils/generalFunction';
-import { HOME_FILTER_CAREER, ROLES_NAME, ROUTES } from '../../../configs/constants';
-import TopCompanyCarousel from '../../../components/TopCompanyCarousel';
-import CareerCarousel from '../../../components/CareerCarousel';
-import FeedbackCarousel from '../../../components/FeedbackCarousel';
-import JobByCategory from '../../components/defaults/JobByCategory';
-import FilterJobPostCard from '../../components/defaults/FilterJobPostCard';
-import SuggestedJobPostCard from '../../components/defaults/SuggestedJobPostCard';
+import { TabTitle } from "../../../utils/generalFunction";
+import {
+  HOME_FILTER_CAREER,
+  ROLES_NAME,
+  ROUTES,
+  APP_NAME,
+} from "../../../configs/constants";
+import TopCompanyCarousel from "../../../components/TopCompanyCarousel";
+import CareerCarousel from "../../../components/CareerCarousel";
+import FeedbackCarousel from "../../../components/FeedbackCarousel";
+import JobByCategory from "../../components/defaults/JobByCategory";
+import FilterJobPostCard from "../../components/defaults/FilterJobPostCard";
+import SuggestedJobPostCard from "../../components/defaults/SuggestedJobPostCard";
 
 export default function HomePage() {
-  TabTitle("Tìm việc nhanh, tuyển dụng hiệu quả tại MyJob")
+  TabTitle(`Tìm việc nhanh, tuyển dụng hiệu quả tại ${APP_NAME}`);
   const { isAuthenticated, currentUser } = useSelector((state) => state.user);
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   return (
     <>
@@ -43,20 +48,20 @@ export default function HomePage() {
 
       <Box sx={{ mt: 10 }}>
         {/*Start: Viec lam tuyen gap */}
-        <Card variant="outlined">
+        <Card variant="outlined" sx={{ boxShadow: 0 }}>
           <CardHeader
             avatar={
-              <Avatar sx={{ bgcolor: 'white' }} aria-label="recipe">
+              <Avatar sx={{ bgcolor: "white" }} aria-label="recipe">
                 <AccessTimeIcon color="secondary" />
               </Avatar>
             }
             title={
-              <Typography variant="h5" sx={{ color: 'white' }}>
+              <Typography variant="h5" sx={{ color: "white" }}>
                 Việc làm tuyển gấp
               </Typography>
             }
             sx={{
-              backgroundColor: '#441da0',
+              backgroundColor: "#441da0",
               p: { xs: 0.75, sm: 1, md: 1.5, lg: 1.5, xl: 1.5 },
             }}
           />
@@ -88,23 +93,23 @@ export default function HomePage() {
           <Card variant="outlined">
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: 'white' }} aria-label="recipe">
+                <Avatar sx={{ bgcolor: "white" }} aria-label="recipe">
                   <TipsAndUpdatesIcon color="secondary" />
                 </Avatar>
               }
               title={
-                <Typography variant="h5" sx={{ color: '#441da0' }}>
+                <Typography variant="h5" sx={{ color: "#441da0" }}>
                   Việc làm gợi ý
                 </Typography>
               }
               sx={{
-                backgroundImage: `url('${require('../../../assets/images/banner-explore.png')}')`,
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
+                backgroundImage: `url('${require("../../../assets/images/banner-explore.png")}')`,
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
                 p: { xs: 0.75, sm: 1, md: 1.5, lg: 1.5, xl: 1.5 },
               }}
             />
-            <CardContent sx={{ backgroundColor: '#e0f0ff' }}>
+            <CardContent sx={{ backgroundColor: "#e0f0ff" }}>
               <Box sx={{ p: { xs: 0, sm: 0, md: 0, lg: 2, xl: 2 } }}>
                 {/* Start: SuggestedJobPostCard */}
                 <SuggestedJobPostCard />
@@ -121,18 +126,18 @@ export default function HomePage() {
           borderRadius: 1,
           p: 4,
           mt: 6,
-          backgroundImage: `url('${require('../../../assets/images/banner-explore-pc.png')}')`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
+          backgroundImage: `url('${require("../../../assets/images/banner-explore-pc.png")}')`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <Stack
           direction={{
-            xs: 'column',
-            sm: 'row',
-            md: 'row',
-            lg: 'row',
-            xl: 'row',
+            xs: "column",
+            sm: "row",
+            md: "row",
+            lg: "row",
+            xl: "row",
           }}
           justifyContent="space-between"
           spacing={2}
@@ -158,20 +163,20 @@ export default function HomePage() {
 
       <Box sx={{ mt: 6 }}>
         {/* Start: Viec lam nganh */}
-        <Card variant="outlined">
+        <Card variant="outlined" sx={{boxShadow: 0}}>
           <CardHeader
             avatar={
-              <Avatar sx={{ bgcolor: 'white' }} aria-label="recipe">
+              <Avatar sx={{ bgcolor: "white" }} aria-label="recipe">
                 {HOME_FILTER_CAREER[0].titleIcon}
               </Avatar>
             }
             title={
-              <Typography variant="h5" sx={{ color: 'white' }}>
+              <Typography variant="h5" sx={{ color: "white" }}>
                 {`Việc làm ngành ${HOME_FILTER_CAREER[0].name}`}
               </Typography>
             }
             sx={{
-              backgroundColor: '#441da0',
+              backgroundColor: "#441da0",
               p: { xs: 0.75, sm: 1, md: 1.5, lg: 1.5, xl: 1.5 },
             }}
           />
@@ -190,20 +195,20 @@ export default function HomePage() {
 
       <Box sx={{ mt: 10 }}>
         {/* Start: Viec lam nganh */}
-        <Card variant="outlined">
+        <Card variant="outlined" sx={{ boxShadow: 0 }}>
           <CardHeader
             avatar={
-              <Avatar sx={{ bgcolor: 'white' }} aria-label="recipe">
+              <Avatar sx={{ bgcolor: "white" }} aria-label="recipe">
                 {HOME_FILTER_CAREER[1].titleIcon}
               </Avatar>
             }
             title={
-              <Typography variant="h5" sx={{ color: 'white' }}>
+              <Typography variant="h5" sx={{ color: "white" }}>
                 {`Việc làm ngành ${HOME_FILTER_CAREER[1].name}`}
               </Typography>
             }
             sx={{
-              backgroundColor: '#441da0',
+              backgroundColor: "#441da0",
               p: { xs: 0.75, sm: 1, md: 1.5, lg: 1.5, xl: 1.5 },
             }}
           />
@@ -231,18 +236,14 @@ export default function HomePage() {
 
       <Box sx={{ mt: 10 }}>
         {/* Start: Job by category */}
-        <Card sx={{ boxShadow: 0 }}>
-          <CardContent>
-            <Box
-              sx={{
-                py: { xs: 1, sm: 1, md: 2, lg: 4, xl: 4 },
-                px: { xs: 1, sm: 1, md: 2, lg: 6, xl: 6 },
-              }}
-            >
-              <JobByCategory />
-            </Box>
-          </CardContent>
-        </Card>
+        <Box
+          sx={{
+            backgroundColor: "background.paper",
+            borderRadius: 2,
+          }}
+        >
+          <JobByCategory />
+        </Box>
         {/* End: Job by category */}
       </Box>
     </>

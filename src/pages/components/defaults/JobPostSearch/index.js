@@ -163,7 +163,7 @@ const JobPostSearch = () => {
           <Grid item xs={12} sm={12} md={12} lg={1} xl={1}>
             <Typography
               variant="subtitle2"
-              sx={{ pt: 0.5, fontSize: 16 }}
+              sx={{ pt: 1, fontSize: 14 }}
               color="GrayText"
             >
               Lọc nâng cao

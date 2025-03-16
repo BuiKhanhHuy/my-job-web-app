@@ -99,7 +99,7 @@ const ProfileCard = () => {
                 <span style={{ color: 'red' }}>{count} hồ sơ</span>
               </Typography>
             </Box>
-            <Box sx={{ mt: 2 }}>
+            <Box sx={{ mt: 3 }}>
               {isLoading ? (
                 <Box>
                   <Grid container spacing={2}>
@@ -140,6 +140,7 @@ const ProfileCard = () => {
                             key={value.id}
                           >
                             <JobSeekerProfile
+                              key={value.id}
                               id={value.id}
                               slug={value.slug}
                               title={value.title}

@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { Box, Card, Skeleton, Stack, Tooltip, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import defaultTheme from '../../themeConfigs/defaultTheme';
 
 import MuiImageCustom from '../MuiImageCustom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,6 +19,7 @@ const CompanyAction = ({ id, views, createAt, resume, company, children }) => {
   const nav = useNavigate();
   const [parentWidth, setParentWidth] = React.useState(0);
   const [stackDirection, setStackDirection] = React.useState('column');
+  const theme = useTheme();
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -43,69 +46,81 @@ const CompanyAction = ({ id, views, createAt, resume, company, children }) => {
       <Card
         variant="outlined"
         sx={{
-          p: 1,
+          p: 1.5,
+          transition: 'all 0.3s ease',
+          border: `1px solid ${theme.palette.grey[100]}`,
+          boxShadow: 0,
           '&:hover': {
-            borderColor: '#441da0',
+            borderColor: theme.palette.primary.main,
+            boxShadow: theme.customShadows.small,
+            transform: 'translateY(-2px)'
           },
         }}
       >
-        <Stack direction={stackDirection} spacing={2} width="100%">
-          <Stack direction="row" spacing={1}>
+        <Stack direction={stackDirection} spacing={1.5} width="100%">
+          <Stack direction="row" spacing={2}>
             <Stack justifyContent="center">
               <MuiImageCustom
-                width={75}
-                height={75}
+                width={85}
+                height={85}
                 src={company?.companyImageUrl}
-                sx={{ border: 0.5, borderRadius: 1.5, borderColor: '#e0e0e0' }}
+                sx={{ 
+                  borderRadius: 2,
+                  border: `1px solid ${theme.palette.grey[200]}`,
+                  p: 0.5,
+                  backgroundColor: 'white',
+                }}
               />
             </Stack>
             <Stack
               flex={1}
-              justifyContent="center"
+              justifyContent="center" 
+              spacing={1}
               style={{ overflow: 'hidden' }}
             >
               <Tooltip followCursor title={company?.companyName}>
                 <Typography
-                  variant="subtitle2"
-                  sx={{ fontSize: 14, cursor: 'pointer', fontWeight: 'bold' }}
-                  gutterBottom
-                  noWrap
-                  style={{
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
+                  variant="h6"
+                  sx={{
+                    fontSize: 16,
+                    cursor: 'pointer',
+                    color: theme.palette.primary.main,
+                    transition: 'color 0.2s ease',
+                    '&:hover': {
+                      color: theme.palette.primary.dark
+                    }
                   }}
+                  noWrap
                   onClick={() => nav(`/${formatRoute(ROUTES.JOB_SEEKER.COMPANY_DETAIL, company?.slug)}`)}
                 >
                   {company?.companyName}
                 </Typography>
               </Tooltip>
 
-              <Box>
+              <Stack spacing={0.5}>
                 <Typography
-                  variant="subtitle2"
-                  color="gray"
-                  style={{
-                    fontWeight: 'normal',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
+                  variant="body2"
+                  sx={{
+                    color: theme.palette.text.secondary,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1
                   }}
                 >
                   Đã xem hồ sơ {resume?.title} {views} lần
                 </Typography>
                 <Typography
-                  variant="subtitle2"
-                  color="gray"
-                  style={{
-                    fontWeight: 'normal',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
+                  variant="body2"
+                  sx={{
+                    color: theme.palette.text.secondary,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1
                   }}
                 >
                   Lần xem cuối {dayjs(createAt).format('DD/MM/YYYY HH:mm')}
                 </Typography>
-              </Box>
+              </Stack>
             </Stack>
           </Stack>
           <Stack
@@ -113,7 +128,7 @@ const CompanyAction = ({ id, views, createAt, resume, company, children }) => {
             justifyContent="flex-end"
             alignItems="center"
             flex={1}
-            spacing={1}
+            spacing={2}
           >
             {children}
           </Stack>
@@ -127,6 +142,7 @@ const CompanyActionFollow = ({ id, company, children }) => {
   const nav = useNavigate();
   const [parentWidth, setParentWidth] = React.useState(0);
   const [stackDirection, setStackDirection] = React.useState('column');
+  const theme = useTheme();
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -155,38 +171,46 @@ const CompanyActionFollow = ({ id, company, children }) => {
       <Card
         variant="outlined"
         sx={{
-          p: 1,
+          p: 1.5,
+          transition: 'all 0.3s ease',
+          border: `1px solid ${theme.palette.grey[100]}`,
+          boxShadow: 0,
           '&:hover': {
-            borderColor: '#441da0',
+            borderColor: theme.palette.primary.main,
+            boxShadow: theme.customShadows.small,
+            transform: 'translateY(-2px)'
           },
         }}
       >
-        <Stack direction={stackDirection} spacing={2} >
+        <Stack direction={stackDirection} spacing={3}>
           <Box>
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" spacing={2}>
               <Stack direction="row" justifyContent="center">
                 <MuiImageCustom
-                  width={75}
-                  height={75}
+                  width={85}
+                  height={85}
                   src={company?.companyImageUrl}
                   sx={{
-                    border: 0.5,
-                    borderRadius: 1.5,
-                    borderColor: '#e0e0e0',
+                    borderRadius: 2,
+                    border: `1px solid ${theme.palette.grey[200]}`,
+                    p: 0.5,
+                    backgroundColor: 'white',
                   }}
                 />
               </Stack>
-              <Stack flex={1} justifyContent="center">
+              <Stack flex={1} justifyContent="center" spacing={1.5}>
                 <Box>
                   <Tooltip followCursor title={company?.companyName}>
                     <Typography
-                      variant="subtitle2"
-                      sx={{ fontSize: 14, fontWeight: 'bold', cursor: 'pointer' }}
-                      gutterBottom
-                      style={{
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
+                      variant="h6"
+                      sx={{
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        color: theme.palette.primary.main,
+                        transition: 'color 0.2s ease',
+                        '&:hover': {
+                          color: theme.palette.primary.dark
+                        }
                       }}
                       onClick={() => nav(`/${formatRoute(ROUTES.JOB_SEEKER.COMPANY_DETAIL, company?.slug)}`)}
                     >
@@ -195,33 +219,57 @@ const CompanyActionFollow = ({ id, company, children }) => {
                   </Tooltip>
                 </Box>
 
-                <Typography variant="body2" gutterBottom>
+                <Typography 
+                  variant="body2"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    color: theme.palette.text.secondary
+                  }}
+                >
                   <FontAwesomeIcon
                     icon={faFontAwesome}
-                    style={{ marginRight: 2 }}
-                    color="#bdbdbd"
-                  />{' '}
+                    style={{ fontSize: 14 }}
+                    color={theme.palette.grey[400]}
+                  />
                   {company?.fieldOperation || (
-                     <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                     Chưa cập nhật
-                   </span>
+                    <span style={{ 
+                      color: theme.palette.grey[400],
+                      fontStyle: 'italic',
+                      fontSize: 13
+                    }}>
+                      Chưa cập nhật
+                    </span>
                   )}
                 </Typography>
-                <Stack direction="row" spacing={2}>
-                  <Typography variant="body2" gutterBottom>
+
+                <Stack 
+                  direction="row" 
+                  spacing={3}
+                  sx={{
+                    '& .MuiTypography-root': {
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 1,
+                      color: theme.palette.text.secondary
+                    }
+                  }}
+                >
+                  <Typography variant="body2">
                     <FontAwesomeIcon
                       icon={faUsers}
-                      style={{ marginRight: 2 }}
-                      color="#bdbdbd"
-                    />{' '}
+                      style={{ fontSize: 14 }}
+                      color={theme.palette.grey[400]}
+                    />
                     {company?.followNumber} theo dõi
                   </Typography>
-                  <Typography variant="body2" gutterBottom>
+                  <Typography variant="body2">
                     <FontAwesomeIcon
                       icon={faBriefcase}
-                      style={{ marginRight: 2 }}
-                      color="#bdbdbd"
-                    />{' '}
+                      style={{ fontSize: 14 }}
+                      color={theme.palette.grey[400]}
+                    />
                     {company?.jobPostNumber} việc làm
                   </Typography>
                 </Stack>
@@ -233,7 +281,7 @@ const CompanyActionFollow = ({ id, company, children }) => {
             justifyContent="flex-end"
             alignItems="center"
             flex={1}
-            spacing={1}
+            spacing={2}
           >
             {children}
           </Stack>
@@ -244,26 +292,35 @@ const CompanyActionFollow = ({ id, company, children }) => {
 };
 
 const Loading = () => (
-  <>
-    <Card sx={{ p: 1, boxShadow: 0 }}>
-      <Stack direction="row" spacing={1}>
-        <Box>
-          <Skeleton variant="rounded" width={75} height={75} />
-        </Box>
-        <Box flex={1}>
-          <Typography variant="subtitle2" sx={{ fontSize: 15 }} gutterBottom>
-            <Skeleton height={30} />
-          </Typography>
-          <Typography variant="subtitle2" color="gray">
-            <Skeleton />
-          </Typography>
-          <Typography variant="subtitle2" color="gray">
-            <Skeleton />
-          </Typography>
-        </Box>
-      </Stack>
-    </Card>
-  </>
+  <Card 
+    sx={{ 
+      p: 2,
+      boxShadow: defaultTheme.customShadows.small,
+      border: `1px solid ${defaultTheme.palette.grey[200]}`
+    }}
+  >
+    <Stack direction="row" spacing={2}>
+      <Box>
+        <Skeleton 
+          variant="rounded" 
+          width={85} 
+          height={85}
+          sx={{ borderRadius: 2 }}
+        />
+      </Box>
+      <Box flex={1}>
+        <Typography variant="h6" gutterBottom>
+          <Skeleton height={35} width="80%" />
+        </Typography>
+        <Typography variant="body2">
+          <Skeleton height={25} width="60%" />
+        </Typography>
+        <Typography variant="body2">
+          <Skeleton height={25} width="40%" />
+        </Typography>
+      </Box>
+    </Stack>
+  </Card>
 );
 
 CompanyAction.CompanyActionFollow = CompanyActionFollow;

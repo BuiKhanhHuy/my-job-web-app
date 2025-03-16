@@ -44,10 +44,41 @@ const MainJobPostCard = () => {
 
   return (
     <>
-      <Box sx={{ pt: 2, pb: 3 }}>
-        <Typography variant="h5">
-          Kết quả tìm kiếm (<span style={{ color: 'red' }}>{count.toLocaleString()}</span> tin
-          đăng)
+      <Box 
+        sx={{ 
+          pt: 3, 
+          pb: 2,
+          display: 'flex',
+          alignItems: 'center',
+          borderBottom: '1px solid',
+          borderColor: 'divider',
+          mb: 2,
+        }}
+      >
+        <Typography 
+          variant="h5" 
+          sx={{
+            color: 'text.primary',
+            fontWeight: 600,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1
+          }}
+        >
+          Kết quả tìm kiếm
+          <Box 
+            component="span"
+            sx={{
+              color: 'primary.main',
+              fontWeight: 600,
+              backgroundColor: 'primary.background',
+              padding: '4px 12px',
+              borderRadius: '20px',
+              fontSize: '0.9em'
+            }}
+          >
+            {count.toLocaleString()} tin đăng
+          </Box>
         </Typography>
       </Box>
       <Stack spacing={2}>
