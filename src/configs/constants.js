@@ -55,9 +55,6 @@ const AUTH_CONFIG = {
   GOONGAPI_KEY: process.env.REACT_APP_GOONGAPI_KEY,
   GOONGAPI_ACCESS_TOKEN: process.env.REACT_APP_GOONGAPI_ACCESS_TOKEN,
 
-  // BING MAP
-  BING_MAPS_KEY: process.env.REACT_APP_BING_MAPS_KEY,
-
   // Dialogflow chatbot
   JOB_SEEKER_BOT: {
     AGENT_ID:
@@ -82,13 +79,13 @@ const ROLES_NAME = {
 
 const HOME_FILTER_CAREER = [
   {
-    id: 8,
+    id: 34,
     name: 'IT - Phần mềm',
     titleIcon: <DevicesIcon color="secondary" />,
   },
   {
-    id: 7,
-    name: 'IT - Phần cứng',
+    id: 33,
+    name: 'IT - Phần cứng/Mạng',
     titleIcon: <DeveloperBoardIcon color="secondary" />,
   },
 ];
@@ -140,6 +137,7 @@ const ICONS = {
   LINKEDIN: require('../assets/icons/linkedin-icon.png'),
   TWITTER: require('../assets/icons/twitter-icon.png'),
   YOUTUBE: require('../assets/icons/youtube-icon.png'),
+  LOCATION_MARKER: require('../assets/icons/location-marker.gif')
 };
 
 const LINKS = {
@@ -171,7 +169,7 @@ const LOGO_IMAGES = {
   LOGO_WITH_BG: require('../assets/logo/logo-with-bg.jpg'),
 }
 
-const BANNER_TYPE = {
+const BANNER_TYPES = {
   HOME: 'HOME',
   MAIN_JOB_RIGHT: 'MAIN_JOB_RIGHT',
 };
@@ -245,6 +243,7 @@ export {
   HOME_FILTER_CAREER,
   REGEX_VATIDATE,
   CV_TYPES,
+  BANNER_TYPES,
   DATE_OPTIONS,
   IMAGES,
   ABOUT_IMAGES,
@@ -253,7 +252,6 @@ export {
   LOGO_IMAGES,
   LINKS,
   ICONS,
-  BANNER_TYPE,
   JOB_POST_STATUS_BG_COLOR,
   ROUTES,
   ImageSvg1,

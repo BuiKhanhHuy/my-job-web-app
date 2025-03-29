@@ -11,7 +11,11 @@ import {
   Step,
   StepLabel,
   Stepper,
+  styled,
 } from '@mui/material';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 
 import useDebounce from '../../../../hooks/useDebounce';
 
@@ -28,6 +32,33 @@ import commonService from '../../../../services/commonService';
 import goongService from '../../../../services/goongService';
 
 const steps = ['Thông tin đăng nhập', 'Thông tin công ty'];
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  padding: '8px 16px',
+  borderRadius: '8px',
+  fontSize: '14px',
+  fontWeight: 500,
+  textTransform: 'none',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+  transition: 'all 0.2s ease',
+  '&:hover': {
+    transform: 'translateY(-1px)',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+  },
+}));
+
+const StyledStepper = styled(Stepper)(({ theme }) => ({
+  '& .MuiStepLabel-root .Mui-completed': {
+    color: theme.palette.primary.main,
+  },
+  '& .MuiStepLabel-root .Mui-active': {
+    color: theme.palette.primary.main,
+  },
+  '& .MuiStepLabel-label': {
+    fontSize: '14px',
+    fontWeight: 500,
+  },
+}));
 
 const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -253,7 +284,7 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
   const formContent = (actStep) => (
     <Box>
       <Stack
-        spacing={1.5}
+        spacing={2.5}
         sx={{ mb: 2, display: actStep === 0 ? 'block' : 'none' }}
       >
         <TextFieldCustom
@@ -262,6 +293,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
           title="Họ và tên"
           placeholder="Nhập họ và tên"
           showRequired={true}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '10px',
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            }
+          }}
         />
         <TextFieldCustom
           name="email"
@@ -269,6 +306,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
           title="Email"
           placeholder="Nhập email"
           showRequired={true}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '10px',
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            }
+          }}
         />
         <PasswordTextFieldCustom
           name="password"
@@ -276,6 +319,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
           title="Mật khẩu"
           placeholder="Nhập mật khẩu"
           showRequired={true}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '10px',
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            }
+          }}
         />
         <PasswordTextFieldCustom
           name="confirmPassword"
@@ -283,18 +332,30 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
           title="Mật khẩu xác nhận"
           placeholder="Nhập mật khẩu xác nhận"
           showRequired={true}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '10px',
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            }
+          }}
         />
       </Stack>
 
       <Box sx={{ mb: 2, display: actStep !== 0 ? 'block' : 'none' }}>
-        <Grid container spacing={1.5}>
-          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+        <Grid container spacing={2.5}>
+          <Grid item xs={12}>
             <TextFieldCustom
               name="company.companyName"
               control={control}
               title="Tên công ty"
               placeholder="Nhập tên công ty"
               showRequired={true}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -304,6 +365,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               title="Email công ty"
               placeholder="Nhập email công ty"
               showRequired={true}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -313,6 +380,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               title="Số điện thoại"
               placeholder="Nhập số điện thoại công ty"
               showRequired={true}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -322,6 +395,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               title="Mã số thuế"
               placeholder="Nhập mã số thuế công ty"
               showRequired={true}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
@@ -329,6 +408,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               name="company.since"
               control={control}
               title="Ngày thành lập"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
@@ -337,6 +422,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               control={control}
               title="Lĩnh vực hoạt động"
               placeholder="Nhập lĩnh vực hoạt động của công ty"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
@@ -347,6 +438,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               title="Quy mô công ty"
               placeholder="Nhập quy mô công ty"
               showRequired={true}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
@@ -355,6 +452,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               control={control}
               title="Website"
               placeholder="Nhập địa chỉ website công ty"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
@@ -365,6 +468,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               title="Tỉnh/Thành phố"
               placeholder="Chọn tỉnh thành phố"
               showRequired={true}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
@@ -375,6 +484,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               title="Quận/Huyện"
               placeholder="Chọn Quận/Huyện"
               showRequired={true}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -388,6 +503,12 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
               loading={true}
               handleSelect={handleSelectLocation}
               helperText="Chọn địa chỉ chúng tôi gợi ý để giúp chúng tôi xác định chính xác vị trí công ty của bạn"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                }
+              }}
             />
           </Grid>
         </Grid>
@@ -403,35 +524,53 @@ const EmployerSignUpForm = ({ onSignUp, serverErrors = {}, checkCreds }) => {
           ? handleSubmit(onSignUp)
           : handleSubmit(handleSubmtNextSuccess, handleSubmitNextError)
       }
+      sx={{
+        width: '100%',
+        '& .MuiTextField-root': {
+          borderRadius: '10px',
+        },
+      }}
     >
-      <Stepper activeStep={activeStep} sx={{ pb: 3 }}>
+      <StyledStepper activeStep={activeStep} sx={{ pb: 4 }}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>
         ))}
-      </Stepper>
+      </StyledStepper>
       <>
         {formContent(activeStep)}
         <Stack
-          sx={{ mt: 3, mb: 2 }}
-          spacing={1.5}
-          direction="row"
+          sx={{ mt: 4 }}
+          spacing={2}
+          direction={{ xs: 'column', sm: 'row' }}
           justifyContent="flex-end"
         >
           {activeStep !== 0 && (
-            <Button variant="outlined" onClick={handleBack}>
+            <StyledButton 
+              variant="outlined" 
+              onClick={handleBack}
+              startIcon={<NavigateBeforeIcon />}
+            >
               Quay lại
-            </Button>
+            </StyledButton>
           )}
           {activeStep === steps.length - 1 ? (
-            <Button variant="contained" type="submit">
+            <StyledButton 
+              variant="contained" 
+              type="submit"
+              startIcon={<HowToRegIcon />}
+            >
               Đăng ký
-            </Button>
+            </StyledButton>
           ) : (
-            <Button variant="contained" type="submit">
+            <StyledButton 
+              variant="contained" 
+              type="submit"
+              endIcon={<NavigateNextIcon />}
+            >
               Tiếp tục
-            </Button>
+            </StyledButton>
           )}
         </Stack>
       </>

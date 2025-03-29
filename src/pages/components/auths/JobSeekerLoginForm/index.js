@@ -1,108 +1,200 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { Box, Button, Divider, Stack } from '@mui/material';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import GoogleIcon from '@mui/icons-material/Google';
-import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Box, Button, Stack, styled, Divider } from "@mui/material";
+import LoginIcon from "@mui/icons-material/Login";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import GoogleIcon from "@mui/icons-material/Google";
+import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
 
-import TextFieldCustom from '../../../../components/controls/TextFieldCustom';
-import PasswordTextFieldCustom from '../../../../components/controls/PasswordTextFieldCustom';
-import { AUTH_CONFIG } from '../../../../configs/constants';
+import TextFieldCustom from "../../../../components/controls/TextFieldCustom";
+import PasswordTextFieldCustom from "../../../../components/controls/PasswordTextFieldCustom";
+import { AUTH_CONFIG } from "../../../../configs/constants";
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  padding: "8px 16px",
+  borderRadius: "8px",
+  fontSize: "14px",
+  fontWeight: 500,
+  textTransform: "none",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+  transition: "all 0.2s ease",
+  "&:hover": {
+    transform: "translateY(-1px)",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+  },
+}));
+
+const StyledSocialButton = styled(Button)(({ theme }) => ({
+  padding: "8px 16px",
+  borderRadius: "8px",
+  fontSize: "14px",
+  fontWeight: 500,
+  textTransform: "none",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+  transition: "all 0.2s ease",
+  "&:hover": {
+    transform: "translateY(-1px)",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+  },
+}));
+
+const StyledDivider = styled(Divider)({
+  margin: "20px 0",
+  "&::before, &::after": {
+    borderColor: "rgba(0, 0, 0, 0.2)",
+  },
+  "& .MuiDivider-wrapper": {
+    padding: "0 16px",
+    fontSize: "13px",
+    color: "rgba(0, 0, 0, 0.6)",
+  },
+});
 
 const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
   const schema = yup.object().shape({
     email: yup
       .string()
-      .required('Email là bắt buộc!')
-      .email('Email không đúng định dạng'),
-    password: yup.string().required('Mật khẩu là bắt buộc!')
-    .min(8, 'Mật khẩu phải có ít nhất 8 ký tự.')
-    .max(128, 'Mật khẩu vượt quá độ dài cho phép.')
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      'Phải chứa một chữ hoa, một chữ thường, một số và một ký tự đặc biệt'
-    ),
+      .required("Email là bắt buộc!")
+      .email("Email không đúng định dạng"),
+    password: yup
+      .string()
+      .required("Mật khẩu là bắt buộc!")
+      .min(8, "Mật khẩu phải có ít nhất 8 ký tự.")
+      .max(128, "Mật khẩu vượt quá độ dài cho phép.")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        "Phải chứa một chữ hoa, một chữ thường, một số và một ký tự đặc biệt"
+      ),
   });
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     resolver: yupResolver(schema),
   });
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onLogin)}>
-      <Stack spacing={1.5} sx={{ mb: 2 }}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit(onLogin)}
+      sx={{
+        width: "100%",
+        "& .MuiTextField-root": {
+          borderRadius: "10px",
+        },
+      }}
+    >
+      <Stack spacing={2.5} sx={{ mb: 3 }}>
         <TextFieldCustom
           name="email"
           control={control}
           title="Email"
-          placeholder="Nhập email"
+          placeholder="Nhập email của bạn"
           showRequired={true}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "10px",
+              backgroundColor: "rgba(255, 255, 255, 0.8)",
+            },
+          }}
         />
         <PasswordTextFieldCustom
           name="password"
           control={control}
           title="Mật khẩu"
-          placeholder="Nhập mật khẩu"
+          placeholder="Nhập mật khẩu của bạn"
           showRequired={true}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "10px",
+              backgroundColor: "rgba(255, 255, 255, 0.8)",
+            },
+          }}
         />
       </Stack>
-      <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} type="submit">
+      <StyledButton
+        fullWidth
+        variant="contained"
+        type="submit"
+        startIcon={<LoginIcon />}
+      >
         Đăng nhập
-      </Button>
-      <Divider>HOẶC</Divider>
+      </StyledButton>
 
-      <LoginSocialFacebook
-        appId={AUTH_CONFIG.FACEBOOK_CLIENT_ID}
-        fieldsProfile={'id'}
-        // onLoginStart={ }
-        // onLogoutSuccess={onLogoutSuccess}
-        // redirect_uri={REDIRECT_URI}
-        isOnlyGetToken={true}
-        ux_mode="popup"
-        onResolve={onFacebookLogin}
-        onReject={(err) => {
-          console.log(err);
+      <StyledDivider>Hoặc đăng nhập với</StyledDivider>
+
+      <Stack 
+        direction="row" 
+        spacing={2} 
+        sx={{
+          width: '100%',
+          '& > *': {
+            flex: 1,
+          }
         }}
       >
-        <Button
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2, backgroundColor: '#3B66C4' }}
-          startIcon={<FacebookIcon />}
+        <LoginSocialFacebook
+          appId={AUTH_CONFIG.FACEBOOK_CLIENT_ID}
+          fieldsProfile={"id"}
+          isOnlyGetToken={true}
+          ux_mode="popup"
+          onResolve={onFacebookLogin}
+          onReject={(err) => {
+            console.log(err);
+          }}
         >
-          Đăng nhập với Facebook
-        </Button>
-      </LoginSocialFacebook>
+          <StyledSocialButton
+            fullWidth
+            variant="outlined"
+            onClick={onFacebookLogin}
+            startIcon={<FacebookIcon />}
+            sx={{
+              borderColor: "#4267B2",
+              color: "#4267B2",
+              "&:hover": {
+                borderColor: "#4267B2",
+                backgroundColor: "rgba(66, 103, 178, 0.04)",
+              },
+            }}
+          >
+            Facebook
+          </StyledSocialButton>
+        </LoginSocialFacebook>
 
-      <LoginSocialGoogle
-        client_id={AUTH_CONFIG.GOOGLE_CLIENT_ID}
-        // onLoginStart={ }
-        // redirect_uri={REDIRECT_URI}
-        isOnlyGetToken={true}
-        access_type="offline"
-        scope="openid profile email"
-        discoveryDocs="claims_supported"
-        onResolve={onGoogleLogin}
-        onReject={(err) => {
-          console.log(err);
-        }}
-        ux_mode="popup"
-      >
-        <Button
-          fullWidth
-          variant="contained"
-          sx={{ mb: 2, backgroundColor: '#CF4332' }}
-          startIcon={<GoogleIcon />}
+        <LoginSocialGoogle
+          client_id={AUTH_CONFIG.GOOGLE_CLIENT_ID}
+          isOnlyGetToken={true}
+          access_type="offline"
+          scope="openid profile email"
+          discoveryDocs="claims_supported"
+          onResolve={onGoogleLogin}
+          onReject={(err) => {
+            console.log(err);
+          }}
+          ux_mode="popup"
         >
-          Đăng nhập với Google
-        </Button>
-      </LoginSocialGoogle>
+          <StyledSocialButton
+            fullWidth
+            variant="outlined"
+            onClick={onGoogleLogin}
+            startIcon={<GoogleIcon />}
+            sx={{
+              borderColor: "#DB4437",
+              color: "#DB4437",
+              "&:hover": {
+                borderColor: "#DB4437",
+                backgroundColor: "rgba(219, 68, 55, 0.04)",
+              },
+            }}
+          >
+            Google
+          </StyledSocialButton>
+        </LoginSocialGoogle>
+      </Stack>
     </Box>
   );
 };

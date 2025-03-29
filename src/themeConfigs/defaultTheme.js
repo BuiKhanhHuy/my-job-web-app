@@ -111,6 +111,7 @@ const shadows = {
     info: '0 2px 20px rgba(0, 0, 0, 0.05)',
     feedback: '0 8px 20px rgba(255, 152, 0, 0.25)',
     sidebar: '0px 2px 20px rgba(0, 0, 0, 0.05)',
+    selectFocus: '0 0 0 3px rgba(107, 69, 201, 0.25)',
   },
 };
 
@@ -283,7 +284,6 @@ const defaultTheme = {
           backgroundColor: '#fff',
           padding: '8px',
           borderRadius: '12px',
-          // boxShadow: shadows.custom.small,
           '& .MuiTabs-indicator': {
             display: 'none',
           },
@@ -326,6 +326,47 @@ const defaultTheme = {
         root: {
           borderColor: colors.card.border,
         }
+      }
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+            boxShadow: `${shadows.custom.selectFocus} !important`,
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: `${colors.primary.main} !important`,
+              borderWidth: '1.5px',
+            },
+          },
+        },
+      }
+    },
+ 
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            padding: '4px 8px',
+          }
+        },
+        paper: {
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+          borderRadius: '8px',
+          marginTop: '4px',
+        },
+        option: {
+          padding: '8px 12px',
+          '&:hover': {
+            backgroundColor: colors.primary.background,
+          },
+          '&[aria-selected="true"]': {
+            backgroundColor: colors.primary.background,
+            fontWeight: 500,
+          },
+        },
+        endAdornment: {
+          color: colors.primary.main,
+        },
       }
     },
     MuiFab: {
@@ -507,3 +548,4 @@ const defaultTheme = {
 };
 
 export default defaultTheme;
+

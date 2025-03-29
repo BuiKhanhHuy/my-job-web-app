@@ -1,7 +1,15 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Avatar, Box, Card, Container, Grid, Typography } from '@mui/material';
+import { 
+  Avatar, 
+  Box, 
+  Card, 
+  Container, 
+  Grid, 
+  Typography,
+  styled 
+} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { TabTitle } from '../../../utils/generalFunction';
@@ -13,6 +21,33 @@ import { updateVerifyEmail } from '../../../redux/authSlice';
 import authService from '../../../services/authService';
 
 import EmployerSignUpForm from '../../components/auths/EmployerSignUpForm';
+
+const StyledCard = styled(Card)(({ theme }) => ({
+  background: 'rgba(255, 255, 255, 0.9)',
+  backdropFilter: 'blur(10px)',
+  borderRadius: '16px',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+  transition: 'all 0.3s ease',
+}));
+
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  margin: '16px',
+  width: '56px',
+  height: '56px',
+  backgroundColor: theme.palette.primary.main,
+  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+}));
+
+const StyledLink = styled(Link)(({ theme }) => ({
+  textDecoration: 'none',
+  color: theme.palette.primary.main,
+  fontWeight: 500,
+  transition: 'all 0.2s ease',
+  '&:hover': {
+    color: theme.palette.primary.dark,
+    textDecoration: 'underline',
+  },
+}));
 
 const EmployerSignUp = () => {
   TabTitle("Đăng ký tài khoản Nhà tuyển dụng")
@@ -79,55 +114,80 @@ const EmployerSignUp = () => {
       <Container
         maxWidth="md"
         sx={{
-          marginTop: { xs: 2, sm: 4, md: 8, lg: 8, xl: 8 },
-          p: 0,
+          marginTop: { xs: 0, sm: 2, md: 3 },
+          p: { xs: 0, sm: 3 },
+          display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <Card sx={{ p: { xs: 2, sm: 6, md: 6, lg: 6, xl: 6 }, pt: 2 }}>
+        <StyledCard sx={{ 
+          p: { xs: 2, sm: 4, md: 5 }, 
+          width: '100%',
+          borderRadius: { xs: 0, sm: '16px' },
+          boxShadow: { xs: 'none', sm: '0 8px 32px rgba(0, 0, 0, 0.1)' },
+        }}>
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              mb: 2,
+              mb: 4,
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'error.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5" align="center">
-              Đăng ký tài khoản nhà tuyển dụng
+            <StyledAvatar>
+              <LockOutlinedIcon sx={{ fontSize: 28 }} />
+            </StyledAvatar>
+            <Typography 
+              component="h1" 
+              variant="h4" 
+              align="center"
+              sx={{ 
+                fontWeight: 600,
+                color: 'primary.main',
+                mb: 1
+              }}
+            >
+              Đăng ký tài khoản
+            </Typography>
+            <Typography 
+              variant="subtitle1" 
+              align="center"
+              sx={{ 
+                color: 'text.secondary',
+                mb: 2 
+              }}
+            >
+              Tạo tài khoản nhà tuyển dụng mới
             </Typography>
           </Box>
-          <Box sx={{ mt: { xs: 3, sm: 4, md: 4, lg: 4, xl: 4 } }}>
-            {/* Start: Employer sign up form */}
+
+          <Box sx={{ mt: 2 }}>
             <EmployerSignUpForm
               onSignUp={handleRegister}
               serverErrors={serverErrors}
               checkCreds={checkCreds}
             />
-            {/* End: Employer sign up form */}
           </Box>
-          <Grid container sx={{ mt: 3 }}>
-            <Grid item xs></Grid>
+
+          <Grid 
+            container 
+            sx={{ 
+              mt: 4,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
             <Grid item>
-              <Link
-                to={`/${ROUTES.AUTH.LOGIN}`}
-                variant="body2"
-                style={{ textDecoration: 'none', color: '#441da0' }}
-              >
-                {'Đã có tài khoản? Đăng nhập'}
-              </Link>
+              <StyledLink to={`/${ROUTES.AUTH.LOGIN}`}>
+                Đã có tài khoản? Đăng nhập
+              </StyledLink>
             </Grid>
           </Grid>
-        </Card>
+        </StyledCard>
       </Container>
-
-      {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}
-      {/* End: full screen loading */}
     </>
   );
 };

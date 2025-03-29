@@ -10,6 +10,7 @@ import {
   Container,
   Grid,
   Typography,
+  styled,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
@@ -29,6 +30,33 @@ import JobSeekerLoginForm from '../../components/auths/JobSeekerLoginForm';
 
 import authService from '../../../services/authService';
 import tokenService from '../../../services/tokenService';
+
+const StyledCard = styled(Card)(({ theme }) => ({
+  background: 'rgba(255, 255, 255, 0.9)',
+  backdropFilter: 'blur(10px)',
+  borderRadius: '16px',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+  transition: 'all 0.3s ease',
+}));
+
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  margin: '16px',
+  width: '56px',
+  height: '56px',
+  backgroundColor: theme.palette.secondary.main,
+  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+}));
+
+const StyledLink = styled(Link)(({ theme }) => ({
+  textDecoration: 'none',
+  color: theme.palette.primary.main,
+  fontWeight: 500,
+  transition: 'all 0.2s ease',
+  '&:hover': {
+    color: theme.palette.primary.dark,
+    textDecoration: 'underline',
+  },
+}));
 
 const JobSeekerLogin = () => {
   TabTitle('Đăng nhập tài khoản Người tìm việc');
@@ -220,91 +248,119 @@ const JobSeekerLogin = () => {
       <Container
         maxWidth="sm"
         sx={{
-          marginTop: { xs: 2, sm: 4, md: 8, lg: 8, xl: 8 },
-          p: 0,
+          marginTop: { xs: 0, sm: 2, md: 3 },
+          p: { xs: 0, sm: 3 },
+          display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <Card sx={{ p: { xs: 2, sm: 6, md: 6, lg: 6, xl: 6 }, pt: 2 }}>
+        <StyledCard sx={{ 
+          p: { xs: 2, sm: 4, md: 5 }, 
+          width: '100%',
+          borderRadius: { xs: 0, sm: '16px' },
+          boxShadow: { xs: 'none', sm: '0 8px 32px rgba(0, 0, 0, 0.1)' },
+        }}>
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              mb: 4,
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5" align="center">
-              Đăng nhập tài khoản ứng viên
+            <StyledAvatar>
+              <LockOutlinedIcon sx={{ fontSize: 28 }} />
+            </StyledAvatar>
+            <Typography 
+              component="h1" 
+              variant="h4" 
+              align="center"
+              sx={{ 
+                fontWeight: 600,
+                color: 'primary.main',
+                mb: 1
+              }}
+            >
+              Đăng nhập
+            </Typography>
+            <Typography 
+              variant="subtitle1" 
+              align="center"
+              sx={{ 
+                color: 'text.secondary',
+                mb: 2 
+              }}
+            >
+              Chào mừng bạn trở lại
             </Typography>
           </Box>
-          {/* <Box>
-            <Alert severity="info">
-              <AlertTitle>Thông tin đăng nhập</AlertTitle>
-              <Typography>
-                Email: <strong>test@gmail.com</strong>
-              </Typography>
-              <Typography>
-                Password: <strong>123</strong>
-              </Typography>
+
+          {errorMessage && (
+            <Alert 
+              severity="error" 
+              sx={{ 
+                mb: 3,
+                borderRadius: '8px',
+              }}
+            >
+              <AlertTitle>Thất bại</AlertTitle>
+              {errorMessage}
             </Alert>
-          </Box> */}
-          {errorMessage ? (
-            <Box>
-              <Alert severity="error">
-                <AlertTitle>Thất bại</AlertTitle>
-                {errorMessage}
-              </Alert>
-            </Box>
-          ) : successMessage ? (
-            <Box>
-              <Alert severity="success">
-                <AlertTitle>Thành công</AlertTitle>
-                {successMessage}
-              </Alert>
-            </Box>
-          ) : (
-            ''
           )}
 
-          <Box sx={{ mt: { xs: 3, sm: 4, md: 4, lg: 4, xl: 4 } }}>
-            {/* Start: login form */}
+          {successMessage && (
+            <Alert 
+              severity="success"
+              sx={{ 
+                mb: 3,
+                borderRadius: '8px',
+              }}
+            >
+              <AlertTitle>Thành công</AlertTitle>
+              {successMessage}
+            </Alert>
+          )}
+
+          <Box sx={{ mt: 2 }}>
             <JobSeekerLoginForm
               onLogin={handleLogin}
               onFacebookLogin={handleFacebookLogin}
               onGoogleLogin={handleGoogleLogin}
             />
-            {/* End: login form */}
           </Box>
-          <Grid container sx={{ mt: 3 }}>
-            <Grid item xs>
-              <Link
-                to={`/${ROUTES.AUTH.FORGOT_PASSWORD}`}
-                variant="body2"
-                style={{ textDecoration: 'none', color: '#441da0' }}
-              >
+
+          <Grid 
+            container 
+            spacing={2} 
+            sx={{ 
+              mt: 4,
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}
+          >
+            <Grid item xs={12} sm={6}>
+              <StyledLink to={`/${ROUTES.AUTH.FORGOT_PASSWORD}`}>
                 Quên mật khẩu?
-              </Link>
+              </StyledLink>
             </Grid>
-            <Grid item>
-              <Link
-                to={`/${ROUTES.AUTH.REGISTER}`}
-                variant="body2"
-                style={{ textDecoration: 'none', color: '#441da0' }}
-              >
-                {'Chưa có tài khoản? Đăng ký'}
-              </Link>
+            <Grid 
+              item 
+              xs={12} 
+              sm={6}
+              sx={{
+                textAlign: { xs: 'left', sm: 'right' }
+              }}
+            >
+              <StyledLink to={`/${ROUTES.AUTH.REGISTER}`}>
+                Chưa có tài khoản? Đăng ký
+              </StyledLink>
             </Grid>
           </Grid>
-        </Card>
+        </StyledCard>
       </Container>
-
-      {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}
-      {/* End: full screen loading */}
     </>
   );
 };

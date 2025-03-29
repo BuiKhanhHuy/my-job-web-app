@@ -285,7 +285,6 @@ const CompanyForm = ({ handleUpdate, editData, serverErrors = null }) => {
                 placeholder="Nhập địa chỉ"
                 control={control}
                 options={locationOptions}
-                loading={true}
                 handleSelect={handleSelectLocation}
               />
             </Grid>
