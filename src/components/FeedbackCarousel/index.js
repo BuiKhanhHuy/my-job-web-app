@@ -57,7 +57,7 @@ const FeedbackCarousel = () => {
     } else if (parentWidth < 1200) {
       setCol(4);
     } else {
-      setCol(5);
+      setCol(4);
     }
   }, [parentWidth]);
 

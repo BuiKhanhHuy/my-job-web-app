@@ -1,47 +1,47 @@
-import dayjs from 'dayjs';
-import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
-import DevicesIcon from '@mui/icons-material/Devices';
-import { ReactComponent as ImageSvg1 } from '../assets/images/svg-images/empty-data.svg';
-import { ReactComponent as ImageSvg2 } from '../assets/images/svg-images/online-gallery.svg';
-import { ReactComponent as ImageSvg3 } from '../assets/images/svg-images/empty-street.svg';
-import { ReactComponent as ImageSvg4 } from '../assets/images/svg-images/dreamer.svg';
-import { ReactComponent as ImageSvg5 } from '../assets/images/svg-images/small_town.svg';
-import { ReactComponent as ImageSvg6 } from '../assets/images/svg-images/working_remotely.svg';
-import { ReactComponent as ImageSvg7 } from '../assets/images/svg-images/country_side.svg';
-import { ReactComponent as ImageSvg8 } from '../assets/images/svg-images/thoughts.svg';
-import { ReactComponent as ImageSvg9 } from '../assets/images/svg-images/browsing_online.svg';
-import { ReactComponent as ImageSvg10 } from '../assets/images/svg-images/note_list.svg';
-import { ReactComponent as ImageSvg11 } from '../assets/images/svg-images/profile_data.svg';
-import { ReactComponent as ImageSvg12 } from '../assets/images/svg-images/my_documents.svg';
-import { ReactComponent as ImageSvg13 } from '../assets/images/svg-images/opinion.svg';
-import { ReactComponent as ImageSvg14 } from '../assets/images/svg-images/letter.svg';
-import { ReactComponent as ImageSvg15 } from '../assets/images/svg-images/sad.svg';
+import dayjs from "dayjs";
+import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard";
+import DevicesIcon from "@mui/icons-material/Devices";
+import { ReactComponent as ImageSvg1 } from "../assets/images/svg-images/empty-data.svg";
+import { ReactComponent as ImageSvg2 } from "../assets/images/svg-images/online-gallery.svg";
+import { ReactComponent as ImageSvg3 } from "../assets/images/svg-images/empty-street.svg";
+import { ReactComponent as ImageSvg4 } from "../assets/images/svg-images/dreamer.svg";
+import { ReactComponent as ImageSvg5 } from "../assets/images/svg-images/small_town.svg";
+import { ReactComponent as ImageSvg6 } from "../assets/images/svg-images/working_remotely.svg";
+import { ReactComponent as ImageSvg7 } from "../assets/images/svg-images/country_side.svg";
+import { ReactComponent as ImageSvg8 } from "../assets/images/svg-images/thoughts.svg";
+import { ReactComponent as ImageSvg9 } from "../assets/images/svg-images/browsing_online.svg";
+import { ReactComponent as ImageSvg10 } from "../assets/images/svg-images/note_list.svg";
+import { ReactComponent as ImageSvg11 } from "../assets/images/svg-images/profile_data.svg";
+import { ReactComponent as ImageSvg12 } from "../assets/images/svg-images/my_documents.svg";
+import { ReactComponent as ImageSvg13 } from "../assets/images/svg-images/opinion.svg";
+import { ReactComponent as ImageSvg14 } from "../assets/images/svg-images/letter.svg";
+import { ReactComponent as ImageSvg15 } from "../assets/images/svg-images/sad.svg";
 
-const ENV = process.env.REACT_APP_NODE_ENV || 'development';
+const ENV = process.env.REACT_APP_NODE_ENV || "development";
 
-const PLATFORM = 'WEB';
+const PLATFORM = "WEB";
 
-const APP_NAME = 'MyJob';
+const APP_NAME = "MyJob";
 
 const HOST_NAME = {
-  MYJOB: process.env.REACT_APP_MYJOB_HOST_NAME || '127.0.0.1',
-  EMPLOYER_MYJOB: process.env.REACT_APP_EMPLOYER_MYJOB_HOST_NAME || 'localhost',
+  MYJOB: process.env.REACT_APP_MYJOB_HOST_NAME || "127.0.0.1",
+  EMPLOYER_MYJOB: process.env.REACT_APP_EMPLOYER_MYJOB_HOST_NAME || "localhost",
 };
 
 const AUTH_PROVIDER = {
-  FACEBOOK: 'facebook',
-  GOOGLE: 'google-oauth2',
+  FACEBOOK: "facebook",
+  GOOGLE: "google-oauth2",
 };
 
 const AUTH_CONFIG = {
   // BACKEND
   CLIENT_ID: process.env.REACT_APP_MYJOB_SERVER_CLIENT_ID,
   CLIENT_SECRECT: process.env.REACT_APP_MYJOB_SERVER_CLIENT_SECRECT,
-  BACKEND_KEY: 'backend',
-  ACCESS_TOKEN_KEY: 'access_token',
-  REFRESH_TOKEN_KEY: 'refresh_token',
-  PASSWORD_KEY: 'password',
-  CONVERT_TOKEN_KEY: 'convert_token',
+  BACKEND_KEY: "backend",
+  ACCESS_TOKEN_KEY: "access_token",
+  REFRESH_TOKEN_KEY: "refresh_token",
+  PASSWORD_KEY: "password",
+  CONVERT_TOKEN_KEY: "convert_token",
 
   // FACEBOOK AUTH
   FACEBOOK_CLIENT_ID: process.env.REACT_APP_FACEBOOK_CLIENT_ID,
@@ -58,34 +58,32 @@ const AUTH_CONFIG = {
   // Dialogflow chatbot
   JOB_SEEKER_BOT: {
     AGENT_ID:
-      process.env.JOB_SEEKER_BOT_AGENT_ID ||
-      '1a0c784b-fda8-4ed7-94c9-7877fc79ec88',
-    CHAT_TITLE: 'MyJob AI',
-    CHAT_ICON: 'https://res.cloudinary.com/dtnpj540t/image/upload/v1705727937/my-job/system-images/job-seeker-chatbot-icon.png',
+      process.env.JOB_SEEKER_BOT_AGENT_ID || "3658b10a-faaf-4e27-beea-99adaa33664e",
+    CHAT_TITLE: "MyJob AI",
+    CHAT_ICON: require("../assets/icons/job_seeker_chatbot_icon.gif"),
   },
   EMPLOYER_BOT: {
-    AGENT_ID: process.env.EMPLOYER_BOT_AGENT_ID ||
-    '',
-    CHAT_TITLE: 'MyJob AI',
-    CHAT_ICON: 'https://res.cloudinary.com/dtnpj540t/image/upload/v1705747491/my-job/system-images/employer-chatbot-icon.png',
+    AGENT_ID: process.env.EMPLOYER_BOT_AGENT_ID || "a49623dc-cfa1-49b1-8b2f-0f7eabdf7f6d",
+    CHAT_TITLE: "MyJob AI",
+    CHAT_ICON: require("../assets/icons/employer_chatbot_icon.gif"),
   },
 };
 
 const ROLES_NAME = {
-  ADMIN: 'ADMIN',
-  EMPLOYER: 'EMPLOYER',
-  JOB_SEEKER: 'JOB_SEEKER',
+  ADMIN: "ADMIN",
+  EMPLOYER: "EMPLOYER",
+  JOB_SEEKER: "JOB_SEEKER",
 };
 
 const HOME_FILTER_CAREER = [
   {
     id: 34,
-    name: 'IT - Phần mềm',
+    name: "IT - Phần mềm",
     titleIcon: <DevicesIcon color="secondary" />,
   },
   {
     id: 33,
-    name: 'IT - Phần cứng/Mạng',
+    name: "IT - Phần cứng/Mạng",
     titleIcon: <DeveloperBoardIcon color="secondary" />,
   },
 ];
@@ -99,15 +97,15 @@ const REGEX_VATIDATE = {
 };
 
 const CV_TYPES = {
-  cvWebsite: 'WEBSITE',
-  cvUpload: 'UPLOAD',
+  cvWebsite: "WEBSITE",
+  cvUpload: "UPLOAD",
 };
 
 const DATE_OPTIONS = {
-  yesterday: dayjs().add(-1, 'day'),
+  yesterday: dayjs().add(-1, "day"),
   today: dayjs(),
-  tomorrow: dayjs().add(1, 'day'),
-  dayCustom: (num) => dayjs().add(num, 'day'),
+  tomorrow: dayjs().add(1, "day"),
+  dayCustom: (num) => dayjs().add(num, "day"),
 };
 
 const IMAGES = {
@@ -117,118 +115,119 @@ const IMAGES = {
   getTextLogo: (mode) => {
     return require(`../assets/logo/${mode}-text-logo.png`);
   },
-  coverImageDefault: require('../assets/images/cover-image-default.webp'),
-  chPlayDownload: require('../assets/images/app-android-download.png'),
-  appStoreDownload: require('../assets/images/app-ios-download.png'),
-  notificationImageDefault: require('../assets/images/noti-img-default.png'),
+  coverImageDefault: require("../assets/images/cover-image-default.webp"),
+  chPlayDownload: require("../assets/images/app-android-download.png"),
+  appStoreDownload: require("../assets/images/app-ios-download.png"),
+  notificationImageDefault: require("../assets/images/noti-img-default.png"),
 };
 
 const ABOUT_IMAGES = {
-  AROUND_JOB_POST: require('../assets/images/about-images/around-job-post.png'),
-  JOB_POST_NOTIFICATION: require('../assets/images/about-images/job-notification-img.png'),
-  JOB_POST: require('../assets/images/about-images/job-post-img.png'),
-  PROFILE: require('../assets/images/about-images/profile-img.png'),
+  AROUND_JOB_POST: require("../assets/images/about-images/around-job-post.png"),
+  JOB_POST_NOTIFICATION: require("../assets/images/about-images/job-notification-img.png"),
+  JOB_POST: require("../assets/images/about-images/job-post-img.png"),
+  PROFILE: require("../assets/images/about-images/profile-img.png"),
 };
 
 const ICONS = {
-  INSTAGRAM: require('../assets/icons/instagram-icon.png'),
-  FACEBOOK: require('../assets/icons/facebook-icon.png'),
-  FACEBOOK_MESSENGER: require('../assets/icons/facebook-messenger-icon.png'),
-  LINKEDIN: require('../assets/icons/linkedin-icon.png'),
-  TWITTER: require('../assets/icons/twitter-icon.png'),
-  YOUTUBE: require('../assets/icons/youtube-icon.png'),
-  LOCATION_MARKER: require('../assets/icons/location-marker.gif')
+  INSTAGRAM: require("../assets/icons/instagram-icon.png"),
+  FACEBOOK: require("../assets/icons/facebook-icon.png"),
+  FACEBOOK_MESSENGER: require("../assets/icons/facebook-messenger-icon.png"),
+  LINKEDIN: require("../assets/icons/linkedin-icon.png"),
+  TWITTER: require("../assets/icons/twitter-icon.png"),
+  YOUTUBE: require("../assets/icons/youtube-icon.png"),
+  LOCATION_MARKER: require("../assets/icons/location-marker.gif"),
+  JOB_SEEKER_CHATBOT_ICON: require("../assets/icons/job_seeker_chatbot_icon.gif"),
+  EMPLOYER_CHATBOT_ICON: require("../assets/icons/employer_chatbot_icon.gif"),
 };
 
 const LINKS = {
-  CHPLAY_LINK: 'https://play.google.com/store/',
-  APPSTORE_LINK: 'https://www.apple.com/app-store/',
-  CERTIFICATE_LINK: 'http://online.gov.vn/',
-  INSTAGRAM_LINK: 'https://www.instagram.com/huybk2/',
-  FACEBOOK_LINK: 'https://www.facebook.com/bkhuy/',
-  FACEBOOK_MESSENGER_LINK: 'https://www.facebook.com/bkhuy/',
-  LINKEDIN_LINK: 'https://www.linkedin.com/in/huy-khanh-10041b20b/',
-  TWITTER_LINK: 'https://twitter.com/HuyBuiKhanh',
-  YOUTUBE_LINK: 'https://www.youtube.com/channel/UCn49BvcP1w1mamaOSGTKVZw',
+  CHPLAY_LINK: "https://play.google.com/store/",
+  APPSTORE_LINK: "https://www.apple.com/app-store/",
+  CERTIFICATE_LINK: "http://online.gov.vn/",
+  INSTAGRAM_LINK: "https://www.instagram.com/huybk2/",
+  FACEBOOK_LINK: "https://www.facebook.com/bkhuy/",
+  FACEBOOK_MESSENGER_LINK: "https://www.facebook.com/bkhuy/",
+  LINKEDIN_LINK: "https://www.linkedin.com/in/huy-khanh-10041b20b/",
+  TWITTER_LINK: "https://twitter.com/HuyBuiKhanh",
+  YOUTUBE_LINK: "https://www.youtube.com/channel/UCn49BvcP1w1mamaOSGTKVZw",
 };
 
 const LOADING_IMAGES = {
-  LOADING_SPINNER: require('../assets/images/loading/loading-spinner.gif'),
+  LOADING_SPINNER: require("../assets/images/loading/loading-spinner.gif"),
 };
 
-
 const FEEDBACK_IMAGES = {
-  "1star": require('../assets/images/feedbacks/1star.gif'),
-  "2star": require('../assets/images/feedbacks/2star.gif'),
-  "3star": require('../assets/images/feedbacks/3star.gif'),
-  "4star": require('../assets/images/feedbacks/4star.gif'),
-  "5star": require('../assets/images/feedbacks/5star.gif'),
-}
+  "1star": require("../assets/images/feedbacks/1star.gif"),
+  "2star": require("../assets/images/feedbacks/2star.gif"),
+  "3star": require("../assets/images/feedbacks/3star.gif"),
+  "4star": require("../assets/images/feedbacks/4star.gif"),
+  "5star": require("../assets/images/feedbacks/5star.gif"),
+};
 
 const LOGO_IMAGES = {
-  LOGO_WITH_BG: require('../assets/logo/logo-with-bg.jpg'),
-}
+  LOGO_WITH_BG: require("../assets/logo/logo-with-bg.jpg"),
+};
 
 const BANNER_TYPES = {
-  HOME: 'HOME',
-  MAIN_JOB_RIGHT: 'MAIN_JOB_RIGHT',
+  HOME: "HOME",
+  MAIN_JOB_RIGHT: "MAIN_JOB_RIGHT",
 };
 
 const JOB_POST_STATUS_BG_COLOR = {
-  1: 'warning',
-  2: 'error',
-  3: 'success',
+  1: "warning",
+  2: "error",
+  3: "success",
 };
 
 const ROUTES = {
   AUTH: {
-    EMAIL_VERIFICATION: 'email-verification-required',
-    LOGIN: 'dang-nhap',
-    REGISTER: 'dang-ky',
-    FORGOT_PASSWORD: 'quen-mat-khau',
-    RESET_PASSWORD: 'cap-nhat-mat-khau/:token',
+    EMAIL_VERIFICATION: "email-verification-required",
+    LOGIN: "dang-nhap",
+    REGISTER: "dang-ky",
+    FORGOT_PASSWORD: "quen-mat-khau",
+    RESET_PASSWORD: "cap-nhat-mat-khau/:token",
   },
   ERROR: {
-    NOT_FOUND: '*',
-    FORBIDDEN: 'forbidden',
+    NOT_FOUND: "*",
+    FORBIDDEN: "forbidden",
   },
   JOB_SEEKER: {
-    HOME: '',
-    JOBS: 'viec-lam',
-    JOB_DETAIL: 'viec-lam/:slug',
-    COMPANY: 'cong-ty',
-    COMPANY_DETAIL: 'cong-ty/:slug',
-    ABOUT_US: 've-chung-toi',
-    JOBS_BY_CAREER: 'viec-lam-theo-nganh-nghe',
-    JOBS_BY_CITY: 'viec-lam-theo-tinh-thanh',
-    JOBS_BY_TYPE: 'viec-lam-theo-hinh-thuc-lam-viec',
-    DASHBOARD: 'bang-dieu-khien',
-    PROFILE: 'ho-so',
-    STEP_PROFILE: 'ho-so-tung-buoc/:slug',
-    ATTACHED_PROFILE: 'ho-so-dinh-kem/:slug',
-    MY_JOB: 'viec-lam-cua-toi',
-    MY_COMPANY: 'cong-ty-cua-toi',
-    NOTIFICATION: 'thong-bao',
-    ACCOUNT: 'tai-khoan',
-    CHAT: 'ket-noi-voi-nha-tuyen-dung',
+    HOME: "",
+    JOBS: "viec-lam",
+    JOB_DETAIL: "viec-lam/:slug",
+    COMPANY: "cong-ty",
+    COMPANY_DETAIL: "cong-ty/:slug",
+    ABOUT_US: "ve-chung-toi",
+    JOBS_BY_CAREER: "viec-lam-theo-nganh-nghe",
+    JOBS_BY_CITY: "viec-lam-theo-tinh-thanh",
+    JOBS_BY_TYPE: "viec-lam-theo-hinh-thuc-lam-viec",
+    DASHBOARD: "bang-dieu-khien",
+    PROFILE: "ho-so",
+    STEP_PROFILE: "ho-so-tung-buoc/:slug",
+    ATTACHED_PROFILE: "ho-so-dinh-kem/:slug",
+    MY_JOB: "viec-lam-cua-toi",
+    MY_COMPANY: "cong-ty-cua-toi",
+    NOTIFICATION: "thong-bao",
+    ACCOUNT: "tai-khoan",
+    CHAT: "ket-noi-voi-nha-tuyen-dung",
   },
   EMPLOYER: {
-    INTRODUCE: 'gioi-thieu',
-    SERVICE: 'dich-vu',
-    PRICING: 'bao-gia',
-    SUPPORT: 'ho-tro',
-    BLOG: 'blog-tuyen-dung',
-    DASHBOARD: '',
-    JOB_POST: 'tin-tuyen-dung',
-    APPLIED_PROFILE: 'ho-so-ung-tuyen',
-    SAVED_PROFILE: 'ho-so-da-luu',
-    PROFILE: 'danh-sach-ung-vien',
-    PROFILE_DETAIL: 'chi-tiet-ung-vien/:slug',
-    COMPANY: 'cong-ty',
-    NOTIFICATION: 'thong-bao',
-    ACCOUNT: 'tai-khoan',
-    SETTING: 'cai-dat',
-    CHAT: 'ket-noi-voi-ung-vien',
+    INTRODUCE: "gioi-thieu",
+    SERVICE: "dich-vu",
+    PRICING: "bao-gia",
+    SUPPORT: "ho-tro",
+    BLOG: "blog-tuyen-dung",
+    DASHBOARD: "",
+    JOB_POST: "tin-tuyen-dung",
+    APPLIED_PROFILE: "ho-so-ung-tuyen",
+    SAVED_PROFILE: "ho-so-da-luu",
+    PROFILE: "danh-sach-ung-vien",
+    PROFILE_DETAIL: "chi-tiet-ung-vien/:slug",
+    COMPANY: "cong-ty",
+    NOTIFICATION: "thong-bao",
+    ACCOUNT: "tai-khoan",
+    SETTING: "cai-dat",
+    CHAT: "ket-noi-voi-ung-vien",
   },
 };
 
