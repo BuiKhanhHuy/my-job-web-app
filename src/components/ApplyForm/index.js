@@ -105,7 +105,7 @@ const ApplyForm = ({ handleApplyJob }) => {
                 >
                   <Stack spacing={1}>
                     {resumes.map((value) => (
-                      <Card sx={{ p: 1 }} variant="outlined" key={value.id}>
+                      <Card sx={{ p: 2 }} variant="outlined" key={value.id}>
                         <Stack direction="row" sx={{ width: '100%' }}>
                           <Stack>
                             <FormControlLabel

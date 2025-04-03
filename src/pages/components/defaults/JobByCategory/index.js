@@ -1,13 +1,13 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Grid, Stack, Typography } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Grid, Stack, Typography } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-import { searchJobPost } from '../../../../redux/filterSlice';
-import { ROUTES } from '../../../../configs/constants';
+import { searchJobPost } from "../../../../redux/filterSlice";
+import { ROUTES } from "../../../../configs/constants";
 
 const maxItem = 6;
 
@@ -23,13 +23,13 @@ const JobByCategory = () => {
 
   const handleFilter = (id, type) => {
     switch (type) {
-      case 'CARRER':
+      case "CARRER":
         dispatch(searchJobPost({ ...jobPostFilter, careerId: id }));
         break;
-      case 'CITY':
+      case "CITY":
         dispatch(searchJobPost({ ...jobPostFilter, cityId: id }));
         break;
-      case 'JOB_TYPE':
+      case "JOB_TYPE":
         dispatch(searchJobPost({ ...jobPostFilter, jobTypeId: id }));
         break;
       default:
@@ -39,32 +39,63 @@ const JobByCategory = () => {
   };
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={4}>
       <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-        <Stack spacing={2}>
-          <Typography variant="h6">Việc làm theo nghề nghiệp</Typography>
-          <Stack>
+        <Stack
+          spacing={2.5}
+          sx={{
+            p: 3,
+            height: "100%",
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              color: "primary.main",
+              borderBottom: "2px solid",
+              borderColor: "primary.main",
+              pb: 1,
+            }}
+          >
+            Việc làm theo nghề nghiệp
+          </Typography>
+          <Stack spacing={1.5}>
             {careerOptions?.slice(0, maxItem).map((item) => (
               <Typography
                 sx={{
-                  cursor: 'pointer',
-                  '&:hover': {
-                    color: '#fca34d',
-                    fontWeight: 'bold',
+                  cursor: "pointer",
+                  py: 0.5,
+                  px: 1.5,
+                  borderRadius: 1,
+                  transition: "all 0.2s ease-in-out",
+                  "&:hover": {
+                    backgroundColor: "primary.background",
+                    color: "primary.main",
+                    transform: "translateX(8px)",
                   },
                 }}
                 key={item.id}
-                gutterBottom
                 onClick={() => handleFilter(item.id, "CARRER")}
               >
-                <span> {item.name}</span>
+                {item.name}
               </Typography>
             ))}
             {careerOptions.length > maxItem && (
               <Typography
-                variant="caption"
-                color="#441da0"
-                sx={{ mt: 1, fontWeight: 'bold', textDecoration: 'none' }}
+                variant="subtitle2"
+                sx={{
+                  mt: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  color: "primary.main",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  "&:hover": {
+                    color: "primary.dark",
+                  },
+                }}
                 component={Link}
                 to={`/${ROUTES.JOB_SEEKER.JOBS_BY_CAREER}`}
               >
@@ -76,20 +107,40 @@ const JobByCategory = () => {
       </Grid>
 
       <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-        <Stack spacing={2}>
-          <Typography variant="h6">Việc làm theo theo khu vực</Typography>
-          <Stack>
+        <Stack
+          spacing={2.5}
+          sx={{
+            p: 3,
+            height: "100%",
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              color: "primary.main",
+              borderBottom: "2px solid",
+              borderColor: "primary.main",
+              pb: 1,
+            }}
+          >
+            Việc làm theo khu vực
+          </Typography>
+          <Stack spacing={1.5}>
             {cityOptions?.slice(0, maxItem).map((item) => (
               <Typography
                 sx={{
-                  cursor: 'pointer',
-                  '&:hover': {
-                    color: '#fca34d',
-                    fontWeight: 'bold',
+                  cursor: "pointer",
+                  py: 0.5,
+                  px: 1.5,
+                  borderRadius: 1,
+                  transition: "all 0.2s ease-in-out",
+                  "&:hover": {
+                    backgroundColor: "primary.background",
+                    color: "primary.main",
+                    transform: "translateX(8px)",
                   },
                 }}
                 key={item.id}
-                gutterBottom
                 onClick={() => handleFilter(item.id, "CITY")}
               >
                 {item.name}
@@ -97,9 +148,20 @@ const JobByCategory = () => {
             ))}
             {cityOptions.length > maxItem && (
               <Typography
-                variant="caption"
-                color="#441da0"
-                sx={{ mt: 1, fontWeight: 'bold', textDecoration: 'none' }}
+                variant="subtitle2"
+                sx={{
+                  mt: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  color: "primary.main",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  "&:hover": {
+                    color: "primary.main",
+                  },
+                }}
                 component={Link}
                 to={`/${ROUTES.JOB_SEEKER.JOBS_BY_CITY}`}
               >
@@ -111,20 +173,40 @@ const JobByCategory = () => {
       </Grid>
 
       <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-        <Stack spacing={2}>
-          <Typography variant="h6">Việc làm theo hình thức làm việc</Typography>
-          <Stack>
+        <Stack
+          spacing={2.5}
+          sx={{
+            p: 3,
+            height: "100%",
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              color: "primary.main",
+              borderBottom: "2px solid",
+              borderColor: "primary.main",
+              pb: 1,
+            }}
+          >
+            Việc làm theo hình thức làm việc
+          </Typography>
+          <Stack spacing={1.5}>
             {jobTypeOptions?.slice(0, maxItem).map((item) => (
               <Typography
                 sx={{
-                  cursor: 'pointer',
-                  '&:hover': {
-                    color: '#fca34d',
-                    fontWeight: 'bold',
+                  cursor: "pointer",
+                  py: 0.5,
+                  px: 1.5,
+                  borderRadius: 1,
+                  transition: "all 0.2s ease-in-out",
+                  "&:hover": {
+                    backgroundColor: "primary.background",
+                    color: "primary.main",
+                    transform: "translateX(8px)",
                   },
                 }}
                 key={item.id}
-                gutterBottom
                 onClick={() => handleFilter(item.id, "JOB_TYPE")}
               >
                 {item.name}
@@ -132,13 +214,24 @@ const JobByCategory = () => {
             ))}
             {jobTypeOptions.length > maxItem && (
               <Typography
-                variant="caption"
-                color="#441da0"
-                sx={{ mt: 1, fontWeight: 'bold', textDecoration: 'none' }}
+                variant="subtitle2"
+                sx={{
+                  mt: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  color: "primary.main",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  "&:hover": {
+                    color: "primary.main",
+                  },
+                }}
                 component={Link}
                 to={`/${ROUTES.JOB_SEEKER.JOBS_BY_TYPE}`}
               >
-                Xem tất cả hình thức làm việc{' '}
+                Xem tất cả hình thức làm việc{" "}
                 <FontAwesomeIcon icon={faChevronRight} />
               </Typography>
             )}

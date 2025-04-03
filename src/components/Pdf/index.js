@@ -89,7 +89,15 @@ const Pdf = ({ fileUrl, title = '' }) => {
                 <Download>
                   {(props) => (
                     <Button
-                      sx={{ color: 'white', textTransform: 'inherit' }}
+                      sx={{
+                        boxShadow: (theme) => theme.customShadows.medium,
+                        color: 'white',
+                        textTransform: 'inherit',
+                        '&:hover': {
+                          transform: 'scale(1.03)',
+                        },
+                        transition: 'all 0.2s ease-in-out',
+                      }}
                       variant="contained"
                       color="warning"
                       onClick={props.onClick}

@@ -282,12 +282,9 @@ const NotificationCard = () => {
             overflow: 'visible',
             filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
             mt: 1.5,
-            '& .MuiAvatar-root': {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
+            borderRadius: 2,
+            width: 500,
+            maxHeight: 500,
             '&:before': {
               content: '""',
               display: 'block',
@@ -305,11 +302,16 @@ const NotificationCard = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <Box style={{ width: 500, maxHeight: 500 }} sx={{ py: 1, px: 1.5 }}>
+        <Box sx={{ py: 2, px: 2 }}>
           <Box style={{ overflowY: 'auto', maxHeight: 450 }}>
             <Stack spacing={2} sx={{ p: 1 }}>
               {notifications.length === 0 ? (
-                <Typography textAlign="center" variant="body2" color="gray">
+                <Typography 
+                  textAlign="center" 
+                  variant="body2" 
+                  color="text.secondary"
+                  sx={{ py: 2 }}
+                >
                   Chưa có thông báo nào
                 </Typography>
               ) : (
@@ -320,9 +322,14 @@ const NotificationCard = () => {
                     alignItems="center"
                     key={idx}
                     sx={{
-                      boxShadow: 1,
-                      p: 1,
-                      borderRadius: 1.5,
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                      p: 1.5,
+                      borderRadius: 2,
+                      transition: 'all 0.2s ease-in-out',
+                      '&:hover': {
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                        bgcolor: 'rgba(0,0,0,0.01)',
+                      },
                     }}
                   >
                     <Box
@@ -348,40 +355,42 @@ const NotificationCard = () => {
                       flex={1}
                       onClick={() => handleClickItem(value)}
                     >
-                      <Stack>
-                        <Box>
-                          <Typography
-                            variant="subtitle2"
-                            fontSize={14}
-                            style={{
-                              fontWeight:
-                                value?.is_read === true ? 'normal' : 'bold',
+                      <Stack spacing={0.5}>
+                        <Typography
+                          variant="subtitle2"
+                          sx={{
+                            fontWeight: value?.is_read === true ? 400 : 600,
+                            color: value?.is_read === true ? 'text.secondary' : 'text.primary',
+                          }}
+                        >
+                          {value.title}
+                        </Typography>
+                        <Typography 
+                          variant="body2" 
+                          color="text.secondary"
+                          sx={{ 
+                            fontSize: '0.875rem',
+                            lineHeight: 1.4 
+                          }}
+                        >
+                          {value.content}
+                        </Typography>
+                        <Stack 
+                          direction="row" 
+                          justifyContent="space-between"
+                          sx={{ mt: 0.5 }}
+                        >
+                          <Typography variant="caption" color="text.disabled">
+                            <Moment fromNow>{value?.time?.seconds * 1000}</Moment>
+                          </Typography>
+                          <Typography 
+                            variant="caption"
+                            sx={{
+                              color: value?.is_read ? 'text.disabled' : 'error.main',
+                              fontWeight: value?.is_read ? 400 : 500
                             }}
                           >
-                            {value.title}
-                          </Typography>
-                        </Box>
-                        <Box>
-                          <Typography variant="caption" color="#616161">
-                            {value.content}
-                          </Typography>
-                        </Box>
-                        <Stack direction="row" justifyContent="space-between">
-                          <Typography
-                            variant="caption"
-                            fontSize={12}
-                            color="#bdbdbd"
-                          >
-                            <Moment fromNow>
-                              {value?.time?.seconds * 1000}
-                            </Moment>
-                          </Typography>
-                          <Typography variant="caption" fontSize={12}>
-                            {value?.is_read === true ? (
-                              <span style={{ color: '#bdbdbd' }}>Đã đọc</span>
-                            ) : (
-                              <span style={{ color: 'red' }}>Mới</span>
-                            )}
+                            {value?.is_read === true ? 'Đã đọc' : 'Mới'}
                           </Typography>
                         </Stack>
                       </Stack>

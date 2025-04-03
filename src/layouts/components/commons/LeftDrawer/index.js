@@ -60,41 +60,66 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Stack
-        sx={{ py: 1 }}
+        sx={{ 
+          py: 2,
+          background: (theme) => theme.palette.primary.gradient,
+          borderRadius: '0 10px 0 0',
+        }}
         justifyContent="center"
         alignItems="center"
         component={Link}
         to="/"
       >
         <Avatar
-          src={IMAGES.getTextLogo(
-            theme.palette.mode === 'light' ? 'dark' : 'light'
-          )}
+          src={IMAGES.getTextLogo('light')}
           sx={{
             width: '55%',
             height: 44,
+            transition: 'transform 0.2s ease-in-out',
+            '&:hover': {
+              transform: 'scale(1.05)',
+            }
           }}
           variant="square"
           alt="LOGO"
         />
       </Stack>
-      <Divider />
-      <List>
+      <Divider sx={{ borderColor: 'grey.200' }} />
+      <List sx={{ py: 2 }}>
         {pages.map((page) => (
           <ListItem
             key={page.id}
             component={NavLink}
             to={page.path}
             disablePadding
+            sx={{
+              mb: 1,
+              mx: 1,
+            }}
           >
             <ListItemButton
               sx={{
                 textAlign: 'center',
-                color: (theme) =>
-                  theme.palette.mode === 'light' ? 'black' : 'white',
+                borderRadius: 2,
+                transition: 'all 0.2s ease-in-out',
+                color: 'primary.main',
+                '&.active': {
+                  backgroundColor: 'primary.background',
+                  color: 'primary.main',
+                  fontWeight: 600,
+                },
+                '&:hover': {
+                  backgroundColor: 'grey.100',
+                  transform: 'translateX(5px)',
+                }
               }}
             >
-              <ListItemText primary={page.label} />
+              <ListItemText 
+                primary={page.label}
+                primaryTypographyProps={{
+                  fontSize: '0.95rem',
+                }} 
+              />
             </ListItemButton>
           </ListItem>
         ))}
@@ -107,7 +132,8 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
       <Divider
         variant="middle"
         sx={{
-          mt: 2,
+          my: 2,
+          borderColor: 'grey.200',
           display: {
             xs: 'block',
             sm: 'none',
@@ -119,7 +145,7 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
       />
 
       <Stack
-        spacing={1}
+        spacing={1.5}
         sx={{
           p: 2,
         }}
@@ -128,7 +154,15 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
           <Button
             variant="contained"
             color="error"
-            sx={{ color: 'white' }}
+            fullWidth
+            sx={{ 
+              py: 1,
+              boxShadow: (theme) => theme.customShadows.small,
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                transition: 'transform 0.2s ease-in-out',
+              }
+            }}
             onClick={() =>
               confirmModal(
                 handleLogout,
@@ -145,8 +179,10 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
             <Button
               variant="contained"
               color="primary"
+              fullWidth
               sx={{
-                color: 'white',
+                py: 1,
+                boxShadow: (theme) => theme.customShadows.small,
                 display: {
                   xs: 'block',
                   sm: 'none',
@@ -154,6 +190,10 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
                   lg: 'none',
                   xl: 'none',
                 },
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  transition: 'transform 0.2s ease-in-out',
+                }
               }}
               onClick={() => nav(`/${ROUTES.AUTH.REGISTER}`)}
             >
@@ -172,13 +212,16 @@ const LeftDrawer = ({ window, pages, mobileOpen, handleDrawerToggle }) => {
       open={mobileOpen}
       onClose={handleDrawerToggle}
       ModalProps={{
-        keepMounted: true, // Better open performance on mobile.
+        keepMounted: true,
       }}
       sx={{
         display: { xs: 'block', sm: 'block', md: 'none' },
         '& .MuiDrawer-paper': {
           boxSizing: 'border-box',
           width: drawerWidth,
+          boxShadow: (theme) => theme.customShadows.card,
+          border: 'none',
+          borderRadius: '0 10px 0 0',
         },
       }}
     >

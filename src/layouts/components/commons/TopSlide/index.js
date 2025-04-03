@@ -10,6 +10,21 @@ import { Box, Link } from '@mui/material';
 import HomeSearch from '../../../../pages/components/defaults/HomeSearch';
 import MuiImageCustom from '../../../../components/MuiImageCustom';
 import myjobService from '../../../../services/myjobService';
+import { BANNER_TYPES } from '../../../../configs/constants';
+
+const styles = {
+  ".swiper-pagination-bullet": {
+    width: 10,
+    height: 10,
+    opacity: 0.5,
+    backgroundColor: "#8b6bd4",
+  },
+  ".swiper-pagination-bullet-active": {
+    width: 10,
+    height: 10,
+    opacity: 1,
+  },
+};
 
 const RenderItem = ({ item }) => {
   const [location, setLocation] = React.useState({
@@ -82,7 +97,7 @@ const TopSlide = () => {
   React.useEffect(() => {
     const getBanners = async () => {
       try {
-        const resData = await myjobService.getBanners();
+        const resData = await myjobService.getBanners({type: BANNER_TYPES.HOME});
 
         const data = resData?.data || [];
 
@@ -100,7 +115,7 @@ const TopSlide = () => {
       className="justify-content-center"
       style={{ height: 320, position: 'relative' }}
     >
-      <Box>
+      <Box sx={styles}>
         <Swiper
           spaceBetween={30}
           pagination={{

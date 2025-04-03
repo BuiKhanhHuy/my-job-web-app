@@ -6,7 +6,7 @@ import {
   TextField,
   Button,
   CircularProgress,
-  Card,
+  Typography,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -224,9 +224,27 @@ const ChatWindow = () => {
   }, [messages]);
 
   return (
-    <Stack direction="column" justifyContent="space-around">
-      <Card>
-        {selectedRoomId && (
+    <Stack 
+      direction="column" 
+      sx={{ 
+        height: '100%',
+        position: 'relative',
+        bgcolor: 'background.default'
+      }}
+    >
+      {selectedRoomId && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 10,
+            bgcolor: 'background.paper',
+            borderBottom: 1,
+            borderColor: 'divider',
+          }}
+        >
           <Stack>
             {currentUser?.roleName === ROLES_NAME.JOB_SEEKER ? (
               <ChatInfo.HeaderChatInfo
@@ -242,60 +260,78 @@ const ChatWindow = () => {
               />
             )}
           </Stack>
-        )}
-      </Card>
-      <Box p={1}>
+        </Box>
+      )}
+
+      <Box 
+        sx={{ 
+          flexGrow: 1, 
+          overflow: 'hidden',
+          mt: selectedRoomId ? '72px' : 0, // Chiều cao của header chat
+          mb: '80px' // Chiều cao của khung nhập tin nhắn
+        }}
+      >
         {selectedRoomId ? (
-          <Stack>
-            <Box height="100%">
+          <Stack sx={{ height: '100%' }}>
+            <Box 
+              sx={{ 
+                height: '100%',
+                position: 'relative'
+              }}
+            >
               {isLoading ? (
                 <Stack
-                  sx={{ py: 2 }}
                   justifyContent="center"
                   alignItems="center"
-                  height={'72vh'}
+                  height="100%"
                 >
-                  <CircularProgress color="secondary" sx={{ margin: 'auto' }} />
+                  <CircularProgress color="primary" />
                 </Stack>
               ) : messages.length === 0 ? (
-                currentUser?.roleName === ROLES_NAME.JOB_SEEKER ? (
-                  <ChatInfo
-                    avatarUrl={selectedRoom?.user?.avatarUrl}
-                    title={selectedRoom?.user?.name}
-                    subTitle={selectedRoom?.user?.company?.companyName}
-                    description={
-                      selectedRoom?.createdBy !== `${currentUserChat?.userId}`
-                        ? `${selectedRoom?.user?.company?.companyName} đã kết nối với bạn.`
-                        : `Bạn đã kết nối đến ${selectedRoom?.user?.company?.companyName}`
-                    }
-                  />
-                ) : (
-                  <ChatInfo
-                    avatarUrl={selectedRoom?.user?.avatarUrl}
-                    title={selectedRoom?.user?.name}
-                    subTitle={selectedRoom?.user?.email}
-                    description={
-                      selectedRoom?.createdBy !== `${currentUserChat?.userId}`
-                        ? `${selectedRoom?.user?.name} đã kết nối với bạn.`
-                        : `Bạn đã kết nối đến ${selectedRoom?.user?.name}`
-                    }
-                  />
-                )
+                <Stack
+                  justifyContent="center" 
+                  alignItems="center"
+                  height="100%"
+                  p={2}
+                >
+                  {currentUser?.roleName === ROLES_NAME.JOB_SEEKER ? (
+                    <ChatInfo
+                      avatarUrl={selectedRoom?.user?.avatarUrl}
+                      title={selectedRoom?.user?.name}
+                      subTitle={selectedRoom?.user?.company?.companyName}
+                      description={
+                        selectedRoom?.createdBy !== `${currentUserChat?.userId}`
+                          ? `${selectedRoom?.user?.company?.companyName} đã kết nối với bạn.`
+                          : `Bạn đã kết nối đến ${selectedRoom?.user?.company?.companyName}`
+                      }
+                    />
+                  ) : (
+                    <ChatInfo
+                      avatarUrl={selectedRoom?.user?.avatarUrl}
+                      title={selectedRoom?.user?.name}
+                      subTitle={selectedRoom?.user?.email}
+                      description={
+                        selectedRoom?.createdBy !== `${currentUserChat?.userId}`
+                          ? `${selectedRoom?.user?.name} đã kết nối với bạn.`
+                          : `Bạn đã kết nối đến ${selectedRoom?.user?.name}`
+                      }
+                    />
+                  )}
+                </Stack>
               ) : (
                 <div
                   ref={messageListRef}
                   id="scrollableDiv"
                   style={{
-                    height: '72vh',
+                    height: '100%',
                     overflow: 'auto',
                     display: 'flex',
                     flexDirection: 'column-reverse',
+                    padding: '16px'
                   }}
                 >
                   <InfiniteScroll
                     style={{
-                      overflowY: 'auto',
-                      padding: 2,
                       display: 'flex',
                       flexDirection: 'column-reverse',
                     }}
@@ -307,7 +343,8 @@ const ChatWindow = () => {
                     loader={
                       <Stack sx={{ py: 2 }} justifyContent="center">
                         <CircularProgress
-                          color="secondary"
+                          color="primary"
+                          size={30}
                           sx={{ margin: '0 auto' }}
                         />
                       </Stack>
@@ -330,49 +367,81 @@ const ChatWindow = () => {
                 </div>
               )}
             </Box>
-            <Box
-              flex={1}
-              p={2}
-              component="form"
-              onSubmit={(e) => handleOnSubmit(e)}
-            >
-              <Stack direction="row" spacing={2} alignItems="flex-end">
-                <Box flex={1}>
-                  <TextField
-                    inputRef={inputRef}
-                    fullWidth
-                    placeholder={'Nhập nội dung tại đây ...'}
-                    defaultValue=""
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                    multiline
-                    maxRows={5}
-                    variant="outlined"
-                  />
-                </Box>
-                <Box>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    endIcon={<SendIcon />}
-                    type="submit"
-                  >
-                    Gửi
-                  </Button>
-                </Box>
-              </Stack>
-            </Box>
           </Stack>
         ) : (
-          <Stack justifyContent="center" alignItems="center">
+          <Stack 
+            justifyContent="center" 
+            alignItems="center" 
+            height="100%"
+            spacing={2}
+            p={2}
+          >
             <Empty
-              style={{ marginTop: 150 }}
-              description="Bạn chưa chọn cuộc trò chuyện nào ..."
+              description={
+                <Typography color="text.secondary">
+                  Bạn chưa chọn cuộc trò chuyện nào ...
+                </Typography>
+              }
             />
           </Stack>
         )}
       </Box>
+
+      {selectedRoomId && (
+        <Box
+          component="form"
+          onSubmit={handleOnSubmit}
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            p: 2,
+            borderTop: 1,
+            borderColor: 'divider',
+            bgcolor: 'background.paper',
+            zIndex: 10
+          }}
+        >
+          <Stack direction="row" spacing={2} alignItems="flex-end">
+            <TextField
+              inputRef={inputRef}
+              fullWidth
+              placeholder="Nhập nội dung tại đây ..."
+              value={inputValue}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              multiline
+              maxRows={5}
+              variant="outlined"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  bgcolor: 'background.default',
+                  '&:hover': {
+                    '& > fieldset': {
+                      borderColor: 'primary.main',
+                    }
+                  }
+                }
+              }}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              endIcon={<SendIcon />}
+              type="submit"
+              sx={{
+                height: 54,
+                px: 3,
+                background: (theme) => theme.palette.primary.gradient
+              }}
+            >
+              Gửi
+            </Button>
+          </Stack>
+        </Box>
+      )}
     </Stack>
   );
 };

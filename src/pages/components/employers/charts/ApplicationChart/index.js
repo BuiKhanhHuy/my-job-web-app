@@ -38,25 +38,55 @@ ChartJS.register(
 );
 
 const options = {
-  scales: {
-    xAxes: [
-      {
-        stacked: true,
-      },
-    ],
-    yAxes: [
-      {
-        stacked: true,
-      },
-    ],
-  },
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
       position: 'bottom',
+      labels: {
+        padding: 20,
+        usePointStyle: true,
+        pointStyle: 'circle',
+        font: {
+          size: 12
+        }
+      }
     },
+    tooltip: {
+      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+      titleColor: '#212529',
+      bodyColor: '#212529',
+      padding: 12,
+      boxPadding: 6,
+      borderColor: 'rgba(0,0,0,0.1)',
+      borderWidth: 1,
+      usePointStyle: true,
+    }
   },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+        drawBorder: false
+      },
+      ticks: {
+        font: {
+          size: 12
+        }
+      }
+    },
+    y: {
+      grid: {
+        color: 'rgba(0,0,0,0.05)',
+        drawBorder: false
+      },
+      ticks: {
+        font: {
+          size: 12
+        }
+      }
+    }
+  }
 };
 
 const ApplicationChart = ({ title }) => {
@@ -90,79 +120,128 @@ const ApplicationChart = ({ title }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allowSubmit]);
 
-  const dataOptions = React.useMemo(() => {
-    const d = {
-      labels: data?.labels || [],
-      datasets: [
-        {
-          type: 'line',
-          label: data?.title2,
-          backgroundColor: data?.backgroundColor2,
-          data: data?.data2 || [],
-          tension: 0.5,
-        },
-        {
-          type: 'bar',
-          label: data?.title1,
-          backgroundColor: data?.backgroundColor1,
-          data: data?.data1 || [],
-        },  
-      ],
-    };
-
-    return d;
-  }, [data]);
+  const dataOptions = React.useMemo(() => ({
+    labels: data?.labels || [],
+    datasets: [
+      {
+        type: 'line',
+        label: data?.title2,
+        borderColor: 'rgba(68, 29, 160, 1)', // primary.main
+        backgroundColor: 'rgba(68, 29, 160, 0.1)',
+        data: data?.data2 || [],
+        tension: 0.4,
+        borderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        pointBackgroundColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointBorderWidth: 2,
+        pointHoverBorderWidth: 2,
+      },
+      {
+        type: 'bar',
+        label: data?.title1,
+        backgroundColor: 'rgba(255, 152, 0, 0.9)', // secondary.main
+        data: data?.data1 || [],
+        borderRadius: 4,
+        barThickness: 12,
+        maxBarThickness: 12
+      },
+    ],
+  }), [data]);
 
   return (
-    <>
-      <Card sx={{ p: 2 }}>
-        <Stack>
-          <Box>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
+    <Card 
+      sx={{ 
+        p: 3,
+        boxShadow: theme => theme.customShadows.card,
+        border: theme => `1px solid ${theme.palette.grey[100]}`,
+        height: '100%'
+      }}
+    >
+      <Stack spacing={3}>
+        <Box>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography variant="h5" color="text.primary">
+              {title}
+            </Typography>
+            <MuiTooltip
+              title="Thống kê chỉ số tuyển dụng trong vòng 1 tháng gần nhất"
+              arrow
+              placement="left"
             >
-              <Typography fontWeight="bold">{title}</Typography>
-              <MuiTooltip
-                title="Thống kê chỉ số tương quan giữa nhu cầu tuyển dụng và lượt hồ sơ ứng tuyển"
-                arrow
-              >
-                <InfoIcon color="disabled" />
-              </MuiTooltip>
-            </Stack>
-          </Box>
-          <Divider sx={{ mt: 2, mb: 3 }} />
-          <Box sx={{ px: 1 }}>
-            <Stack
-              direction="row"
-              justifyContent="flex-end"
-              spacing={0.75}
-              mb={1}
-            >
-              <RangePickerCustom
-                allowSubmit={allowSubmit}
-                setAllowSubmit={setAllowSubmit}
-                selectedDateRange={selectedDateRange}
-                setSelectedDateRange={setSelectedDateRange}
+              <InfoIcon
+                sx={{
+                  color: 'grey.400',
+                  cursor: 'pointer',
+                  '&:hover': {
+                    color: 'primary.main',
+                  },
+                }}
               />
-            </Stack>
-            <Stack justifyContent="center" alignItems="center">
-              {isLoading ? (
-                <CircularProgress color="secondary" />
-              ) : data.length === 0 ? (
+            </MuiTooltip>
+          </Stack>
+        </Box>
+
+        <Divider sx={{ borderStyle: 'dashed' }} />
+
+        <Box>
+          <Stack direction="row" justifyContent="flex-end" spacing={1} mb={3}>
+            <RangePickerCustom
+              allowSubmit={allowSubmit}
+              setAllowSubmit={setAllowSubmit}
+              selectedDateRange={selectedDateRange}
+              setSelectedDateRange={setSelectedDateRange}
+            />
+          </Stack>
+
+          <Box sx={{ position: 'relative', minHeight: 320 }}>
+            {isLoading ? (
+              <Stack
+                alignItems="center"
+                justifyContent="center"
+                sx={{ height: 320 }}
+              >
+                <CircularProgress 
+                  size={40}
+                  thickness={3}
+                  sx={{
+                    color: 'primary.main'
+                  }}
+                />
+              </Stack>
+            ) : data.length === 0 ? (
+              <Stack
+                alignItems="center"
+                justifyContent="center"
+                sx={{
+                  height: 320,
+                  bgcolor: 'grey.50',
+                  borderRadius: 2
+                }}
+              >
                 <Empty
                   image={Empty.PRESENTED_IMAGE_SIMPLE}
-                  description="Không có dữ liệu để thống kê"
+                  description={
+                    <Typography variant="body2" color="text.secondary">
+                      Không có dữ liệu để thống kê
+                    </Typography>
+                  }
                 />
-              ) : (
-                <Bar data={dataOptions} options={options}  height={320}/>
-              )}
-            </Stack>
+              </Stack>
+            ) : (
+              <Box sx={{ height: 320 }}>
+                <Bar options={options} data={dataOptions} />
+              </Box>
+            )}
           </Box>
-        </Stack>
-      </Card>
-    </>
+        </Box>
+      </Stack>
+    </Card>
   );
 };
 

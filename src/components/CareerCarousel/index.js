@@ -1,54 +1,66 @@
-import 'swiper/css';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/pagination";
 
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Pagination, Autoplay } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Box, Card, Skeleton, Stack, Typography } from '@mui/material';
-import commonService from '../../services/commonService';
-import MuiImageCustom from '../MuiImageCustom';
-import { searchJobPost } from '../../redux/filterSlice';
-import { ROUTES } from '../../configs/constants';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Pagination, Autoplay } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Box, Card, Skeleton, Stack, Typography } from "@mui/material";
+import commonService from "../../services/commonService";
+import MuiImageCustom from "../MuiImageCustom";
+import { searchJobPost } from "../../redux/filterSlice";
+import { ROUTES } from "../../configs/constants";
 
+// Cập nhật styles cho pagination
+const styles = {
+  ".swiper-pagination": {
+    bottom: "-5px !important",
+  },
+  ".swiper-wrapper": {
+    paddingBottom: "35px",
+  },
+  ".swiper-pagination-bullet": {
+    width: 8,
+    height: 8,
+    opacity: 0.5,
+    backgroundColor: (theme) => theme.palette.primary.main,
+    transition: "all 0.3s ease",
+  },
+  ".swiper-pagination-bullet-active": {
+    width: 24,
+    height: 8,
+    opacity: 1,
+    borderRadius: "4px",
+  },
+};
+
+// Cập nhật component Loading
 const Loading = (
-  <>
-    <Card
-      sx={{
-        alignItems: 'center',
-        p: 1,
-        py: 1,
-        mb: 0.5,
-        boxShadow: 0,
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light' ? '#F4F6FF' : '',
-      }}
-    >
-      <Skeleton
-        variant="rounded"
-        width={64}
-        height={64}
-        style={{ margin: '0 auto', padding: 2 }}
-      />
-      <Typography
-        variant="h6"
-        component="h6"
-        gutterBottom={true}
-        sx={{ textAlign: 'center', fontWeight: 'bold' }}
-      >
-        <Skeleton />
-      </Typography>
-      <Typography
-        variant="caption"
-        display="block"
-        gutterBottom
-        sx={{ textAlign: 'center', color: '#9e9e9e' }}
-      >
-        <Skeleton />
-      </Typography>
-    </Card>
-  </>
+  <Card
+    sx={{
+      alignItems: "center",
+      p: 2,
+      mb: 0.5,
+      boxShadow: 0,
+      backgroundColor: (theme) => theme.palette.background.paper,
+      transition: "transform 0.2s ease-in-out",
+      borderRadius: "16px",
+    }}
+  >
+    <Skeleton
+      variant="rounded"
+      width={72}
+      height={72}
+      style={{ margin: "0 auto", borderRadius: "12px" }}
+    />
+    <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>
+      <Skeleton width="80%" style={{ margin: "0 auto" }} />
+    </Typography>
+    <Typography variant="caption">
+      <Skeleton width="60%" style={{ margin: "0 auto" }} />
+    </Typography>
+  </Card>
 );
 
 const CareerCarousel = () => {
@@ -62,14 +74,14 @@ const CareerCarousel = () => {
 
   React.useEffect(() => {
     const handleResize = () => {
-      const newWidth = document.getElementById('career-carousel').offsetWidth;
+      const newWidth = document.getElementById("career-carousel").offsetWidth;
       setParentWidth(newWidth);
     };
 
     handleResize();
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   React.useEffect(() => {
@@ -108,7 +120,7 @@ const CareerCarousel = () => {
 
   return (
     <div id="career-carousel">
-      <Box>
+      <Box sx={styles}>
         <Swiper
           slidesPerView={col}
           spaceBetween={15}
@@ -129,43 +141,63 @@ const CareerCarousel = () => {
                 <SwiperSlide key={value.id}>
                   <Card
                     sx={{
-                      alignItems: 'center',
-                      p: 1,
-                      py: 1,
+                      alignItems: "center",
+                      p: 2,
                       mb: 0.5,
+                      cursor: "pointer",
                       boxShadow: 0,
-                      cursor: 'pointer',
-                      '&:hover': {
-                        color: '#fca34d',
-                        boxShadow: 4,
+                      backgroundColor: (theme) => theme.palette.background.paper,
+                      borderRadius: "16px",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        transform: "translateY(-4px)",
+                        boxShadow: (theme) => theme.customShadows.medium,
+                        "& .career-icon": {
+                          transform: "scale(1.05)",
+                        },
+                        "& .career-name": {
+                          color: (theme) => theme.palette.primary.main,
+                        },
                       },
-                      backgroundColor: (theme) =>
-                        theme.palette.mode === 'light' ? '#F4F6FF' : '',
                     }}
                     onClick={() => handleFilter(value.id)}
                   >
                     <Stack
                       direction="row"
                       justifyContent="center"
-                      sx={{ p: 2 }}
+                      sx={{
+                        p: 2,
+                        "& .career-icon": {
+                          transition: "transform 0.3s ease",
+                        },
+                      }}
                     >
                       <MuiImageCustom
-                        width={64}
-                        height={64}
+                        width={72}
+                        height={72}
                         src={value?.iconUrl}
+                        className="career-icon"
+                        sx={{
+                          borderRadius: "12px",
+                          p: 1,
+                          backgroundColor: (theme) => theme.palette.primary.background,
+                        }}
                       />
                     </Stack>
                     <Typography
+                      className="career-name"
                       variant="h6"
                       component="h6"
                       gutterBottom={true}
                       sx={{
-                        textAlign: 'center',
-                        fontWeight: 'bold',
-                        fontSize: 17,
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        fontSize: "1rem",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        transition: "color 0.3s ease",
+                        px: 1,
                       }}
                     >
                       {value?.name}
@@ -174,7 +206,15 @@ const CareerCarousel = () => {
                       variant="caption"
                       display="block"
                       gutterBottom
-                      sx={{ textAlign: 'center', color: '#9e9e9e' }}
+                      sx={{
+                        textAlign: "center",
+                        color: (theme) => theme.palette.text.secondary,
+                        backgroundColor: (theme) => theme.palette.primary.background,
+                        px: 2,
+                        py: 0.5,
+                        borderRadius: "20px",
+                        fontSize: "0.75rem",
+                      }}
                     >
                       {value.jobPostTotal} Việc Làm
                     </Typography>

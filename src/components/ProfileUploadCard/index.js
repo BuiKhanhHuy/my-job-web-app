@@ -19,6 +19,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import downloadPdf, { formatRoute } from '../../utils/funcUtils';
 import { ROUTES } from '../../configs/constants';
+import defaultTheme from '../../themeConfigs/defaultTheme';
 
 const ProfileUploadCard = ({
   resumeImage,
@@ -37,10 +38,16 @@ const ProfileUploadCard = ({
     <Box
       sx={{
         height: 310,
-        bgcolor: 'lightblue',
+        bgcolor: 'background.paper',
         position: 'relative',
         overflow: 'hidden',
-        borderRadius: 1,
+        borderRadius: 2,
+        boxShadow: (theme) => theme.customShadows.card,
+        transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+        '&:hover': {
+          transform: 'translateY(-4px)',
+          boxShadow: (theme) => theme.customShadows.large,
+        }
       }}
     >
       <img
@@ -52,6 +59,7 @@ const ProfileUploadCard = ({
           left: 0,
           zIndex: 1,
           width: '100%',
+          height: '100%',
         }}
         alt="BG"
       />
@@ -63,86 +71,110 @@ const ProfileUploadCard = ({
           left: 0,
           zIndex: 2,
           position: 'absolute',
-          background: 'linear-gradient(180deg,hsla(0,0%,100%,0),#212f3f)',
+          background: 'linear-gradient(180deg, rgba(33, 47, 63, 0) 0%, rgba(33, 47, 63, 0.8) 50%, rgba(33, 47, 63, 0.95) 100%)',
         }}
       >
-        <Stack direction="row" justifyContent="flex-end" sx={{ marginTop: 1 }}>
+        <Stack direction="row" justifyContent="flex-end" sx={{ margin: 2 }}>
           {isActive ? (
             <Chip
-              sx={{ ml: 1 }}
+              sx={{
+                backdropFilter: 'blur(8px)',
+                backgroundColor: 'rgba(46, 125, 50, 0.85)',
+                '& .MuiChip-label': {
+                  color: 'white',
+                }
+              }}
               size="small"
-              icon={<StarIcon color="warning" />}
-              color="success"
+              icon={<StarIcon sx={{ color: 'warning.main' }} />}
               label="Cho phép tìm kiếm"
               onClick={() => handleActive(slug)}
             />
           ) : (
             <Chip
-              variant="filled"
-              sx={{ ml: 1 }}
+              sx={{
+                backdropFilter: 'blur(8px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                '& .MuiChip-label': {
+                  color: 'white',
+                }
+              }}
               size="small"
-              icon={<StarOutlineIcon color="warning" />}
-              color="default"
+              icon={<StarOutlineIcon sx={{ color: 'warning.main' }} />}
               label="Cho phép tìm kiếm"
               onClick={() => handleActive(slug)}
             />
           )}
           <Tooltip
-           title={`Bật "Cho phép tìm kiếm" sẽ giúp nhà tuyển dụng tìm thấy hồ sơ của bạn và họ có thể liên hệ với bạn về công việc mới. Chỉ có duy nhất một hồ được bật trạng thái "cho phép tìm kiếm" trong tất cả hồ sơ của bạn.`}
+            title={`Bật "Cho phép tìm kiếm" sẽ giúp nhà tuyển dụng tìm thấy hồ sơ của bạn và họ có thể liên hệ với bạn về công việc mới. Chỉ có duy nhất một hồ được bật trạng thái "cho phép tìm kiếm" trong tất cả hồ sơ của bạn.`}
             arrow
           >
-            <HelpIcon color="disabled" />
+            <HelpIcon sx={{ ml: 1, color: 'rgba(255, 255, 255, 0.7)' }} />
           </Tooltip>
         </Stack>
+
         <Box
           sx={{
             position: 'absolute',
             zIndex: 3,
-            bottom: 16,
-            left: 16,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            p: 2,
             color: 'white',
           }}
         >
-          <Stack spacing={1}>
+          <Stack spacing={2}>
             <Stack
               direction="row"
               justifyContent="space-between"
               alignItems="center"
             >
-              <Typography>{title}</Typography>
+              <Typography variant="h6" sx={{ fontWeight: 600 }}>{title}</Typography>
               <IconButton
-                aria-label="delete"
-                color="warning"
+                sx={{
+                  bgcolor: 'rgba(255, 255, 255, 0.1)',
+                  backdropFilter: 'blur(8px)',
+                  '&:hover': {
+                    bgcolor: 'rgba(255, 255, 255, 0.2)',
+                  }
+                }}
                 size="small"
                 onClick={() => nav(`/${ROUTES.JOB_SEEKER.DASHBOARD}/${formatRoute(ROUTES.JOB_SEEKER.ATTACHED_PROFILE, slug)}`)}
               >
-                <EditIcon />
+                <EditIcon sx={{ color: 'white' }} />
               </IconButton>
             </Stack>
-            <Box>
-              <Typography variant="caption">
-                Cập nhật lần cuối:{' '}
-                {dayjs(updateAt).format('DD/MM/YYYY HH:mm:ss')}
-              </Typography>
-            </Box>
-            <Stack direction="row" justifyContent="space-between">
-              <Stack direction="row" spacing={1} alignItems="center">
-                <Chip
-                  sx={{ ml: 1, color: 'white' }}
-                  size="small"
-                  icon={<DownloadIcon />}
-                  color="secondary"
-                  label="Tải xuống"
-                  onClick={() => downloadPdf(fileUrl, title)}
-                />
-              </Stack>
+
+            <Typography variant="caption" sx={{ opacity: 0.8 }}>
+              Cập nhật lần cuối: {dayjs(updateAt).format('DD/MM/YYYY HH:mm:ss')}
+            </Typography>
+
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Chip
+                sx={{
+                  backdropFilter: 'blur(8px)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  '& .MuiChip-label': {
+                    color: 'white',
+                  }
+                }}
+                size="small"
+                icon={<DownloadIcon sx={{ color: defaultTheme.palette.secondary.main }} />}
+                label="Tải xuống"
+                onClick={() => downloadPdf(fileUrl, title)}
+              />
               <IconButton
-                aria-label="delete"
-                color="error"
+                sx={{
+                  bgcolor: 'rgba(211, 47, 47, 0.1)',
+                  backdropFilter: 'blur(8px)',
+                  '&:hover': {
+                    bgcolor: 'rgba(211, 47, 47, 0.2)',
+                  }
+                }}
                 size="small"
                 onClick={() => handleDelete(slug)}
               >
-                <DeleteForever />
+                <DeleteForever sx={{ color: 'error.light' }} />
               </IconButton>
             </Stack>
           </Stack>

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
-import { HashLoader } from 'react-spinners';
+import Fade from '@mui/material/Fade';
+import { LOADING_IMAGES } from '../../../configs/constants';
 
-const BackdropLoading = ({ bgColor = 'rgba(0, 0, 0, 0.4)' }) => {
+const BackdropLoading = ({ bgColor = 'rgba(0, 0, 0, 0.4)', open = true }) => {
   return (
     <Backdrop
       sx={{
@@ -13,9 +14,21 @@ const BackdropLoading = ({ bgColor = 'rgba(0, 0, 0, 0.4)' }) => {
       style={{
         zIndex: 9999,
       }}
-      open={true}
+      open={open}
+      TransitionComponent={Fade}
+      TransitionProps={{
+        timeout: 100
+      }}
     >
-      <HashLoader color="#fca34d" size={100} speedMultiplier={2} />
+      <img 
+        src={LOADING_IMAGES.LOADING_SPINNER}
+        alt="Loading ..."
+        style={{
+          width: '100px',
+          height: 'auto',
+          animation: 'spin 2s linear infinite'
+        }}
+      />
     </Backdrop>
   );
 };

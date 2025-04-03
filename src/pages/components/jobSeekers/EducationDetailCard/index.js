@@ -24,8 +24,8 @@ import {
 } from '@mui/lab';
 
 import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
@@ -190,30 +190,51 @@ const EducationDetailCard = ({ title }) => {
 
   return (
     <>
-      <Box>
+      <Box
+        sx={{
+          backgroundColor: 'background.paper',
+          borderRadius: 3,
+          p: 3,
+          boxShadow: (theme) => theme.customShadows.card,
+        }}
+      >
         {isLoadingEducationsDetail ? (
           Loading
         ) : (
-          <Stack>
+          <Stack spacing={3}>
             <Box>
               <Stack
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Typography variant="h6">{title}</Typography>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 600,
+                  }}
+                >
+                  {title}
+                </Typography>
                 <Fab
                   size="small"
                   color="primary"
-                  aria-label="edit"
+                  aria-label="add"
                   onClick={handleShowAdd}
+                  sx={{
+                    boxShadow: (theme) => theme.customShadows.medium,
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                    transition: "all 0.2s ease-in-out",
+                  }}
                 >
-                  <AddIcon sx={{ color: 'white', fontSize: 30 }} />
+                  <AddIcon />
                 </Fab>
               </Stack>
             </Box>
-            <Divider sx={{ mt: 2, mb: 3 }} />
-            <Box sx={{ px: 1 }}>
+            <Divider sx={{ my: 0, borderColor: 'grey.500' }}/>
+            <Box>
               {educationsDetail.length === 0 ? (
                 <EmptyCard
                   content="Bạn hãy thêm thông tin học vấn của mình để nhà tuyển dụng tham khảo"
@@ -226,82 +247,140 @@ const EducationDetailCard = ({ title }) => {
                       flex: 0,
                       padding: 0,
                     },
+                    mt: 0,
                   }}
                 >
                   {educationsDetail.map((value) => (
                     <TimelineItem key={value.id}>
                       <TimelineSeparator>
-                        <TimelineDot color="warning" />
-                        <TimelineConnector />
+                        <TimelineDot 
+                          sx={{
+                            background: (theme) => theme.palette.primary.gradient,
+                            boxShadow: (theme) => theme.customShadows.small,
+                          }}
+                        />
+                        <TimelineConnector sx={{ bgcolor: 'primary.light' }} />
                       </TimelineSeparator>
                       <TimelineContent>
-                        <Typography variant="body1" gutterBottom>
-                          <Moment format="DD/MM/yyyy">{value.startDate}</Moment>{' '}
-                          -{' '}
-                          {value.completedDate ? (
-                            <Moment format="DD/MM/yyyy">
-                              {value.completedDate}
-                            </Moment>
-                          ) : (
-                            'Hiện tại'
-                          )}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          gutterBottom
-                          sx={{ fontWeight: 'bold' }}
-                        >
-                          {value?.degreeName}
-                        </Typography>
-                        <Typography variant="body1">
-                          {value?.trainingPlaceName}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          gutterBottom
-                          sx={{ color: 'gray', fontStyle: 'italic' }}
-                        >
-                          {value?.major}
-                        </Typography>
+                        <Box sx={{ p: 1 }}>
+                          <Typography 
+                            variant="body2"
+                            color="primary.main"
+                            sx={{ fontWeight: 600, mb: 1 }}
+                          >
+                            <Moment format="DD/MM/yyyy">{value.startDate}</Moment>{' '}
+                            -{' '}
+                            {value.completedDate ? (
+                              <Moment format="DD/MM/yyyy">
+                                {value.completedDate}
+                              </Moment>
+                            ) : (
+                              'Hiện tại'
+                            )}
+                          </Typography>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            sx={{ 
+                              fontWeight: 'bold',
+                              color: 'text.primary'
+                            }}
+                          >
+                            {value?.degreeName}
+                          </Typography>
+                          <Typography 
+                            variant="body1"
+                            sx={{ 
+                              color: 'text.secondary',
+                              mb: 0.5
+                            }}
+                          >
+                            {value?.trainingPlaceName}
+                          </Typography>
+                          <Typography 
+                            variant="body2"
+                            sx={{ 
+                              color: 'text.secondary',
+                              fontStyle: 'italic',
+                              mb: 2
+                            }}
+                          >
+                            {value?.major}
+                          </Typography>
 
-                        <Stack direction="row" spacing={1}>
-                          <IconButton
-                            color="warning"
-                            aria-label="edit education detail"
-                            onClick={() => handleShowUpdate(value.id)}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                          <IconButton
-                            color="error"
-                            aria-label="delete education detail"
-                            onClick={() =>
-                              handleDeleteducationsDetail(value.id)
-                            }
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </Stack>
+                          <Stack direction="row" spacing={1}>
+                            <IconButton
+                              size="small"
+                              sx={{
+                                color: 'secondary.main',
+                                bgcolor: 'secondary.background',
+                                '&:hover': {
+                                  bgcolor: 'secondary.light',
+                                  color: 'white',
+                                },
+                              }}
+                              onClick={() => handleShowUpdate(value.id)}
+                            >
+                              <ModeEditOutlineOutlinedIcon fontSize="small" />
+                            </IconButton>
+                            <IconButton
+                              size="small"
+                              sx={{
+                                color: 'error.main',
+                                bgcolor: 'error.background',
+                                '&:hover': {
+                                  bgcolor: 'error.main',
+                                  color: 'white',
+                                },
+                              }}
+                              onClick={() => handleDeleteducationsDetail(value.id)}
+                            >
+                              <DeleteOutlineOutlinedIcon fontSize="small" />
+                            </IconButton>
+                          </Stack>
 
-                        <Accordion sx={{ boxShadow: 0 }}>
-                          <AccordionSummary
-                            sx={{ p: 0, m: 0 }}
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
+                          <Accordion 
+                            sx={{ 
+                              boxShadow: 'none',
+                              bgcolor: 'transparent',
+                              '&:before': {
+                                display: 'none',
+                              },
+                            }}
                           >
-                            <Typography color="gray">Mô tả chi tiết</Typography>
-                          </AccordionSummary>
-                          <AccordionDetails sx={{ p: 0, m: 0 }}>
-                            <Typography>
-                              {value?.description || (
-                                 <span style={{ color: '#e0e0e0', fontStyle: 'italic', fontSize: 13 }}>
-                                 Chưa cập nhật
-                               </span>
-                              )}
-                            </Typography>
-                          </AccordionDetails>
-                        </Accordion>
+                            <AccordionSummary
+                              expandIcon={
+                                <ExpandMoreIcon 
+                                  sx={{ 
+                                    color: 'primary.main',
+                                    fontSize: 20
+                                  }}
+                                />
+                              }
+                            >
+                              <Typography 
+                                variant="body2"
+                                sx={{
+                                  color: 'text.secondary',
+                                  fontWeight: 500
+                                }}
+                              >
+                                Mô tả chi tiết
+                              </Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                              <Typography
+                                variant="body2"
+                                sx={{
+                                  color: value.description ? 'text.primary' : 'text.placeholder',
+                                  fontStyle: value.description ? 'normal' : 'italic',
+                                }}
+                              >
+                                {value.description || "Chưa cập nhật"}
+                              </Typography>
+                            </AccordionDetails>
+                          </Accordion>
+                        </Box>
                       </TimelineContent>
                     </TimelineItem>
                   ))}

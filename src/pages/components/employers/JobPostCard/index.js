@@ -280,64 +280,141 @@ const JobPostCard = () => {
   };
 
   return (
-    <>
+    <Box sx={{ 
+      px: { xs: 1, sm: 2 }, 
+      py: { xs: 2, sm: 2 }, 
+      backgroundColor: 'background.paper', 
+      borderRadius: 2 
+    }}>
+      {/* Header Section - Responsive */}
+      <Stack 
+        direction={{ xs: 'column', sm: 'row' }}
+        alignItems={{ xs: 'flex-start', sm: 'center' }}
+        justifyContent="space-between" 
+        spacing={{ xs: 2, sm: 0 }}
+        mb={4}
+      >
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            fontWeight: 600,
+            background: 'primary.gradient',
+            WebkitBackgroundClip: 'text',
+            fontSize: { xs: '1.25rem', sm: '1.5rem' }
+          }}
+        >
+          Quản lý tin tuyển dụng
+        </Typography>
+        <Stack 
+          direction={{ xs: 'column', sm: 'row' }} 
+          spacing={2}
+          width={{ xs: '100%', sm: 'auto' }}
+        >
+          <Button
+            variant="outlined"
+            color="secondary"
+            startIcon={<FileDownloadOutlinedIcon />}
+            onClick={handleExport}
+            fullWidth={false}
+            sx={{
+              borderRadius: 2,
+              px: 3,
+              '&:hover': {
+                backgroundColor: 'secondary.backgroundHover'
+              }
+            }}
+          >
+            Tải danh sách
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={handleShowAdd}
+            fullWidth={false}
+            sx={{
+              borderRadius: 2,
+              px: 3,
+              background: 'primary.gradient',
+              boxShadow: 'custom.small',
+              '&:hover': {
+                boxShadow: 'custom.medium'
+              }
+            }}
+          >
+            Tạo tin mới
+          </Button>
+        </Stack>
+      </Stack>
+
+      {/* Filter Section - Responsive */}
       <Stack
-        direction={{
-          xs: 'column',
-          sm: 'column',
-          md: 'row',
-          lg: 'row',
-          xl: 'row',
-        }}
+        direction={{ xs: 'column', md: 'row' }}
         sx={{ mb: 3 }}
         spacing={2}
+        alignItems={{ xs: 'flex-start', md: 'center' }}
       >
         <Box>
-          <Typography variant="subtitle2">Bộ lọc: </Typography>
+          <Typography 
+            variant="subtitle1" 
+            sx={{ 
+              color: 'text.secondary',
+              fontWeight: 600,
+              mb: { xs: 1, md: 0 }
+            }}
+          >
+            Bộ lọc:
+          </Typography>
         </Box>
-        <Box flex={1}>
-          {/* Start: JobPostFilterForm */}
+        <Box flex={1} width="100%">
           <JobPostFilterForm handleFilter={handleFilter} />
-          {/* End: JobPostFilterForm */}
         </Box>
       </Stack>
-      <Stack direction="row" justifyContent="flex-end" spacing={1} mb={2}>
-        <Button
-          variant="outlined"
-          color="secondary"
-          startIcon={<FileDownloadOutlinedIcon />}
-          onClick={handleExport}
-        >
-          Tải danh sách
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<AddIcon />}
-          onClick={handleShowAdd}
-        >
-          Tạo tin mới
-        </Button>
-      </Stack>
-      {isLoadingJobPost ? <LinearProgress color="primary" /> : <Divider />}
-      <JobPostsTable
-        headCells={headCells}
-        rows={JobPosts}
-        isLoading={isLoadingJobPost}
-        order={order}
-        orderBy={orderBy}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        count={count}
-        handleRequestSort={handleRequestSort}
-        handleChangePage={handleChangePage}
-        handleChangeRowsPerPage={handleChangeRowsPerPage}
-        handleDelete={handleDeleteJobPost}
-        handleUpdate={handleShowUpdate}
-      />
-      {/* <DataTableCustom.Loading /> */}
 
-      {/* Start: form  */}
+      {/* Loading Progress */}
+      {isLoadingJobPost ? (
+        <Box sx={{ width: '100%', mb: 2 }}>
+          <LinearProgress 
+            color="primary"
+            sx={{
+              height: { xs: 4, sm: 6 },
+              borderRadius: 3,
+              backgroundColor: 'primary.background'
+            }}
+          />
+        </Box>
+      ) : (
+        <Divider sx={{ mb: 2 }} />
+      )}
+
+      {/* Table Section */}
+      <Box sx={{
+        backgroundColor: 'background.paper',
+        borderRadius: 2,
+        boxShadow: 'custom.card',
+        overflow: 'hidden',
+        width: '100%',
+        '& .MuiTableContainer-root': {
+          overflowX: 'auto'
+        }
+      }}>
+        <JobPostsTable
+          headCells={headCells}
+          rows={JobPosts}
+          isLoading={isLoadingJobPost}
+          order={order}
+          orderBy={orderBy}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          count={count}
+          handleRequestSort={handleRequestSort}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          handleDelete={handleDeleteJobPost}
+          handleUpdate={handleShowUpdate}
+        />
+      </Box>
+
       <FormPopup
         title="Tin tuyển dụng"
         openPopup={openPopup}
@@ -349,12 +426,9 @@ const JobPostCard = () => {
           serverErrors={serverErrors}
         />
       </FormPopup>
-      {/* End: form */}
 
-      {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}
-      {/* End: full screen loading */}
-    </>
+    </Box>
   );
 };
 

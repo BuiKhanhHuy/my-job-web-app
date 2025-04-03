@@ -1,11 +1,11 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { Rating, Typography } from '@mui/material';
-
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-const RatingCustom = ({ name, control, title = null }) => {
+const RatingCustom = ({ name, control, title = null, onChangeActive, ...props }) => {
   return (
     <div>
       {title && (
@@ -14,7 +14,7 @@ const RatingCustom = ({ name, control, title = null }) => {
         </Typography>
       )}
       <Controller
-        defaultValue={3}
+        defaultValue={5}
         name={name}
         control={control}
         render={({ field, fieldState }) => (
@@ -23,6 +23,8 @@ const RatingCustom = ({ name, control, title = null }) => {
               size="large"
               value={field.value}
               onChange={field.onChange}
+              onChangeActive={onChangeActive}
+              {...props}
             />
             {fieldState.invalid && (
               <span

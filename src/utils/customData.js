@@ -28,7 +28,7 @@ const convertMoney = n => {
   if (n >= 1000000000) {
     return `${Math.trunc(n / 1000000000)} tỉ`;
   } else if (n >= 1000000) {
-    return `${Math.trunc(n / 1000000)} triệu`;
+    return `${Math.trunc(n / 1000000)} tr`;
   } else {
     return `${Math.trunc(n)}`;
   }

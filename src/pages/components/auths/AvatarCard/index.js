@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Stack, IconButton, Typography } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 import { confirmModal } from '../../../../utils/sweetalert2Modal';
@@ -62,44 +62,93 @@ const AvatarCard = () => {
   return (
     <>
       <Stack alignItems="center">
-        <Box>
+        <Box
+          sx={{
+            position: 'relative',
+            width: 120,
+            height: 120,
+            padding: '4px',
+            borderRadius: '50%',
+            background: `linear-gradient(45deg, #441da0, #6b4fd1)`,
+            boxShadow: '0 4px 14px 0 rgba(68, 29, 160, 0.15)',
+            '&:hover .avatar-actions': {
+              opacity: 1,
+            },
+          }}
+        >
           <MuiImageCustom
             src={currentUser?.avatarUrl}
-            width={120}
-            height={120}
-            sx={{ borderRadius: '50%' }}
+            width="100%"
+            height="100%"
+            sx={{
+              borderRadius: '50%',
+              objectFit: 'cover',
+              border: '2px solid white',
+            }}
           />
-        </Box>
-        <Box>
-          <ImgCrop
-            rotationSlider
-            modalProps={{ zIndex: 2000 }}
-            modalTitle="Chỉnh sửa ảnh"
-            modalOk="Tải lên"
-            modalCancel="Hủy"
-            showReset={true}
-            resetText="Đặt lại"
+          
+          {/* Overlay với buttons */}
+          <Box
+            className="avatar-actions"
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              borderRadius: '50%',
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              opacity: 0,
+              transition: 'opacity 0.2s ease',
+            }}
           >
-            <Upload
-              listType="picture"
-              maxCount={1}
-              customRequest={handleUpload}
-              showUploadList={false}
-            >
-              <IconButton color="warning" aria-label="upload" component="label">
-                <EditIcon />
-              </IconButton>
-            </Upload>
-          </ImgCrop>
-          <IconButton
-            color="error"
-            aria-label="upload"
-            component="label"
-            onClick={handleDelete}
-          >
-            <HighlightOffIcon />
-          </IconButton>
+            <Stack direction="row" spacing={1}>
+              <ImgCrop
+                rotationSlider
+                modalProps={{ zIndex: 2000 }}
+                modalTitle="Chỉnh sửa ảnh"
+                modalOk="Tải lên"
+                modalCancel="Hủy"
+                showReset={true}
+                resetText="Đặt lại"
+              >
+                <Upload
+                  listType="picture"
+                  maxCount={1}
+                  customRequest={handleUpload}
+                  showUploadList={false}
+                >
+                  <IconButton 
+                    size="small"
+                    sx={{ 
+                      bgcolor: 'white',
+                      '&:hover': { bgcolor: 'white', opacity: 0.9 }
+                    }}
+                  >
+                    <ModeEditOutlineOutlinedIcon sx={{ fontSize: 18, color: '#fca34d' }} />
+                  </IconButton>
+                </Upload>
+              </ImgCrop>
+              
+              {currentUser?.avatarUrl && (
+                <IconButton
+                  size="small"
+                  onClick={handleDelete}
+                  sx={{ 
+                    bgcolor: 'white',
+                    '&:hover': { bgcolor: 'white', opacity: 0.9 }
+                  }}
+                >
+                  <HighlightOffIcon sx={{ fontSize: 18, color: '#d32f2f' }} />
+                </IconButton>
+              )}
+            </Stack>
+          </Box>
         </Box>
+
         <Typography variant="subtitle2" gutterBottom sx={{ mt: 1 }}>
           Ảnh đại diện
         </Typography>

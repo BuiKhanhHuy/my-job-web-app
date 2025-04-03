@@ -32,33 +32,83 @@ const Popup = ({
       <Dialog
         fullScreen={fullScreen}
         open={openPopup}
-        onClose={setOpenPopup}
+        onClose={() => setOpenPopup(false)}
         aria-labelledby="responsive-dialog-title"
         maxWidth="md"
         fullWidth
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            borderRadius: '16px',
+            boxShadow: theme.customShadows.card,
+            border: `1px solid ${theme.palette.grey[100]}`,
+            overflow: 'hidden'
+          }
+        }}
       >
-        <DialogTitle sx={{ p: 1.5 }} id="responsive-dialog-title">
+        <DialogTitle 
+          sx={{ 
+            p: 2.5,
+            background: theme.palette.grey[50]
+          }}
+        >
           <Stack
             direction="row"
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h5">{title}</Typography>
-            <IconButton color="error" onClick={() => setOpenPopup(false)}>
+            <Typography 
+              variant="h5"
+              sx={{
+                color: theme.palette.grey[900],
+                fontWeight: 600
+              }}
+            >
+              {title}
+            </Typography>
+            <IconButton
+              onClick={() => setOpenPopup(false)}
+              sx={{
+                color: theme.palette.grey[500],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100]
+                }
+              }}
+            >
               <CloseIcon />
             </IconButton>
           </Stack>
         </DialogTitle>
+
         <Divider />
-        <DialogContent>{children}</DialogContent>
+
+        <DialogContent sx={{ p: 3 }}>
+          {children}
+        </DialogContent>
+
         {showDialogAction && (
-          <DialogActions sx={{ py: 2 }}>
+          <DialogActions 
+            sx={{ 
+              py: 2.5,
+              px: 3,
+              background: theme.palette.grey[50]
+            }}
+          >
             <LoadingButton
               loading={false}
               loadingPosition="start"
               startIcon={buttonIcon}
               variant="contained"
-              sx={{ margin: '0 auto' }}
+              sx={{
+                margin: '0 auto',
+                minWidth: 120,
+                background: theme.palette.primary.gradient,
+                '&:hover': {
+                  background: theme.palette.primary.gradient,
+                  opacity: 0.9,
+                  boxShadow: theme.customShadows.medium
+                }
+              }}
               type="submit"
               form="modal-form"
             >

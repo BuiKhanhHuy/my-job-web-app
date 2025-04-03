@@ -48,44 +48,39 @@ const OnlineProfilePage = () => {
   };
 
   return (
-    <Box>
-      <Grid container spacing={2}>
+    <Box sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
+      <Grid container spacing={3}>
         <Grid xs={12} sm={12} md={7} lg={9} xl={9} item>
-          <Stack spacing={2}>
-            <Card sx={{ p: 2 }} ref={(el) => (refs.current[0] = el)}>
-              {/* Start: Personal info */}
+          <Stack spacing={3}>
+            <Card 
+              ref={(el) => (refs.current[0] = el)}
+              sx={{
+                '&:hover': {
+                  boxShadow: (theme) => theme.customShadows.card,
+                  borderColor: 'primary.main',
+                  transition: 'all 0.3s ease'
+                }
+              }}
+            >
               <PersonalInfoCard title="Thông tin cá nhân" />
-              {/* End: Personal info  */}
             </Card>
-            <Card sx={{ p: 2 }} ref={(el) => (refs.current[1] = el)}>
-              {/* Start: General info */}
+            <Card  ref={(el) => (refs.current[1] = el)}>
               <GeneralInfoCard title="Thông tin chung" />
-              {/* End: General info */}
             </Card>
-            <Card sx={{ p: 2 }} ref={(el) => (refs.current[2] = el)}>
-              {/* Start: Experience detail */}
+            <Card ref={(el) => (refs.current[2] = el)}>
               <ExperienceDetailCard title="Kinh nghiệm làm việc" />
-              {/* End: Experience detail */}
             </Card>
-            <Card sx={{ p: 2 }} ref={(el) => (refs.current[3] = el)}>
-              {/* Start: Education detail */}
+            <Card ref={(el) => (refs.current[3] = el)}>
               <EducationDetailCard title="Thông tin học vấn" />
-              {/* End: Education detail */}
             </Card>
-            <Card sx={{ p: 2 }} ref={(el) => (refs.current[4] = el)}>
-              {/* Start: Appreciation */}
+            <Card ref={(el) => (refs.current[4] = el)}>
               <CertificateCard title="Chứng chỉ" />
-              {/* End: Appreciation */}
             </Card>
-            <Card sx={{ p: 2 }} ref={(el) => (refs.current[5] = el)}>
-              {/* Start: Language Skills */}
+            <Card ref={(el) => (refs.current[5] = el)}>
               <LanguageSkillCard title="Kỹ năng ngôn ngữ" />
-              {/* End: Language Skills */}
             </Card>
-            <Card sx={{ p: 2 }} ref={(el) => (refs.current[6] = el)}>
-              {/* Start: Advanced Skills */}
+            <Card ref={(el) => (refs.current[6] = el)}>
               <AdvancedSkillCard title="Kỹ năng chuyên môn" />
-              {/* End: Advanced Skills */}
             </Card>
           </Stack>
         </Grid>
@@ -98,48 +93,68 @@ const OnlineProfilePage = () => {
           sx={{
             display: {
               xs: 'none',
-              sm: 'none',
-              md: 'block',
-              lg: 'block',
-              xl: 'block',
-            },
+              sm: 'none', 
+              md: 'block'
+            }
           }}
           item
         >
           <Stack
             spacing={2}
-            style={{
+            sx={{
               position: 'sticky',
               top: 80,
             }}
           >
-            <Card sx={{ p: 2 }}>
-              <Stack>
-                <Box>
-                  <Typography variant="h6">Hồ sơ trực tuyến của bạn</Typography>
-                </Box>
-                <Box>
-                  <List
-                    sx={{
-                      width: '100%',
-                      bgcolor: 'background.paper',
-                    }}
-                    aria-label="contacts"
-                  >
-                    {items.map((item) => (
-                      <ListItem
-                        key={item.id}
-                        disablePadding
+            <Card 
+              sx={{
+                p: 3,
+                background: (theme) => theme.palette.primary.gradient,
+                color: 'white',
+                border: 'none'
+              }}
+            >
+              <Stack spacing={2}>
+                <Typography 
+                  variant="h6" 
+                  sx={{
+                    fontWeight: 600,
+                    color: 'inherit'
+                  }}
+                >
+                  Hồ sơ trực tuyến của bạn
+                </Typography>
+
+                <List sx={{ width: '100%' }}>
+                  {items.map((item) => (
+                    <ListItem
+                      key={item.id}
+                      disablePadding
+                      sx={{ mb: 1 }}
+                    >
+                      <ListItemButton
                         onClick={() => handleClickScroll(item.id)}
+                        sx={{
+                          borderRadius: 2,
+                          '&:hover': {
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                          }
+                        }}
                       >
-                        <ListItemButton>
-                          <ListItemIcon>{item.icon}</ListItemIcon>
-                          <ListItemText primary={item.value} />
-                        </ListItemButton>
-                      </ListItem>
-                    ))}
-                  </List>
-                </Box>
+                        <ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
+                          {item.icon}
+                        </ListItemIcon>
+                        <ListItemText 
+                          primary={item.value}
+                          primaryTypographyProps={{
+                            fontSize: '0.9rem',
+                            fontWeight: 500
+                          }}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                </List>
               </Stack>
             </Card>
           </Stack>

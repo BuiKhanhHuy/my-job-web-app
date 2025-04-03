@@ -35,33 +35,75 @@ const SocialNetworkSharingPopup = (props) => {
   } = props;
 
   return (
-    <Dialog onClose={() => setOpenPopup(false)} open={open}>
-      <DialogTitle sx={{ p: 1.5 }} id="responsive-dialog-title">
+    <Dialog 
+      onClose={() => setOpenPopup(false)} 
+      open={open}
+      PaperProps={{
+        sx: {
+          width: '320px',
+          borderRadius: '16px',
+          boxShadow: (theme) => theme.customShadows.large,
+        }
+      }}
+    >
+      <DialogTitle 
+        sx={{ 
+          p: 2.5,
+          pb: 1.5,
+          borderBottom: (theme) => `1px solid ${theme.palette.grey[100]}`
+        }}
+      >
         <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography variant="h5">Chia sẻ qua</Typography>
+          <Typography variant="h5" sx={{ fontWeight: 600 }}>Chia sẻ qua</Typography>
           <IconButton
-            color="error"
             onClick={() => setOpenPopup(false)}
             size="small"
+            sx={{
+              color: 'grey.500',
+              '&:hover': {
+                color: 'error.main',
+                bgcolor: 'error.background',
+              },
+              transition: 'all 0.2s ease-in-out'
+            }}
           >
-            <CloseIcon />
+            <CloseIcon fontSize="small" />
           </IconButton>
         </Stack>
       </DialogTitle>
-      <List sx={{ pt: 0 }}>
+
+      <List sx={{ pt: 1, pb: 2, px: 1 }}>
         <ListItem>
-          <Stack direction="row" spacing={1}>
+          <Stack 
+            direction="row" 
+            spacing={2} 
+            justifyContent="center" 
+            width="100%"
+          >
             {facebook && (
               <FacebookShareButton
                 url={facebook?.url || ''}
                 quote={facebook?.quote || ''}
                 hashtag={facebook?.hashtag || ''}
               >
-                <FacebookIcon size={32} round />
+                <FacebookIcon 
+                  size={40} 
+                  round 
+                  bgStyle={{
+                    fill: '#1877F2'
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.1)'
+                    }
+                  }}
+                />
               </FacebookShareButton>
             )}
 
@@ -72,7 +114,20 @@ const SocialNetworkSharingPopup = (props) => {
                 redirectUri={facebookMessenger?.url || ''}
                 to={facebookMessenger?.to || ''}
               >
-                <FacebookMessengerIcon size={32} round />
+                <FacebookMessengerIcon 
+                  size={40} 
+                  round 
+                  bgStyle={{
+                    fill: '#0099FF'
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.1)'
+                    }
+                  }}
+                />
               </FacebookMessengerShareButton>
             )}
 
@@ -83,7 +138,20 @@ const SocialNetworkSharingPopup = (props) => {
                 summary={linkedin?.summary || ''}
                 source={linkedin?.source || ''}
               >
-                <LinkedinIcon size={32} round />
+                <LinkedinIcon 
+                  size={40} 
+                  round 
+                  bgStyle={{
+                    fill: '#0A66C2'
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.1)'
+                    }
+                  }}
+                />
               </LinkedinShareButton>
             )}
 
@@ -95,7 +163,20 @@ const SocialNetworkSharingPopup = (props) => {
                 hashtags={twitter?.hashtags || []}
                 related={twitter?.related || []}
               >
-                <TwitterIcon size={32} round />
+                <TwitterIcon 
+                  size={40} 
+                  round 
+                  bgStyle={{
+                    fill: '#1DA1F2'
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.1)'
+                    }
+                  }}
+                />
               </TwitterShareButton>
             )}
 
@@ -105,7 +186,20 @@ const SocialNetworkSharingPopup = (props) => {
                 subject={email?.subject || ""}
                 body={email?.body || ""}
               >
-                <EmailIcon size={32} round />
+                <EmailIcon 
+                  size={40} 
+                  round 
+                  bgStyle={{
+                    fill: '#EA4335'
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.1)'
+                    }
+                  }}
+                />
               </EmailShareButton>
             )}
           </Stack>

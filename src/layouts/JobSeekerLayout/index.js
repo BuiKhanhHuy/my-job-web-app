@@ -1,24 +1,18 @@
-import React from 'react';
-import { useTheme } from '@mui/material/styles';
-import { Outlet } from 'react-router-dom';
+import React from "react";
+import { Outlet } from "react-router-dom";
 
-import { Box, Container } from '@mui/material';
+import { Box, Container } from "@mui/material";
 
-import Header from '../components/commons/Header';
-import TabBar from '../components/jobSeekers/TabBar';
-import Footer from '../components/commons/Footer';
+import Header from "../components/commons/Header";
+import TabBar from "../components/jobSeekers/TabBar";
+import Footer from "../components/commons/Footer";
 
 const JobSeekerLayout = () => {
-  const theme = useTheme();
 
   return (
     <Box>
       <Header />
-      <Box
-        sx={{
-          backgroundColor: theme.palette.mode === 'light' ? 'white' : '#121212',
-        }}
-      >
+      <Box>
         <Container maxWidth="xl">
           <TabBar />
         </Container>
@@ -29,9 +23,9 @@ const JobSeekerLayout = () => {
           my: {
             xs: 1.5,
             sm: 2,
-            md: 4,
-            lg: 4,
-            xl: 4,
+            md: 3,
+            lg: 3,
+            xl: 3,
           },
           paddingLeft: { xs: 1, sm: 4, md: 6, lg: 8, xl: 8 },
           paddingRight: { xs: 1, sm: 4, md: 6, lg: 8, xl: 8 },
@@ -62,8 +56,8 @@ const JobSeekerLayout = () => {
             lg: 5,
             xl: 5,
           },
-          color: 'white',
-          bgcolor: '#441da0',
+          color: "white",
+          bgcolor: "#441da0",
         }}
       >
         <Footer />

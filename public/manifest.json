@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MyJob",
+  "name": "MyJob | Hệ thống giới thiệu việc làm",
   "icons": [
     {
       "src": "favicon.ico",

@@ -1,15 +1,15 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Box, Divider, Stack, Typography, Fab } from '@mui/material';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
+import React from "react";
+import { useParams } from "react-router-dom";
+import { Box, Divider, Stack, Typography, Fab } from "@mui/material";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
-import CVForm from '../CVForm';
-import Pdf from '../../../../components/Pdf';
-import BackdropLoading from '../../../../components/loading/BackdropLoading';
-import errorHandling from '../../../../utils/errorHandling';
-import FormPopup from '../../../../components/controls/FormPopup';
-import resumeService from '../../../../services/resumeService';
-import toastMessages from '../../../../utils/toastMessages';
+import CVForm from "../CVForm";
+import Pdf from "../../../../components/Pdf";
+import BackdropLoading from "../../../../components/loading/BackdropLoading";
+import errorHandling from "../../../../utils/errorHandling";
+import FormPopup from "../../../../components/controls/FormPopup";
+import resumeService from "../../../../services/resumeService";
+import toastMessages from "../../../../utils/toastMessages";
 
 const CVCard = ({ title }) => {
   const { slug: resumeSlug } = useParams();
@@ -41,13 +41,13 @@ const CVCard = ({ title }) => {
       setIsFullScreenLoading(true);
 
       var formData = new FormData();
-      formData.append('file', data.files[0]);
+      formData.append("file", data.files[0]);
       try {
         await resumeService.updateCV(resumeSlug, formData);
 
         setOpenPopup(false);
         setIsSuccess(!isSuccess);
-        toastMessages.success('Upload File thành công.');
+        toastMessages.success("Upload File thành công.");
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -60,33 +60,90 @@ const CVCard = ({ title }) => {
 
   return (
     <>
-      <Stack>
+      <Stack
+        sx={{
+          backgroundColor: "background.paper",
+          borderRadius: 2,
+          p: 3,
+          boxShadow: (theme) => theme.customShadows.card,
+          "&:hover": {
+            boxShadow: (theme) => theme.customShadows.medium,
+          },
+        }}
+      >
         <Box>
           <Stack
             direction="row"
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h6">{title}</Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: 600,
+              }}
+            >
+              {title}
+            </Typography>
             <Fab
               size="small"
-              color="secondary"
+              color="primary"
               aria-label="edit"
               onClick={() => setOpenPopup(true)}
+              sx={{
+                boxShadow: (theme) => theme.customShadows.medium,
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+                transition: "all 0.2s ease-in-out",
+              }}
             >
-              <FileUploadIcon sx={{ color: 'white' }} />
+              <FileUploadIcon />
             </Fab>
           </Stack>
         </Box>
-        <Divider sx={{ mt: 2, mb: 3 }} />
-        <Box sx={{ px: 1 }}>
+        <Divider sx={{ my: 3, borderColor: 'grey.500' }}/>
+        <Box>
           {isLoadingCv ? (
-            <h1>Loading</h1>
+            <Stack alignItems="center" justifyContent="center" sx={{ py: 8 }}>
+              <Typography variant="subtitle1" color="text.secondary">
+                Đang tải CV...
+              </Typography>
+            </Stack>
           ) : cv === null ? (
-            <h1>Cv null</h1>
+            <Stack
+              alignItems="center"
+              justifyContent="center"
+              sx={{
+                py: 8,
+                backgroundColor: "primary.background",
+                borderRadius: 2,
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                color="text.secondary"
+                sx={{ mb: 1 }}
+              >
+                Chưa có CV nào được tải lên
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ fontStyle: "italic" }}
+              >
+                Nhấn nút tải lên để thêm CV của bạn
+              </Typography>
+            </Stack>
           ) : (
-            <Stack spacing={4}>
-              <Box>
+            <Stack spacing={3}>
+              <Box
+                sx={{
+                  borderRadius: 2,
+                  overflow: "hidden",
+                  boxShadow: (theme) => theme.customShadows.small,
+                }}
+              >
                 <Pdf title={cv.title} fileUrl={cv.fileUrl} />
               </Box>
             </Stack>
@@ -102,11 +159,9 @@ const CVCard = ({ title }) => {
       >
         <CVForm handleUpdate={handleUpdate} />
       </FormPopup>
-      {/* End: form */}
 
       {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}
-      {/* End: full screen loading */}
     </>
   );
 };

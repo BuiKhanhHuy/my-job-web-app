@@ -1,23 +1,23 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
-import PublishIcon from '@mui/icons-material/Publish';
+import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
+import PublishIcon from "@mui/icons-material/Publish";
 
-import { CV_TYPES, ImageSvg2 } from '../../../../configs/constants';
-import toastMessages from '../../../../utils/toastMessages';
-import errorHandling from '../../../../utils/errorHandling';
-import BackdropLoading from '../../../../components/loading/BackdropLoading';
-import FormPopup from '../../../../components/controls/FormPopup';
-import ProfileUploadForm from '../ProfileUploadForm';
+import { CV_TYPES, ImageSvg2 } from "../../../../configs/constants";
+import toastMessages from "../../../../utils/toastMessages";
+import errorHandling from "../../../../utils/errorHandling";
+import BackdropLoading from "../../../../components/loading/BackdropLoading";
+import FormPopup from "../../../../components/controls/FormPopup";
+import ProfileUploadForm from "../ProfileUploadForm";
 
-import jobSeekerProfileService from '../../../../services/jobSeekerProfileService';
-import resumeService from '../../../../services/resumeService';
-import ProfileUploadCard from '../../../../components/ProfileUploadCard';
-import { confirmModal } from '../../../../utils/sweetalert2Modal';
-import NoDataCard from '../../../../components/NoDataCard';
+import jobSeekerProfileService from "../../../../services/jobSeekerProfileService";
+import resumeService from "../../../../services/resumeService";
+import ProfileUploadCard from "../../../../components/ProfileUploadCard";
+import { confirmModal } from "../../../../utils/sweetalert2Modal";
+import NoDataCard from "../../../../components/NoDataCard";
 
-import { reloadResume } from '../../../../redux/profileSlice';
+import { reloadResume } from "../../../../redux/profileSlice";
 
 const ProfileUpload = ({ title }) => {
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const ProfileUpload = ({ title }) => {
 
         setOpenPopup(false);
         setIsSuccess(!isSuccess);
-        toastMessages.success('Tải CV thành công.');
+        toastMessages.success("Tải CV thành công.");
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -83,7 +83,7 @@ const ProfileUpload = ({ title }) => {
         await resumeService.deleteResume(slug);
 
         setIsSuccess(!isSuccess);
-        toastMessages.success('Xóa thành công.');
+        toastMessages.success("Xóa thành công.");
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -93,9 +93,9 @@ const ProfileUpload = ({ title }) => {
 
     confirmModal(
       () => del(slug),
-      'Xóa CV đính kém',
-      'CV này sẽ được xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn?',
-      'warning'
+      "Xóa CV đính kém",
+      "CV này sẽ được xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn?",
+      "warning"
     );
   };
 
@@ -106,7 +106,7 @@ const ProfileUpload = ({ title }) => {
         await resumeService.activeResume(resumeSlug);
 
         dispatch(reloadResume());
-        toastMessages.success('Thay đổi trạng thái hồ sơ thành công.');
+        toastMessages.success("Thay đổi trạng thái hồ sơ thành công.");
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -121,11 +121,11 @@ const ProfileUpload = ({ title }) => {
     <>
       <Stack>
         <Box>
-          <Typography variant="h6">
-            {title} (<span style={{ color: 'red' }}>{resumes.length}</span>)
+          <Typography variant="h5">
+            {title} (<span style={{ color: "red" }}>{resumes.length}</span>)
           </Typography>
         </Box>
-        <Divider sx={{ mt: 2, mb: 3 }} />
+        <Divider sx={{ mt: 2, mb: 3, borderColor: 'grey.500' }} />
         <Box sx={{ px: 1 }}>
           <Box>
             <Box>
@@ -172,9 +172,18 @@ const ProfileUpload = ({ title }) => {
             </Box>
             <Stack sx={{ pt: 5 }} direction="row" justifyContent="center">
               <Button
-                startIcon={<PublishIcon />}
                 variant="contained"
+                startIcon={<PublishIcon />}
                 onClick={() => setOpenPopup(true)}
+                sx={{
+                  px: 4,
+                  py: 1.5,
+                  background: (theme) => theme.palette.primary.gradient,
+                  "&:hover": {
+                    background: (theme) => theme.palette.primary.gradient,
+                    opacity: 0.9,
+                  },
+                }}
               >
                 Upload CV
               </Button>

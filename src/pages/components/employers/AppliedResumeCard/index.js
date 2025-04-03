@@ -266,111 +266,195 @@ const AppliedResumeCard = ({ title }) => {
   };
 
   return (
-    <>
-      <Box>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
+    <Box sx={{ 
+      px: { xs: 1, sm: 2 }, 
+      py: { xs: 2, sm: 2 }, 
+      backgroundColor: 'background.paper', 
+      borderRadius: 2 
+    }}>
+      {/* Header Section */}
+      <Stack 
+        direction={{ xs: 'column', sm: 'row' }}
+        alignItems={{ xs: 'flex-start', sm: 'center' }}
+        justifyContent="space-between"
+        spacing={{ xs: 2, sm: 0 }}
+        mb={4}
+      >
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            fontWeight: 600,
+            background: 'primary.gradient',
+            WebkitBackgroundClip: 'text',
+            fontSize: { xs: '1.25rem', sm: '1.5rem' }
+          }}
         >
-          <Typography variant="h5">{title}</Typography>
-          <Button
-            variant="outlined"
-            color="secondary"
-            startIcon={<FileDownloadOutlinedIcon />}
-            onClick={handleExport}
-          >
-            Tải danh sách
-          </Button>
-        </Stack>
+          {title}
+        </Typography>
+        <Button
+          variant="outlined"
+          color="secondary"
+          startIcon={<FileDownloadOutlinedIcon />}
+          onClick={handleExport}
+          sx={{
+            borderRadius: 2,
+            px: 3,
+            width: { xs: '100%', sm: 'auto' },
+            '&:hover': {
+              backgroundColor: 'secondary.backgroundHover'
+            }
+          }}
+        >
+          Tải danh sách
+        </Button>
+      </Stack>
+
+      {/* Filter Section */}
+      <Box sx={{ mb: 3 }}>
+        <Typography 
+          variant="subtitle1" 
+          sx={{ 
+            color: 'text.secondary',
+            fontWeight: 600,
+            mb: 2
+          }}
+        >
+          Bộ lọc:
+        </Typography>
+
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} md={4} xl={5}>
+            <Autocomplete
+              getOptionLabel={(option) => option.jobName}
+              value={jobPostOptions.find((o) => o.id === jobPostIdSelect) || null}
+              onChange={(e, value) => setJobPostIdSelect(value?.id || '')}
+              disablePortal
+              size="small"
+              options={jobPostOptions}
+              renderInput={(params) => (
+                <TextField 
+                  {...params} 
+                  placeholder="Tất cả tin đăng"
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 2,
+                      backgroundColor: 'background.paper'
+                    }
+                  }}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4} xl={3}>
+            <Autocomplete
+              getOptionLabel={(option) => option.name}
+              value={
+                allConfig?.applicationStatusOptions.find(
+                  (o) => o.id === applicationStatusSelect
+                ) || null
+              }
+              onChange={(e, value) => setApplicationStatusSelect(value?.id || '')}
+              disablePortal
+              size="small"
+              options={allConfig?.applicationStatusOptions || []}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="Tất cả trạng thái tuyển dụng"
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 2,
+                      backgroundColor: 'background.paper'
+                    }
+                  }}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <Stack
+              direction="row"
+              justifyContent={{ xs: 'flex-start', md: 'flex-start' }}
+              spacing={1}
+            >
+              <Tooltip title="Đặt lại" arrow>
+                <IconButton 
+                  onClick={handleResetFilterData}
+                  sx={{
+                    backgroundColor: 'grey.100',
+                    borderRadius: 2,
+                    '&:hover': {
+                      backgroundColor: 'grey.200'
+                    }
+                  }}
+                >
+                  <RefreshIcon />
+                </IconButton>
+              </Tooltip>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<FilterListIcon />}
+                endIcon={<ExpandMoreIcon />}
+                onClick={() => setOpenPopup(true)}
+                sx={{
+                  borderRadius: 2,
+                  background: 'primary.gradient',
+                  boxShadow: 'custom.small',
+                  '&:hover': {
+                    boxShadow: 'custom.medium'
+                  }
+                }}
+              >
+                Lọc nâng cao ({numbersFilter})
+              </Button>
+            </Stack>
+          </Grid>
+        </Grid>
       </Box>
 
-      <Divider sx={{ mt: 2, mb: 3 }} />
-
-      <Grid container sx={{ mb: 3 }} spacing={2}>
-        <Grid item xs={12}>
-          <Stack justifyContent="center">
-            <Typography variant="subtitle2">Bộ lọc: </Typography>
-          </Stack>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} xl={5}>
-          <Autocomplete
-            getOptionLabel={(option) => option.jobName}
-            value={jobPostOptions.find((o) => o.id === jobPostIdSelect) || null}
-            onChange={(e, value) => setJobPostIdSelect(value?.id || '')}
-            disablePortal
-            id="jobPosts"
-            size="small"
-            options={jobPostOptions}
-            renderInput={(params) => (
-              <TextField {...params} placeholder="Tất cả tin đăng" />
-            )}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} xl={2}>
-          <Autocomplete
-            getOptionLabel={(option) => option.name}
-            value={
-              allConfig?.applicationStatusOptions.find(
-                (o) => o.id === applicationStatusSelect
-              ) || null
-            }
-            onChange={(e, value) => setApplicationStatusSelect(value?.id || '')}
-            disablePortal
-            id="status"
-            size="small"
-            options={allConfig?.applicationStatusOptions || []}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                placeholder="Tất cả trạng thái tuyển dụng"
-              />
-            )}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={4}>
-          <Stack
-            direction="row"
-            justifyContent={{
-              xs: 'flex-end',
-              sm: 'flex-end',
-              md: 'flex-start',
-              lg: 'flex-start',
-              xl: 'flex-start',
+      {/* Loading Progress */}
+      {isLoading ? (
+        <Box sx={{ width: '100%', mb: 2 }}>
+          <LinearProgress 
+            color="primary"
+            sx={{
+              height: { xs: 4, sm: 6 },
+              borderRadius: 3,
+              backgroundColor: 'primary.background'
             }}
-          >
-            <Tooltip title="Đặt lại" arrow sx={{ mr: 1 }}>
-              <IconButton aria-label="refresh" onClick={handleResetFilterData}>
-                <RefreshIcon />
-              </IconButton>
-            </Tooltip>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<FilterListIcon />}
-              endIcon={<ExpandMoreIcon />}
-              onClick={() => setOpenPopup(true)}
-            >
-              Lọc nâng cao ({numbersFilter})
-            </Button>
-          </Stack>
-        </Grid>
-      </Grid>
-      {isLoading ? <LinearProgress color="primary" /> : <Divider />}
-      <AppliedResumeTable
-        headCells={headCells}
-        rows={resumes}
-        isLoading={isLoading}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        count={count}
-        handleChangeApplicationStatus={handleChangeApplicationStatus}
-        handleChangePage={handleChangePage}
-        handleChangeRowsPerPage={handleChangeRowsPerPage}
-        handleDelete={handleDelete}
-      />
+          />
+        </Box>
+      ) : (
+        <Divider sx={{ mb: 2 }} />
+      )}
 
-      {/* Start: form  */}
+      {/* Table Section */}
+      <Box sx={{
+        backgroundColor: 'background.paper',
+        borderRadius: 2,
+        boxShadow: 'custom.card',
+        overflow: 'hidden',
+        width: '100%',
+        '& .MuiTableContainer-root': {
+          overflowX: 'auto'
+        }
+      }}>
+        <AppliedResumeTable
+          headCells={headCells}
+          rows={resumes}
+          isLoading={isLoading}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          count={count}
+          handleChangeApplicationStatus={handleChangeApplicationStatus}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          handleDelete={handleDelete}
+        />
+      </Box>
+
+      {/* Popup and Loading remain unchanged */}
       <FormPopup
         title="Lọc nâng cao"
         buttonText="Lọc"
@@ -383,12 +467,9 @@ const AppliedResumeCard = ({ title }) => {
           filterData={filterData}
         />
       </FormPopup>
-      {/* End: form */}
 
-      {/* Start: full screen loading */}
       {isFullScreenLoading && <BackdropLoading />}
-      {/* End: full screen loading */}
-    </>
+    </Box>
   );
 };
 

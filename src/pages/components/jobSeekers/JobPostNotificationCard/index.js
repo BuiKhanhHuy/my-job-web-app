@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { useSelector } from "react-redux";
 import {
   Box,
   Button,
@@ -10,53 +10,53 @@ import {
   Stack,
   Switch,
   Typography,
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import AddIcon from '@mui/icons-material/Add';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+} from "@mui/material";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import AddIcon from "@mui/icons-material/Add";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBriefcase,
   faCalendarAlt,
   faCircleDollarToSlot,
   faLocationDot,
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
-import { ImageSvg10 } from '../../../../configs/constants';
-import toastMessages from '../../../../utils/toastMessages';
-import BackdropLoading from '../../../../components/loading/BackdropLoading';
-import { confirmModal } from '../../../../utils/sweetalert2Modal';
-import { convertMoney } from '../../../../utils/customData';
-import NoDataCard from '../../../../components/NoDataCard';
-import MuiImageCustom from '../../../../components/MuiImageCustom';
-import FormPopup from '../../../../components/controls/FormPopup';
-import JobPostNotificationForm from '../JobPostNotificationForm';
-import errorHandling from '../../../../utils/errorHandling';
-import jobPostNotificationService from '../../../../services/jobPostNotificationService';
+import { ImageSvg10 } from "../../../../configs/constants";
+import toastMessages from "../../../../utils/toastMessages";
+import BackdropLoading from "../../../../components/loading/BackdropLoading";
+import { confirmModal } from "../../../../utils/sweetalert2Modal";
+import { convertMoney } from "../../../../utils/customData";
+import NoDataCard from "../../../../components/NoDataCard";
+import MuiImageCustom from "../../../../components/MuiImageCustom";
+import FormPopup from "../../../../components/controls/FormPopup";
+import JobPostNotificationForm from "../JobPostNotificationForm";
+import errorHandling from "../../../../utils/errorHandling";
+import jobPostNotificationService from "../../../../services/jobPostNotificationService";
 
 const ItemLoading = () => {
   const [parentWidth, setParentWidth] = React.useState(0);
-  const [stackDirection, setStackDirection] = React.useState('column');
+  const [stackDirection, setStackDirection] = React.useState("column");
 
   React.useEffect(() => {
     const handleResize = () => {
       const newWidth = document.getElementById(
-        'job-post-notification-loading'
+        "job-post-notification-loading"
       ).offsetWidth;
       setParentWidth(newWidth);
     };
 
     handleResize();
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   React.useEffect(() => {
     if (parentWidth < 600) {
-      setStackDirection('column');
+      setStackDirection("column");
     } else {
-      setStackDirection('row');
+      setStackDirection("row");
     }
   }, [parentWidth]);
 
@@ -67,7 +67,7 @@ const ItemLoading = () => {
           <Box flex={1}>
             <Stack spacing={1}>
               <Box>
-                <Typography fontSize={18} fontWeight={'bold'}>
+                <Typography fontSize={18} fontWeight={"bold"}>
                   <Skeleton />
                 </Typography>
               </Box>
@@ -157,163 +157,205 @@ const ItemComponent = ({
 }) => {
   const { allConfig } = useSelector((state) => state.config);
   const [parentWidth, setParentWidth] = React.useState(0);
-  const [stackDirection, setStackDirection] = React.useState('column');
+  const [stackDirection, setStackDirection] = React.useState("column");
 
   React.useEffect(() => {
     const handleResize = () => {
       const newWidth = document.getElementById(
-        'job-post-notification'
+        "job-post-notification"
       ).offsetWidth;
       setParentWidth(newWidth);
     };
 
     handleResize();
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   React.useEffect(() => {
     if (parentWidth < 600) {
-      setStackDirection('column');
+      setStackDirection("column");
     } else {
-      setStackDirection('row');
+      setStackDirection("row");
     }
   }, [parentWidth]);
 
   return (
     <div id="job-post-notification">
-      <Box>
-        <Stack direction="row" spacing={3} alignItem="center">
+      <Box
+        sx={{
+          px: 3,
+          py: 2,
+          borderRadius: 2,
+          bgcolor: "background.paper",
+          boxShadow: 0,
+          "&:hover": {
+            boxShadow: (theme) => theme.customShadows.medium,
+            transform: "translateY(-2px)",
+            transition: "all 0.3s ease-in-out",
+          },
+        }}
+      >
+        <Stack direction="row" spacing={3} alignItems="center">
           <Box flex={1}>
-            <Stack spacing={1}>
+            <Stack spacing={2}>
               <Box>
-                <Typography fontSize={16} fontWeight={'bold'}>
+                <Typography
+                  fontSize={18}
+                  fontWeight="600"
+                  color="text.primary"
+                  sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                  }}
+                >
                   {jobName}
                 </Typography>
               </Box>
               <Stack
                 direction={stackDirection}
-                spacing={stackDirection === 'column' ? 1 : 2}
+                spacing={stackDirection === "column" ? 2 : 3}
+                sx={{
+                  "& .info-item": {
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    color: "grey.600",
+                    "& svg": {
+                      fontSize: "1.2rem",
+                      color: "grey.500",
+                    },
+                  },
+                }}
               >
-                <Box>
-                  <Typography fontWeight="bold" color="#e0e0e0" fontSize={14}>
-                    <FontAwesomeIcon
-                      icon={faCircleDollarToSlot}
-                      style={{ marginRight: 5 }}
-                    />
+                <Box className="info-item">
+                  <FontAwesomeIcon icon={faCircleDollarToSlot} />
+                  {salary ? (
+                    <Typography
+                      component="span"
+                      color="secondary.main"
+                      fontWeight="600"
+                    >
+                      {convertMoney(salary)}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      component="span"
+                      fontSize="13px"
+                      fontStyle="italic"
+                      color="grey.400"
+                    >
+                      Chưa cập nhật
+                    </Typography>
+                  )}
+                </Box>
 
-                    {salary ? (
-                      <span style={{ color: 'orange' }}>
-                        {convertMoney(salary)}
-                      </span>
-                    ) : (
-                      <span
-                        style={{
-                          color: '#e0e0e0',
-                          fontStyle: 'italic',
-                          fontSize: 13,
-                        }}
-                      >
-                        Chưa cập nhật
-                      </span>
-                    )}
-                  </Typography>
+                <Box className="info-item">
+                  <FontAwesomeIcon icon={faLocationDot} />
+                  {allConfig?.cityDict[city] ? (
+                    <Typography component="span" fontSize="14px">
+                      {allConfig?.cityDict[city]}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      component="span"
+                      fontSize="13px"
+                      fontStyle="italic"
+                      color="grey.400"
+                    >
+                      Chưa cập nhật
+                    </Typography>
+                  )}
                 </Box>
-                <Box>
-                  <Typography fontWeight="bold" color="#e0e0e0" fontSize={14}>
-                    <FontAwesomeIcon
-                      icon={faLocationDot}
-                      style={{ marginRight: 5 }}
-                    />
-                    {allConfig?.cityDict[city] ? (
-                      <span style={{ color: 'black', fontWeight: 'normal' }}>
-                        {allConfig?.cityDict[city]}
-                      </span>
-                    ) : (
-                      <span
-                        style={{
-                          color: '#e0e0e0',
-                          fontStyle: 'italic',
-                          fontSize: 13,
-                        }}
-                      >
-                        Chưa cập nhật
-                      </span>
-                    )}
-                  </Typography>
+
+                <Box className="info-item">
+                  <FontAwesomeIcon icon={faBriefcase} />
+                  {allConfig?.careerDict[career] ? (
+                    <Typography component="span" fontSize="14px">
+                      {allConfig?.careerDict[career]}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      component="span"
+                      fontSize="13px"
+                      fontStyle="italic"
+                      color="grey.400"
+                    >
+                      Chưa cập nhật
+                    </Typography>
+                  )}
                 </Box>
-                <Box>
-                  <Typography fontWeight="bold" color="#e0e0e0" fontSize={14}>
-                    <FontAwesomeIcon
-                      icon={faBriefcase}
-                      style={{ marginRight: 5 }}
-                    />
-                    {allConfig?.careerDict[career] ? (
-                      <span style={{ color: 'black', fontWeight: 'normal' }}>
-                        {allConfig?.careerDict[career]}
-                      </span>
-                    ) : (
-                      <span
-                        style={{
-                          color: '#e0e0e0',
-                          fontStyle: 'italic',
-                          fontSize: 13,
-                        }}
-                      >
-                        Chưa cập nhật
-                      </span>
-                    )}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography fontWeight="bold" color="#e0e0e0" fontSize={14}>
-                    <FontAwesomeIcon
-                      icon={faCalendarAlt}
-                      style={{ marginRight: 5 }}
-                    />
-                    {allConfig?.frequencyNotificationDict[frequency] ? (
-                      <span style={{ color: 'black', fontWeight: 'normal' }}>
-                        {allConfig?.frequencyNotificationDict[frequency]}
-                      </span>
-                    ) : (
-                      <span
-                        style={{
-                          color: '#e0e0e0',
-                          fontStyle: 'italic',
-                          fontSize: 13,
-                        }}
-                      >
-                        Chưa cập nhật
-                      </span>
-                    )}
-                  </Typography>
+
+                <Box className="info-item">
+                  <FontAwesomeIcon icon={faCalendarAlt} />
+                  {allConfig?.frequencyNotificationDict[frequency] ? (
+                    <Typography component="span" fontSize="14px">
+                      {allConfig?.frequencyNotificationDict[frequency]}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      component="span"
+                      fontSize="13px"
+                      fontStyle="italic"
+                      color="grey.400"
+                    >
+                      Chưa cập nhật
+                    </Typography>
+                  )}
                 </Box>
               </Stack>
             </Stack>
           </Box>
-          <Stack direction="row" spacing={1} alignItems="center">
+
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            sx={{
+              "& .MuiIconButton-root": {
+                borderRadius: 2,
+                transition: "all 0.2s",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+              },
+            }}
+          >
             <Box>
-              {/* Start: ActiveButtonComponent */}
               <ActiveButtonComponent id={id} isActive={isActive} />
-              {/* End: ActiveButtonComponent */}
             </Box>
             <Box>
               <IconButton
                 aria-label="edit"
-                color="warning"
                 onClick={() => handleShowUpdate(id)}
+                sx={{
+                  color: "warning.main",
+                  bgcolor: "warning.background",
+                  "&:hover": {
+                    bgcolor: "warning.background",
+                  },
+                }}
               >
-                <EditIcon />
+                <ModeEditOutlineOutlinedIcon />
               </IconButton>
             </Box>
             <Box>
               <IconButton
                 aria-label="delete"
-                color="error"
                 onClick={() => handleDelete(id)}
+                sx={{
+                  color: "error.main",
+                  bgcolor: "error.background",
+                  "&:hover": {
+                    bgcolor: "error.background",
+                  },
+                }}
               >
-                <DeleteIcon />
+                <DeleteOutlineOutlinedIcon />
               </IconButton>
             </Box>
           </Stack>
@@ -395,7 +437,7 @@ const JobPostNotificationCard = () => {
         await jobPostNotificationService.addJobPostNotification(data);
         setOpenPopup(false);
         setIsSuccess(!isSuccess);
-        toastMessages.success('Thêm thông báo việc làm thành công.');
+        toastMessages.success("Thêm thông báo việc làm thành công.");
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -412,7 +454,7 @@ const JobPostNotificationCard = () => {
         );
         setOpenPopup(false);
         setIsSuccess(!isSuccess);
-        toastMessages.success('Cập nhật thông báo việc làm thành công.');
+        toastMessages.success("Cập nhật thông báo việc làm thành công.");
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -420,7 +462,7 @@ const JobPostNotificationCard = () => {
       }
     };
 
-    if ('id' in data) {
+    if ("id" in data) {
       // update
       update(data);
     } else {
@@ -436,7 +478,7 @@ const JobPostNotificationCard = () => {
           id
         );
         setIsSuccess(!isSuccess);
-        toastMessages.success('Xóa thông báo việc làm thành công.');
+        toastMessages.success("Xóa thông báo việc làm thành công.");
       } catch (error) {
         errorHandling(error);
       } finally {
@@ -446,23 +488,29 @@ const JobPostNotificationCard = () => {
 
     confirmModal(
       () => del(id),
-      'Xóa thông báo việc làm',
-      'Thông báo việc làm này sẽ được xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn?',
-      'warning'
+      "Xóa thông báo việc làm",
+      "Thông báo việc làm này sẽ được xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn?",
+      "warning"
     );
   };
 
   return (
     <>
-      <Box>
+      <Box sx={{ boxShadow: 0, p: { xs: 1, sm: 1, md: 2, lg: 2, xl: 2 } }}>
         <Box>
           <Stack direction="row" spacing={2} alignItems="center">
             <Stack flex={1}>
               <Box>
-                <Typography variant="h6">Thông báo việc làm</Typography>
+                <Typography variant="h5" fontWeight="600" color="text.primary">
+                  Thông báo việc làm
+                </Typography>
               </Box>
               <Box>
-                <Typography variant="body2" color="#757575">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mt: 0.5 }}
+                >
                   Tối đa 3 thông báo việc làm được bật
                 </Typography>
               </Box>
@@ -472,13 +520,22 @@ const JobPostNotificationCard = () => {
                 variant="contained"
                 startIcon={<AddIcon />}
                 onClick={handleShowAdd}
+                sx={{
+                  px: 3,
+                  py: 1,
+                  background: (theme) => theme.palette.primary.gradient,
+                  "&:hover": {
+                    background: (theme) => theme.palette.primary.gradient,
+                    opacity: 0.9,
+                  },
+                }}
               >
                 Tạo thông báo
               </Button>
             </Box>
           </Stack>
         </Box>
-        <Divider sx={{ mt: 2, mb: 2 }} />
+        <Divider sx={{ my: 3 }} />
         <Box>
           {isLoadingJobPostNotifications ? (
             <Stack spacing={4}>
@@ -521,7 +578,7 @@ const JobPostNotificationCard = () => {
                       color="primary"
                       size="medium"
                       variant="text"
-                      sx={{ margin: '0 auto', mt: 5 }}
+                      sx={{ margin: "0 auto", mt: 5 }}
                       count={Math.ceil(count / pageSize)}
                       page={page}
                       onChange={handleChangePage}
@@ -541,7 +598,7 @@ const JobPostNotificationCard = () => {
               <MuiImageCustom
                 width={100}
                 height={100}
-                src={'https://vieclam24h.vn/img/mail-bro%202.png'}
+                src={"https://vieclam24h.vn/img/mail-bro%202.png"}
                 shiftDuration={0}
               />
             </Box>
@@ -555,7 +612,7 @@ const JobPostNotificationCard = () => {
             </Stack>
           </Stack>
         }
-        buttonText={editData ? 'Lưu' : 'Tạo thông báo'}
+        buttonText={editData ? "Lưu" : "Tạo thông báo"}
         buttonIcon={null}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
