@@ -8,8 +8,11 @@ services:
     container_name: myjob-frontend-container
     volumes:
       - .:/myjob_web_app
+      - /myjob_web_app/node_modules
     ports:
       - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     env_file:
       - .env
     networks:
