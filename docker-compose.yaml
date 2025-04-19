@@ -1,41 +1,37 @@
-version: 'version'
+version: '3.8'
 
 services:
-  frontend_nginx:
-    image: myjob-frontend-nginx
-    container_name: myjob-frontend-nginx-container
+  frontend_dev:
     build: 
       context: .
       dockerfile: Dockerfile
-    restart: unless-stopped
-    environment:
-      - REACT_APP_NODE_ENV=${REACT_APP_NODE_ENV}
-      - REACT_APP_BASE_URL=${REACT_APP_BASE_URL}
-      - REACT_APP_MYJOB_SERVER_CLIENT_ID=${REACT_APP_MYJOB_SERVER_CLIENT_ID}
-      - REACT_APP_MYJOB_SERVER_CLIENT_SECRECT=${REACT_APP_MYJOB_SERVER_CLIENT_SECRECT}
-      - REACT_APP_FACEBOOK_CLIENT_ID=${REACT_APP_FACEBOOK_CLIENT_ID}
-      - REACT_APP_FACEBOOK_CLIENT_SECRET=${REACT_APP_FACEBOOK_CLIENT_SECRET}
-      - REACT_APP_GOOGLE_CLIENT_ID=${REACT_APP_GOOGLE_CLIENT_ID}
-      - REACT_APP_GOOGLE_CLIENT_SECRET=${REACT_APP_GOOGLE_CLIENT_SECRET}
-      - REACT_APP_GOONGAPI_KEY=${REACT_APP_GOONGAPI_KEY}
-      - REACT_APP_GOONGAPI_ACCESS_TOKEN=${REACT_APP_GOONGAPI_ACCESS_TOKEN}
-      - REACT_APP_CHAT_APP_ID=${REACT_APP_CHAT_APP_ID}
-      - REACT_APP_JOB_SEEKER_BOT_ID=${REACT_APP_JOB_SEEKER_BOT_ID}
-      - REACT_APP_EMPLOYER_BOT_ID=${REACT_APP_EMPLOYER_BOT_ID}
-      - REACT_APP_FIREBASE_API_KEY=${REACT_APP_FIREBASE_API_KEY}
-      - REACT_APP_FIREBASE_AUTH_DOMAIN=${REACT_APP_FIREBASE_AUTH_DOMAIN}
-      - REACT_APP_FIREBASE_PROJECT_ID=${REACT_APP_FIREBASE_PROJECT_ID}
-      - REACT_APP_FIREBASE_STORAGE_BUCKET=${REACT_APP_FIREBASE_STORAGE_BUCKET}
-      - REACT_APP_FIREBASE_MESSAGING_SENDER_ID=${REACT_APP_FIREBASE_MESSAGING_SENDER_ID}
-      - REACT_APP_FIREBASE_APP_ID=${REACT_APP_FIREBASE_APP_ID}
-      - REACT_APP_FIREBASE_DATABASE_URL=${REACT_APP_FIREBASE_DATABASE_URL}
-    networks:
-      - myjob-frontend-network
+    container_name: myjob-frontend-container
+    volumes:
+      - .:/myjob_web_app
     ports:
-      - "80:80"
-    expose:
-      - 80
+      - "3000:3000"
+    env_file:
+      - .env
+    networks:
+      - myjob-network
+
+  frontend_nginx:
+    image: nginx:1.24.0-alpine
+    container_name: myjob-frontend-nginx-container
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - myjob-network
+    ports:
+      - "443:443"
+    volumes:
+      - ./docker/nginx/hosts:/etc/hosts:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/nginx/certs:/etc/nginx/certs:ro
+    depends_on:
+      - frontend_dev
 
 networks:
-  myjob-frontend-network:
-    name: myjob-frontend-network
+  myjob-network:
+    name: myjob-network

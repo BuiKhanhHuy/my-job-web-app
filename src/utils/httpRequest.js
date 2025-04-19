@@ -2,10 +2,16 @@ import axios from 'axios';
 import queryString from 'query-string';
 import tokenService from '../services/tokenService';
 
+// API endpoints that do not require authentication
 const notAuthenticationURL = ['api/auth/token/', 'api/auth/convert-token/'];
+// Prefix for API endpoints
+const prefix = 'api'
+
+// Use relative path to work with nginx proxy
+const baseURL = `/${prefix}/`;
 
 const httpRequest = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -14,6 +20,8 @@ const httpRequest = axios.create({
       return queryString.stringify(params, { arrayFormat: 'bracket' });
     },
   },
+  withCredentials: true,
+  timeout: 30000,
 });
 
 httpRequest.interceptors.request.use(

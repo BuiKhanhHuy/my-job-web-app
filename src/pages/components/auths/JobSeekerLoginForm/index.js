@@ -139,6 +139,7 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
       >
         <LoginSocialFacebook
           appId={AUTH_CONFIG.FACEBOOK_CLIENT_ID}
+          scope="email,public_profile"
           fieldsProfile={"id"}
           isOnlyGetToken={true}
           ux_mode="popup"

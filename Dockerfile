@@ -1,14 +1,16 @@
-# syntax=docker/dockerfile:1
-FROM node:18.18 as build
+# Frontend development environment
+FROM node:18.18
+
 WORKDIR /myjob_web_app
-COPY package*.json .
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
 RUN npm install
-COPY . .
-RUN npx update-browserslist-db@latest && npm run build
+
+# Expose port for dev server
 EXPOSE 3000
 
-FROM nginx:1.24.0-alpine
-RUN rm -f /etc/nginx/conf.d/default.conf
-COPY --from=build /myjob_web_app/build /usr/share/nginx/html
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
+# Default command when container starts
+CMD ["npm", "run", "start"]

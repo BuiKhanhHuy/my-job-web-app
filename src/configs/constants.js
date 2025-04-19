@@ -58,12 +58,12 @@ const AUTH_CONFIG = {
   // Dialogflow chatbot
   JOB_SEEKER_BOT: {
     AGENT_ID:
-      process.env.JOB_SEEKER_BOT_AGENT_ID || "3658b10a-faaf-4e27-beea-99adaa33664e",
+      process.env.JOB_SEEKER_BOT_AGENT_ID || "",
     CHAT_TITLE: "MyJob AI",
     CHAT_ICON: require("../assets/icons/job_seeker_chatbot_icon.gif"),
   },
   EMPLOYER_BOT: {
-    AGENT_ID: process.env.EMPLOYER_BOT_AGENT_ID || "a49623dc-cfa1-49b1-8b2f-0f7eabdf7f6d",
+    AGENT_ID: process.env.EMPLOYER_BOT_AGENT_ID || "",
     CHAT_TITLE: "MyJob AI",
     CHAT_ICON: require("../assets/icons/employer_chatbot_icon.gif"),
   },
