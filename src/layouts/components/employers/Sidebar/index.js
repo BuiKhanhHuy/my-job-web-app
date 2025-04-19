@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import {
   Avatar,
@@ -8,11 +8,15 @@ import {
   useTheme,
   Toolbar,
   Typography,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListItemButton,
+  Collapse,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
-import TreeView from '@mui/lab/TreeView';
-import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import GridViewIcon from '@mui/icons-material/GridView';
@@ -27,267 +31,235 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 import { IMAGES, ROUTES, APP_NAME } from '../../../../configs/constants';
 
-const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
+const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
+  borderRadius: '8px',
+  marginBottom: '2px',
   color: theme.palette.text.secondary,
-  '& .css-6ubf1z-MuiTreeItem-content.Mui-selected': {
-    backgroundColor: 'transparent',
-  },
-  [`& .${treeItemClasses.content}`]: {
+  textDecoration: 'none',
+  position: 'relative',
+  '&:hover': {
+    backgroundColor: theme.palette.primary.background,
     color: theme.palette.text.secondary,
-    borderRadius: '8px',
-    padding: '6px 8px',
-    marginBottom: '2px',
-    fontWeight: 500,
-    transition: 'all 0.2s ease-in-out',
-
-    '&.Mui-expanded': {
-      fontWeight: 600,
-    },
+    textDecoration: 'none',
+  },
+  '&.Mui-selected': {
+    backgroundColor: theme.palette.primary.background,
+    color: theme.palette.primary.main,
+    fontWeight: 600,
     '&:hover': {
       backgroundColor: theme.palette.primary.background,
-    },
-    '&.Mui-selected': {
-      backgroundColor: theme.palette.primary.background,
       color: theme.palette.primary.main,
-      fontWeight: 600,
-      '&:hover': {
-        backgroundColor: theme.palette.primary.background,
-      },
-    },
-    [`& .${treeItemClasses.label}`]: {
-      fontWeight: 'inherit',
-      color: 'inherit',
     },
   },
-  [`& .${treeItemClasses.group}`]: {
-    marginLeft: '8px',
-    paddingLeft: '8px',
-    borderLeft: `1px dashed ${theme.palette.divider}`,
+  '& .MuiTypography-root': {
+    color: 'inherit',
+  },
+  '& .MuiListItemIcon-root': {
+    color: 'inherit',
+  },
+  '&.active': {
+    backgroundColor: theme.palette.primary.background,
+    color: theme.palette.primary.main,
+    fontWeight: 600,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.background,
+      color: theme.palette.primary.main,
+    },
   },
 }));
 
-function StyledTreeItem(props) {
-  const { labelIcon: LabelIcon, labelText, ...other } = props;
-
+const MenuItem = ({ icon: Icon, text, to, onClick, isSelected, isExpanded, hasChildren, isChild }) => {
   return (
-    <StyledTreeItemRoot
-      label={
-        <Box sx={{ display: 'flex', alignItems: 'center', py: 0.5 }}>
-          <Box 
-            component={LabelIcon} 
-            color="inherit" 
-            sx={{ 
-              mr: 1,
-              fontSize: '1.2rem',
-              transition: 'all 0.2s',
-            }} 
-          />
-          <Typography
-            variant="body2"
-            sx={{ 
-              fontWeight: 'inherit', 
-              flexGrow: 1,
-              fontSize: '0.9rem',
-            }}
-          >
-            {labelText}
-          </Typography>
+    <StyledListItemButton
+      component={to ? NavLink : 'div'}
+      to={to}
+      onClick={onClick}
+      selected={isSelected}
+      sx={{ 
+        pl: isChild ? 3 : 2,
+        ...(hasChildren ? {} : { '& .MuiListItemIcon-root': { ml: 0 } })
+      }}
+    >
+      {!isChild && Icon && (
+        <ListItemIcon sx={{ minWidth: 35 }}>
+          <Icon fontSize="small" />
+        </ListItemIcon>
+      )}
+      {isChild && (
+        <Box
+          sx={{
+            width: 4,
+            height: 4,
+            borderRadius: '50%',
+            backgroundColor: 'text.secondary',
+            mr: 1.5,
+            ml: 1,
+          }}
+        />
+      )}
+      <ListItemText 
+        primary={text} 
+        primaryTypographyProps={{ 
+          variant: 'body2',
+          fontSize: '0.9rem',
+        }}
+      />
+      {hasChildren && (
+        <Box component="span" sx={{ ml: 'auto' }}>
+          {isExpanded ? (
+            <ArrowDropDownIcon fontSize="small" />
+          ) : (
+            <ArrowRightIcon fontSize="small" />
+          )}
         </Box>
-      }
-      {...other}
-    />
+      )}
+    </StyledListItemButton>
   );
-}
-
-StyledTreeItem.propTypes = {
-  bgColor: PropTypes.string,
-  color: PropTypes.string,
-  labelIcon: PropTypes.elementType.isRequired,
-  labelInfo: PropTypes.string,
-  labelText: PropTypes.string.isRequired,
 };
 
-const drawer = (location, theme) => (
-  <div>
-    <Toolbar sx={{ px: 2, py: 1.5 }}>
-      <Box 
-        component={Link} 
-        to={`/${ROUTES.EMPLOYER.DASHBOARD}`}
-        sx={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        <Avatar
-          src={IMAGES.getTextLogo(
-            theme.palette.mode === 'light' ? 'dark' : 'light'
-          )}
+const DrawerContent = () => {
+  const location = useLocation();
+  const theme = useTheme();
+  const [expandedItems, setExpandedItems] = useState({
+    candidates: true,
+    account: true,
+  });
+
+  const handleExpand = (section) => {
+    setExpandedItems(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
+  return (
+    <div>
+      <Toolbar sx={{ px: 2, py: 1.5 }}>
+        <Box 
+          component={Link} 
+          to={`/${ROUTES.EMPLOYER.DASHBOARD}`}
           sx={{
-            height: 48,
-            width: 'auto',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center'
           }}
-          variant="rounded"
-          alt="LOGO"
-        />
+        >
+          <Avatar
+            src={IMAGES.getTextLogo(
+              theme.palette.mode === 'light' ? 'dark' : 'light'
+            )}
+            sx={{
+              height: 48,
+              width: 'auto',
+            }}
+            variant="rounded"
+            alt="LOGO"
+          />
+        </Box>
+      </Toolbar>
+      <Divider sx={{ borderColor: 'grey.500' }} />
+      <Box sx={{ px: 1.5, py: 1.5 }}>
+        <List component="nav" disablePadding>
+          {/* Tổng quan */}
+          <ListItem disablePadding>
+            <MenuItem
+              icon={GridViewIcon}
+              text="Bản điều khiển"
+              to={`/${ROUTES.EMPLOYER.DASHBOARD}`}
+              isSelected={location.pathname === `/${ROUTES.EMPLOYER.DASHBOARD}`}
+            />
+          </ListItem>
+
+          {/* Quản lý đăng tuyển */}
+          <ListItem disablePadding>
+            <MenuItem
+              icon={ListAltOutlinedIcon}
+              text="Danh sách tin đăng"
+              to={`/${ROUTES.EMPLOYER.JOB_POST}`}
+              isSelected={location.pathname === `/${ROUTES.EMPLOYER.JOB_POST}`}
+            />
+          </ListItem>
+
+          {/* Quản lý ứng viên */}
+          <ListItem disablePadding>
+            <MenuItem
+              icon={FactCheckOutlinedIcon}
+              text="Quản lý ứng viên"
+              hasChildren
+              isExpanded={expandedItems.candidates}
+              onClick={() => handleExpand('candidates')}
+            />
+          </ListItem>
+          <Collapse in={expandedItems.candidates} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <MenuItem
+                text="Hồ sơ ứng tuyển"
+                to={`/${ROUTES.EMPLOYER.APPLIED_PROFILE}`}
+                isSelected={location.pathname === `/${ROUTES.EMPLOYER.APPLIED_PROFILE}`}
+                isChild
+              />
+              <MenuItem
+                text="Hồ sơ đã lưu"
+                to={`/${ROUTES.EMPLOYER.SAVED_PROFILE}`}
+                isSelected={location.pathname === `/${ROUTES.EMPLOYER.SAVED_PROFILE}`}
+                isChild
+              />
+              <MenuItem
+                text="Tìm ứng viên mới"
+                to={`/${ROUTES.EMPLOYER.PROFILE}`}
+                isSelected={location.pathname === `/${ROUTES.EMPLOYER.PROFILE}`}
+                isChild
+              />
+            </List>
+          </Collapse>
+
+          {/* Quản lý thông báo */}
+          <ListItem disablePadding>
+            <MenuItem
+              icon={NotificationsNoneOutlinedIcon}
+              text={`${APP_NAME} thông báo`}
+              to={`/${ROUTES.EMPLOYER.NOTIFICATION}`}
+              isSelected={location.pathname === `/${ROUTES.EMPLOYER.NOTIFICATION}`}
+            />
+          </ListItem>
+
+          {/* Quản lý tài khoản */}
+          <ListItem disablePadding>
+            <MenuItem
+              icon={BusinessOutlinedIcon}
+              text="Quản lý tài khoản"
+              hasChildren
+              isExpanded={expandedItems.account}
+              onClick={() => handleExpand('account')}
+            />
+          </ListItem>
+          <Collapse in={expandedItems.account} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <MenuItem
+                text="Thông tin công ty"
+                to={`/${ROUTES.EMPLOYER.COMPANY}`}
+                isSelected={location.pathname === `/${ROUTES.EMPLOYER.COMPANY}`}
+                isChild
+              />
+              <MenuItem
+                text="Tài khoản"
+                to={`/${ROUTES.EMPLOYER.ACCOUNT}`}
+                isSelected={location.pathname === `/${ROUTES.EMPLOYER.ACCOUNT}`}
+                isChild
+              />
+              <MenuItem
+                text="Cài đặt"
+                to={`/${ROUTES.EMPLOYER.SETTING}`}
+                isSelected={location.pathname === `/${ROUTES.EMPLOYER.SETTING}`}
+                isChild
+              />
+            </List>
+          </Collapse>
+        </List>
       </Box>
-    </Toolbar>
-    <Divider sx={{ borderColor: 'grey.500' }} />
-    <Box sx={{ px: 1.5, py: 1.5 }}>
-      <TreeView
-        defaultExpanded={['1', '2', '3', '4', '5']}
-        defaultCollapseIcon={<ArrowDropDownIcon sx={{ fontSize: '1.2rem' }} />}
-        defaultExpandIcon={<ArrowRightIcon sx={{ fontSize: '1.2rem' }} />}
-        defaultEndIcon={<div style={{ width: 20 }} />}
-        sx={{ 
-          flexGrow: 1, 
-          maxWidth: '100%', 
-          overflowY: 'auto',
-          '& .MuiTreeItem-content': {
-            padding: '2px 0',
-          }
-        }}
-      >
-        <StyledTreeItem nodeId="1" labelText="Tổng quan">
-          <NavLink
-            to={`/${ROUTES.EMPLOYER.DASHBOARD}`}
-            style={({ isActive }) => ({
-              textDecoration: 'none',
-              display: 'block',
-              backgroundColor: isActive ? theme.palette.primary.background : 'inherit',
-            })}
-          >
-            <StyledTreeItem
-              nodeId="6"
-              labelText="Bản điều khiển"
-              labelIcon={GridViewIcon}
-            />
-          </NavLink>
-        </StyledTreeItem>
-        <StyledTreeItem nodeId="2" labelText="Quản lý đăng tuyển">
-          <NavLink
-            to={`/${ROUTES.EMPLOYER.JOB_POST}`}
-            style={({ isActive }) => ({
-              textDecoration: 'none',
-              display: 'block',
-              backgroundColor: isActive ? theme.palette.primary.background : 'inherit',
-            })}
-          >
-            <StyledTreeItem
-              nodeId="7"
-              labelText="Danh sách tin đăng"
-              labelIcon={ListAltOutlinedIcon}
-            />
-          </NavLink>
-        </StyledTreeItem>
-        <StyledTreeItem nodeId="3" labelText="Quản lý ứng viên">
-          <NavLink
-            to={`/${ROUTES.EMPLOYER.APPLIED_PROFILE}`}
-            style={({ isActive }) => ({
-              textDecoration: 'none',
-              display: 'block',
-              backgroundColor: isActive ? theme.palette.primary.background : 'inherit',
-            })}
-          >
-            <StyledTreeItem
-              nodeId="8"
-              labelText="Hồ sơ ứng tuyển"
-              labelIcon={FactCheckOutlinedIcon}
-            />
-          </NavLink>
-          <NavLink
-            to={`/${ROUTES.EMPLOYER.SAVED_PROFILE}`}
-            style={({ isActive }) => ({
-              textDecoration: 'none',
-              display: 'block',
-              backgroundColor: isActive ? theme.palette.primary.background : 'inherit',
-            })}
-          >
-            <StyledTreeItem
-              nodeId="9"
-              labelText="Hồ sơ đã lưu"
-              labelIcon={BookmarkAddedOutlinedIcon}
-            />
-          </NavLink>
-          <NavLink
-            to={`/${ROUTES.EMPLOYER.PROFILE}`}
-            style={({ isActive }) => ({
-              textDecoration: 'none',
-              display: 'block',
-              backgroundColor: isActive ? theme.palette.primary.background : 'inherit',
-            })}
-          >
-            <StyledTreeItem
-              nodeId="10"
-              labelText="Tìm ứng viên mới"
-              labelIcon={ContentPasteSearchOutlinedIcon}
-            />
-          </NavLink>
-        </StyledTreeItem>
-        <StyledTreeItem nodeId="4" labelText="Quản lý thông báo">
-          <NavLink
-            to={`/${ROUTES.EMPLOYER.NOTIFICATION}`}
-            style={({ isActive }) => ({
-              textDecoration: 'none',
-              display: 'block',
-              backgroundColor: isActive ? theme.palette.primary.background : 'inherit',
-            })}
-          >
-            <StyledTreeItem
-              nodeId="11"
-              labelText={`${APP_NAME} thông báo`}
-              labelIcon={NotificationsNoneOutlinedIcon}
-            />
-          </NavLink>
-        </StyledTreeItem>
-        <StyledTreeItem nodeId="5" labelText="Quản lý tài khoản">
-          <NavLink
-            to={`/${ROUTES.EMPLOYER.COMPANY}`}
-            style={({ isActive }) => ({
-              textDecoration: 'none',
-              display: 'block',
-              backgroundColor: isActive ? theme.palette.primary.background : 'inherit',
-            })}
-          >
-            <StyledTreeItem
-              nodeId="12"
-              labelText="Thông tin công ty"
-              labelIcon={BusinessOutlinedIcon}
-            />
-          </NavLink>
-          <NavLink
-            to={`/${ROUTES.EMPLOYER.ACCOUNT}`}
-            style={({ isActive }) => ({
-              textDecoration: 'none',
-              display: 'block',
-              backgroundColor: isActive ? theme.palette.primary.background : 'inherit',
-            })}
-          >
-            <StyledTreeItem
-              nodeId="13"
-              labelText="Tài khoản"
-              labelIcon={AccountCircleOutlinedIcon}
-            />
-          </NavLink>
-          <NavLink
-            to={`/${ROUTES.EMPLOYER.SETTING}`}
-            style={({ isActive }) => ({
-              textDecoration: 'none',
-              display: 'block',
-              backgroundColor: isActive ? theme.palette.primary.background : 'inherit',
-            })}
-          >
-            <StyledTreeItem
-              nodeId="14"
-              labelText="Cài đặt"
-              labelIcon={SettingsOutlinedIcon}
-            />
-          </NavLink>
-        </StyledTreeItem>
-      </TreeView>
-    </Box>
-  </div>
-);
+    </div>
+  );
+};
 
 const Sidebar = ({ drawerWidth }) => {
   const location = useLocation();
@@ -315,7 +287,7 @@ const Sidebar = ({ drawerWidth }) => {
       }}
       open
     >
-      {drawer(location, theme)}
+      <DrawerContent />
     </Drawer>
   );
 };
@@ -327,7 +299,6 @@ const MobileSidebar = ({
   handleDrawerToggle,
 }) => {
   const theme = useTheme();
-  const location = useLocation();
 
   return (
     <Drawer
@@ -356,7 +327,7 @@ const MobileSidebar = ({
         },
       }}
     >
-      {drawer(location, theme)}
+      <DrawerContent />
     </Drawer>
   );
 };

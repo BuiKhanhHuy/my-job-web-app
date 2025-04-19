@@ -78,9 +78,14 @@
     "yup": "^1.0.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "CHOKIDAR_USEPOLLING=true FAST_REFRESH=true craco start",
+    "start:local": "CHOKIDAR_USEPOLLING=true FAST_REFRESH=true ./node_modules/.bin/craco start",
+    "build": "CI=false GENERATE_SOURCEMAP=false craco build",
+    "build:local": "./node_modules/.bin/craco build",
+    "build:amplify": "CI=false GENERATE_SOURCEMAP=false craco build",
+    "build:fast": "CI=false GENERATE_SOURCEMAP=false NODE_ENV=production craco build --max-old-space-size=4096",
+    "build:fast:local": "./node_modules/.bin/craco build --max-old-space-size=4096",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -100,5 +105,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "compression-webpack-plugin": "^11.1.0",
+    "terser-webpack-plugin": "^5.3.14",
+    "thread-loader": "^4.0.4"
   }
 }
