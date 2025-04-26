@@ -64,7 +64,6 @@ const AUTH_CONFIG = {
 
   // GOONG
   GOONGAPI_KEY: process.env.REACT_APP_GOONGAPI_KEY,
-  GOONGAPI_ACCESS_TOKEN: process.env.REACT_APP_GOONGAPI_ACCESS_TOKEN,
 
   // Dialogflow chatbot
   JOB_SEEKER_BOT: {
