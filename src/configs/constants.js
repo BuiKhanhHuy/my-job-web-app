@@ -9,34 +9,62 @@ License: MIT License
 See the LICENSE file in the project root for full license information.
 */
 
-import dayjs from "dayjs";
+import dayjs from './moment-config';
 import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard";
 import DevicesIcon from "@mui/icons-material/Devices";
-import { ReactComponent as ImageSvg1 } from "../assets/images/svg-images/empty-data.svg";
-import { ReactComponent as ImageSvg2 } from "../assets/images/svg-images/online-gallery.svg";
-import { ReactComponent as ImageSvg3 } from "../assets/images/svg-images/empty-street.svg";
-import { ReactComponent as ImageSvg4 } from "../assets/images/svg-images/dreamer.svg";
-import { ReactComponent as ImageSvg5 } from "../assets/images/svg-images/small_town.svg";
-import { ReactComponent as ImageSvg6 } from "../assets/images/svg-images/working_remotely.svg";
-import { ReactComponent as ImageSvg7 } from "../assets/images/svg-images/country_side.svg";
-import { ReactComponent as ImageSvg8 } from "../assets/images/svg-images/thoughts.svg";
-import { ReactComponent as ImageSvg9 } from "../assets/images/svg-images/browsing_online.svg";
-import { ReactComponent as ImageSvg10 } from "../assets/images/svg-images/note_list.svg";
-import { ReactComponent as ImageSvg11 } from "../assets/images/svg-images/profile_data.svg";
-import { ReactComponent as ImageSvg12 } from "../assets/images/svg-images/my_documents.svg";
-import { ReactComponent as ImageSvg13 } from "../assets/images/svg-images/opinion.svg";
-import { ReactComponent as ImageSvg14 } from "../assets/images/svg-images/letter.svg";
-import { ReactComponent as ImageSvg15 } from "../assets/images/svg-images/sad.svg";
 
-const ENV = process.env.REACT_APP_NODE_ENV || "development";
+// Import SVG files
+import emptyDataSvg from "../assets/images/svg-images/empty-data.svg";
+import onlineGallerySvg from "../assets/images/svg-images/online-gallery.svg";
+import emptyStreetSvg from "../assets/images/svg-images/empty-street.svg";
+import dreamerSvg from "../assets/images/svg-images/dreamer.svg";
+import smallTownSvg from "../assets/images/svg-images/small_town.svg";
+import workingRemotelySvg from "../assets/images/svg-images/working_remotely.svg";
+import countrySideSvg from "../assets/images/svg-images/country_side.svg";
+import thoughtsSvg from "../assets/images/svg-images/thoughts.svg";
+import browsingOnlineSvg from "../assets/images/svg-images/browsing_online.svg";
+import noteListSvg from "../assets/images/svg-images/note_list.svg";
+import profileDataSvg from "../assets/images/svg-images/profile_data.svg";
+import myDocumentsSvg from "../assets/images/svg-images/my_documents.svg";
+import opinionSvg from "../assets/images/svg-images/opinion.svg";
+import letterSvg from "../assets/images/svg-images/letter.svg";
+import sadSvg from "../assets/images/svg-images/sad.svg";
+
+// Import các assets
+import jobSeekerChatbotIcon from "../assets/icons/job_seeker_chatbot_icon.gif";
+import employerChatbotIcon from "../assets/icons/employer_chatbot_icon.gif";
+import coverImageDefault from "../assets/images/cover-image-default.webp";
+import chPlayDownload from "../assets/images/app-android-download.png";
+import appStoreDownload from "../assets/images/app-ios-download.png";
+import notificationImageDefault from "../assets/images/noti-img-default.png";
+import aroundJobPost from "../assets/images/about-images/around-job-post.png";
+import jobPostNotification from "../assets/images/about-images/job-notification-img.png";
+import jobPostImg from "../assets/images/about-images/job-post-img.png";
+import profileImg from "../assets/images/about-images/profile-img.png";
+import instagramIcon from "../assets/icons/instagram-icon.png";
+import facebookIcon from "../assets/icons/facebook-icon.png";
+import facebookMessengerIcon from "../assets/icons/facebook-messenger-icon.png";
+import linkedinIcon from "../assets/icons/linkedin-icon.png";
+import twitterIcon from "../assets/icons/twitter-icon.png";
+import youtubeIcon from "../assets/icons/youtube-icon.png";
+import locationMarker from "../assets/icons/location-marker.gif";
+import loadingSpinner from "../assets/images/loading/loading-spinner.gif";
+import star1 from "../assets/images/feedbacks/1star.gif";
+import star2 from "../assets/images/feedbacks/2star.gif";
+import star3 from "../assets/images/feedbacks/3star.gif";
+import star4 from "../assets/images/feedbacks/4star.gif";
+import star5 from "../assets/images/feedbacks/5star.gif";
+import logoWithBg from "../assets/logo/logo-with-bg.jpg";
+
+const ENV = import.meta.env.VITE_NODE_ENV || "development";
 
 const PLATFORM = "WEB";
 
 const APP_NAME = "MyJob";
 
 const HOST_NAME = {
-  MYJOB: process.env.REACT_APP_MYJOB_HOST_NAME || "127.0.0.1",
-  EMPLOYER_MYJOB: process.env.REACT_APP_EMPLOYER_MYJOB_HOST_NAME || "localhost",
+  MYJOB:  import.meta.env.VITE_MYJOB_HOST_NAME,
+  EMPLOYER_MYJOB:  import.meta.env.VITE_EMPLOYER_MYJOB_HOST_NAME,
 };
 
 const AUTH_PROVIDER = {
@@ -46,8 +74,8 @@ const AUTH_PROVIDER = {
 
 const AUTH_CONFIG = {
   // BACKEND
-  CLIENT_ID: process.env.REACT_APP_MYJOB_SERVER_CLIENT_ID,
-  CLIENT_SECRECT: process.env.REACT_APP_MYJOB_SERVER_CLIENT_SECRECT,
+  CLIENT_ID: import.meta.env.VITE_MYJOB_SERVER_CLIENT_ID,
+  CLIENT_SECRECT: import.meta.env.VITE_MYJOB_SERVER_CLIENT_SECRECT,
   BACKEND_KEY: "backend",
   ACCESS_TOKEN_KEY: "access_token",
   REFRESH_TOKEN_KEY: "refresh_token",
@@ -55,27 +83,26 @@ const AUTH_CONFIG = {
   CONVERT_TOKEN_KEY: "convert_token",
 
   // FACEBOOK AUTH
-  FACEBOOK_CLIENT_ID: process.env.REACT_APP_FACEBOOK_CLIENT_ID,
-  FACEBOOK_CLIENT_SECRET: process.env.REACT_APP_FACEBOOK_CLIENT_SECRET,
+  FACEBOOK_CLIENT_ID: import.meta.env.VITE_FACEBOOK_CLIENT_ID,
+  FACEBOOK_CLIENT_SECRET: import.meta.env.VITE_FACEBOOK_CLIENT_SECRET,
 
   // GOOGLE AUTH
-  GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET: process.env.REACT_APP_GOOGLE_CLIENT_SECRET,
+  GOOGLE_CLIENT_ID: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
 
   // GOONG
-  GOONGAPI_KEY: process.env.REACT_APP_GOONGAPI_KEY,
+  GOONGAPI_KEY: import.meta.env.VITE_GOONGAPI_KEY,
 
   // Dialogflow chatbot
   JOB_SEEKER_BOT: {
-    AGENT_ID:
-      process.env.JOB_SEEKER_BOT_AGENT_ID || "",
+    AGENT_ID: import.meta.env.VITE_JOB_SEEKER_BOT_AGENT_ID || "",
     CHAT_TITLE: "MyJob AI",
-    CHAT_ICON: require("../assets/icons/job_seeker_chatbot_icon.gif"),
+    CHAT_ICON: jobSeekerChatbotIcon,
   },
   EMPLOYER_BOT: {
-    AGENT_ID: process.env.EMPLOYER_BOT_AGENT_ID || "",
+    AGENT_ID: import.meta.env.VITE_EMPLOYER_BOT_AGENT_ID || "",
     CHAT_TITLE: "MyJob AI",
-    CHAT_ICON: require("../assets/icons/employer_chatbot_icon.gif"),
+    CHAT_ICON: employerChatbotIcon,
   },
 };
 
@@ -89,12 +116,12 @@ const HOME_FILTER_CAREER = [
   {
     id: 34,
     name: "IT - Phần mềm",
-    titleIcon: <DevicesIcon color="secondary" />,
+    titleIcon: DevicesIcon 
   },
   {
     id: 33,
     name: "IT - Phần cứng/Mạng",
-    titleIcon: <DeveloperBoardIcon color="secondary" />,
+    titleIcon: DeveloperBoardIcon
   },
 ];
 
@@ -120,34 +147,34 @@ const DATE_OPTIONS = {
 
 const IMAGES = {
   getLogo: (size, mode) => {
-    return require(`../assets/logo/${mode}-logo-${size}.png`);
+    return new URL(`../assets/logo/${mode}-logo-${size}.png`, import.meta.url).href;
   },
   getTextLogo: (mode) => {
-    return require(`../assets/logo/${mode}-text-logo.png`);
+    return new URL(`../assets/logo/${mode}-text-logo.png`, import.meta.url).href;
   },
-  coverImageDefault: require("../assets/images/cover-image-default.webp"),
-  chPlayDownload: require("../assets/images/app-android-download.png"),
-  appStoreDownload: require("../assets/images/app-ios-download.png"),
-  notificationImageDefault: require("../assets/images/noti-img-default.png"),
+  coverImageDefault,
+  chPlayDownload,
+  appStoreDownload,
+  notificationImageDefault,
 };
 
 const ABOUT_IMAGES = {
-  AROUND_JOB_POST: require("../assets/images/about-images/around-job-post.png"),
-  JOB_POST_NOTIFICATION: require("../assets/images/about-images/job-notification-img.png"),
-  JOB_POST: require("../assets/images/about-images/job-post-img.png"),
-  PROFILE: require("../assets/images/about-images/profile-img.png"),
+  AROUND_JOB_POST: aroundJobPost,
+  JOB_POST_NOTIFICATION: jobPostNotification,
+  JOB_POST: jobPostImg,
+  PROFILE: profileImg,
 };
 
 const ICONS = {
-  INSTAGRAM: require("../assets/icons/instagram-icon.png"),
-  FACEBOOK: require("../assets/icons/facebook-icon.png"),
-  FACEBOOK_MESSENGER: require("../assets/icons/facebook-messenger-icon.png"),
-  LINKEDIN: require("../assets/icons/linkedin-icon.png"),
-  TWITTER: require("../assets/icons/twitter-icon.png"),
-  YOUTUBE: require("../assets/icons/youtube-icon.png"),
-  LOCATION_MARKER: require("../assets/icons/location-marker.gif"),
-  JOB_SEEKER_CHATBOT_ICON: require("../assets/icons/job_seeker_chatbot_icon.gif"),
-  EMPLOYER_CHATBOT_ICON: require("../assets/icons/employer_chatbot_icon.gif"),
+  INSTAGRAM: instagramIcon,
+  FACEBOOK: facebookIcon,
+  FACEBOOK_MESSENGER: facebookMessengerIcon,
+  LINKEDIN: linkedinIcon,
+  TWITTER: twitterIcon,
+  YOUTUBE: youtubeIcon,
+  LOCATION_MARKER: locationMarker,
+  JOB_SEEKER_CHATBOT_ICON: jobSeekerChatbotIcon,
+  EMPLOYER_CHATBOT_ICON: employerChatbotIcon,
 };
 
 const LINKS = {
@@ -163,19 +190,19 @@ const LINKS = {
 };
 
 const LOADING_IMAGES = {
-  LOADING_SPINNER: require("../assets/images/loading/loading-spinner.gif"),
+  LOADING_SPINNER: loadingSpinner,
 };
 
 const FEEDBACK_IMAGES = {
-  "1star": require("../assets/images/feedbacks/1star.gif"),
-  "2star": require("../assets/images/feedbacks/2star.gif"),
-  "3star": require("../assets/images/feedbacks/3star.gif"),
-  "4star": require("../assets/images/feedbacks/4star.gif"),
-  "5star": require("../assets/images/feedbacks/5star.gif"),
+  "1star": star1,
+  "2star": star2,
+  "3star": star3,
+  "4star": star4,
+  "5star": star5,
 };
 
 const LOGO_IMAGES = {
-  LOGO_WITH_BG: require("../assets/logo/logo-with-bg.jpg"),
+  LOGO_WITH_BG: logoWithBg,
 };
 
 const BANNER_TYPES = {
@@ -241,6 +268,25 @@ const ROUTES = {
   },
 };
 
+// SVG components
+const SVG_IMAGES = {
+  ImageSvg1: emptyDataSvg,
+  ImageSvg2: onlineGallerySvg,
+  ImageSvg3: emptyStreetSvg,
+  ImageSvg4: dreamerSvg,
+  ImageSvg5: smallTownSvg,
+  ImageSvg6: workingRemotelySvg,
+  ImageSvg7: countrySideSvg,
+  ImageSvg8: thoughtsSvg,
+  ImageSvg9: browsingOnlineSvg,
+  ImageSvg10: noteListSvg,
+  ImageSvg11: profileDataSvg,
+  ImageSvg12: myDocumentsSvg,
+  ImageSvg13: opinionSvg,
+  ImageSvg14: letterSvg,
+  ImageSvg15: sadSvg,
+};
+
 export {
   ENV,
   PLATFORM,
@@ -263,19 +309,5 @@ export {
   ICONS,
   JOB_POST_STATUS_BG_COLOR,
   ROUTES,
-  ImageSvg1,
-  ImageSvg2,
-  ImageSvg3,
-  ImageSvg4,
-  ImageSvg5,
-  ImageSvg6,
-  ImageSvg7,
-  ImageSvg8,
-  ImageSvg9,
-  ImageSvg10,
-  ImageSvg11,
-  ImageSvg12,
-  ImageSvg13,
-  ImageSvg14,
-  ImageSvg15,
+  SVG_IMAGES,
 };

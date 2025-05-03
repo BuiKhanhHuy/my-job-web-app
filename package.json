@@ -2,12 +2,12 @@
   "name": "my-job-web-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/open-sans": "^4.5.14",
     "@fontsource/public-sans": "^4.5.12",
-    "@fontsource/roboto": "^4.5.8",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
@@ -19,13 +19,13 @@
     "@mui/lab": "^5.0.0-alpha.122",
     "@mui/material": "^5.11.11",
     "@mui/styled-engine-sc": "^5.11.11",
-    "@mui/x-date-pickers": "^6.0.1",
+    "@mui/x-date-pickers": "^6.20.2",
+    "@react-oauth/google": "^0.12.1",
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf-viewer/get-file": "^3.12.0",
     "@react-pdf-viewer/zoom": "^3.12.0",
     "@react-pdf/renderer": "^3.1.9",
     "@reduxjs/toolkit": "^1.9.3",
-    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@tippyjs/react": "^4.2.6",
@@ -33,8 +33,7 @@
     "antd-img-crop": "^4.12.2",
     "axios": "^1.3.4",
     "chart.js": "^4.3.0",
-    "dayjs": "^1.11.7",
-    "dotenv-webpack": "^8.0.1",
+    "dayjs": "^1.11.13",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "firebase": "^9.21.0",
@@ -42,8 +41,8 @@
     "leaflet": "^1.9.4",
     "material-ui-popup-state": "^5.0.5",
     "mdb-react-ui-kit": "^6.1.0",
-    "moment": "^2.29.4",
-    "moment-timezone": "^0.5.43",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.48",
     "mui-file-dropzone": "^4.0.2",
     "mui-image": "^1.0.7",
     "pdfjs-dist": "^3.4.120",
@@ -60,10 +59,8 @@
     "react-image-gallery": "^1.2.11",
     "react-infinite-scroll-component": "^6.1.0",
     "react-leaflet": "^4.2.1",
-    "react-moment": "^1.1.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.2",
-    "react-scripts": "5.0.1",
     "react-share": "^4.4.1",
     "react-to-print": "^2.14.12",
     "react-toastify": "^9.1.1",
@@ -73,20 +70,14 @@
     "styled-components": "^5.3.8",
     "sweetalert2": "^11.7.3",
     "swiper": "^9.1.0",
-    "web-vitals": "^2.1.4",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.2/xlsx-0.19.2.tgz",
     "yup": "^1.0.2"
   },
   "scripts": {
-    "start": "CHOKIDAR_USEPOLLING=true FAST_REFRESH=true craco start",
-    "start:local": "CHOKIDAR_USEPOLLING=true FAST_REFRESH=true ./node_modules/.bin/craco start",
-    "build": "CI=false GENERATE_SOURCEMAP=false craco build",
-    "build:local": "./node_modules/.bin/craco build",
-    "build:amplify": "CI=false GENERATE_SOURCEMAP=false craco build",
-    "build:fast": "CI=false GENERATE_SOURCEMAP=false NODE_ENV=production craco build --max-old-space-size=4096",
-    "build:fast:local": "./node_modules/.bin/craco build --max-old-space-size=4096",
-    "test": "craco test",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "eslintConfig": {
     "extends": [
@@ -107,9 +98,9 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^7.1.0",
-    "compression-webpack-plugin": "^11.1.0",
-    "terser-webpack-plugin": "^5.3.14",
-    "thread-loader": "^4.0.4"
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.0.12",
+    "vite-plugin-svgr": "^4.3.0",
+    "vitest": "^1.2.1"
   }
 }
