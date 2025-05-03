@@ -27,18 +27,18 @@ server {
     
     # Proxy for API requests
     location /api/ {
-        proxy_pass https://<ngrok domain>/api/; //👈 REPLACE HERE
+        proxy_pass https://<ngrok domain>/api/;
         proxy_http_version 1.1;
         
         # Configure SNI - most important to solve the issue
         proxy_ssl_server_name on;
-        proxy_ssl_name <ngrok domain>; //👈 REPLACE HERE
+        proxy_ssl_name <ngrok domain>;
         
         # Skip SSL verification when sending requests from local to ngrok
         proxy_ssl_verify off;
         
         # Ensure correct host header is sent
-        proxy_set_header Host <ngrok domain>; //👈 REPLACE HERE
+        proxy_set_header Host <ngrok domain>;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+      rel="stylesheet"
+    />
+    <title>MyJob | Hệ thống giới thiệu việc làm</title>
+    <style>
+      df-messenger {
+        --df-messenger-bot-message: #9c8ebd;
+        --df-messenger-button-titlebar-color: #441da0;
+        --df-messenger-button-titlebar-font-color: #ffffff;
+        --df-messenger-chat-background-color: #f8f9fa;
+        --df-messenger-font-color: #ffffff;
+        --df-messenger-input-box-color: #ffffff;
+        --df-messenger-input-font-color: #333333;
+        --df-messenger-input-placeholder-font-color: #969db6;
+        --df-messenger-minimized-chat-close-icon-color: #441da0;
+        --df-messenger-send-icon: #441da0;
+        --df-messenger-user-message: #441da0;
+      }
+      
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      
+      #initial-loader {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+      }
+      
+      .loading-spinner {
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+      }
+      
+      .loading-spinner img {
+        width: 100px;
+        height: auto;
+      }
+      
+      .fade-out {
+        opacity: 0 !important;
+      }
+    </style>
+     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+  </head>
+  <body>
+    <div id="initial-loader">
+      <div class="loading-spinner">
+        <img 
+          src="/loading-spinner.gif" 
+          alt="Loading" 
+          style="width: 100px; height: auto;"
+        >
+      </div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/index.jsx"></script>
+  </body>
+</html> 
