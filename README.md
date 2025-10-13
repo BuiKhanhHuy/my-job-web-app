@@ -1,636 +1,634 @@
-<p align="center">
- <img src="https://github.com/BuiKhanhHuy/my-job-web-app/assets/69914972/3252a6c3-4ec7-46cd-8265-e1d42ade58ea" width="200"  alt="Image" />
-</p>
-<h1 align="center">JOB PORTAL SYSTEM</h1>
-<h1 align="center">MyJob Web Application (ReactJS)</h1>
-<p align="center">Web application for the My Job employment and recruitment platform.</p>
+# 🚀 MyJob - Job Recruitment & Search Web Application
 
-## Table of Contents
+<div align="center">
+  <img src="https://github.com/BuiKhanhHuy/my-job-web-app/assets/69914972/3252a6c3-4ec7-46cd-8265-e1d42ade58ea" width="200" alt="MyJob Logo" />
+  
+  **Platform connecting employers and job seekers**
+</div>
 
-- [Overview](#overview)
-  - [Live Demo](#live-demo)
-- [System Requirements](#system-requirements)
-- [Installation](#installation)
-  - [MacOS & Linux](#macos--linux)
-  - [Windows](#windows)
-- [Project Structure](#project-structure)
-- [Troubleshooting](#troubleshooting)
-- [API & Integration](#api--integration)
+---
 
-## Overview
+## 📋 Table of Contents
 
-My Job is a platform connecting employers and job seekers. This web application includes:
-- User interface for job seekers (www.myjob.com)
-- Management interface for employers (employer.myjob.com)
+1. [Introduction](#-introduction)
+2. [Installation Guide](#-installation-guide)
+3. [Environment Variables Configuration](#-environment-variables-configuration)
+4. [Data Configuration](#-data-configuration)
 
-### Live Demo
+---
 
-[https://myjob.buikhanhhuy.com](https://myjob.buikhanhhuy.com)
+## 🎯 Introduction
 
-### Technologies Used
+**MyJob** is a platform connecting employers and job seekers, including:
+- 👨‍💼 **Job seeker interface**: `https://www.myjob.com`
+- 🏢 **Employer interface**: `https://employer.myjob.com`
 
-- Frontend: React.js
-- Containerization: Docker, Docker Compose
-- Web Server: Nginx
-- SSL: mkcert (for local development environment)
+---
 
-## System Requirements
+## 📦 Installation Guide
 
-- [Git](https://git-scm.com/downloads)
-- [Docker](https://www.docker.com/products/docker-desktop/) and Docker Compose
-- [Make](https://www.gnu.org/software/make/) (optional, to use Makefile commands)
-- [Node.js](https://nodejs.org/) (v16+, for local development without Docker)
-
-## Installation
-
-### MacOS & Linux
-
-#### 1. Clone the project
+### Step 1: Clone the Project
 
 ```bash
-git clone https://github.com/buikhanhhuy/my-job-web-app.git
+# Clone repository
+git clone https://github.com/BuiKhanhHuy/my-job-web-app.git
+
+# Navigate to project directory
 cd my-job-web-app
+
+# Create environment configuration file from template
+cp .env.example .env
 ```
 
-#### 2. Configure environment
+### Step 2: Configure Environment Variables
 
-Create an `.env` file from the template:
+1. Open the newly created `.env` file
+2. Fill in all configuration information according to the [guide below](#-environment-variables-configuration)
+3. Save the file
 
-```bash
-cp .env.develop.example .env
-```
+### Step 3: Configure Nginx
 
-Edit the `.env` file if necessary.
-
-#### 3. Install and launch (Simple method)
-
-Use Makefile to perform all necessary steps:
-
-```bash
-make init
-```
-
-This command will:
-- Update the system hosts file (requires sudo)
-- Create and install local SSL certificates
-- Build Docker images
-- Start the containers
-
-#### 4. Manual installation (step by step)
-
-**a. Grant execute permission to scripts**:
-
-```bash
-chmod +x ./docker/scripts/*.sh
-```
-
-**b. Update hosts file**:
-
-```bash
-sudo ./docker/scripts/setup-hosts.sh
-```
-
-**c. Create local SSL certificate**:
-
-```bash
-sudo ./docker/scripts/generate-certs.sh
-```
-
-**d. Build and run Docker**:
-
-```bash
-docker-compose build
-docker-compose up -d
-```
-
-#### 5. Access the application
-
-When completed, access:
-- https://www.myjob.com - Job seeker interface
-- https://employer.myjob.com - Employer interface
-
-### Windows
-
-#### 1. Install necessary tools
-
-- Docker Desktop with WSL2: [Installation Guide](https://docs.docker.com/desktop/windows/install/)
-- WSL2 (Windows Subsystem for Linux): [Installation Guide](https://docs.microsoft.com/en-us/windows/wsl/install)
-
-#### 2. Method 1: Using WSL2 (Recommended)
-
-**a. Open Ubuntu in WSL2**:
-```
-wsl
-```
-
-**b. Clone and install the project**:
-```bash
-cd ~
-git clone https://github.com/buikhanhhuy/my-job-web-app.git
-cd my-job-web-app
-```
-
-**c. Continue with steps as in MacOS/Linux**:
-```bash
-make init
-```
-
-#### 3. Method 2: Using CMD/PowerShell with Admin rights or Git Bash
-
-**a. Update hosts file**:
-
-Open Notepad with Admin rights and open the file:
-```
-C:\Windows\System32\drivers\etc\hosts
-```
-
-Add to the end of the file:
-```
-127.0.0.1 myjob.com
-127.0.0.1 employer.myjob.com
-```
-
-**b. If using Git Bash, grant execute permission to scripts**:
-```bash
-chmod +x ./docker/scripts/*.sh
-```
-
-**c. Install mkcert**:
-
-Using Chocolatey:
-```
-choco install mkcert
-```
-
-**d. Create certs directory and SSL certificate**:
-```
-mkdir docker\nginx\certs
-mkcert -install
-mkcert -key-file docker\nginx\certs\myjob.key -cert-file docker\nginx\certs\myjob.crt myjob.com *.myjob.com localhost 127.0.0.1 ::1
-```
-
-**e. Build and run Docker**:
-```
-docker-compose build
-docker-compose up -d
-```
-
-## Application Management
-
-### Using Makefile (MacOS, Linux, Windows with WSL)
-
-```bash
-# Initialize everything
-make init
-
-# Setup hosts
-make setup-hosts
-
-# Generate SSL certificates
-make generate-certs
-
-# Start Docker
-make docker-up
-
-# Stop Docker
-make docker-down
-
-# Rebuild Docker
-make docker-build
-
-# View logs
-make logs
-
-# Reinstall SSL certificates
-make reinstall-certs
-```
-
-### Using Docker Compose directly
-
-```bash
-# Start
-docker-compose up -d
-
-# Stop
-docker-compose down
-
-# Restart Nginx
-docker-compose restart frontend_nginx
-
-# View logs
-docker-compose logs -f
-```
-
-## Project Structure
-
-```
-my-job-web-app/
-├── Dockerfile              # Main Dockerfile
-├── docker-compose.yaml     # Docker Compose configuration
-├── Makefile                # Makefile command definitions
-├── docker/                 # Docker configuration directory
-│   ├── nginx/              # Nginx configuration
-│   │   ├── certs/          # SSL certificates directory
-│   │   ├── default.conf    # Nginx configuration
-│   │   └── hosts           # Hosts file
-│   └── scripts/            # Helper scripts
-│       ├── generate-certs.sh  # SSL generation script
-│       └── setup-hosts.sh  # Hosts file update script
-├── src/                    # React source code
-├── public/                 # Static files
-└── package.json            # npm configuration
-```
-
-## Troubleshooting
-
-### SSL Issues
-
-**Browser shows insecure connection warning**:
-1. If using mkcert, certificates should be automatically trusted
-2. If not, you can:
-   - Accept the risk and continue (only for development environment)
-   - Import the root CA certificate into your browser
-
-**Reinstall SSL certificates**:
-```bash
-make reinstall-certs
-```
-
-### Hosts Issues
-
-**Cannot access domain**:
-1. Check hosts file:
-   ```bash
-   # MacOS/Linux
-   cat /etc/hosts
+1. Copy file `default.conf.example` → `default.conf`
+2. Update `<ngrok domain>` in the file with the ngrok domain configured in Backend
    
-   # Windows
-   type C:\Windows\System32\drivers\etc\hosts
-   ```
-2. Run hosts setup script again:
-   ```bash
-   # MacOS/Linux
-   sudo ./docker/scripts/setup-hosts.sh
-   
-   # Windows (CMD with Admin rights)
-   notepad C:\Windows\System32\drivers\etc\hosts
-   ```
+   Example: `<ngrok domain>` → `sought-shiner-utterly.ngrok-free.app`
 
-### Docker Issues
+### Step 4: Launch Application
 
-**Containers not running**:
 ```bash
-# Check status
-docker-compose ps
-
-# View logs
-docker-compose logs -f
+# Build and run application with Docker
+docker-compose up -d --build
 ```
 
-**Port in use**:
-1. Check and stop services using ports 80/443:
-   ```bash
-   # MacOS/Linux
-   sudo lsof -i :80
-   sudo lsof -i :443
+> **Note**: Ensure Docker and Docker Compose are installed on your machine.
+
+### Step 5: Domain Simulation
+
+Allow www.myjob.com and employer.myjob.com to replace localhost (127.0.0.1)
+
+**For MacOS, Linux:**
+
+Open terminal and run:
+```bash
+sudo vim /etc/hosts
+```
+Add these 2 lines:
+```
+127.0.0.1       www.myjob.com
+127.0.0.1       employer.myjob.com
+```
+
+**For Windows:**
+
+Navigate to `C:\Windows\System32\drivers\etc\`
+Add the above 2 lines to the `hosts` file (Open with administrator privileges)
+
+
+### Step 6: Verify Results
+
+After successful launch, access:
+- 🌐 **Job seeker page**: https://www.myjob.com
+- 🌐 **Employer page**: https://employer.myjob.com
+
+---
+
+## ⚙️ Environment Variables Configuration
+
+### 1. GOONG Maps API
+
+GOONG Maps is used to display maps and addresses.
+
+**Required environment variables:**
+```env
+VITE_GOONGAPI_KEY=<API_Key>
+```
+
+**Configuration steps:**
+
+1. Access [GOONG Maps](https://account.goong.io/) and register an account
+2. In Dashboard → Create a new API Key
+3. Copy the API Key and paste it into the `VITE_GOONGAPI_KEY` variable in the `.env` file
+
+---
+
+### 2. Firebase Configuration
+
+Firebase serves notification and chat functionality.
+
+**Required environment variables:**
+```env
+VITE_FIREBASE_API_KEY=<API_Key>
+VITE_FIREBASE_AUTH_DOMAIN=<Auth_Domain>
+VITE_FIREBASE_PROJECT_ID=<Project_ID>
+VITE_FIREBASE_STORAGE_BUCKET=<Storage_Bucket>
+VITE_FIREBASE_MESSAGING_SENDER_ID=<Sender_ID>
+VITE_FIREBASE_APP_ID=<App_ID>
+```
+
+**Configuration steps:**
+
+Copy the entire Firebase configuration from the **Backend** `.env` file (already set up previously) and paste it into the Frontend `.env` file.
+
+---
+
+### 3. OAuth2 Authentication
+
+Configure Client ID and Client Secret for login methods.
+
+#### 3.1. Login With Email & Password
+
+   **Required environment variables:**
+   ```env
+VITE_MYJOB_SERVER_CLIENT_ID=<Client_ID>
+VITE_MYJOB_SERVER_CLIENT_SECRECT=<Client_Secret>
+```
+
+**Configuration steps:**
+
+1. Access the Backend `Applications` page at: `https://ngrok-domain/o/applications/`
+2. Click **`New Application`** button
+3. Fill in information as follows:
+   - **Name**: Choose any name (e.g., `Default authentication`)
+   - **Client id**: Keep default value → Copy and update to `VITE_MYJOB_SERVER_CLIENT_ID`
+   - **Client secret**: Keep default value → Copy and update to `VITE_MYJOB_SERVER_CLIENT_SECRECT`
+   - **Hash client secret**: ✅ Check
+   - **Client type**: Select `Confidential`
+   - **Authorization grant type**: Select `Resource owner password-based`
+   - Other fields can be left empty
    
-   # Windows
-   netstat -ano | findstr :80
-   netstat -ano | findstr :443
+   > ⚠️ **Important note**: Client id and Client secret must be **copied and saved** before clicking Save (cannot be viewed again after Save)
+
+4. Click **`Save`**
+
+---
+
+#### 3.2. Login With Facebook
+
+   **Required environment variables:**
+   ```env
+VITE_FACEBOOK_CLIENT_ID=<Client_ID>
+VITE_FACEBOOK_CLIENT_SECRET=<Client_Secret>
+```
+
+**Configuration steps:**
+
+1. Access the Backend `Applications` page at: `https://ngrok-domain/o/applications/`
+2. Click **`New Application`** button
+3. Fill in information as follows:
+   - **Name**: Choose any name (e.g., `Authenticate with Facebook`)
+   - **Client id**: Keep default value → Copy and update to `VITE_FACEBOOK_CLIENT_ID`
+   - **Client secret**: Keep default value → Copy and update to `VITE_FACEBOOK_CLIENT_SECRET`
+   - **Hash client secret**: ✅ Check
+   - **Client type**: Select `Confidential`
+   - **Authorization grant type**: Select `Client credentials`
+   - Other fields can be left empty
+   
+   > ⚠️ **Important note**: Client id and Client secret must be **copied and saved** before clicking Save
+
+4. Click **`Save`**
+
+---
+
+#### 3.3. Login With Google
+
+   **Required environment variables:**
+   ```env
+VITE_GOOGLE_CLIENT_ID=<Client_ID>
+VITE_GOOGLE_CLIENT_SECRET=<Client_Secret>
+```
+
+**Configuration steps:**
+
+1. Access the Backend `Applications` page at: `https://ngrok-domain/o/applications/`
+2. Click **`New Application`** button
+3. Fill in information as follows:
+   - **Name**: Choose any name (e.g., `Authenticate with Google`)
+   - **Client id**: Keep default value → Copy and update to `VITE_GOOGLE_CLIENT_ID`
+   - **Client secret**: Keep default value → Copy and update to `VITE_GOOGLE_CLIENT_SECRET`
+   - **Hash client secret**: ✅ Check
+   - **Client type**: Select `Confidential`
+   - **Authorization grant type**: Select `Client credentials`
+   - Other fields can be left empty
+   
+   > ⚠️ **Important note**: Client id and Client secret must be **copied and saved** before clicking Save
+
+4. Click **`Save`**
+
+---
+
+### 4. Dialogflow Chatbot
+
+Configure chatbot for job seekers and employers.
+
+**Required environment variables:**
+```env
+VITE_JOB_SEEKER_BOT_AGENT_ID=<Job_Seeker_Agent_ID>
+VITE_EMPLOYER_BOT_AGENT_ID=<Employer_Agent_ID>
+```
+
+**Configuration steps:**
+
+You need to create **2 chatbot agents**: one for job seekers and one for employers.
+
+1. Access [Dialogflow Console](https://dialogflow.cloud.google.com/)
+2. Click **`Create new agent`**
+3. Fill in agent information:
+   - Create first agent with name: `JobSeekerMyJobAgent` (for job seekers)
+   - Create second agent with name: `EmployerMyJobAgent` (for employers)
+   - You can choose a previously created Google Project or create a new one
+4. After creating the agent, access **`Integrations`** → Select **`Dialogflow Messenger`** → Click **`ENABLE`**
+5. The dialog displays the **agent-id**, copy and paste into:
+   - `VITE_JOB_SEEKER_BOT_AGENT_ID` (for JobSeekerMyJobAgent)
+   - `VITE_EMPLOYER_BOT_AGENT_ID` (for EmployerMyJobAgent)
+
+> 💡 **Tip**: Repeat steps 2-5 for both agents
+
+---
+
+## 🗃️ Data Configuration
+
+### 1. Configure Chatbot Data
+
+**Purpose**: Import intents, entities and configure webhook so the chatbot can answer user questions.
+
+**Steps to perform:**
+
+1. Access [Dialogflow Console](https://dialogflow.cloud.google.com/)
+2. Select agent `JobSeekerMyJobAgent` (or `EmployerMyJobAgent` to configure for employers)
+
+3. **Configure Webhook** for chatbot to call Backend API:
+   - Access **Fulfillment** → Enable **Enabled Webhook**
+   - Enter information:
+     - **URL**: 
+       - For job seekers: `https://ngrok-domain/api/chatbot/jobseeker/webhook/`
+       - For employers: `https://ngrok-domain/api/chatbot/employer/webhook/`
+     - **Basic Auth**: 
+       - Username: `temp`
+       - Password: `temp`
+   - Click **Save**
+
+4. **Import agent data** from Backend:
+   - Access **Settings** (gear icon) of the agent
+   - Select **Export and Import** tab
+   - Click **`IMPORT FROM ZIP`**
+   - Select the corresponding file from the Backend `data/chatbot/` directory:
+     - `JobSeekerMyJobAgent.zip` (for job seeker agent)
+     - `EmployerMyJobAgent.zip` (for employer agent)
+   - Wait for the import process to complete
+
+> 💡 **Note**: Perform similarly for both agents (JobSeekerMyJobAgent and EmployerMyJobAgent)
+
+---
+
+### 2. Configure Images (Upload to Cloudinary)
+
+**Purpose**: Automatically upload sample images to Cloudinary for display in the application.
+
+**Steps to perform:**
+
+1. Access the **Backend admin page** (Django Admin)
+2. Go to **Periodic tasks** (Manage periodic tasks)
+3. Find and select the record named: 
    ```
-2. Edit `docker-compose.yaml` to use different ports if needed
+   [SETUP] Upload Files To Cloudinary One-time Task: every 60 seconds
+   ```
+4. Check the **`Enabled`** box
+5. Click **`Save`**
+6. Wait **60 seconds** for the cron job to automatically run and upload images
 
-## API & Integration
+> ⚠️ **Important note**: 
+> - This is a **one-time cron job** (one-time task)
+> - The cron job will automatically upload all images from the `data/cloudinary/cloudinary_files.json` file (in Backend) to Cloudinary
+> - **Do not shut down the Backend** while the cron job is running (at least 10 minutes)
+> - After upload completes, you can disable this task
 
-### Backend API
+---
 
-The application connects to the My Job API Server. Ensure the API server is running and accessible via the URL configured in the `.env` file:
+## 🎉 Complete!
 
-```
-REACT_APP_BASE_URL=http://api.myjob.com/
-```
+You have completed the installation and configuration of **MyJob Web Application**. Access the application and enjoy!
 
-## Links
+**Useful links:**
+- 📖 [Documentation](https://github.com/BuiKhanhHuy/my-job-web-app)
+- 🐛 [Report Issues](https://github.com/BuiKhanhHuy/my-job-web-app/issues)
+- 💬 [Discussions](https://github.com/BuiKhanhHuy/my-job-web-app/discussions)
 
-### 🚀 [API Server](https://github.com/buikhanhhuy/my-job-api-server)
-### 📱 [Mobile app](https://github.com/buikhanhhuy/MyJobApp)
-
+---
 
 <details>
-<summary>VN</summary>
+<summary>🇻🇳 <strong>Vietnamese</strong></summary>
 
-# My Job Web App
+# 🚀 MyJob - Ứng Dụng Web Tuyển Dụng & Tìm Việc
 
-Web app cho nền tảng tìm kiếm việc làm và tuyển dụng My Job.
+<div align="center">
+  <img src="https://github.com/BuiKhanhHuy/my-job-web-app/assets/69914972/3252a6c3-4ec7-46cd-8265-e1d42ade58ea" width="200" alt="MyJob Logo" />
+  
+  **Nền tảng kết nối nhà tuyển dụng và người tìm việc**
+</div>
 
-## Mục lục
+---
 
-- [Tổng quan](#tổng-quan)
-  - [Live Demo](#live-demo)
-- [Yêu cầu hệ thống](#yêu-cầu-hệ-thống)
-- [Cài đặt](#cài-đặt)
-  - [MacOS & Linux](#macos--linux)
-  - [Windows](#windows)
-- [Cấu trúc dự án](#cấu-trúc-dự-án)
-- [Xử lý sự cố](#xử-lý-sự-cố)
-- [API & Tích hợp](#api--tích-hợp)
+## 📋 Mục Lục
 
-## Tổng quan
+1. [Giới Thiệu](#-giới-thiệu)
+2. [Hướng Dẫn Cài Đặt](#-hướng-dẫn-cài-đặt)
+3. [Cấu Hình Biến Môi Trường](#-cấu-hình-biến-môi-trường)
+4. [Cấu Hình Dữ Liệu](#-cấu-hình-dữ-liệu)
 
-My Job là nền tảng kết nối nhà tuyển dụng và người tìm việc. Dự án web app này bao gồm:
-- Giao diện người dùng cho người tìm việc (www.myjob.com)
-- Giao diện quản lý cho nhà tuyển dụng (employer.myjob.com)
+---
 
-### Live Demo
+## 🎯 Giới Thiệu
 
-[https://myjob.buikhanhhuy.com](https://myjob.buikhanhhuy.com)
+**MyJob** là nền tảng kết nối giữa nhà tuyển dụng và người tìm việc, bao gồm:
+- 👨‍💼 **Giao diện dành cho người tìm việc**: `https://www.myjob.com`
+- 🏢 **Giao diện dành cho nhà tuyển dụng**: `https://employer.myjob.com`
 
-### Công nghệ sử dụng
+---
 
-- Frontend: React.js
-- Containerization: Docker, Docker Compose
-- Web Server: Nginx
-- SSL: mkcert (cho môi trường phát triển local)
+## 📦 Hướng Dẫn Cài Đặt
 
-## Yêu cầu hệ thống
-
-- [Git](https://git-scm.com/downloads)
-- [Docker](https://www.docker.com/products/docker-desktop/) và Docker Compose
-- [Make](https://www.gnu.org/software/make/) (tùy chọn, để sử dụng các lệnh Makefile)
-- [Node.js](https://nodejs.org/) (v16+, cho phát triển local không dùng Docker)
-
-## Cài đặt
-
-### MacOS  & Linux
-
-#### 1. Clone dự án
+### Bước 1: Clone Dự Án
 
 ```bash
-git clone https://github.com/buikhanhhuy/my-job-web-app.git
+# Clone repository về máy
+git clone https://github.com/BuiKhanhHuy/my-job-web-app.git
+
+# Di chuyển vào thư mục dự án
 cd my-job-web-app
+
+# Tạo file cấu hình môi trường từ template
+cp .env.example .env
 ```
 
-#### 2. Cấu hình môi trường
+### Bước 2: Cấu Hình Biến Môi Trường
 
-Tạo file `.env` từ file mẫu:
+1. Mở file `.env` vừa tạo
+2. Điền đầy đủ các thông tin cấu hình theo hướng dẫn ở [phần dưới](#-cấu-hình-biến-môi-trường)
+3. Lưu file lại
+
+### Bước 3: Cấu hình nginx
+1. Clone file `default.conf.example` → `default.conf`
+2. Cập nhật `<ngrok domain>` trong file thành domain của ngrok đã setup ở Backend
+Ví dụ: `<ngrok domain>` → `sought-shiner-utterly.ngrok-free.app`
+
+### Bước 4: Khởi Chạy Ứng Dụng
 
 ```bash
-cp example.env .env
+# Build và chạy ứng dụng với Docker
+docker-compose up -d --build
 ```
 
-Chỉnh sửa file `.env` nếu cần thiết.
+> **Lưu ý**: Đảm bảo Docker và Docker Compose đã được cài đặt trên máy.
 
-#### 3. Cài đặt và khởi động (Cách đơn giản)
+### Bước 5: Giả lập domain
 
-Sử dụng Makefile để thực hiện tất cả các bước cần thiết:
+Cho phép www.myjob.com, employer.myjob.com thay thế cho localhost (127.0.0.1)
 
+**Đối với MacOS, Linux:**
+
+Vào terminal, gõ lệnh:
 ```bash
-make init
+sudo vim /etc/hosts
+```
+Thêm 2 dòng:
+```
+127.0.0.1       www.myjob.com
+127.0.0.1       employer.myjob.com
 ```
 
-Lệnh trên sẽ:
-- Cập nhật file hosts hệ thống (yêu cầu quyền sudo)
-- Tạo và cài đặt chứng chỉ SSL local
-- Build Docker images
-- Khởi động các container
+**Đối với Windows:**
 
-#### 4. Cài đặt thủ công (từng bước)
+Truy cập vào `C:\Windows\System32\drivers\etc\`
+Thêm 2 dòng trên vào file `hosts` (Mở với quyền administrators)
 
-**a. Cấp quyền thực thi cho scripts**:
 
-```bash
-chmod +x ./docker/scripts/*.sh
+### Bước 6: Kiểm Tra Kết Quả
+
+Sau khi khởi chạy thành công, truy cập:
+- 🌐 **Trang người tìm việc**: https://www.myjob.com
+- 🌐 **Trang nhà tuyển dụng**: https://employer.myjob.com
+
+---
+
+## ⚙️ Cấu Hình Biến Môi Trường
+
+### 1. GOONG Maps API
+
+GOONG Maps được sử dụng để hiển thị bản đồ và địa chỉ.
+
+**Biến môi trường cần thiết:**
+```env
+VITE_GOONGAPI_KEY=<API_Key>
 ```
 
-**b. Cập nhật file hosts**:
+**Các bước cấu hình:**
 
-```bash
-sudo ./docker/scripts/setup-hosts.sh
+1. Truy cập [GOONG Maps](https://account.goong.io/) và đăng ký tài khoản
+2. Tại Dashboard → Tạo một API Key mới
+3. Copy API Key và dán vào biến `VITE_GOONGAPI_KEY` trong file `.env`
+
+---
+
+### 2. Firebase Configuration
+
+Firebase phục vụ cho chức năng thông báo (notification) và nhắn tin (chat).
+
+**Biến môi trường cần thiết:**
+```env
+VITE_FIREBASE_API_KEY=<API_Key>
+VITE_FIREBASE_AUTH_DOMAIN=<Auth_Domain>
+VITE_FIREBASE_PROJECT_ID=<Project_ID>
+VITE_FIREBASE_STORAGE_BUCKET=<Storage_Bucket>
+VITE_FIREBASE_MESSAGING_SENDER_ID=<Sender_ID>
+VITE_FIREBASE_APP_ID=<App_ID>
 ```
 
-**c. Tạo chứng chỉ SSL local**:
+**Các bước cấu hình:**
 
-```bash
-sudo ./docker/scripts/generate-certs.sh
+Copy toàn bộ cấu hình Firebase từ file `.env` của **Backend** (đã setup trước đó) và dán vào file `.env` của Frontend.
+
+---
+
+### 3. OAuth2 Authentication
+
+Cấu hình Client ID và Client Secret cho các phương thức đăng nhập.
+
+#### 3.1. Đăng Nhập Với Email & Password
+
+**Biến môi trường cần thiết:**
+```env
+VITE_MYJOB_SERVER_CLIENT_ID=<Client_ID>
+VITE_MYJOB_SERVER_CLIENT_SECRECT=<Client_Secret>
 ```
 
-**d. Build và chạy Docker**:
+**Các bước cấu hình:**
 
-```bash
-docker-compose build
-docker-compose up -d
-```
-
-#### 5. Truy cập ứng dụng
-
-Sau khi hoàn tất, truy cập:
-- https://www.myjob.com - Giao diện người tìm việc
-- https://employer.myjob.com - Giao diện nhà tuyển dụng
-
-### Windows
-
-#### 1. Cài đặt các công cụ cần thiết
-
-- Docker Desktop với WSL2: [Hướng dẫn cài đặt](https://docs.docker.com/desktop/windows/install/)
-- WSL2 (Windows Subsystem for Linux): [Hướng dẫn cài đặt](https://docs.microsoft.com/en-us/windows/wsl/install)
-
-#### 2. Phương pháp 1: Sử dụng WSL2 (Khuyến nghị)
-
-**a. Mở Ubuntu trong WSL2**:
-```
-wsl
-```
-
-**b. Clone và cài đặt dự án**:
-```bash
-cd ~
-git clone https://github.com/buikhanhhuy/my-job-web-app.git
-cd my-job-web-app
-```
-
-**c. Tiếp tục với các bước như MacOS/Linux**:
-```bash
-make init
-```
-
-#### 3. Phương pháp 2: Sử dụng CMD/PowerShell với quyền Admin hoặc Git Bash
-
-**a. Cập nhật file hosts**:
-
-Mở Notepad với quyền Admin và mở file:
-```
-C:\Windows\System32\drivers\etc\hosts
-```
-
-Thêm vào cuối file:
-```
-127.0.0.1 myjob.com
-127.0.0.1 employer.myjob.com
-```
-
-**b. Nếu sử dụng Git Bash, cấp quyền thực thi cho scripts**:
-```bash
-chmod +x ./docker/scripts/*.sh
-```
-
-**c. Cài đặt mkcert**:
-
-Sử dụng Chocolatey:
-```
-choco install mkcert
-```
-
-**d. Tạo thư mục certs và chứng chỉ SSL**:
-```
-mkdir docker\nginx\certs
-mkcert -install
-mkcert -key-file docker\nginx\certs\myjob.key -cert-file docker\nginx\certs\myjob.crt myjob.com *.myjob.com localhost 127.0.0.1 ::1
-```
-
-**e. Build và chạy Docker**:
-```
-docker-compose build
-docker-compose up -d
-```
-
-## Quản lý ứng dụng
-
-### Sử dụng Makefile (MacOS, Linux, Windows với WSL)
-
-```bash
-# Khởi tạo toàn bộ
-make init
-
-# Cài đặt hosts
-make setup-hosts
-
-# Tạo chứng chỉ SSL
-make generate-certs
-
-# Khởi động Docker
-make docker-up
-
-# Dừng Docker
-make docker-down
-
-# Build lại Docker
-make docker-build
-
-# Xem logs
-make logs
-
-# Cài đặt lại chứng chỉ SSL
-make reinstall-certs
-```
-
-### Sử dụng Docker Compose trực tiếp
-
-```bash
-# Khởi động
-docker-compose up -d
-
-# Dừng
-docker-compose down
-
-# Khởi động lại Nginx
-docker-compose restart frontend_nginx
-
-# Xem logs
-docker-compose logs -f
-```
-
-## Cấu trúc dự án
-
-```
-my-job-web-app/
-├── Dockerfile              # Dockerfile chính
-├── docker-compose.yaml     # Cấu hình Docker Compose
-├── Makefile                # Định nghĩa các lệnh make
-├── docker/                 # Thư mục chứa cấu hình Docker
-│   ├── nginx/              # Cấu hình Nginx
-│   │   ├── certs/          # Thư mục chứa chứng chỉ SSL
-│   │   ├── default.conf    # Cấu hình Nginx
-│   │   └── hosts           # File hosts
-│   └── scripts/            # Scripts hỗ trợ
-│       ├── generate-certs.sh  # Script tạo SSL
-│       └── setup-hosts.sh  # Script cập nhật hosts
-├── src/                    # Mã nguồn React
-├── public/                 # Static files
-└── package.json            # Cấu hình npm
-```
-
-## Xử lý sự cố
-
-### Vấn đề về SSL
-
-**Trình duyệt hiển thị cảnh báo kết nối không an toàn**:
-1. Nếu sử dụng mkcert, chứng chỉ nên được tin cậy tự động
-2. Nếu không, bạn có thể:
-   - Chấp nhận rủi ro và tiếp tục (chỉ dùng cho môi trường phát triển)
-   - Nhập chứng chỉ CA root vào trình duyệt
-
-**Tái cài đặt chứng chỉ SSL**:
-```bash
-make reinstall-certs
-```
-
-### Vấn đề về hosts
-
-**Không thể truy cập domain**:
-1. Kiểm tra file hosts:
-   ```bash
-   # MacOS/Linux
-   cat /etc/hosts
+1. Truy cập trang `Applications` của Backend tại: `https://ngrok-domain/o/applications/`
+2. Click nút **`New Application`**
+3. Điền thông tin như sau:
+   - **Name**: Đặt tên tuỳ ý (ví dụ: `Default authentication`)
+   - **Client id**: Giữ nguyên giá trị mặc định → Copy và cập nhật vào `VITE_MYJOB_SERVER_CLIENT_ID`
+   - **Client secret**: Giữ nguyên giá trị mặc định → Copy và cập nhật vào `VITE_MYJOB_SERVER_CLIENT_SECRECT`
+   - **Hash client secret**: ✅ Tích chọn
+   - **Client type**: Chọn `Confidential`
+   - **Authorization grant type**: Chọn `Resource owner password-based`
+   - Các trường còn lại có thể để trống
    
-   # Windows
-   type C:\Windows\System32\drivers\etc\hosts
-   ```
-2. Chạy lại script cài đặt hosts:
-   ```bash
-   # MacOS/Linux
-   sudo ./docker/scripts/setup-hosts.sh
+   > ⚠️ **Lưu ý quan trọng**: Client id và Client secret phải được **copy và lưu lại** trước khi nhấn Save (sau khi Save sẽ không thể xem lại)
+
+4. Nhấn **`Save`**
+
+---
+
+#### 3.2. Đăng Nhập Với Facebook
+
+**Biến môi trường cần thiết:**
+```env
+VITE_FACEBOOK_CLIENT_ID=<Client_ID>
+VITE_FACEBOOK_CLIENT_SECRET=<Client_Secret>
+```
+
+**Các bước cấu hình:**
+
+1. Truy cập trang `Applications` của Backend tại: `https://ngrok-domain/o/applications/`
+2. Click nút **`New Application`**
+3. Điền thông tin như sau:
+   - **Name**: Đặt tên tuỳ ý (ví dụ: `Authenticate with Facebook`)
+   - **Client id**: Giữ nguyên giá trị mặc định → Copy và cập nhật vào `VITE_FACEBOOK_CLIENT_ID`
+   - **Client secret**: Giữ nguyên giá trị mặc định → Copy và cập nhật vào `VITE_FACEBOOK_CLIENT_SECRET`
+   - **Hash client secret**: ✅ Tích chọn
+   - **Client type**: Chọn `Confidential`
+   - **Authorization grant type**: Chọn `Client credentials`
+   - Các trường còn lại có thể để trống
    
-   # Windows (CMD với quyền Admin)
-   notepad C:\Windows\System32\drivers\etc\hosts
-   ```
+   > ⚠️ **Lưu ý quan trọng**: Client id và Client secret phải được **copy và lưu lại** trước khi nhấn Save
 
-### Vấn đề về Docker
+4. Nhấn **`Save`**
 
-**Các container không chạy**:
-```bash
-# Kiểm tra trạng thái
-docker-compose ps
+---
 
-# Xem logs
-docker-compose logs -f
+#### 3.3. Đăng Nhập Với Google
+
+**Biến môi trường cần thiết:**
+```env
+VITE_GOOGLE_CLIENT_ID=<Client_ID>
+VITE_GOOGLE_CLIENT_SECRET=<Client_Secret>
 ```
 
-**Cổng bị sử dụng**:
-1. Kiểm tra và dừng dịch vụ đang sử dụng cổng 80/443:
-   ```bash
-   # MacOS/Linux
-   sudo lsof -i :80
-   sudo lsof -i :443
+**Các bước cấu hình:**
+
+1. Truy cập trang `Applications` của Backend tại: `https://ngrok-domain/o/applications/`
+2. Click nút **`New Application`**
+3. Điền thông tin như sau:
+   - **Name**: Đặt tên tuỳ ý (ví dụ: `Authenticate with Google`)
+   - **Client id**: Giữ nguyên giá trị mặc định → Copy và cập nhật vào `VITE_GOOGLE_CLIENT_ID`
+   - **Client secret**: Giữ nguyên giá trị mặc định → Copy và cập nhật vào `VITE_GOOGLE_CLIENT_SECRET`
+   - **Hash client secret**: ✅ Tích chọn
+   - **Client type**: Chọn `Confidential`
+   - **Authorization grant type**: Chọn `Client credentials`
+   - Các trường còn lại có thể để trống
    
-   # Windows
-   netstat -ano | findstr :80
-   netstat -ano | findstr :443
+   > ⚠️ **Lưu ý quan trọng**: Client id và Client secret phải được **copy và lưu lại** trước khi nhấn Save
+
+4. Nhấn **`Save`**
+
+---
+
+### 4. Dialogflow Chatbot
+
+Cấu hình chatbot cho người tìm việc và nhà tuyển dụng.
+
+**Biến môi trường cần thiết:**
+```env
+VITE_JOB_SEEKER_BOT_AGENT_ID=<Agent_ID_người_tìm_việc>
+VITE_EMPLOYER_BOT_AGENT_ID=<Agent_ID_nhà_tuyển_dụng>
+```
+
+**Các bước cấu hình:**
+
+Bạn cần tạo **2 agent chatbot**: một cho người tìm việc và một cho nhà tuyển dụng.
+
+1. Truy cập [Dialogflow Console](https://dialogflow.cloud.google.com/)
+2. Click **`Create new agent`**
+3. Điền thông tin agent:
+   - Tạo agent thứ nhất với tên: `JobSeekerMyJobAgent` (dành cho người tìm việc)
+   - Tạo agent thứ hai với tên: `EmployerMyJobAgent` (dành cho nhà tuyển dụng)
+   - Có thể chọn Google Project đã tạo trước đó hoặc tạo mới
+4. Sau khi tạo agent, truy cập **`Integrations`** → Chọn **`Dialogflow Messenger`** → Click **`ENABLE`**
+5. Hộp thoại hiển thị **agent-id**, copy và điền vào:
+   - `VITE_JOB_SEEKER_BOT_AGENT_ID` (cho JobSeekerMyJobAgent)
+   - `VITE_EMPLOYER_BOT_AGENT_ID` (cho EmployerMyJobAgent)
+
+> 💡 **Mẹo**: Lặp lại các bước từ 2-5 cho cả hai agent
+
+---
+
+## 🗃️ Cấu Hình Dữ Liệu
+
+### 1. Cấu Hình Data Cho Chatbot
+
+**Mục đích**: Import intents, entities và cấu hình webhook để chatbot có thể trả lời các câu hỏi từ người dùng.
+
+**Các bước thực hiện:**
+
+1. Truy cập [Dialogflow Console](https://dialogflow.cloud.google.com/)
+2. Chọn agent `JobSeekerMyJobAgent` (hoặc `EmployerMyJobAgent` để cấu hình cho nhà tuyển dụng)
+
+3. **Cấu hình Webhook** để chatbot gọi API Backend:
+   - Truy cập **Fulfillment** → Bật **Enabled Webhook**
+   - Nhập thông tin:
+     - **URL**: 
+       - Cho người tìm việc: `https://ngrok-domain/api/chatbot/jobseeker/webhook/`
+       - Cho nhà tuyển dụng: `https://ngrok-domain/api/chatbot/employer/webhook/`
+     - **Basic Auth**: 
+       - Username: `temp`
+       - Password: `temp`
+   - Click **Save**
+
+4. **Import dữ liệu agent** từ Backend:
+   - Truy cập **Settings** (biểu tượng bánh răng) của agent
+   - Chọn tab **Export and Import**
+   - Click **`IMPORT FROM ZIP`**
+   - Chọn file tương ứng từ thư mục `data/chatbot/` của Backend:
+     - `JobSeekerMyJobAgent.zip` (cho agent người tìm việc)
+     - `EmployerMyJobAgent.zip` (cho agent nhà tuyển dụng)
+   - Đợi quá trình import hoàn tất
+
+> 💡 **Lưu ý**: Thực hiện tương tự cho cả 2 agent (JobSeekerMyJobAgent và EmployerMyJobAgent)
+
+---
+
+### 2. Cấu Hình Hình Ảnh (Upload Lên Cloudinary)
+
+**Mục đích**: Tự động upload hình ảnh mẫu lên Cloudinary để hiển thị trong ứng dụng.
+
+**Các bước thực hiện:**
+
+1. Truy cập **trang quản trị Backend** (Django Admin)
+2. Vào mục **Periodic tasks** (Quản lý các tác vụ định kỳ)
+3. Tìm và chọn record có tên: 
    ```
-2. Chỉnh sửa `docker-compose.yaml` để sử dụng cổng khác nếu cần
+   [SETUP] Upload Files To Cloudinary One-time Task: every 60 seconds
+   ```
+4. Tích chọn ô **`Enabled`**
+5. Nhấn **`Save`**
+6. Đợi **60 giây** để cron job tự động chạy và upload hình ảnh
 
-## API & Tích hợp
+> ⚠️ **Lưu ý quan trọng**: 
+> - Đây là **cron job chạy một lần duy nhất** (one-time task)
+> - Cron job sẽ tự động upload tất cả hình ảnh từ file `data/cloudinary/cloudinary_files.json` (trong Backend) lên Cloudinary
+> - **Không tắt Backend** trong quá trình cron job đang chạy (ít nhất 10 phút)
+> - Sau khi upload xong, có thể tắt (disable) lại task này
 
-### Backend API
+---
 
-Ứng dụng kết nối với My Job API Server. Đảm bảo server API đang chạy và truy cập được qua URL đã cấu hình trong file `.env`:
+## 🎉 Hoàn Tất!
 
-```
-REACT_APP_BASE_URL=http://api.myjob.com/
-```
+Bạn đã hoàn thành việc cài đặt và cấu hình **MyJob Web Application**. Truy cập ứng dụng và trải nghiệm!
 
-## Liên kết
-
-### 🚀 [API Server](https://github.com/buikhanhhuy/my-job-api-server)
-### 📱 [Mobile app](https://github.com/buikhanhhuy/MyJobApp)
+**Liên kết hữu ích:**
+- 📖 [Documentation](https://github.com/BuiKhanhHuy/my-job-web-app)
+- 🐛 [Báo lỗi](https://github.com/BuiKhanhHuy/my-job-web-app/issues)
+- 💬 [Thảo luận](https://github.com/BuiKhanhHuy/my-job-web-app/discussions)
 
 </details>
