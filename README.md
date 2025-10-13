@@ -43,7 +43,7 @@ cp .env.example .env
 ### Step 2: Configure Environment Variables
 
 1. Open the newly created `.env` file
-2. Fill in all configuration information according to the [guide below](#-environment-variables-configuration)
+2. Fill in all configuration information according to the [guide below](#%EF%B8%8F-cấu-hình-biến-môi-trường)
 3. Save the file
 
 ### Step 3: Configure Nginx
@@ -176,8 +176,8 @@ VITE_FACEBOOK_CLIENT_SECRET=<Client_Secret>
 2. Click **`New Application`** button
 3. Fill in information as follows:
    - **Name**: Choose any name (e.g., `Authenticate with Facebook`)
-   - **Client id**: Keep default value → Copy and update to `VITE_FACEBOOK_CLIENT_ID`
-   - **Client secret**: Keep default value → Copy and update to `VITE_FACEBOOK_CLIENT_SECRET`
+   - **Client id**: Paste the value of `SOCIAL_AUTH_FACEBOOK_KEY` that you configured in the Backend → Copy and update to `VITE_FACEBOOK_CLIENT_ID`
+   - **Client secret**: Paste the value of `SOCIAL_AUTH_FACEBOOK_SECRET` that you configured in the Backend → Copy and update to `VITE_FACEBOOK_CLIENT_SECRET`
    - **Hash client secret**: ✅ Check
    - **Client type**: Select `Confidential`
    - **Authorization grant type**: Select `Client credentials`
@@ -203,8 +203,8 @@ VITE_GOOGLE_CLIENT_SECRET=<Client_Secret>
 2. Click **`New Application`** button
 3. Fill in information as follows:
    - **Name**: Choose any name (e.g., `Authenticate with Google`)
-   - **Client id**: Keep default value → Copy and update to `VITE_GOOGLE_CLIENT_ID`
-   - **Client secret**: Keep default value → Copy and update to `VITE_GOOGLE_CLIENT_SECRET`
+   - **Client id**: Paste the value of `SOCIAL_AUTH_GOOGLE_OAUTH2_KEY` that you configured in the Backend → Copy and update to `VITE_GOOGLE_CLIENT_ID`
+   - **Client secret**: Paste the value of `SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET` that you configured in the Backend → Copy and update to `VITE_GOOGLE_CLIENT_SECRET`
    - **Hash client secret**: ✅ Check
    - **Client type**: Select `Confidential`
    - **Authorization grant type**: Select `Client credentials`
@@ -363,7 +363,7 @@ cp .env.example .env
 ### Bước 2: Cấu Hình Biến Môi Trường
 
 1. Mở file `.env` vừa tạo
-2. Điền đầy đủ các thông tin cấu hình theo hướng dẫn ở [phần dưới](#-cấu-hình-biến-môi-trường)
+2. Điền đầy đủ các thông tin cấu hình theo hướng dẫn ở [phần dưới](#%EF%B8%8F-cấu-hình-biến-môi-trường)
 3. Lưu file lại
 
 ### Bước 3: Cấu hình nginx
@@ -494,8 +494,8 @@ VITE_FACEBOOK_CLIENT_SECRET=<Client_Secret>
 2. Click nút **`New Application`**
 3. Điền thông tin như sau:
    - **Name**: Đặt tên tuỳ ý (ví dụ: `Authenticate with Facebook`)
-   - **Client id**: Giữ nguyên giá trị mặc định → Copy và cập nhật vào `VITE_FACEBOOK_CLIENT_ID`
-   - **Client secret**: Giữ nguyên giá trị mặc định → Copy và cập nhật vào `VITE_FACEBOOK_CLIENT_SECRET`
+   - **Client id**: Paste giá trị `SOCIAL_AUTH_FACEBOOK_KEY` đã config ở Backend → Copy và cập nhật vào `VITE_FACEBOOK_CLIENT_ID`
+   - **Client secret**: Paste giá trị `SOCIAL_AUTH_FACEBOOK_SECRET` đã config ở Backend → Copy và cập nhật vào `VITE_FACEBOOK_CLIENT_SECRET`
    - **Hash client secret**: ✅ Tích chọn
    - **Client type**: Chọn `Confidential`
    - **Authorization grant type**: Chọn `Client credentials`
@@ -521,8 +521,8 @@ VITE_GOOGLE_CLIENT_SECRET=<Client_Secret>
 2. Click nút **`New Application`**
 3. Điền thông tin như sau:
    - **Name**: Đặt tên tuỳ ý (ví dụ: `Authenticate with Google`)
-   - **Client id**: Giữ nguyên giá trị mặc định → Copy và cập nhật vào `VITE_GOOGLE_CLIENT_ID`
-   - **Client secret**: Giữ nguyên giá trị mặc định → Copy và cập nhật vào `VITE_GOOGLE_CLIENT_SECRET`
+   - **Client id**: Paste giá trị `SOCIAL_AUTH_GOOGLE_OAUTH2_KEY` đã config ở Backend → Copy và cập nhật vào `VITE_GOOGLE_CLIENT_ID`
+   - **Client secret**: Paste giá trị `SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET` đã config ở Backend → Copy và cập nhật vào `VITE_GOOGLE_CLIENT_SECRET`
    - **Hash client secret**: ✅ Tích chọn
    - **Client type**: Chọn `Confidential`
    - **Authorization grant type**: Chọn `Client credentials`
