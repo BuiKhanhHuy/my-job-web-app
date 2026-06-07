@@ -15,11 +15,8 @@ import tokenService from '../services/tokenService';
 
 // API endpoints that do not require authentication
 const notAuthenticationURL = ['api/auth/token/', 'api/auth/convert-token/'];
-// Prefix for API endpoints
-const prefix = 'api'
 
-// Use relative path to work with nginx proxy
-const baseURL = `/${prefix}/`;
+const baseURL = import.meta.env.VITE_API_BASE_URL || '/api/';
 
 const httpRequest = axios.create({
   baseURL,

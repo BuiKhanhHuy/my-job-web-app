@@ -28,6 +28,7 @@ jobs:
         run: npm run build
         env:
           VITE_NODE_ENV: production
+          VITE_API_BASE_URL: https://api.buikhanhhuy.click/api/
           VITE_MYJOB_HOST_NAME: www.buikhanhhuy.click
           VITE_EMPLOYER_MYJOB_HOST_NAME: employer.buikhanhhuy.click
           VITE_MYJOB_SERVER_CLIENT_ID: ${{ secrets.VITE_MYJOB_SERVER_CLIENT_ID }}
