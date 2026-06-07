@@ -1,0 +1,19 @@
+{
+  "name": "my-job-web-app-cdk",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@types/node": "22.x",
+    "aws-cdk": "2.x",
+    "typescript": "~5.7.0"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.x",
+    "constructs": "^10.0.0"
+  }
+}

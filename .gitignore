@@ -1,10 +1,29 @@
-.vscode
-.env
+# Editor
+.vscode/
+.idea/
 
-# dependencies
+# Environment variables (chứa secrets)
+.env
+.env.local
+.env.*.local
+
+# Dependencies
 /node_modules
 
-# production
+# Build output
 /build
-/idea
-/.idea
+/dist
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Docker SSL certs (không commit private key)
+docker/nginx/certs/
+
+# SSH private keys
+*.pem

@@ -1,0 +1,56 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build & Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_NODE_ENV: production
+          VITE_MYJOB_HOST_NAME: www.buikhanhhuy.click
+          VITE_EMPLOYER_MYJOB_HOST_NAME: employer.buikhanhhuy.click
+          VITE_MYJOB_SERVER_CLIENT_ID: ${{ secrets.VITE_MYJOB_SERVER_CLIENT_ID }}
+          VITE_MYJOB_SERVER_CLIENT_SECRECT: ${{ secrets.VITE_MYJOB_SERVER_CLIENT_SECRECT }}
+          VITE_FACEBOOK_CLIENT_ID: ${{ secrets.VITE_FACEBOOK_CLIENT_ID }}
+          VITE_FACEBOOK_CLIENT_SECRET: ${{ secrets.VITE_FACEBOOK_CLIENT_SECRET }}
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
+          VITE_GOOGLE_CLIENT_SECRET: ${{ secrets.VITE_GOOGLE_CLIENT_SECRET }}
+          VITE_GOONGAPI_KEY: ${{ secrets.VITE_GOONGAPI_KEY }}
+          VITE_JOB_SEEKER_BOT_AGENT_ID: ${{ secrets.VITE_JOB_SEEKER_BOT_AGENT_ID }}
+          VITE_EMPLOYER_BOT_AGENT_ID: ${{ secrets.VITE_EMPLOYER_BOT_AGENT_ID }}
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+
+      - name: Deploy to EC2 via rsync
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          chmod 400 key.pem
+          rsync -avz --delete \
+            -e "ssh -i key.pem -o StrictHostKeyChecking=no" \
+            build/ ec2-user@${{ secrets.EC2_HOST }}:/var/www/myjob/html/
+          rm -f key.pem

@@ -1,0 +1,14 @@
+# CDK compiled output
+dist/
+*.js
+*.d.ts
+*.js.map
+
+# Dependencies
+node_modules/
+
+# CDK staging & asset bundles
+cdk.out/
+
+# CDK context (auto-generated, không cần commit)
+cdk.context.json
