@@ -13,7 +13,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Box, Button, Stack, styled, Divider } from "@mui/material";
+import { Alert, Box, Button, Stack, styled, Divider } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -82,8 +82,8 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "test@gmail.com",
+      password: "P@ssw0rd",
     },
     resolver: yupResolver(schema),
   });
@@ -104,6 +104,20 @@ const JobSeekerLoginForm = ({ onLogin, onFacebookLogin, onGoogleLogin }) => {
         },
       }}
     >
+      <Alert severity="success" sx={{ mb: 1.5, borderRadius: "8px" }}>
+        Thông tin đăng nhập đã được điền sẵn
+      </Alert>
+      <Alert severity="info" sx={{ mb: 2, borderRadius: "8px" }}>
+        Xem trang quản trị:{" "}
+        <a
+          href="https://admin.buikhanhhuy.click/login/?next=/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          admin.buikhanhhuy.click
+        </a>
+        {" "}— Email: <strong>admin@gmail.com</strong> / Pass: <strong>P@ssw0rd</strong>
+      </Alert>
       <Stack spacing={2.5} sx={{ mb: 3 }}>
         <TextFieldCustom
           name="email"

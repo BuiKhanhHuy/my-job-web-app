@@ -54,7 +54,7 @@ httpRequest.interceptors.response.use(
     // const originalConfig = error.config;
 
     // Access Token was expired
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
       tokenService.removeAccessTokenAndRefreshTokenFromCookie();
       // const refreshTokenCookie = tokenService.getRefreshTokenFromCookie();
 
